@@ -259,6 +259,78 @@ main {
 
 
 
+/* ############## */
+/* ### HEADER ### */
+/* ############## */
+
+header {
+    max-width: 1200px; margin: 40px auto;
+    padding: 20px;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+header #logo {
+    display: inline-block; float: left;
+    width: 80px; height: 80px;
+    background: url('../img/favicon/favicon_512x512.png') no-repeat center left;
+    -o-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    -o-animation: fade-in-logo 2s;
+    -moz-animation: fade-in-logo 2s;
+    -webkit-animation: fade-in-logo 2s;
+    animation: fade-in-logo 2s;
+}
+
+header #title {
+    display: inline-block;
+    margin: 0 0 0 10px;
+    -o-animation: fade-in-logo 2.2s;
+    -moz-animation: fade-in-logo 2.2s;
+    -webkit-animation: fade-in-logo 2.2s;
+    animation: fade-in-logo 2.2s;
+}
+
+header #title span {
+    display: inline-block;
+    line-height: 1em; font-weight: 700;
+}
+
+header #title span:nth-child(1) {
+    margin: 10px 0 3px 0;
+    font-size: 25px; color: #008aef; 
+}
+
+header #title span:nth-child(3) {
+    font-size: 35px; color: #3ac1ff; 
+}
+
+@-o-keyframes fade-in-logo {
+    0%, 20% {-o-transform: translate(50px, 0); opacity: 0;}
+    21% {-o-transform: translate(50px, 0); opacity: .3;}
+}
+@-moz-keyframes fade-in-logo {
+    0%, 20% {-moz-transform: translate(50px, 0); opacity: 0;}
+    21% {-moz-transform: translate(50px, 0); opacity: .3;}
+}
+@-webkit-keyframes fade-in-logo {
+    0%, 20% {-webkit-transform: translate(50px, 0); opacity: 0;}
+    21% {-webkit-transform: translate(50px, 0); opacity: .3;}
+}
+@keyframes fade-in-logo {
+    0%, 20% {transform: translate(50px, 0); opacity: 0;}
+    21% {transform: translate(50px, 0); opacity: .3;}
+}
+
+
+
+
+
+
 /* ################## */
 /* ### NAVIGATION ### */
 /* ################## */
