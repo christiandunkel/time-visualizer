@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="animation-paused">
 <head>
     
     <meta charset="utf-8" />
@@ -27,17 +27,43 @@
         
         <nav>
             
-            <!-- left side buttons --> 
-        
-            <button id="play-button" title="Play Animation"></button>
+            <div class="top-menu">
+
+                <button id="load-data">Load Data</button>
+                
+                <div id="loaded-file-name">example</div>
+
+                <button id="darkmode-toggle" title="Toggle Darkmode"></button>
+                
+            </div>
             
-            <button id="pause-button" title="Pause Animation"></button>
+            <div class="animation-controls">
+
+                <div class="right-side">
+
+                    <div class="descriptor">Animation speed</div>
+
+                    <button id="animation-speed-0-25" class="secondary" title="Set animation speed to 0.25">.25</button>
+
+                    <button id="animation-speed-0-5" class="secondary" title="Set animation speed to 0.5">.5</button>
+
+                    <button id="animation-speed-1-0" class="secondary active" title="Set animation speed to 1 (default)">1</button>
+
+                    <button id="animation-speed-2-0" class="secondary" title="Set animation speed to 2">2</button>
+                    
+                </div>
+                
+                <div class="left-side">
+
+                    <button id="play-button" class="secondary non-transparent" title="Play Animation"></button>
+
+                    <button id="pause-button" class="secondary non-transparent" title="Pause Animation"></button>
+
+                    <button id="stop-button" class="secondary non-transparent" title="Stop Animation"></button>
+
+                </div>
             
-            <button id="reset-button" title="Reset Animation"></button>
-            
-            <!-- right side buttons -->
-        
-            <button id="darkmode-toggle" title="Toggle Darkmode"></button>
+            </div>
             
         </nav>
     
