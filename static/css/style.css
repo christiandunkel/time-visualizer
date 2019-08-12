@@ -1,0 +1,241 @@
+/* reset browser default styles */
+
+.placeholder::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #848484;
+}
+.placeholder::-moz-placeholder { /* Firefox 19+ */
+    color: #848484;
+}
+.placeholder:-moz-placeholder { /* Firefox 18- */
+    color: #848484;
+}
+.placeholder::-ms-input-placeholder { /* Microsoft Edge */
+    color: #848484;
+}
+.placeholder:-ms-input-placeholder { /* IE 10+ */
+    color: #848484;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    -moz-user-select: none;
+    user-select: none;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+    -ms-user-select: none;
+    user-select: none;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    -moz-user-select: none;
+    user-select: none;
+}
+
+div, span, h1, h2, h3, h4, h5, h6, p, pre, a, del, img, ins, small, strike, strong, b, u, i, center, ol, ul, li, form, label, table, caption, tbody, tfoot, thead, tr, th, td, figure, figcaption, header, main, footer, menu, nav, input {
+    font: inherit; font-size: 100%;
+}
+
+div {
+    font-size: 0;
+}
+
+textarea {
+    font-family: 'Minecraftia', 'Arial', sans-serif; font-size: 16px; line-height: 20px;
+}
+
+div, span, h1, h2, h3, h4, p, pre, a, del, img, ins, small, strike, strong, b, u, i, center, ol, ul, li, form, label, table, caption, tbody, tfoot, thead, tr, th, td, figure, figcaption, header, main, footer, menu, nav, input {
+    vertical-align: baseline;
+	margin: 0; padding: 0;
+	border: 0;
+}
+
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-color: transparent;
+}
+
+thead,
+tbody,
+tfoot {
+    vertical-align: middle;
+    border-color: transparent;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tbody {
+    display: table-row-group;
+}
+
+tfoot {
+    display: table-footer-group;
+}
+
+th {
+    font-weight: normal;
+    text-align: center;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: transparent;
+}
+
+th, td {
+    display: table-cell;
+    vertical-align: inherit;
+    border-color: transparent;
+}
+
+input,
+textarea {
+    font-family: inherit;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
+input[type="hidden"] {
+    display: none;
+}
+
+input[type="submit"] {
+    cursor: pointer;
+}
+
+article, aside, details, figcaption, figure, header, main, footer, hgroup, menu, nav, section {
+	display: block;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    width: auto; margin: 0; padding: 0;
+    background: transparent; border: none; overflow: visible; cursor: pointer;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    color: inherit; font: inherit; line-height: normal;
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+button,
+input[type="submit"] {
+    -o-transition: .3s, outline 0s;
+    -moz-transition: .3s, outline 0s;
+    -webkit-transition: .3s, outline 0s;
+    transition: .3s, outline 0s;
+}
+
+h1 {
+    position: relative;
+    font-size: 28px; color: #343434;
+}
+
+h2 {
+    margin: 45px 0 0 0;
+    font-size: 22px; color: #464646;
+}
+
+h3 {
+    margin: 40px 0 0 0;
+    font-size: 18px; color: #6d6d6d;
+}
+
+h1, h2, h3 {
+    position: relative;
+    line-height: 1.3em;
+}
+
+b {
+    font-weight: 700;
+}
+
+u {
+    text-decoration: underline;
+}
+
+i {
+    font-style: italic;
+}
+
+strike,
+del {
+    text-decoration: line-through;
+}
+
+p {
+    margin: 18px 0;
+    font-size: 14px; line-height: 20px; color: #3b3b3b;
+}
+
+ul {
+    list-style: inside;
+    margin: 24px 0; padding: 0 0 0 20px;
+    font-size: 14px; line-height: 20px;
+}
+
+small {
+    font-size: .7em; line-height: 1.1em;
+}
+
+
+
+
+
+
+/* ############### */
+/* ### General ### */
+/* ############### */
+
+html {
+    min-height: 100%;
+    -ms-text-size-adjust: none;
+    -webkit-text-size-adjust: none; /* prevent resizing text to fit */
+    -webkit-touch-callout: none; /* prevent callout to copy image,etc when tap hold */
+    -webkit-tap-highlight-color: transparent; /* prevent tap highlight color / shadow */
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -moz-osx-font-smoothing: auto; /* firefox font smoothing */ 
+    -webkit-font-smoothing: subpixel-antialiased; /* chrome, opera, safari, etc. */
+    scroll-behavior: smooth; /* prevent instant scroll, enable smooth movement */
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    position: relative;
+    min-height: 100%; margin: 0 auto;
+    overflow-x: hidden;
+    font-size: 0;
+}
+
+html *,
+html *:after,
+html *:before {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
