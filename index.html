@@ -23,11 +23,27 @@
 </head>
 <body>
     
-    <div id="chart-container">
+    <main>
+        
+        <nav>
+            
+            <!-- left side buttons --> 
+        
+            <button id="play-button" title="Play Animation"></button>
+            
+            <button id="pause-button" title="Pause Animation"></button>
+            
+            <button id="reset-button" title="Reset Animation"></button>
+            
+            <!-- right side buttons -->
+        
+            <button id="darkmode-toggle" title="Toggle Darkmode"></button>
+            
+        </nav>
     
         <div id="column-chart">
         
-            <button class="column-container">
+            <button class="column-container" title="Open statistic for column 1">
             
                 <div class="desc">
                     <div class="name">Column 1</div>
@@ -39,7 +55,7 @@
                 
             </button>
         
-            <button class="column-container">
+            <button class="column-container" title="Open statistic for column 2">
             
                 <div class="desc">
                     <div class="name">Column 2</div>
@@ -53,7 +69,9 @@
         
         </div>
     
-    </div>
+    </main>
+    
+    <script src="static/js/visualizer.js"></script>
     
 </body>
 </html>
