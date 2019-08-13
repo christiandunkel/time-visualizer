@@ -154,22 +154,15 @@ input[type="submit"] {
 }
 
 h1 {
-    position: relative;
-    font-size: 28px; color: #343434;
+    font-size: 28px;
 }
 
 h2 {
     margin: 45px 0 0 0;
-    font-size: 22px; color: #464646;
-}
-
-h3 {
-    margin: 40px 0 0 0;
-    font-size: 18px; color: #6d6d6d;
+    font-size: 22px;
 }
 
 h1, h2, h3 {
-    position: relative;
     line-height: 1.3em;
 }
 
@@ -225,7 +218,7 @@ html {
     -webkit-font-smoothing: subpixel-antialiased; /* chrome, opera, safari, etc. */
     scroll-behavior: smooth; /* prevent instant scroll, enable smooth movement */
     background: white;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Arial', sans-serif; color: #484848;
     -o-transition: .2s;
     -moz-transition: .2s;
     -webkit-transition: .2s;
@@ -233,6 +226,7 @@ html {
 }
 html.darkMode {
     background: #272727;
+    color: #b9b9b9;
 }
 
 html *,
@@ -251,7 +245,7 @@ body {
 }
 
 main {
-    max-width: 1200px; width: 100%; margin: 20px auto; padding: 20px;
+    max-width: 1200px; width: 100%; margin: 0 auto; padding: 20px;
 }
 
 
@@ -264,8 +258,8 @@ main {
 /* ############## */
 
 header {
-    max-width: 1200px; margin: 40px auto;
-    padding: 20px;
+    max-width: 1200px; margin: 50px auto 0 auto;
+    padding: 0 20px;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -274,7 +268,7 @@ header {
 
 header #logo {
     display: inline-block; float: left;
-    width: 80px; height: 80px;
+    width: 30px; height: 30px; margin: 0 10px 0 0;
     background: url('../img/favicon/favicon_512x512.png') no-repeat center left;
     -o-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
@@ -288,11 +282,6 @@ header #logo {
 
 header #title {
     display: inline-block;
-    margin: 0 0 0 10px;
-    -o-animation: fade-in-logo 2.2s;
-    -moz-animation: fade-in-logo 2.2s;
-    -webkit-animation: fade-in-logo 2.2s;
-    animation: fade-in-logo 2.2s;
 }
 
 header #title span {
@@ -301,12 +290,19 @@ header #title span {
 }
 
 header #title span:nth-child(1) {
-    margin: 10px 0 3px 0;
-    font-size: 25px; color: #008aef; 
+    font-size: 32px; color: #4196ff; 
+    -o-animation: fade-in-logo 2.2s;
+    -moz-animation: fade-in-logo 2.2s;
+    -webkit-animation: fade-in-logo 2.2s;
+    animation: fade-in-logo 2.2s;
 }
 
-header #title span:nth-child(3) {
-    font-size: 35px; color: #3ac1ff; 
+header #title span:nth-child(2) {
+    font-size: 27px; color: #4f9eff; 
+    -o-animation: fade-in-logo 2.4s;
+    -moz-animation: fade-in-logo 2.4s;
+    -webkit-animation: fade-in-logo 2.4s;
+    animation: fade-in-logo 2.4s;
 }
 
 @-o-keyframes fade-in-logo {
@@ -520,6 +516,46 @@ nav button.secondary.non-transparent,
 nav button.secondary.active,
 nav button.secondary:hover {
     opacity: 1;
+}
+
+
+
+
+
+/* ###################### */
+/* ### Chart Data Set ### */
+/* ###################### */
+
+#data-set-info {
+    margin: 20px auto 40px auto; padding: 0 0 10px 0;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    border: solid #e0e0e0; border-width: 0 0 1px 0;
+}
+.darkMode #data-set-info {
+    border-color: #4b4b4b;
+}
+
+#data-set-info .title {
+    margin: 0 10px 0 0;
+    font-size: 24px; font-weight: 100;
+}
+
+#data-set-info .version {
+    opacity: .7;
+    font-size: 15px;
+}
+
+#data-set-info .version:before {
+    content: 'v';
+}
+
+#data-set-info .date {
+    float: right;
+    opacity: .4;
+    font-size: 14px;
 }
 
 
