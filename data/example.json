@@ -4,8 +4,14 @@
     "version" : 1.0,
     "date": "2019-08-11",
     "keys": {
-        "company_1": "Bob's Burger",
-        "company_2": "Steve's Steaks"
+        "company_1": {
+            "name": "Bob's Burger",
+            "icon": "example_icon1.png"
+        },
+        "company_2": {
+            "name": "Steve's Steaks",
+            "icon": "example_icon2.png"
+        }
     },
     "range": {
         "from": 1990,
