@@ -346,6 +346,7 @@ nav #animation-controls .right-side {
     }
     
     nav #animation-controls {
+        margin-top: 20px; padding-top: 0;
         border-width: 0;
     }
     
@@ -529,10 +530,10 @@ nav button#toggle-darkmode:after {
 /* secondary buttons */
 
 nav button.secondary {
-    min-width: auto; min-height: 32px;
-    margin-top: 8px; padding: 8px 16px;
+    min-width: 32px; min-height: 32px;
+    margin-top: 8px; padding: 8px 8px;
     opacity: .6;
-    font-size: 14px; line-height: 16px; font-weight: 700; letter-spacing: .7px;
+    font-size: 14px; line-height: 16px; font-weight: 700; letter-spacing: .7px; text-align: center;
 }
 
 nav button.secondary.active {
@@ -566,13 +567,16 @@ nav button.secondary:hover {
 }
 
 #data-set-info .title {
-    margin: 0 10px 0 0;
-    font-size: 24px; font-weight: 100;
+    display: inline-block; float: left;
+    max-width: 350px; margin: 0 10px 0 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-size: 20px; font-weight: 100;
 }
 
 #data-set-info .version {
     opacity: .7;
     font-size: 15px;
+    line-height: 26px;
 }
 
 #data-set-info .version:before {
@@ -582,7 +586,20 @@ nav button.secondary:hover {
 #data-set-info .date {
     float: right;
     opacity: .4;
-    font-size: 14px; line-height: 45px;
+    font-size: 14px; line-height: 30px;
+}
+
+@media (max-width: 550px) {
+    
+    #data-set-info .title {
+        display: block; float: none;
+        width: 100%;
+    }
+    
+    #data-set-info .version {
+        line-height: 30px;
+    }
+    
 }
 
 
@@ -599,7 +616,7 @@ nav button.secondary:hover {
 
 .column-container {
     position: relative;
-    width: 100%; margin: 2px 0; padding: 6px 6px 6px 80px;
+    width: 100%; margin: 2px 0; padding: 2px 122px 2px 42px;
     text-align: left;
     -ms-user-select: none;
     -moz-user-select: none;
@@ -632,8 +649,8 @@ nav button.secondary:hover {
 }
 
 .column-container .icon {
-    position: absolute; top: 6px; left: 6px;
-    width: 70px; height: 50px;
+    position: absolute; top: 2px; left: 2px;
+    width: 36px; height: 36px;
     background: no-repeat contain;
     background-position: center right;
     background-color: #5e8bf2;
@@ -645,7 +662,7 @@ nav button.secondary:hover {
 
 .column-container .meter {
     position: relative;
-    width: 70%; height: 50px;
+    width: 100%; height: 36px;
     background: #67a2ff; border-radius: 5px;
     -o-transition: .8s;
     -moz-transition: .8s;
@@ -673,4 +690,38 @@ nav button.secondary:hover {
     left: 100%;
     padding: 0 0 0 8px;
     font-size: 14px; letter-spacing: -.1px; color: #919191;
+}
+
+@media (max-width: 550px) {
+
+    .column-container {
+        padding-right: 2px;
+    }
+
+    .column-container .icon,
+    .column-container .meter {
+        height: 40px;
+    }
+
+    .column-container .name,
+    .column-container .value {
+        -o-transform: none;
+        -ms-transform: none;
+        -moz-transform: none;
+        -webkit-transform: none;
+        transform: none;
+    }
+    
+    .column-container .name {
+        top: 4px;
+        font-size: 15px;
+    }
+
+    .column-container .value {
+        top: auto; bottom: 4px; left: 15px;
+        padding: 0;
+        color: white;
+        font-size: 12px;
+    }
+    
 }
