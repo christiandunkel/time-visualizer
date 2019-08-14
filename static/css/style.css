@@ -625,12 +625,13 @@ nav button.secondary:hover {
 /* ###################### */
 
 #data-set-info {
-    margin: 50px auto 14px auto; padding: 0 0 10px 0;
+    margin: 50px auto 14px auto; padding: 10px 16px;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-    border: solid #e0e0e0; border-width: 0 0 1px 0;
+    background: #555555; border-radius: 5px;
+    color: white;
 }
 .darkMode #data-set-info {
     border-color: #4b4b4b;
@@ -640,13 +641,13 @@ nav button.secondary:hover {
     display: inline-block; float: left;
     max-width: 350px; margin: 0 10px 0 0;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    font-size: 20px; font-weight: 100;
+    font-size: 17px; font-weight: 100;
 }
 
 #data-set-info .version {
-    opacity: .7;
+    opacity: .8;
     font-size: 15px;
-    line-height: 26px;
+    line-height: 20px;
 }
 
 #data-set-info .version:before {
@@ -655,8 +656,8 @@ nav button.secondary:hover {
 
 #data-set-info .date {
     float: right;
-    opacity: .4;
-    font-size: 14px; line-height: 30px;
+    opacity: .6;
+    font-size: 14px; line-height: 20px;
 }
 
 @media (max-width: 550px) {
@@ -666,7 +667,8 @@ nav button.secondary:hover {
         width: 100%;
     }
     
-    #data-set-info .version {
+    #data-set-info .version,
+    #data-set-info .date {
         line-height: 30px;
     }
     
