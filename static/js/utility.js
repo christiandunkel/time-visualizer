@@ -65,11 +65,11 @@ var _ = {
             lookInDOM = false;
         }
         
-        if (_.isUndefined(elem) || n === null) {
+        if (_.isUndefined(elem) || elem === null) {
             return false;
         }
         
-        return lookInDOM ? document.body.contains(n) : true;
+        return lookInDOM ? document.body.contains(elem) : true;
         
     },
     

@@ -228,7 +228,7 @@ header {
 
 header #logo {
     display: inline-block; float: left;
-    width: 30px; height: 30px; margin: 0 10px 0 0;
+    width: 40px; height: 40px; margin: 0 10px 0 0;
     background: url('../img/favicon/favicon_512x512.png') no-repeat center left;
     -o-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
@@ -245,12 +245,12 @@ header #title {
 }
 
 header #title span {
-    display: inline-block;
+    display: block;
     line-height: 1em; font-weight: 700;
 }
 
 header #title span:nth-child(1) {
-    font-size: 32px; color: #4196ff; 
+    font-size: 30px; color: #4196ff; 
     -o-animation: fade-in-logo 2.2s;
     -moz-animation: fade-in-logo 2.2s;
     -webkit-animation: fade-in-logo 2.2s;
@@ -258,7 +258,8 @@ header #title span:nth-child(1) {
 }
 
 header #title span:nth-child(2) {
-    font-size: 27px; color: #4f9eff; 
+    padding: 0 0 0 8px;
+    font-size: 18px; color: #4f9eff; 
     -o-animation: fade-in-logo 2.4s;
     -moz-animation: fade-in-logo 2.4s;
     -webkit-animation: fade-in-logo 2.4s;
@@ -303,16 +304,59 @@ nav {
     background: #1d1d1d;
 }
 
-nav .animation-controls {
+nav .descriptor {
+    display: inline-block;
+    margin: 0 8px 0 0;
+    font-size: 13px; line-height: 1.2em; color: #b2b2b2; font-weight: 700;
+}
+
+nav .descriptor.hidden {
+    display: none;
+}
+
+nav #animation-controls {
     margin: 15px 0 0 0; padding: 12px 0;
     border: solid #eaeaea; border-width: 2px 0 0;
 }
-.darkMode nav .animation-controls {
+.darkMode nav #animation-controls {
     border-color: #464646;
 }
 
-nav .animation-controls .right-side {
+nav #animation-controls > * {
+    display: inline-block;
+}
+
+nav #animation-controls .right-side {
     float: right;
+}
+
+@media (max-width: 550px) {
+    
+    nav .descriptor {
+        display: block;
+    }
+    
+    nav .descriptor.hidden {
+        display: block;
+        margin: 20px 0 0 0;
+    }
+    
+    nav .descriptor.hidden.top {
+        margin: 10px 0 6px 0;
+    }
+    
+    nav #animation-controls {
+        border-width: 0;
+    }
+    
+    nav #animation-controls > * {
+        display: block;
+    }
+    
+    nav #animation-controls .right-side {
+        float: none;
+    }
+    
 }
 
 /* primary buttons */
@@ -396,6 +440,32 @@ nav button.right {
     float: right;
     margin: 0 0 0 8px;
 }
+    
+nav #top-menu br {
+    display: none;
+}
+
+@media (max-width: 550px) {
+    
+    nav #loaded-file-name {
+        display: block;
+        padding: 5px 0 20px 8px;
+    }
+    
+    nav #top-menu br {
+        display: block;
+    }
+    
+    nav button.right {
+        float: none;
+        margin: 0 8px 0 0;
+    }
+    
+    nav button#toggle-chart {
+        float: left;
+    }
+    
+}
 
 /* button icons */
 
@@ -457,12 +527,6 @@ nav button#toggle-darkmode:after {
 }
 
 /* secondary buttons */
-
-nav .descriptor {
-    display: inline-block;
-    margin: 0 8px 0 0;
-    font-size: 13px; line-height: 1.2em; color: #b2b2b2; font-weight: 700;
-}
 
 nav button.secondary {
     min-width: auto; min-height: 32px;
