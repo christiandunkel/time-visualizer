@@ -329,7 +329,7 @@ header #github-link:hover {
 
 header #github-link:active,
 header #github-link:focus {
-    width: 400px; height: 400px;
+    width: 220px; height: 220px;
     -o-transition: 1s;
     -moz-transition: 1s;
     -webkit-transition: 1s;
@@ -406,10 +406,10 @@ nav {
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-    -o-animation: hidden-elem 1.5s, fade-in 1.5s 1.5s;
-    -moz-animation: hidden-elem 1.5s, fade-in 1.5s 1.5s;
-    -webkit-animation: hidden-elem 1.5s, fade-in 1.5s 1.5s;
-    animation: hidden-elem 1.5s, fade-in 1.5s 1.5s;
+    -o-animation: hidden-elem 1s, fade-in 1s 1s;
+    -moz-animation: hidden-elem 1s, fade-in 1s 1s;
+    -webkit-animation: hidden-elem 1s, fade-in 1s 1s;
+    animation: hidden-elem 1s, fade-in 1s 1s;
 }
 .darkMode nav {
     background: #1d1d1d;
@@ -673,10 +673,10 @@ nav button.secondary:hover {
     user-select: none;
     background: #555555; border-radius: 5px;
     color: white;
-    -o-animation: hidden-elem 2s, fade-in 1.5s 2s;
-    -moz-animation: hidden-elem 2s, fade-in 1.5s 2s;
-    -webkit-animation: hidden-elem 2s, fade-in 1.5s 2s;
-    animation: hidden-elem 2s, fade-in 1.5s 2s;
+    -o-animation: hidden-elem 1.5s, fade-in 1s 1.5s;
+    -moz-animation: hidden-elem 1.5s, fade-in 1s 1.5s;
+    -webkit-animation: hidden-elem 1.5s, fade-in 1s 1.5s;
+    animation: hidden-elem 1.5s, fade-in 1s 1.5s;
 }
 .darkMode #data-set-info {
     border-color: #4b4b4b;
@@ -707,6 +707,10 @@ nav button.secondary:hover {
 
 @media (max-width: 550px) {
     
+    #data-set-info {
+        padding-top: 17px;
+    }
+    
     #data-set-info .title {
         display: block; float: none;
         width: 100%;
@@ -731,10 +735,10 @@ nav button.secondary:hover {
 
 #column-chart {
     width: 100%;
-    -o-animation: hidden-elem 2.5s, fade-in 1.5s 2.5s;
-    -moz-animation: hidden-elem 2.5s, fade-in 1.5s 2.5s;
-    -webkit-animation: hidden-elem 2.5s, fade-in 1.5s 2.5s;
-    animation: hidden-elem 2.5s, fade-in 1.5s 2.5s;
+    -o-animation: hidden-elem 2s, fade-in 1s 2s;
+    -moz-animation: hidden-elem 2s, fade-in 1s 2s;
+    -webkit-animation: hidden-elem 2s, fade-in 1s 2s;
+    animation: hidden-elem 2s, fade-in 1s 2s;
 }
 
 .column-container {
@@ -822,12 +826,15 @@ nav button.secondary:hover {
 @media (max-width: 550px) {
 
     .column-container {
-        padding-right: 2px;
+        padding-right: 2px; padding-left: 50px;
     }
 
-    .column-container .icon,
+    .column-container .icon {
+        width: 44px; height: 44px;
+    }
+
     .column-container .meter {
-        height: 40px;
+        height: 44px;
     }
 
     .column-container .name,
@@ -840,12 +847,12 @@ nav button.secondary:hover {
     }
     
     .column-container .name {
-        top: 4px;
+        top: 6px;
         font-size: 15px;
     }
 
     .column-container .value {
-        top: auto; bottom: 4px; left: 15px;
+        top: auto; bottom: 6px; left: 15px;
         padding: 0;
         color: white;
         font-size: 12px;
@@ -912,10 +919,10 @@ nav button.secondary:hover {
 }
 
 .notice.javascript {
-    -o-animation: hidden-elem 1s, fade-in 1.5s 1s;
-    -moz-animation: hidden-elem 1s, fade-in 1.5s 1s;
-    -webkit-animation: hidden-elem 1s, fade-in 1.5s 1s;
-    animation: hidden-elem 1s, fade-in 1.5s 1s;
+    -o-animation: hidden-elem .5s, fade-in 1s .5s;
+    -moz-animation: hidden-elem .5s, fade-in 1s .5s;
+    -webkit-animation: hidden-elem .5s, fade-in 1s .5s;
+    animation: hidden-elem .5s, fade-in 1s .5s;
 }
 
 .javascriptOn .notice.javascript {
