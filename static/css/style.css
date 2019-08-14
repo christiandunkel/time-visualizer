@@ -310,6 +310,15 @@ header #github-link:focus {
     transition: 1s;
 }
 
+header #github-link:active .curl,
+header #github-link:focus .curl {
+	box-shadow : 0 0 20px rgba(0, 0, 0, .5);
+    -o-transition: 1s;
+    -moz-transition: 1s;
+    -webkit-transition: 1s;
+    transition: 1s;
+}
+
 header #github-link * {
     display: block; position: absolute; top: 0; right: 0;
     width: 100%; height: 100%;
@@ -322,6 +331,10 @@ header #github-link .curl {
     background: linear-gradient(45deg, rgba(157,157,157,1) 0%,rgba(193,193,193,1) 14%,rgba(255,255,255,1) 35%,rgba(203,203,203,1) 49%,rgba(141,141,141,1) 51%,rgba(0,0,0,0) 52%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9d9d9d', endColorstr='#00000000',GradientType=1 );
 	box-shadow : 0 0 6px rgba(0, 0, 0, .5);
+    -o-transition: .9s;
+    -moz-transition: .9s;
+    -webkit-transition: .9s;
+    transition: .9s;
 }
 
 header #github-link .icon {
