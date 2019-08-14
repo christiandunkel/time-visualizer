@@ -32,38 +32,38 @@
     
 <body>
         
-    <header>
-
-        <div id="logo"></div>
-
-        <h1 id="title">
-            <span>Time</span>
-            <span>Visualizer</span>
-        </h1>
-        
-        <a id="github-link" href="https://github.com/christiandunkel/time-visualizer" title="Look at the code on Github">
-            <div class="curl"></div>
-            <div class="icon"></div>
-            <div class="background"></div>
-        </a>
-
-    </header>
+    <a id="github-link" href="https://github.com/christiandunkel/time-visualizer" title="Look at the code on Github">
+        <div class="curl"></div>
+        <div class="icon"></div>
+        <div class="background"></div>
+    </a>
     
-    <main>
+    <div id="top-area">
         
-        <div class="notice red javascript">Javascript needs to be enabled for this tool to work.</div>
-        
+        <header>
+
+            <div id="logo"></div>
+
+            <h1 id="title">
+                <span>Time</span>
+                <span>Visualizer</span>
+            </h1>
+
+            <div class="notice red javascript">Javascript needs to be enabled for this tool to work.</div>
+
+        </header>
+
         <nav>
-            
+
             <div id="top-menu">
 
                 <button id="load-data">Load data</button>
-                
+
                 <div id="loaded-file-name">
                     <span class="name">example</span>
                     <span class="ending">.json</span>
                 </div>
-                
+
                 <br />
 
                 <div class="descriptor hidden top">General Options</div>
@@ -71,9 +71,9 @@
                 <button id="toggle-darkmode" class="right" title="Toggle dark mode"></button>
 
                 <button id="toggle-chart" class="right" title="Toggle chart type">Type 1</button>
-                
+
             </div>
-            
+
             <div id="animation-controls">
 
                 <div class="right-side">
@@ -87,9 +87,9 @@
                     <button id="animation-speed-1-0" class="secondary active" title="Set animation speed to 1 (default)">1</button>
 
                     <button id="animation-speed-2-0" class="secondary" title="Set animation speed to 2">2</button>
-                    
+
                 </div>
-                
+
                 <div class="left-side">
 
                     <div class="descriptor hidden">Animation Controls</div>
@@ -101,10 +101,14 @@
                     <button id="stop-button" class="secondary non-transparent" title="Stop animation"></button>
 
                 </div>
-            
+
             </div>
-            
+
         </nav>
+    
+    </div>
+    
+    <main>
         
         <div id="data-set-info">
         
