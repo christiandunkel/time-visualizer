@@ -218,8 +218,9 @@ main {
 /* ############## */
 
 header {
-    max-width: 1200px; margin: 50px auto 0 auto;
-    padding: 0 20px;
+    position: relative;
+    max-width: 1200px; margin: 0 auto;
+    padding: 20px 20px 0 20px;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -281,6 +282,51 @@ header #title span:nth-child(2) {
 @keyframes fade-in-logo {
     0%, 20% {transform: translate(50px, 0); opacity: 0;}
     21% {transform: translate(50px, 0); opacity: .3;}
+}
+
+header #github-link {
+    display: block; position: absolute; top: 0; right: 0;
+    width: 70px; height: 70px;
+    transition: .9s;
+}
+
+header #github-link:hover {
+    width: 100px; height: 100px;
+    transition: .3s;
+}
+
+header #github-link * {
+    display: block; position: absolute; top: 0; right: 0;
+    width: 100%; height: 100%;
+}
+
+header #github-link:active .curl,
+header #github-link:active .background,
+header #github-link:focus .curl,
+header #github-link:focus .background {
+    width: 400px; height: 400px;
+    transition: 1s;
+}
+
+header #github-link .curl {
+    z-index: 3;
+    background: linear-gradient(45deg, #9d9d9d 0%, #c1c1c1 14%, white 35%, #cbcbcb 49%, #8d8d8d 50%, transparent 51%, transparent 100%);
+	box-shadow : 0 0 6px rgba(0, 0, 0, .5);
+}
+
+header #github-link .icon {
+    top: 8px; right: 8px; z-index: 2;
+    width: 48px; height: 48px;
+    background: url('../img/github_symbol_120x120.png') no-repeat center;
+    -o-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+
+header #github-link .background {
+    z-index: 1;
+    background: linear-gradient(45deg, transparent 0%, transparent 50%, #363636 51%, #7c7c7c 100%);
 }
 
 
@@ -646,6 +692,10 @@ nav button.secondary:hover {
 .column-container:hover .icon,
 .column-container:active .icon {
     opacity: .5;
+    -o-transition: .3s;
+    -moz-transition: .3s;
+    -webkit-transition: .3s;
+    transition: .3s;
 }
 
 .column-container .icon {
