@@ -365,20 +365,23 @@ nav button:not(.active):active {
 #loaded-file-name {
     display: inline-block;
     padding: 0 0 0 10px;
+}
+
+#loaded-file-name .name {
+    display: inline-block;
+    max-width: 170px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     font-size: 13px; line-height: 1.2em; color: #7c7c7c;
 }
-.darkMode #loaded-file-name {
+.darkMode #loaded-file-name .name {
     color: #a8a8a8;
 }
 
-#loaded-file-name:before {
-    content: 'loaded: ';
-    font-weight: 700;
-}
-
-#loaded-file-name:after {
-    content: '.json';
-    font-size: 10px;
+#loaded-file-name .ending {
+    display: inline-block;
+    padding: 0 0 0 2px;
+    overflow: hidden;
+    font-size: 10px; line-height: 1.2em;
 }
 
 html.animation-playing nav button#play-button {
@@ -544,15 +547,24 @@ nav button.secondary:hover {
     transition: 1s;
 }
 
-.column-container:hover {
+.column-container:hover,
+.column-container:active {
     background: #f8f7f7; border-radius: 10px;
     -o-transition: .3s;
     -moz-transition: .3s;
     -webkit-transition: .3s;
     transition: .3s;
 }
-.darkMode .column-container:hover {
+.darkMode .column-container:hover,
+.darkMode column-container:active {
     background: #1a1a1a;
+}
+
+.column-container:hover .meter,
+.column-container:active .meter,
+.column-container:hover .icon,
+.column-container:active .icon {
+    opacity: .5;
 }
 
 .column-container .icon {
@@ -561,6 +573,10 @@ nav button.secondary:hover {
     background: no-repeat contain;
     background-position: center right;
     background-color: #5e8bf2;
+    -o-transition: .8s;
+    -moz-transition: .8s;
+    -webkit-transition: .8s;
+    transition: .8s;
 }
 
 .column-container .meter {
@@ -571,15 +587,6 @@ nav button.secondary:hover {
     -moz-transition: .8s;
     -webkit-transition: .8s;
     transition: .8s;
-    -o-animation: animate-meter 2.7s linear infinite;
-    -moz-animation: animate-meter 2.7s linear infinite;
-    -webkit-animation: animate-meter 2.7s linear infinite;
-    animation: animate-meter 2.7s linear infinite;
-}
-
-.column-container:hover .meter,
-.column-container:active .meter {
-    background: #b5b5b5;
 }
 
 .column-container .name,
@@ -602,17 +609,4 @@ nav button.secondary:hover {
     left: 100%;
     padding: 0 0 0 8px;
     font-size: 14px; letter-spacing: -.1px; color: #919191;
-}
-
-@-o-keyframes animate-meter {
-    50% {opacity: .81;}
-}
-@-moz-keyframes animate-meter {
-    50% {opacity: .81;}
-}
-@-webkit-keyframes animate-meter {
-    50% {opacity: .81;}
-}
-@keyframes animate-meter {
-    50% {opacity: .81;}
 }
