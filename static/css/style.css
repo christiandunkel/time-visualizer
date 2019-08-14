@@ -208,6 +208,32 @@ main {
     max-width: 1200px; width: 100%; margin: 0 auto; padding: 20px;
 }
 
+@-o-keyframes hidden-elem {
+    0%, 100% {opacity: 0; pointer-events: none;}
+}
+@-moz-keyframes hidden-elem {
+    0%, 100% {opacity: 0; pointer-events: none;}
+}
+@-webkit-keyframes hidden-elem {
+    0%, 100% {opacity: 0; pointer-events: none;}
+}
+@keyframes hidden-elem {
+    0%, 100% {opacity: 0; pointer-events: none;}
+}
+
+@-o-keyframes fade-in {
+    0% {opacity: 0; pointer-events: none;}
+}
+@-moz-keyframes fade-in {
+    0% {opacity: 0; pointer-events: none;}
+}
+@-webkit-keyframes fade-in {
+    0% {opacity: 0; pointer-events: none;}
+}
+@keyframes fade-in {
+    0% {opacity: 0; pointer-events: none;}
+}
+
 
 
 
@@ -260,7 +286,7 @@ header #title span:nth-child(1) {
 
 header #title span:nth-child(2) {
     padding: 0 0 0 8px;
-    font-size: 18px; color: #4f9eff; 
+    font-size: 18px; color: #4f9eff;
     -o-animation: fade-in-logo 2.4s;
     -moz-animation: fade-in-logo 2.4s;
     -webkit-animation: fade-in-logo 2.4s;
@@ -380,6 +406,10 @@ nav {
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    -o-animation: hidden-elem 1.5s, fade-in 1.5s 1.5s;
+    -moz-animation: hidden-elem 1.5s, fade-in 1.5s 1.5s;
+    -webkit-animation: hidden-elem 1.5s, fade-in 1.5s 1.5s;
+    animation: hidden-elem 1.5s, fade-in 1.5s 1.5s;
 }
 .darkMode nav {
     background: #1d1d1d;
@@ -507,7 +537,7 @@ nav button:not(.active):active {
     display: inline-block;
     padding: 0 0 0 2px;
     overflow: hidden;
-    font-size: 10px; line-height: 1.2em;
+    font-size: 10px; line-height: 17px;
 }
 
 html.animation-playing nav button#play-button {
@@ -632,7 +662,7 @@ nav button.secondary:hover {
 
 
 /* ###################### */
-/* ### Chart Data Set ### */
+/* ### CHART DATA SET ### */
 /* ###################### */
 
 #data-set-info {
@@ -643,6 +673,10 @@ nav button.secondary:hover {
     user-select: none;
     background: #555555; border-radius: 5px;
     color: white;
+    -o-animation: hidden-elem 2s, fade-in 1.5s 2s;
+    -moz-animation: hidden-elem 2s, fade-in 1.5s 2s;
+    -webkit-animation: hidden-elem 2s, fade-in 1.5s 2s;
+    animation: hidden-elem 2s, fade-in 1.5s 2s;
 }
 .darkMode #data-set-info {
     border-color: #4b4b4b;
@@ -689,12 +723,18 @@ nav button.secondary:hover {
 
 
 
-/* ############## */
-/* ### Charts ### */
-/* ############## */
+/*
+ * ##############
+ * ### CHARTS ###
+ * ##############
+ */
 
 #column-chart {
     width: 100%;
+    -o-animation: hidden-elem 2.5s, fade-in 1.5s 2.5s;
+    -moz-animation: hidden-elem 2.5s, fade-in 1.5s 2.5s;
+    -webkit-animation: hidden-elem 2.5s, fade-in 1.5s 2.5s;
+    animation: hidden-elem 2.5s, fade-in 1.5s 2.5s;
 }
 
 .column-container {
@@ -811,4 +851,73 @@ nav button.secondary:hover {
         font-size: 12px;
     }
     
+}
+
+
+
+
+
+/*
+ * ##############
+ * ### NOTICE ###
+ * ##############
+ */
+
+.notice {
+    width: 100%; margin: 30px auto; padding: 20px 40px;
+    border-style: solid; border-width: 1px; border-radius: 2px;
+    font-size: 16px; line-height: 1.4em;
+}
+
+.notice.blue,
+.notice.info {
+    background: #e9f2ff; border-color: #bfc7ff;
+    color: #485dff;
+}
+.darkMode .notice.blue,
+.darkMode .notice.info {
+    background: #4f4f9c; border-color: #6b76c5;
+    color: #dde1fb;
+}
+
+.notice.red,
+.notice.javascript {
+    background: #ffd4d4; border-color: #ffb0b0;
+    color: #a91111;
+}
+.darkMode .notice.red,
+.darkMode .notice.javascript {
+    background: #710909; border-color: #a53737;
+    color: #ffd1d1;
+}
+
+.notice.green {
+    background: #e6ffe9; border-color: #d0ffd0;
+    color: #00520d;
+}
+.darkMode .notice.green {
+    background: #112913; border-color: #264e26;
+    color: #b3ffbf;
+}
+
+.notice.yellow,
+.notice.warning {
+    background: #fdffbc; border-color: #e5cc52;
+    color: #a06707;
+}
+.darkMode .notice.yellow,
+.darkMode .notice.warning {
+    background: #5f6143; border-color: #d4e400;
+    color: #fffc70;
+}
+
+.notice.javascript {
+    -o-animation: hidden-elem 1s, fade-in 1.5s 1s;
+    -moz-animation: hidden-elem 1s, fade-in 1.5s 1s;
+    -webkit-animation: hidden-elem 1s, fade-in 1.5s 1s;
+    animation: hidden-elem 1s, fade-in 1.5s 1s;
+}
+
+.javascriptOn .notice.javascript {
+    display: none;
 }

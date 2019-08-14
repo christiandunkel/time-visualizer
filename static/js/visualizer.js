@@ -4,7 +4,6 @@
  * ===============
  */
 
-let html = _.tag('html')[0];
 let head = _.tag('head')[0];
 let body = _.tag('body')[0];
 

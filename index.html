@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="animation-paused">
+<html class="javascriptOff animation-paused">
 
 <head>
     
@@ -16,6 +16,14 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    
+    <script type="text/javascript">
+    
+        let html = document.getElementsByTagName('html')[0];
+        
+        html.className = html.className.replace(/javascriptOff/, 'javascriptOn');
+    
+    </script>
     
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
     <link rel="shortcut icon" href="static/img/favicon/favicon.ico" type="image/x-icon" />
@@ -43,6 +51,8 @@
     
     <main>
         
+        <div class="notice red javascript">Javascript needs to be enabled for this tool to work.</div>
+        
         <nav>
             
             <div id="top-menu">
@@ -60,7 +70,7 @@
 
                 <button id="toggle-darkmode" class="right" title="Toggle dark mode"></button>
 
-                <button id="toggle-chart" class="right" title="Toggle chart type">Chart 1</button>
+                <button id="toggle-chart" class="right" title="Toggle chart type">Type 1</button>
                 
             </div>
             
