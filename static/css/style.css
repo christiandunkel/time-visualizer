@@ -287,11 +287,17 @@ header #title span:nth-child(2) {
 header #github-link {
     display: block; position: absolute; top: 0; right: 0;
     width: 70px; height: 70px;
+    -o-transition: .9s;
+    -moz-transition: .9s;
+    -webkit-transition: .9s;
     transition: .9s;
 }
 
 header #github-link:hover {
     width: 100px; height: 100px;
+    -o-transition: .3s;
+    -moz-transition: .3s;
+    -webkit-transition: .3s;
     transition: .3s;
 }
 
@@ -305,28 +311,46 @@ header #github-link:active .background,
 header #github-link:focus .curl,
 header #github-link:focus .background {
     width: 400px; height: 400px;
+    -o-transition: 1s;
+    -moz-transition: 1s;
+    -webkit-transition: 1s;
     transition: 1s;
 }
 
 header #github-link .curl {
     z-index: 3;
-    background: linear-gradient(45deg, #9d9d9d 0%, #c1c1c1 14%, white 35%, #cbcbcb 49%, #8d8d8d 50%, transparent 51%, transparent 100%);
+    background: -moz-linear-gradient(45deg, rgba(157,157,157,1) 0%, rgba(193,193,193,1) 14%, rgba(255,255,255,1) 35%, rgba(203,203,203,1) 49%, rgba(141,141,141,1) 50%, rgba(0,0,0,0) 51%);
+    background: -webkit-linear-gradient(45deg, rgba(157,157,157,1) 0%,rgba(193,193,193,1) 14%,rgba(255,255,255,1) 35%,rgba(203,203,203,1) 49%,rgba(141,141,141,1) 50%,rgba(0,0,0,0) 51%);
+    background: linear-gradient(45deg, rgba(157,157,157,1) 0%,rgba(193,193,193,1) 14%,rgba(255,255,255,1) 35%,rgba(203,203,203,1) 49%,rgba(141,141,141,1) 50%,rgba(0,0,0,0) 51%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9d9d9d', endColorstr='#00000000',GradientType=1 );
 	box-shadow : 0 0 6px rgba(0, 0, 0, .5);
 }
 
 header #github-link .icon {
     top: 8px; right: 8px; z-index: 2;
     width: 48px; height: 48px;
-    background: url('../img/github_symbol_120x120.png') no-repeat center;
+    background: url('../img/github_icon_white.png') no-repeat center;
     -o-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -webkit-background-size: 100% 100%;
     background-size: 100% 100%;
 }
+.darkMode header #github-link .icon {
+    background-image: url('../img/github_icon.png');
+}
 
 header #github-link .background {
     z-index: 1;
-    background: linear-gradient(45deg, transparent 0%, transparent 50%, #363636 51%, #7c7c7c 100%);
+    background: -moz-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(54,54,54,1) 51%, rgba(124,124,124,1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(54,54,54,1) 51%,rgba(124,124,124,1) 100%);
+    background: linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(54,54,54,1) 51%,rgba(124,124,124,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#7c7c7c',GradientType=1 );
+}
+.darkMode header #github-link .background {
+    background: -moz-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(165,165,165,1) 51%, rgba(212,212,212,1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
+    background: linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#d4d4d4',GradientType=1 );
 }
 
 
