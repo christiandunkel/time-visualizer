@@ -116,9 +116,24 @@
             <button class="close">
                 <div class="cross"></div>
             </button>
-                
-            <input type='file' />
-            
+
+            <div class="heading">Select a data set...</div>
+
+            <button class="data-set-btn" onclick="load_data_set('country-imports.json')">Country Imports</button>
+
+            <button class="data-set-btn" onclick="load_data_set('country-exports.json')">Country Exports</button>
+
+            <div class="or">or</div>
+
+            <div id="drop-area">
+
+                <div class="text">Drop a file here.</div>
+
+                <input type="file" id="dropped-file" accept=".json, .txt" onchange="load_data_set(this.files)" title="Select a file." />
+                <label for="dropped-file">Select a file</label>
+
+            </div>
+
         </div>
     
     </div>
