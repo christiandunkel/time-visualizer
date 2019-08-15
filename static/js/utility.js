@@ -333,6 +333,11 @@ var _ = {
         
     },
     
+    preventDefault : function (elem) {
+        elem.preventDefault();
+        elem.stopPropagation();
+    },
+    
     
     
     

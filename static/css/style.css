@@ -888,10 +888,10 @@ nav button.secondary:hover {
     color: #767676;
 }
 
-#drop-area:hover {
+#drop-area.dragged-over {
     color: #d8d8d8;
 }
-.darkMode #drop-area:hover {
+.darkMode #drop-area.dragged-over {
     color: #666;
 }
 
