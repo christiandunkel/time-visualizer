@@ -1,131 +1,166 @@
-/*
- * ===============
- * === GENERAL ===
- * ===============
- */
-
-let head = _.tag('head')[0];
-let body = _.tag('body')[0];
-
-
-
-
-
-/*
- * ==========
- * === UI ===
- * ==========
- */
-
-// load data button
-let data_load_btn = _.id('load-data');
-let data_load_window = _.id('data-load-window');
-_.addClick(data_load_btn, function () {
-    _.addClass(data_load_window, 'visible');
-});
-
-// dark mode button
-let darkmode = false;
-let darkmode_toggle = _.id('toggle-darkmode');
-_.addClick(darkmode_toggle, function () {
+var NAV = {
     
-    // toggle darkmode value
-    darkmode = !darkmode;
+    data_load_btn : null,
+    data_load_window : null,
     
-    // toggle darkmode class according to value
-    html.classList[darkmode ? 'add' : 'remove']('darkMode');
+    darkmode : false,
+    darkmode_btn : null,
     
-});
-
-
-
-
-
-/*
- * ========================
- * === DATA LOAD WINDOW ===
- * ========================
- */
-
-// close 'data load window' button
-let data_load_window_close_btn = _.class('close', data_load_window)[0];
-_.addClick(data_load_window_close_btn, function () {
-    _.removeClass(data_load_window, 'visible');
-});
-
-// close 'data load window' on click on 'blured' background
-let data_load_window_blur = _.class('blur', data_load_window)[0];
-_.addClick(data_load_window_blur, function () {
-    _.removeClass(data_load_window, 'visible');
-});
-
-/* drag and drop effect in 'data load window' */
-
-let drop_area = _.id('drop-area');
-_.addEvent(drop_area, 'dragenter', _.preventDefault);
-_.addEvent(drop_area, 'dragover', _.preventDefault);
-_.addEvent(drop_area, 'dragleave', _.preventDefault);
-_.addEvent(drop_area, 'drop', _.preventDefault);
-
-function draggedOverHighlight() {
-    _.addClass(drop_area, 'dragged-over');
-}
-_.addEvent(drop_area, 'dragenter', draggedOverHighlight);
-_.addEvent(drop_area, 'dragover', draggedOverHighlight);
-
-function draggedOverUnhighlight() {
-    _.removeClass(drop_area, 'dragged-over');
-}
-_.addEvent(drop_area, 'dragleave', draggedOverUnhighlight);
-_.addEvent(drop_area, 'drop', draggedOverUnhighlight);
-
-function handleDroppedFile(e) {
-    
-    _.preventDefault(e);
-    
-    let file = null;
-    
-    if (e.dataTransfer.items) {
+    // add events to navigation buttons
+    load : function () {
         
-        let items = e.dataTransfer.items;
-    
-        if (items.length > 1) {
-            alert('Dropping multiple files is forbidden.');
-            return;
-        }
+        // get 'load data' button and window
+        this.data_load_btn = _.id('load-data');
         
-        if (items[0].kind === 'file') {
-            file = items[0].getAsFile();
-        }
+        // add event for opening the 'data load' window
+        _.addClick(this.data_load_btn, DATA_LOAD_WINDOW.open);
+        
+        // get 'dark mode' button
+        this.darkmode_btn = _.id('toggle-darkmode');
+        
+        // add event for toggling the 'dark mode'
+        _.addClick(this.darkmode_btn, this.toggle_dark_mode);
+        
+    },
+    
+    toggle_dark_mode : function () {
+
+        // toggle darkmode value
+        this.darkmode = !this.darkmode;
+
+        // toggle darkmode class according to value
+        html.classList[this.darkmode ? 'add' : 'remove']('darkMode');
         
     }
-    else {
-        
-        let items = e.dataTransfer.files;
-    
-        if (items.length > 1) {
-            alert('Dropping multiple files is forbidden.');
-            return;
-        }
-        
-        let file = items[0];
-        
-    }
-        
-    if (file.size > 10000) {
-        if (!confirm('This data set is large (' + (file.size/1000) + 'KB) and may freeze your tab momentarily. Do you want to continue?')) {
-            return;
-        }
-    }
-    
-    load_data_set(file);
     
 }
 
-_.addEvent(drop_area, 'drop', handleDroppedFile);
+var DATA_LOAD_WINDOW = {
+    
+    window : null,
+    close_btn : null,
+    blur : null,
+    
+    initialize : function () {
+        
+        // get window element
+        this.window = _.id('data-load-window');
+        
+        // get closing cross button inside window
+        this.close_btn = _.class('close', this.window)[0];
+        
+        // get darkened, transparent background area
+        this.blur = _.class('blur', this.window)[0];
+        
+        // add 'close window' events
+        _.addClick(this.blur, this.close);
+        _.addClick(this.close_btn, this.close);
+        
+        // initialize the drag'n'drop area for files in the window
+        this.initializeDropArea();
+        
+    },
+    
+    open : function () {
+        _.addClass(DATA_LOAD_WINDOW.window, 'visible');
+    },
+        
+    close : function () {
+        _.removeClass(DATA_LOAD_WINDOW.window, 'visible');
+    },
+    
+    drop_area : null,
+    
+    initializeDropArea : function () {
+        
+        // get area on which user can drop a file
+        this.drop_area = _.id('drop-area');
+        
+        // prevent default browser actions on drag'n'drop
+        _.addEvent(this.drop_area, 'dragenter', _.preventDefault);
+        _.addEvent(this.drop_area, 'dragover', _.preventDefault);
+        _.addEvent(this.drop_area, 'dragleave', _.preventDefault);
+        _.addEvent(this.drop_area, 'drop', _.preventDefault);
 
-/* load data set into memory */
+        // add highlight events, if user dragged file on top of area
+        _.addEvent(this.drop_area, 'dragenter', this.highlightDropArea);
+        _.addEvent(this.drop_area, 'dragover', this.highlightDropArea);
 
-function load_data_set(file) {
+        // unhighlight area if user's cursor with file left or dropped
+        _.addEvent(this.drop_area, 'dragleave', this.unhighlightDropArea);
+        _.addEvent(this.drop_area, 'drop', this.unhighlightDropArea);
+
+        // add event to handle files dropped on drop area
+        _.addEvent(this.drop_area, 'drop', this.handleDroppedFile);
+        
+    },
+    
+    highlightDropArea : function () {
+        _.addClass(DATA_LOAD_WINDOW.drop_area, 'dragged-over');
+    },
+    
+    unhighlightDropArea : function () {
+        _.removeClass(DATA_LOAD_WINDOW.drop_area, 'dragged-over');
+    },
+    
+    handleDroppedFile : function (e) {
+        
+        _.preventDefault(e);
+
+        let file = null;
+
+        if (e.dataTransfer.items) {
+
+            let items = e.dataTransfer.items;
+
+            if (items.length > 1) {
+                alert('Dropping multiple files is forbidden.');
+                return;
+            }
+
+            if (items[0].kind === 'file') {
+                file = items[0].getAsFile();
+            }
+
+        }
+        else {
+
+            let items = e.dataTransfer.files;
+
+            if (items.length > 1) {
+                alert('Dropping multiple files is forbidden.');
+                return;
+            }
+
+            let file = items[0];
+
+        }
+
+        if (file.size > 10000) {
+            if (!confirm('This data set is large (' + (file.size/1000) + 'KB) and may freeze your tab momentarily. Do you want to continue?')) {
+                return;
+            }
+        }
+        
+        // TODO : pass on file content for further process
+        
+    }
     
 }
+
+var CONTROLLER = {
+    
+    initialize : function () {
+        
+        // set globals
+        window.head = _.tag('head')[0];
+        window.body = _.tag('body')[0];
+
+        // load parts
+        NAV.load();
+        DATA_LOAD_WINDOW.initialize();
+        
+    }
+    
+}
+_.addEvent(window, 'load', CONTROLLER.initialize);

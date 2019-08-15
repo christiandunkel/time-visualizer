@@ -1023,7 +1023,7 @@ nav button.secondary:hover {
 
 .column-container {
     position: relative;
-    width: 100%; margin: 2px 0; padding: 2px 122px 2px 42px;
+    width: 100%; margin: 2px 0; padding: 2px 122px 2px 50px;
     text-align: left;
     -ms-user-select: none;
     -moz-user-select: none;
@@ -1061,7 +1061,7 @@ nav button.secondary:hover {
 
 .column-container .icon {
     position: absolute; top: 2px; left: 2px;
-    width: 36px; height: 36px;
+    width: 44px; height: 44px;
     background: no-repeat contain;
     background-position: center right;
     background-color: #5e8bf2;
@@ -1073,7 +1073,7 @@ nav button.secondary:hover {
 
 .column-container .meter {
     position: relative;
-    width: 100%; height: 36px;
+    width: 100%; height: 44px;
     background: #67a2ff; border-radius: 5px;
     -o-transition: .8s;
     -moz-transition: .8s;
@@ -1106,15 +1106,7 @@ nav button.secondary:hover {
 @media (max-width: 550px) {
 
     .column-container {
-        padding-right: 2px; padding-left: 50px;
-    }
-
-    .column-container .icon {
-        width: 44px; height: 44px;
-    }
-
-    .column-container .meter {
-        height: 44px;
+        padding-right: 2px;
     }
 
     .column-container .name,

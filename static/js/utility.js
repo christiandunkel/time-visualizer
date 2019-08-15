@@ -87,7 +87,7 @@ var _ = {
     create : function (str, settings) {
         
         if (!_.isString(str)) {
-            return console.warn('No string given.');
+            return console.error('No string given.');
         }
         
         let id = str.match(/#[^\.#\s]+/g);
@@ -108,7 +108,7 @@ var _ = {
         if (_.isDefined(settings)) {
 
             if (!_.isObject(settings)) {
-                console.warn('Given settings object is not valid.');
+                console.error('Given settings object is not valid.');
             }
             else {
 
@@ -148,11 +148,11 @@ var _ = {
     append : function (elem1, elem2) {
         
         if (!_.exists(elem1)) {
-            return console.warn('First given element does not exist.');
+            return console.error('First given element does not exist.');
         }
         
         if (_.isUndefined(elem2)) {
-            return console.warn('Second given parameter is neither an element, text or a number.');
+            return console.error('Second given parameter is neither an element, text or a number.');
         }
 
         // if elem2 is text or a number, convert it to a text node
@@ -168,11 +168,11 @@ var _ = {
     prepend : function (elem1, elem2) {
         
         if (!_.exists(elem1)) {
-            return console.warn('First given element does not exist.');
+            return console.error('First given element does not exist.');
         }
         
         if (_.isUndefined(elem2)) {
-            return console.warn('Second given parameter is neither an element, text or a number.');
+            return console.error('Second given parameter is neither an element, text or a number.');
         }
 
         // if elem2 is text or a number, convert it to a text node
@@ -188,11 +188,11 @@ var _ = {
     after : function (elem1, elem2) {
         
         if (!_.exists(elem1)) {
-            return console.warn('First given element does not exist.');
+            return console.error('First given element does not exist.');
         }
         
         if (_.isUndefined(elem2)) {
-            return console.warn('Second given parameter is neither an element, text or a number.');
+            return console.error('Second given parameter is neither an element, text or a number.');
         }
 
         // if elem2 is text or a number, convert it to a text node
@@ -208,11 +208,11 @@ var _ = {
     before : function (elem1, elem2) {
         
         if (!_.exists(elem1)) {
-            return console.warn('First given element does not exist.');
+            return console.error('First given element does not exist.');
         }
         
         if (_.isUndefined(elem2)) {
-            return console.warn('Second given parameter is neither an element, text or a number.');
+            return console.error('Second given parameter is neither an element, text or a number.');
         }
 
         // if elem2 is text or a number, convert it to a text node
@@ -237,7 +237,7 @@ var _ = {
     empty : function (elem) {
         
         if (!_.exists(elem)) {
-            return console.warn('Element does not exist.');
+            return console.error('Element does not exist.');
         }
         
         elem.innerHTML = '';
@@ -258,15 +258,15 @@ var _ = {
     addEvent : function (elem, event, fn, useCapture) {
         
         if (!_.exists(elem)) {
-            return console.warn('Element does not exist.');
+            return console.error('Element does not exist.');
         }
         
         if (!_.isString(event)) {
-            return console.warn('No event name was given.');
+            return console.error('No event name was given.');
         }
         
         if (!_.isFunction(fn)) {
-            return console.warn('No function was given.');
+            return console.error('No function was given.');
         }
         
         if (useCapture !== true) {
@@ -287,15 +287,15 @@ var _ = {
     removeEvent : function (elem, event, fn, useCapture) {
         
         if (!_.exists(elem)) {
-            return console.warn('Element does not exist.');
+            return console.error('Element does not exist.');
         }
         
         if (!_.isString(event)) {
-            return console.warn('No event name was given.');
+            return console.error('No event name was given.');
         }
         
         if (!_.isFunction(fn)) {
-            return console.warn('No function was given.');
+            return console.error('No function was given.');
         }
         
         if (useCapture !== true) {
@@ -326,7 +326,7 @@ var _ = {
     target : function (elem) {
         
         if (!_.exists(elem)) {
-            return console.warn('Element does not exist.');
+            return console.error('Element does not exist.');
         }
         
         return elem.target || elem.srcElement;
@@ -352,11 +352,11 @@ var _ = {
     addClass : function (elem, class_) {
         
         if (!_.exists(elem)) {
-            return console.warn('Element does not exist.');
+            return console.error('Element does not exist.');
         }
         
         if (!_.isString(class_)) {
-            return console.warn('No class name was given.');
+            return console.error('No class name was given.');
         }
 
         // use classList API if available
@@ -373,11 +373,11 @@ var _ = {
     removeClass : function (elem, class_) {
         
         if (!_.exists(elem)) {
-            return console.warn('Element does not exist.');
+            return console.error('Element does not exist.');
         }
         
         if (!_.isString(class_)) {
-            return console.warn('No class name was given.');
+            return console.error('No class name was given.');
         }
 
         // use classList API if available
@@ -397,11 +397,11 @@ var _ = {
     toggleClass : function (elem, class_) {
         
         if (!_.exists(elem)) {
-            return console.warn('Element does not exist.');
+            return console.error('Element does not exist.');
         }
         
         if (!_.isString(class_)) {
-            return console.warn('No class name was given.');
+            return console.error('No class name was given.');
         }
 
         if (_.hasClass(elem, class_)) {
@@ -417,11 +417,11 @@ var _ = {
     hasClass : function (elem, class_) {
         
         if (!_.exists(elem)) {
-            return console.warn('Element does not exist.');
+            return console.error('Element does not exist.');
         }
         
         if (!_.isString(class_)) {
-            return console.warn('No class name was given.');
+            return console.error('No class name was given.');
         }
         
         // use classList API if available
@@ -450,11 +450,11 @@ var _ = {
     getStyle : function (elem, style) {
         
         if (_.exists(elem)) {
-            return console.warn('Element is not defined.');
+            return console.error('Element is not defined.');
         }
         
         if (!_.isString(elem)) {
-            return console.warn('Given style is not a string.');
+            return console.error('Given style is not a string.');
         }
         
         if ('getComputedStyle' in window) {
@@ -470,7 +470,7 @@ var _ = {
     getHeight : function (elem) {
         
         if (_.exists(elem)) {
-            return console.warn('Element is not defined.');
+            return console.error('Element is not defined.');
         }
         
         let r = elem.getBoundingClientRect();
@@ -482,7 +482,7 @@ var _ = {
     getWidth : function (elem) {
         
         if (_.exists(elem)) {
-            return console.warn('Element is not defined.');
+            return console.error('Element is not defined.');
         }
         
         let r = elem.getBoundingClientRect();
@@ -559,7 +559,7 @@ var _ = {
     escapeRegex : function (str) {
         
         if (!_.isString(class_)) {
-            return console.warn('No string was given.');
+            return console.error('No string was given.');
         }
         
         return ('' + str).replace(/[\.\*\+\?\^\$\{\}\(\)\|\[\]\\\/\-]/g, '\\$&');
@@ -570,7 +570,7 @@ var _ = {
     encodeHTML : function (str) {
         
         if (!_.isString(class_)) {
-            return console.warn('No string was given.');
+            return console.error('No string was given.');
         }
         
         return ('' + str).replace(/&/g, '\&amp\;')
@@ -585,7 +585,7 @@ var _ = {
     decodeHTML : function (str) {
         
         if (!_.isString(class_)) {
-            return console.warn('No string was given.');
+            return console.error('No string was given.');
         }
         
         return ('' + str).replace(/\&amp\;/g, '&')
