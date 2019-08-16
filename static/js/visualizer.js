@@ -1,10 +1,9 @@
 var NAV = {
     
+    /* GENERAL */
+    
     data_load_btn : null,
     data_load_window : null,
-    
-    darkmode : false,
-    darkmode_btn : null,
     
     // add events to navigation buttons
     initialize : function () {
@@ -23,6 +22,13 @@ var NAV = {
         
     },
     
+    
+    
+    /* DARKMODE */
+    
+    darkmode : false,
+    darkmode_btn : null,
+    
     toggle_dark_mode : function () {
 
         // toggle darkmode value
@@ -36,6 +42,8 @@ var NAV = {
 }
 
 var DATA_LOAD_WINDOW = {
+    
+    /* GENERAL */
     
     window : null,
     close_btn : null,
@@ -69,10 +77,24 @@ var DATA_LOAD_WINDOW = {
         _.removeClass(DATA_LOAD_WINDOW.window, 'visible');
     },
     
-    drop_area : null,
-    select_file_btn : null,
+    
+    
+    /* FILE DROP AREA */
+    
+    file_reader_notice : null,
     
     initializeDropArea : function () {
+        
+        // warn user if FileReader API is not supported
+        if (typeof(window.FileReader) !== 'function') {
+            
+            // get warning notice
+            this.file_reader_notice = _.id('file-reader-notice');
+            
+            // make it visible
+            _.addClass(this.file_reader_notice, 'show');
+            
+        }
         
         // get area on which user can drop a file
         this.drop_area = _.id('drop-area');
@@ -107,6 +129,13 @@ var DATA_LOAD_WINDOW = {
     unhighlightDropArea : function () {
         _.removeClass(DATA_LOAD_WINDOW.drop_area, 'dragged-over');
     },
+    
+    
+    
+    /* FILE HANDLING */
+    
+    drop_area : null,
+    select_file_input : null,
     
     handleDroppedFile : function (e) {
         
@@ -151,6 +180,12 @@ var DATA_LOAD_WINDOW = {
     
     handleSelectedFile : function (e) {
         
+        // warn user if FileReader API is not supported
+        if (typeof(window.FileReader) !== 'function') {
+            alert('The FileReader API is not supported by your browser. Please update your browser or switch to a different one!');
+            return;
+        }
+        
         // get file from event handeler
         let items = this.files;
         let file = items[0];
@@ -160,6 +195,11 @@ var DATA_LOAD_WINDOW = {
     },
     
     processFile : function (file) {
+        
+        if (!file) {
+            console.error('File is not defined.');
+            return;
+        }
         
         // filter out all files besides .json and .txt
         if (!/\.(json|txt)$/.test(file.name)) {
@@ -176,11 +216,36 @@ var DATA_LOAD_WINDOW = {
             }
         }
         
+        // read file
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+
+        // on error, warn user
+        reader.onerror = function (e) {
+            alert('File could not be read.');
+        }
+
+        // otherwise, proceed on converting file content to object
+        reader.onload = function (e) {
+            
+            let JSON = _.parseJSON(_.target(e).result);
+            
+            if (!JSON) {
+                alert('Could not parse the file as it is not in a valid JSON format. Check your browser console for more information.');
+                return;
+            }
+            
+            console.log(JSON);
+            
+        }
+        
     }
     
 }
 
 var MAIN = {
+    
+    /* GENERAL */
     
     initialize : function () {
         

@@ -594,6 +594,22 @@ var _ = {
                          .replace(/\&quot\;/g, '"')
                          .replace(/\&#039\;/g, '\'');
         
+    },
+    
+    // parses a JSON string to an object
+    parseJSON : function (str) {
+
+        let obj = null;
+        
+        try {
+            obj = JSON.parse(str);
+        }
+        catch (err) {
+            console.error('Could not parse the given string as JSON, because of a ' + err);
+        }
+
+        return obj;
+        
     }
     
 };

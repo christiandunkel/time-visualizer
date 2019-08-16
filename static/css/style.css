@@ -1190,6 +1190,7 @@ nav button.secondary:hover {
     color: #fffc70;
 }
 
+.notice.hidden.show,
 .notice.javascript {
     -o-animation: hidden-elem .5s, fade-in 1s .5s;
     -moz-animation: hidden-elem .5s, fade-in 1s .5s;
@@ -1197,6 +1198,7 @@ nav button.secondary:hover {
     animation: hidden-elem .5s, fade-in 1s .5s;
 }
 
+.notice.hidden:not(.show),
 .javascriptOn .notice.javascript {
     display: none;
 }
