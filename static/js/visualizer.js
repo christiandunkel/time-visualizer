@@ -1,3 +1,4 @@
+"use strict";
 /*
  * manages the functionality of the navigation buttons
  */
@@ -418,9 +419,63 @@ var DATA_LOAD = {
     // generates an array of data values from given data object
     generateDataPointArray : function (data, from, to) {
         
-        // TODO
+        function checkForValidValue(val) {
+                
+            // check if the value is a number
+            if (!_.isNumber(val)) {
+                throw 'Error: Value "' + value + '" for key "' + i + '" in JSON must be a number, but is a "' + typeof(value) + '".';
+            }
+            
+        }
         
-        return [];
+        let data_points = [];
+        
+        // go through range and generate a value for each iteration
+        for (let i = from; i <= to; i++) {
+            
+            // check for a value for the iteration in the data
+            if (
+                _.exists(data[i + ""]) && 
+                _.isNumber(data[i + ""])
+            ) {
+                
+                // get the value from the data
+                let value = data[i + ""];
+                checkForValidValue(value);
+                
+                // check if the number is really a value
+                if (!_.isNumber(value)) {
+                    throw 'Error: Value "' + value + '" for key "' + i + '" in JSON must be a number, but is a "' + typeof(value) + '".';
+                }
+                
+                data_points[data_points.length] = value;
+                continue;
+            }
+            
+            // if not, set value to 0, if it's the first iteration
+            if (i == from) {
+                data_points[data_points.length] = 0;
+                continue;
+            }
+            
+            // otherwise, calculate the average of prev & next value
+            let prev = data_points[data_points.length - 1];
+            let next = 0;
+            // go through all coming values, to find the next valid one
+            for (let j = i + 1; j <= to; j++) {
+                console.warn('Key "' + i + '" is missing in JSON file.');
+                if (_.exists(data[j + ""])) {
+                    next = data[j + ""];
+                    checkForValidValue(next);
+                    break;
+                }
+            }
+            let average = (prev + next) / 2;
+            data_points[data_points.length] = average;
+            
+        }
+        
+        return data_points;
         
     }
     
@@ -462,6 +517,7 @@ var ANIMATOR = {
     
     setData : function (obj) {
         this.data = obj;
+        console.log(this.data);
     },
     
     

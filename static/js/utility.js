@@ -1,3 +1,4 @@
+"use strict";
 /*
  * defines utility functions for later use in the visualizer
  */
