@@ -358,21 +358,60 @@ var DATA_LOAD = {
                     '#828282' : 'url(' + icon_url + ')'
             }
         });
-        _.append(container, icon);
         
         // column with values
         let column = _.create('div.column');
-        let meter = _.create('div.meter');
+        let meter = _.create('div.meter', {
+            'style' : {
+                'background' : this.getRandomColor()
+            }
+        });
         let name = _.create('div.name', {
             'innerHTML' : key_name
         });
         let value = _.create('div.value');
+        
+        // append elements to container
         _.append(meter, name);
         _.append(meter, value);
         _.append(column, meter);
+        _.append(container, icon);
         _.append(container, column);
         
         return container;
+        
+    },
+    
+    getRandomColor : function () {
+      
+        let colors = [
+            '#00d6d6', // aqua
+            '#0000ff', // blue
+            '#a52a2a', // brown
+            '#00008b', // darkblue
+            '#008b8b', // darkcyan
+            '#cbab01', // darkgold
+            '#585858', // darkgrey
+            '#006400', // darkgreen
+            '#a09a4d', // darkhaki
+            '#8b008b', // darkmagenta
+            '#556b2f', // darkolivegreen
+            '#a2651b', // darkorange
+            '#9932cc', // darkorchid
+            '#8b0000', // darkred
+            '#bf775f', // darksalmon
+            '#9400d3', // darkviolet
+            '#008000', // green
+            '#4b0082', // indigo
+            '#5ebf5e', // lightgreen
+            '#800000', // maroon
+            '#808000', // olive
+            '#800080' // purple
+        ];
+        
+        
+        // return a random color from the array
+        return colors[Math.floor(Math.random() * colors.length)];
         
     },
     

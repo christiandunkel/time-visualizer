@@ -1155,6 +1155,7 @@ nav button.secondary:hover {
 .column-container .value {
     display: inline-block; 
     position: absolute; top: 50%;
+    max-width: 85%;
     -o-transform: translate(0, -50%);
     -ms-transform: translate(0, -50%);
     -moz-transform: translate(0, -50%);
@@ -1164,7 +1165,8 @@ nav button.secondary:hover {
 
 .column-container .name {
     left: 15px;
-    font-size: 15px; letter-spacing: .2px; font-weight: 700; color: white;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-size: 15px; letter-spacing: .2px; font-weight: 700; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,.6);
 }
 
 .column-container .value {
