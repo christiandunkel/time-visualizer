@@ -115,25 +115,41 @@
             <button class="close">
                 <div class="cross"></div>
             </button>
-
-            <div class="heading">Select a data set...</div>
-
-            <button class="data-set-btn" onclick="load_data_set('global-imports.json')">Global Imports</button>
-
-            <button class="data-set-btn" onclick="load_data_set('global-exports.json')">Global Exports</button>
-
-            <div class="or">or</div>
             
-            <div id="file-reader-notice" class="notice red hidden">FileReader API must be supported by your browser!</div>
-
-            <div id="drop-area">
-
-                <div class="text">Drop a file here.</div>
-
-                <input type="file" id="selected-file" accept=".json, .txt" title="Select a file." />
+            <div class="file-selected">
+            
+                <div class="circle">
                 
-                <label for="selected-file">Select a file</label>
+                    <div class="tick"></div>
+                
+                    <div class="text">File loaded.</div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="no-file-selected">
 
+                <div class="heading">Select a data set...</div>
+
+                <button class="data-set-btn" onclick="load_data_set('global-imports.json')">Global Imports</button>
+
+                <button class="data-set-btn" onclick="load_data_set('global-exports.json')">Global Exports</button>
+
+                <div class="or">or</div>
+
+                <div id="file-reader-notice" class="notice red hidden">FileReader API must be supported by your browser!</div>
+
+                <div id="drop-area">
+
+                    <div class="text">Drop a file here.</div>
+
+                    <input type="file" id="selected-file" accept=".json, .txt" title="Select a file." />
+
+                    <label for="selected-file">Select a file</label>
+
+                </div>
+                
             </div>
 
         </div>
@@ -158,7 +174,7 @@
         
         
         
-        <!-- total chart (1) -->
+        <!-- total-data chart -->
     
         <div id="column-chart">
         

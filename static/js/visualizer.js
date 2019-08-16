@@ -92,6 +92,9 @@ var DATA_LOAD_WINDOW = {
         // close window
         _.removeClass(DATA_LOAD_WINDOW.window, 'visible');
         
+        // close 'file selected' message inside window
+        _.removeClass(DATA_LOAD_WINDOW.window, 'file-selected');
+        
         // reset tab focus back to 'data load' button in navigation
         NAV.data_load_btn.focus();
         
@@ -250,9 +253,56 @@ var DATA_LOAD_WINDOW = {
                 return;
             }
             
+            ANIMATOR.stop();
+            
+            _.addClass(DATA_LOAD_WINDOW.window, 'file-selected');
+            
             console.log(JSON);
             
         }
+        
+    }
+    
+}
+
+var ANIMATOR = {
+    
+    is_running : false,
+    time : 1,
+    
+    from : 0,
+    to : 0,
+    current : 0,
+    
+    // start playing animation
+    play : function () {
+        this.is_running = true;
+    },
+    
+    // pause currently playing animation
+    pause : function () {
+        this.is_running = false;
+    },
+    
+    // stop and reset current animation
+    stop : function () {
+        this.is_running = false;
+        this.current = this.from;
+    },
+    
+    // generate the current animation frame
+    update : function () {
+        this.updateTotalChart();
+        this.updateIndividualCharts();
+    },
+    
+    // update chart containing all data
+    updateTotalChart : function () {
+        
+    },
+    
+    // update the invidual chart of every key
+    updateIndividualCharts : function () {
         
     }
     

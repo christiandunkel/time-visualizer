@@ -823,6 +823,80 @@ nav button.secondary:hover {
     color: #979595;
 }
 
+#data-load-window .file-selected {
+    display: none; position: relative;
+    width: 100%; height: 100%;
+}
+#data-load-window.file-selected .file-selected {
+    display: block;
+}
+#data-load-window .no-file-selected {
+    display: block;
+}
+#data-load-window.file-selected .no-file-selected {
+    display: none;
+}
+
+#data-load-window .file-selected .circle {
+    position: absolute; top: 48%; left: 50%;
+    width: 100px; height: 100px;
+    background: currentColor; border-radius: 50%;
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: #3e9eff;
+    -o-animation: appear-circle .4s;
+    -moz-animation: appear-circle .4s;
+    -webkit-animation: appear-circle .4s;
+    animation: appear-circle .4s;
+}
+
+@-o-keyframes appear-circle {
+    0% {-o-transform: translate(-50%, -50%) scale(1.5);}
+    55% {-o-transform: translate(-50%, -50%) scale(.8);}
+    80% {-o-transform: translate(-50%, -50%) scale(1.1);}
+}
+@-moz-keyframes appear-circle {
+    0% {-moz-transform: translate(-50%, -50%) scale(1.5);}
+    55% {-moz-transform: translate(-50%, -50%) scale(.8);}
+    80% {-moz-transform: translate(-50%, -50%) scale(1.1);}
+}
+@-webkit-keyframes appear-circle {
+    0% {-webkit-transform: translate(-50%, -50%) scale(1.5);}
+    55% {-webkit-transform: translate(-50%, -50%) scale(.8);}
+    80% {-webkit-transform: translate(-50%, -50%) scale(1.1);}
+}
+@keyframes appear-circle {
+    0% {transform: translate(-50%, -50%) scale(1.5);}
+    55% {transform: translate(-50%, -50%) scale(.8);}
+    80% {transform: translate(-50%, -50%) scale(1.1);}
+}
+
+#data-load-window .file-selected .tick {
+    position: absolute; top: 50%; left: 50%;
+    width: 30px; height: 30px;
+    /* base-64 encoded tick_white.svg | icon by iconmoon.io */
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICdodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQnPjxzdmcgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMzIgMzIiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0yNyA0bC0xNSAxNS03LTctNSA1IDEyIDEyIDIwLTIweiI+PC9wYXRoPjwvc3ZnPg==') no-repeat center;
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#data-load-window .file-selected .text {
+    position: absolute; left: 0; bottom: -29px;
+    width: 100%;
+    opacity: .8;
+    text-align: center; font-size: 15px; line-height: 18px; font-weight: 700;
+    -o-animation: hidden-elem .4s, fade-in .4s .4s;
+    -moz-animation: hidden-elem .4s, fade-in .4s .4s;
+    -webkit-animation: hidden-elem .4s, fade-in .4s .4s;
+    animation: hidden-elem .4s, fade-in .4s .4s;
+}
+
 #data-load-window .heading {
     font-size: 20px; line-height: 23px;
 }
