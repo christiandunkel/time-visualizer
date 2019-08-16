@@ -31,12 +31,18 @@
 </head>
     
 <body>
+    
+    <!-- displayed on top right corner -->
         
     <a id="github-link" href="https://github.com/christiandunkel/time-visualizer" title="Look at the code on Github">
         <div class="curl"></div>
         <div class="icon"></div>
         <div class="background"></div>
     </a>
+    
+    
+    
+    <!-- whole top header area -->
     
     <div id="top-area">
         
@@ -57,20 +63,9 @@
 
             <div id="top-menu">
 
-                <button id="load-data">Load data</button>
-
-                <div id="loaded-file-name">
-                    <span class="name">example</span>
-                    <span class="ending">.json</span>
-                </div>
-
-                <br />
-
-                <div class="descriptor hidden top">General Options</div>
-
                 <button id="toggle-darkmode" class="right" title="Toggle dark mode"></button>
 
-                <button id="toggle-chart" class="right" title="Toggle chart type">Type 1</button>
+                <button id="load-data">Load data</button>
 
             </div>
 
@@ -108,6 +103,10 @@
     
     </div>
     
+    
+    
+    <!-- open-/closable windows -->
+    
     <div id="data-load-window" class="hidden-window">
     
         <div class="blur"></div>
@@ -141,6 +140,10 @@
     
     </div>
     
+    
+    
+    <!-- chart container -->
+    
     <main>
         
         <div id="data-set-info">
@@ -152,6 +155,10 @@
             <span class="date">2019-08-11</span>
             
         </div>
+        
+        
+        
+        <!-- total chart (1) -->
     
         <div id="column-chart">
         
@@ -182,6 +189,10 @@
         </div>
     
     </main>
+    
+    
+    
+    <!-- import scripts -->
     
     <script src="static/js/utility.js"></script>
     <script src="static/js/visualizer.js"></script>

@@ -117,6 +117,10 @@ a:focus,
 button:focus {
     outline: 1px solid rgba(0, 98, 255, 0.5);
 }
+.darkMode a:focus,
+.darkMode button:focus {
+    outline-color: rgba(72, 163, 255, 0.5);
+}
 
 h1 {
     font-size: 28px;
@@ -555,26 +559,18 @@ nav button:not(.active):active {
     box-shadow: 0 0 0 #6f6f6f, 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
-#loaded-file-name {
-    display: inline-block;
-    padding: 0 0 0 10px;
+nav button#load-data {
+    background-color: #6091ff;
+    -moz-box-shadow: 2px 2px 0 #89c4ff, 1px 1px 4px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 2px 2px 0 #89c4ff, 1px 1px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 0 #89c4ff, 1px 1px 4px rgba(0, 0, 0, 0.3);
+    color: white;
 }
-
-#loaded-file-name .name {
-    display: inline-block;
-    max-width: 170px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    font-size: 13px; line-height: 1.2em; color: #7c7c7c;
-}
-.darkMode #loaded-file-name .name {
-    color: #a8a8a8;
-}
-
-#loaded-file-name .ending {
-    display: inline-block;
-    padding: 0 0 0 2px;
-    overflow: hidden;
-    font-size: 10px; line-height: 17px;
+nav button#load-data:hover,
+nav button#load-data:active {
+    -moz-box-shadow: 0 0 0 #89c4ff, 0 0 2px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 0 0 #89c4ff, 0 0 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0 #89c4ff, 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 html.animation-playing nav button#play-button {
@@ -596,9 +592,8 @@ nav #top-menu br {
 
 @media (max-width: 550px) {
     
-    nav #loaded-file-name {
-        display: block;
-        padding: 5px 0 20px 8px;
+    nav button#load-data {
+        float: left;
     }
     
     nav #top-menu br {
@@ -608,10 +603,6 @@ nav #top-menu br {
     nav button.right {
         float: none;
         margin: 0 8px 0 0;
-    }
-    
-    nav button#toggle-chart {
-        float: left;
     }
     
 }
