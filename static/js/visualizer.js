@@ -70,6 +70,7 @@ var DATA_LOAD_WINDOW = {
     },
     
     drop_area : null,
+    select_file_btn : null,
     
     initializeDropArea : function () {
         
@@ -92,6 +93,10 @@ var DATA_LOAD_WINDOW = {
 
         // add event to handle files dropped on drop area
         _.addEvent(this.drop_area, 'drop', this.handleDroppedFile);
+        
+        // add event for 'select file' button
+        this.select_file_btn = _.id('selected-file');
+        _.addEvent(this.select_file_btn, 'change', this.handleSelectedFile)
         
     },
     
@@ -121,6 +126,10 @@ var DATA_LOAD_WINDOW = {
             if (items[0].kind === 'file') {
                 file = items[0].getAsFile();
             }
+            else {
+                alert('Please drop a file.');
+                return;
+            }
 
         }
         else {
@@ -135,14 +144,37 @@ var DATA_LOAD_WINDOW = {
             let file = items[0];
 
         }
+        
+        DATA_LOAD_WINDOW.processFile(file);
+        
+    },
+    
+    handleSelectedFile : function (e) {
+        
+        // get file from event handeler
+        let items = this.files;
+        let file = items[0];
+        
+        DATA_LOAD_WINDOW.processFile(file);
+        
+    },
+    
+    processFile : function (file) {
+        
+        // filter out all files besides .json and .txt
+        if (!/\.(json|txt)$/.test(file.name)) {
+            alert('Only .json and .txt files are allowed.');
+            return;
+        }
 
+        // warn users loading files bigger than 10KB
         if (file.size > 10000) {
-            if (!confirm('This data set is large (' + (file.size/1000) + 'KB) and may freeze your tab momentarily. Do you want to continue?')) {
+            if (!confirm(
+                'This data set is large (' + (file.size/1000) + 'KB) and may freeze your tab momentarily. Do you want to continue?'
+            )) {
                 return;
             }
         }
-        
-        // TODO : pass on file content for further process
         
     }
     
@@ -163,4 +195,6 @@ var MAIN = {
     }
     
 }
+
+// initialize the framework once all HTML content is ready
 _.addEvent(window, 'load', MAIN.initialize);

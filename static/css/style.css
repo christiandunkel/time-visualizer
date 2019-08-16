@@ -905,13 +905,13 @@ nav button.secondary:hover {
     transition: .15s;
 }
 
-#drop-area #dropped-file {
+#drop-area #selected-file {
     position: absolute; z-index: -1;
     width: 0.1px; height: 0.1px;
     opacity: 0; overflow: hidden;
 }
 
-#drop-area #dropped-file + label {
+#drop-area #selected-file + label {
     display: block; position: absolute; bottom: 25px; left: 50%;
     padding: 10px 18px;
     background: #4f7dff; border-radius: 3px; cursor: pointer;
@@ -930,7 +930,7 @@ nav button.secondary:hover {
     transition: .3s;
 }
 
-#drop-area #dropped-file + label:hover {
+#drop-area #selected-file + label:hover {
     background-color: #6d93ff;
     -moz-box-shadow: 2px 2px 4px rgba(37, 63, 255, 0.3);
     -webkit-box-shadow: 2px 2px 4px rgba(37, 63, 255, 0.3);
