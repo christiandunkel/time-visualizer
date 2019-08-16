@@ -1,3 +1,6 @@
+/*
+ * defines utility functions for later use in the visualizer
+ */
 var _ = {
     
     /*
