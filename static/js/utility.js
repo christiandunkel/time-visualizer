@@ -550,9 +550,9 @@ var _ = {
     
     
     /*
-     * ==================
-     * === SANITATION ===
-     * ==================
+     * ====================
+     * === SANITIZATION ===
+     * ====================
      */
     
     // escapes string to be regex-compatible

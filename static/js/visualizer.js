@@ -7,7 +7,7 @@ var NAV = {
     darkmode_btn : null,
     
     // add events to navigation buttons
-    load : function () {
+    initialize : function () {
         
         // get 'load data' button and window
         this.data_load_btn = _.id('load-data');
@@ -148,7 +148,7 @@ var DATA_LOAD_WINDOW = {
     
 }
 
-var CONTROLLER = {
+var MAIN = {
     
     initialize : function () {
         
@@ -157,10 +157,10 @@ var CONTROLLER = {
         window.body = _.tag('body')[0];
 
         // load parts
-        NAV.load();
+        NAV.initialize();
         DATA_LOAD_WINDOW.initialize();
         
     }
     
 }
-_.addEvent(window, 'load', CONTROLLER.initialize);
+_.addEvent(window, 'load', MAIN.initialize);
