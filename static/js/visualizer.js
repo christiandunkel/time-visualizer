@@ -1,9 +1,12 @@
 var NAV = {
     
-    /* GENERAL */
-    
     data_load_btn : null,
     data_load_window : null,
+    
+    darkmode : false,
+    darkmode_btn : null,
+    
+    /* GENERAL */
     
     // add events to navigation buttons
     initialize : function () {
@@ -26,9 +29,6 @@ var NAV = {
     
     /* DARKMODE */
     
-    darkmode : false,
-    darkmode_btn : null,
-    
     toggle_dark_mode : function () {
 
         // toggle darkmode value
@@ -43,11 +43,16 @@ var NAV = {
 
 var DATA_LOAD_WINDOW = {
     
-    /* GENERAL */
-    
     window : null,
     close_btn : null,
     blur : null,
+    
+    drop_area : null,
+    select_file_input : null,
+    
+    file_reader_notice : null,
+    
+    /* GENERAL */
     
     initialize : function () {
         
@@ -70,18 +75,31 @@ var DATA_LOAD_WINDOW = {
     },
     
     open : function () {
+        
+        // open window
         _.addClass(DATA_LOAD_WINDOW.window, 'visible');
+        
+        // with a little delay, set tab focus on close button
+        // if set immediately, will be ignored or buggy
+        setTimeout(function () {
+            DATA_LOAD_WINDOW.close_btn.focus();
+        }, 100);
+        
     },
         
     close : function () {
+        
+        // close window
         _.removeClass(DATA_LOAD_WINDOW.window, 'visible');
+        
+        // reset tab focus back to 'data load' button in navigation
+        NAV.data_load_btn.focus();
+        
     },
     
     
     
     /* FILE DROP AREA */
-    
-    file_reader_notice : null,
     
     initializeDropArea : function () {
         
@@ -117,8 +135,8 @@ var DATA_LOAD_WINDOW = {
         _.addEvent(this.drop_area, 'drop', this.handleDroppedFile);
         
         // add event for 'select file' button
-        this.select_file_btn = _.id('selected-file');
-        _.addEvent(this.select_file_btn, 'change', this.handleSelectedFile)
+        this.select_file_input = _.id('selected-file');
+        _.addEvent(this.select_file_input, 'change', this.handleSelectedFile)
         
     },
     
@@ -133,9 +151,6 @@ var DATA_LOAD_WINDOW = {
     
     
     /* FILE HANDLING */
-    
-    drop_area : null,
-    select_file_input : null,
     
     handleDroppedFile : function (e) {
         
