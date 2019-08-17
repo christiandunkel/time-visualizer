@@ -340,18 +340,19 @@ var DATA_LOAD = {
         _.empty(this.column_chart);
         
         // load data columns in chart
+        let counter = 0;
         for (let key in obj.data) {
            
             if (!obj.data.hasOwnProperty(key)) {
                 return;
             }
             
-            // filter out bad icon values
-            let icon = obj.keys[key].icon;
-            icon = _.isString(icon) ? icon : null;
-            
             // create a column and append it to the chart
-            let column = this.getColumn(obj.keys[key].name, icon);
+            let column = this.getColumn(
+                counter,
+                obj.keys[key].name, 
+                obj.keys[key].icon
+            );
             _.append(this.column_chart, column);
             
             // add column to object holding references to columns
@@ -366,6 +367,8 @@ var DATA_LOAD = {
                 obj.range.from, 
                 obj.range.to
             );
+            
+            counter++;
             
         }
             
@@ -383,18 +386,17 @@ var DATA_LOAD = {
     },
     
     // generates DOM node for a column in the chart
-    getColumn : function (key_name, icon_url) {
+    getColumn : function (column_index, key_name, icon_url) {
         
         // containing element
         let container = _.create('button.column-container', {
             'title' : 'Open statistics for ' + key_name
         });
         
-        // graphic / icon in front
+        // graphic left of icon
         let icon = _.create('div.icon', {
             'style' : {
-                'background' : icon_url == null ? 
-                    '#828282' : 'url(' + icon_url + ')'
+                'background-image' : 'url(' + (_.isString(icon_url) ? icon_url : '') + ')'
             }
         });
         
@@ -402,7 +404,7 @@ var DATA_LOAD = {
         let column = _.create('div.column');
         let meter = _.create('div.meter', {
             'style' : {
-                'background' : this.getRandomColor()
+                'background' : this.getColumnColor(column_index)
             }
         });
         let name = _.create('div.name', {
@@ -422,39 +424,33 @@ var DATA_LOAD = {
     },
     
     // returns a random color from a pre-defined selection
-    getRandomColor : function () {
+    getColumnColor : function (index) {
       
         let colors = [
             
-            /* BLUE */
-            '#00d6d6', // aqua
-            '#00008b', // darkblue
-            
-            /* RED */
+            '#099b9b', // darkaqua
             '#a52a2a', // brown
-            '#bf775f', // darksalmon
-            '#800000', // maroon
-            
-            /* YELLOW */
-            '#cbab01', // darkgold
-            '#a09a4d', // darkhaki
-            '#a2651b', // darkorange
-            
-            /* GREEN */
+            '#9f8605', // darkgold
             '#556b2f', // darkolivegreen
-            '#5ebf5e', // lightgreen
-            '#808000', // olive
-            
-            /* VIOLET */
             '#8b008b', // darkmagenta
+            
+            '#1616ad', // darkblue
+            '#bf775f', // darksalmon
+            '#888236', // darkhaki
+            '#5ebf5e', // lightgreen
             '#9932cc', // darkorchid
+            
+            '#3f238d', // blueishviolet
+            '#800000', // maroon
+            '#a2651b', // darkorange
+            '#808000', // olive
             '#800080' // purple
             
         ];
         
         
         // return a random color from the array
-        return colors[Math.floor(Math.random() * colors.length)];
+        return colors[index];
         
     },
     

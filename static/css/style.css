@@ -1171,7 +1171,6 @@ nav button.secondary:hover {
     width: 44px; height: 44px;
     background: no-repeat contain;
     background-position: center right;
-    background-color: #5e8bf2;
     -o-transition: .8s;
     -moz-transition: .8s;
     -webkit-transition: .8s;
