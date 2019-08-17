@@ -1056,17 +1056,46 @@ nav button.secondary:hover {
 }
 
 #data-set-current-value {
-    max-width: 100%; padding: 15px 0 8px 50px;
-    opacity: .5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    padding: 15px 0 8px 50px;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-    text-align: left; font-size: 70px; letter-spacing: 1px; font-weight: 700;
+    font-size: 70px;
     -o-animation: hidden-elem 1.05s, fade-in .6s 1.05s;
     -moz-animation: hidden-elem 1.05s, fade-in .6s 1.05s;
     -webkit-animation: hidden-elem 1.05s, fade-in .6s 1.05s;
     animation: hidden-elem 1.05s, fade-in .6s 1.05s;
+}
+
+#data-set-current-value .container {
+    display: inline-block; position: relative;
+    max-width: 100%;
+    font-size: inherit;
+}
+
+#data-set-current-value .value,
+#data-set-current-value .indicator {
+    display: inline-block;
+    max-width: 100%; padding: 3px;
+    white-space: nowrap; overflow: hidden;
+    font-size: inherit; line-height: 1em; letter-spacing: 1px; font-weight: 700;
+}
+
+#data-set-current-value .value {
+    position: relative; z-index: 1;
+    opacity: .5;
+    text-overflow: ellipsis;
+}
+
+#data-set-current-value .indicator {
+    position: absolute; top: 0; left: 0; z-index: 2;
+    width: 0;
+    background: #ff5454; border-radius: 5px;
+    color: white;
+}
+#data-set-current-value .indicator.hidden {
+    display: none;
 }
 
 @media (max-width: 750px) {

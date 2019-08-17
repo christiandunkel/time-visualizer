@@ -393,7 +393,7 @@ var DATA_LOAD = {
             'title' : 'Open statistics for ' + key_name
         });
         
-        // graphic left of icon
+        // graphic left of column
         let icon = _.create('div.icon', {
             'style' : {
                 'background-image' : 'url(' + (_.isString(icon_url) ? icon_url : '') + ')'
@@ -449,8 +449,8 @@ var DATA_LOAD = {
         ];
         
         
-        // return a random color from the array
-        return colors[index];
+        // return a color corresponding to the index or a multiple of it from the array
+        return colors[index % colors.length];
         
     },
     
@@ -555,8 +555,9 @@ var DATA_LOAD = {
  */
 var ANIMATOR = {
     
-    // HTML element displaying current value
+    // HTML element displaying 'current' value
     current_value_elem : null,
+    current_indicator_elem : null,
     
     is_running : false,
     time : 1,
@@ -582,7 +583,11 @@ var ANIMATOR = {
     
     initialize : function () {
         
-        this.current_value_elem = _.id('data-set-current-value');
+        // get HTML node holding 'current' data value
+        let container = _.id('data-set-current-value');
+        this.current_value_elem = _.class('value', container)[0];
+        this.current_indicator_elem = _.class('indicator', container)[0];
+        _.removeClass(this.current_indicator_elem, 'hidden');
         
     },
     
@@ -705,8 +710,14 @@ var ANIMATOR = {
         
         // set current value
         if ($.current % 50 == 0) {
-            $.current_value_elem.innerHTML = parseInt($.from) + ($.current == 0 ? 0 : $.current / 50);
+            let curr_val = parseInt($.from) + ($.current == 0 ? 0 : $.current / 50);
+            $.current_value_elem.innerHTML = curr_val;
+            $.current_indicator_elem.innerHTML = curr_val;
         }
+        // set current indicator's width
+        _.setStyles($.current_indicator_elem, {
+            'width': ($.current % 50 * 2) + '%'
+        });
         
         $.updateTotalChart();
         $.updateIndividualCharts();
