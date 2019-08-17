@@ -357,8 +357,10 @@ var DATA_LOAD = {
             
             // add column to object holding references to columns
             columns[key] = {
+                'container' : column,
                 'meter' : _.class('meter', column)[0],
-                'value' : _.class('value', column)[0]
+                'value' : _.class('value', column)[0],
+                'start_order' : counter // order as node in HTML chart (from top to bottom) 
             };
             
             // add key data to animation object
@@ -576,6 +578,7 @@ var ANIMATOR = {
     // object holding references to column HTML nodes
     columns : {},
     column_num : 0,
+    pixels_between_columns : 0,
     
     
     
@@ -621,6 +624,18 @@ var ANIMATOR = {
     setColumns : function (obj) {
         this.columns = obj;
         this.column_num = Object.keys(obj).length;
+        
+        // if more than one column, they need to be ordered by length
+        if (this.column_num > 1) {
+            
+            // find out the pixel difference in position between two columns
+            let keys = Object.keys(obj);
+            let column_1_top_pos = obj[keys[0]].container.getBoundingClientRect().top;
+            let column_2_top_pos = obj[keys[1]].container.getBoundingClientRect().top;
+            this.pixels_between_columns = Math.abs(column_1_top_pos - column_2_top_pos);
+            
+        }
+        
     },
     
     
@@ -658,6 +673,11 @@ var ANIMATOR = {
         clearInterval($.loop);
         $.loop = null;
         
+    },
+    
+    // restarts the animation
+    restart : function () {
+        ANIMATOR.current = 0;
     },
     
     // triggers the end state, where one can not 'unpause', as it will restart, but the animation is still frozen in last frame 
@@ -729,13 +749,23 @@ var ANIMATOR = {
         
         let $ = ANIMATOR;
         
+        
+        /* COLUMN LENGTH */
+        
         // get min and max value of current frame
         let min = Number.MAX_VALUE;
         let max = Number.MIN_VALUE;
+        // and get an array of all key value pairs (for later sorting)
+        let all_values = []
         for (let key in $.data) {
             let val = $.data[key][$.current];
             if (val < min) min = val;
             if (val > max) max = val;
+            
+            all_values[all_values.length] = {
+                'key' : key, 
+                'value' : val
+            };
         }
         
         // increase diff between min and max, so min column is always at least 20% of total size
@@ -754,6 +784,26 @@ var ANIMATOR = {
                 'width' : (((curr - min) / (max - min)) * 100) + "%" 
             });
             
+        }
+        
+        
+        
+        /* COLUMN ORDER */
+        
+        // sort all values from smallest to biggest
+        function sortObject(obj, property) {
+            return obj.sort(function (a, b) {
+                return a[property] < b[property];
+            });
+        }
+        let sorted_values = sortObject(all_values, 'value');
+        
+        for (let i = 0; i < $.column_num; i++) {
+            let column = $.columns[sorted_values[i].key];
+            let transform_by = (i - column.start_order) * $.pixels_between_columns;
+            _.setStyles(column.container, {
+                'transform': 'translate(0px, ' + transform_by + 'px)'
+            });
         }
         
         $.current++;
