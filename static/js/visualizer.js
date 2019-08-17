@@ -299,18 +299,17 @@ var DATA_LOAD = {
     
     // parses a string into a JSON object,
     // then sends the object to visualizeObject()
-    parseJSON : function (str, suppressWarning) {
+    parseJSON : function (str) {
             
         // generate an object from JSON string
         let obj = _.parseJSON(str);
 
+        // warn user, if the string could not be parsed
         if (!obj) {
             
-            if (!(suppressWarning === true)) {
-                alert('Could not parse the file as it is not in a valid JSON format.\nCheck your browser console for more information.');
-            }
-            
+            alert('Could not parse the file as it is not in a valid JSON format.\nCheck your browser console for more information.');
             return;
+            
         }
 
         // visualize the object
@@ -422,28 +421,31 @@ var DATA_LOAD = {
     getRandomColor : function () {
       
         let colors = [
+            
+            /* BLUE */
             '#00d6d6', // aqua
-            '#0000ff', // blue
-            '#a52a2a', // brown
             '#00008b', // darkblue
-            '#008b8b', // darkcyan
-            '#cbab01', // darkgold
-            '#585858', // darkgrey
-            '#006400', // darkgreen
-            '#a09a4d', // darkhaki
-            '#8b008b', // darkmagenta
-            '#556b2f', // darkolivegreen
-            '#a2651b', // darkorange
-            '#9932cc', // darkorchid
-            '#8b0000', // darkred
+            
+            /* RED */
+            '#a52a2a', // brown
             '#bf775f', // darksalmon
-            '#9400d3', // darkviolet
-            '#008000', // green
-            '#4b0082', // indigo
-            '#5ebf5e', // lightgreen
             '#800000', // maroon
+            
+            /* YELLOW */
+            '#cbab01', // darkgold
+            '#a09a4d', // darkhaki
+            '#a2651b', // darkorange
+            
+            /* GREEN */
+            '#556b2f', // darkolivegreen
+            '#5ebf5e', // lightgreen
             '#808000', // olive
+            
+            /* VIOLET */
+            '#8b008b', // darkmagenta
+            '#9932cc', // darkorchid
             '#800080' // purple
+            
         ];
         
         
@@ -725,7 +727,6 @@ var ANIMATOR = {
             
         }
         
-        console.log($.current);
         $.current++;
         
     },
@@ -759,7 +760,13 @@ var MAIN = {
         request.send();
 
         request.onreadystatechange = function (e) {
-            DATA_LOAD.parseJSON(request.responseText, true);
+            
+            let json = request.responseText;
+            
+            if (json != null && json != '') {
+                DATA_LOAD.parseJSON(request.responseText);
+            }
+            
         }
         
     }

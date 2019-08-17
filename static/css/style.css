@@ -223,10 +223,10 @@ body {
     -moz-box-shadow: 0 2px 12px #e6e6e6;
     -webkit-box-shadow: 0 2px 12px #e6e6e6;
     box-shadow: 0 2px 12px #e6e6e6;
-    -o-animation: fade-in .5s;
-    -moz-animation: fade-in .5s;
-    -webkit-animation: fade-in .5s;
-    animation: fade-in .5s;
+    -o-animation: fade-in .6s;
+    -moz-animation: fade-in .6s;
+    -webkit-animation: fade-in .6s;
+    animation: fade-in .6s;
 }
 .darkMode #top-area {
     -moz-box-shadow: 0 2px 16px #131313;
@@ -447,10 +447,10 @@ nav {
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-    -o-animation: hidden-elem 1s, fade-in 1s 1s;
-    -moz-animation: hidden-elem 1s, fade-in 1s 1s;
-    -webkit-animation: hidden-elem 1s, fade-in 1s 1s;
-    animation: hidden-elem 1s, fade-in 1s 1s;
+    -o-animation: hidden-elem .6s, fade-in .6s .6s;
+    -moz-animation: hidden-elem .6s, fade-in .6s .6s;
+    -webkit-animation: hidden-elem .6s, fade-in .6s .6s;
+    animation: hidden-elem .6s, fade-in .6s .6s;
 }
 .darkMode nav {
     background: #1d1d1d; border-color: #373737;
@@ -1023,10 +1023,10 @@ nav button.secondary:hover {
     user-select: none;
     background: #555555; border-radius: 5px;
     color: white;
-    -o-animation: hidden-elem 1.5s, fade-in 1s 1.5s;
-    -moz-animation: hidden-elem 1.5s, fade-in 1s 1.5s;
-    -webkit-animation: hidden-elem 1.5s, fade-in 1s 1.5s;
-    animation: hidden-elem 1.5s, fade-in 1s 1.5s;
+    -o-animation: hidden-elem .9s, fade-in .6s .9s;
+    -moz-animation: hidden-elem .9s, fade-in .6s .9s;
+    -webkit-animation: hidden-elem .9s, fade-in .6s .9s;
+    animation: hidden-elem .9s, fade-in .6s .9s;
 }
 .darkMode #data-set-info {
     border-color: #4b4b4b;
@@ -1085,10 +1085,10 @@ nav button.secondary:hover {
 
 #column-chart {
     width: 100%;
-    -o-animation: hidden-elem 2s, fade-in 1s 2s;
-    -moz-animation: hidden-elem 2s, fade-in 1s 2s;
-    -webkit-animation: hidden-elem 2s, fade-in 1s 2s;
-    animation: hidden-elem 2s, fade-in 1s 2s;
+    -o-animation: hidden-elem 1.2s, fade-in .6s 1.2s;
+    -moz-animation: hidden-elem 1.2s, fade-in .6s 1.2s;
+    -webkit-animation: hidden-elem 1.2s, fade-in .6s 1.2s;
+    animation: hidden-elem 1.2s, fade-in .6s 1.2s;
 }
 
 .column-container {
@@ -1267,10 +1267,10 @@ nav button.secondary:hover {
 
 .notice.hidden.show,
 .notice.javascript {
-    -o-animation: hidden-elem .5s, fade-in 1s .5s;
-    -moz-animation: hidden-elem .5s, fade-in 1s .5s;
-    -webkit-animation: hidden-elem .5s, fade-in 1s .5s;
-    animation: hidden-elem .5s, fade-in 1s .5s;
+    -o-animation: hidden-elem .3s, fade-in .6s .3s;
+    -moz-animation: hidden-elem .3s, fade-in .6s .3s;
+    -webkit-animation: hidden-elem .3s, fade-in .6s .3s;
+    animation: hidden-elem .3s, fade-in .6s .3s;
 }
 
 .notice.hidden:not(.show),
