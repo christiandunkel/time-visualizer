@@ -249,8 +249,7 @@ var DATA_LOAD = {
         
     },
     
-    // reads a given file, and converts it from JSON to an object,
-    // then sends the object to visualizeObject()
+    // reads a given file and sends the string to parseJSON()
     processFile : function (file) {
         
         // warn user if FileReader API is not supported
@@ -292,18 +291,31 @@ var DATA_LOAD = {
         reader.onload = function (e) {
             
             // generate an object from JSON string
-            let obj = _.parseJSON(_.target(e).result);
-            
-            if (!obj) {
-                alert('Could not parse the file as it is not in a valid JSON format.\nCheck your browser console for more information.');
-                return;
-            }
-            
-            // visualize the object
-            DATA_LOAD.visualizeObject(obj);
+            DATA_LOAD.parseJSON(_.target(e).result);
             
         }
         
+    },
+    
+    // parses a string into a JSON object,
+    // then sends the object to visualizeObject()
+    parseJSON : function (str, suppressWarning) {
+            
+        // generate an object from JSON string
+        let obj = _.parseJSON(str);
+
+        if (!obj) {
+            
+            if (!(suppressWarning === true)) {
+                alert('Could not parse the file as it is not in a valid JSON format.\nCheck your browser console for more information.');
+            }
+            
+            return;
+        }
+
+        // visualize the object
+        DATA_LOAD.visualizeObject(obj);
+                
     },
     
     
@@ -739,6 +751,16 @@ var MAIN = {
         // load parts
         NAV.initialize();
         DATA_LOAD.initialize();
+        
+        // load example data set as chart
+        const request = new XMLHttpRequest();
+        const example_json = 'data/example.json';
+        request.open('GET', example_json);
+        request.send();
+
+        request.onreadystatechange = function (e) {
+            DATA_LOAD.parseJSON(request.responseText, true);
+        }
         
     }
     
