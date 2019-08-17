@@ -80,6 +80,8 @@ var DATA_LOAD = {
     },
     column_chart : null,
     
+    
+    
     /* GENERAL */
     
     initialize : function () {
@@ -521,7 +523,7 @@ var DATA_LOAD = {
             // current data point
             let curr = data_points[i];
             
-            // put current value into array
+            // put current value into array as a string
             let num = upscaled_data_points.length;
             upscaled_data_points[num] = curr;
             
@@ -555,6 +557,9 @@ var DATA_LOAD = {
  */
 var ANIMATOR = {
     
+    // HTML element displaying current value
+    current_value_elem : null,
+    
     is_running : false,
     time : 1,
     
@@ -567,11 +572,21 @@ var ANIMATOR = {
     loop : null,
     
     // object holding the animation data
-    data : null,
+    data : {},
     
     // object holding references to column HTML nodes
-    columns : null,
+    columns : {},
     column_num : 0,
+    
+    
+    
+    /* GENERAL */
+    
+    initialize : function () {
+        
+        this.current_value_elem = _.id('data-set-current-value');
+        
+    },
     
     
     
@@ -690,6 +705,11 @@ var ANIMATOR = {
             return;
         }
         
+        // set current value
+        if ($.current % 50 == 0) {
+            $.current_value_elem.innerHTML = parseInt($.from) + ($.current == 0 ? 0 : $.current / 50);
+        }
+        
         $.updateTotalChart();
         $.updateIndividualCharts();
         
@@ -752,6 +772,7 @@ var MAIN = {
         // load parts
         NAV.initialize();
         DATA_LOAD.initialize();
+        ANIMATOR.initialize();
         
         // load example data set as chart
         const request = new XMLHttpRequest();

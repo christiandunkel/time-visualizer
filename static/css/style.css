@@ -1055,7 +1055,31 @@ nav button.secondary:hover {
     font-size: 14px; line-height: 20px;
 }
 
+#data-set-current-value {
+    max-width: 100%; padding: 15px 0 8px 50px;
+    opacity: .5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    text-align: left; font-size: 70px; letter-spacing: 1px; font-weight: 700;
+}
+
+@media (max-width: 750px) {
+    
+    #data-set-current-value {
+        padding: 10px 0 6px 50px;
+        font-size: 50px;
+    }
+    
+}
+
 @media (max-width: 550px) {
+    
+    #data-set-current-value {
+        padding: 10px 0 6px 50px;
+        font-size: 35px;
+    }
     
     #data-set-info {
         padding-top: 17px;
@@ -1069,6 +1093,15 @@ nav button.secondary:hover {
     #data-set-info .version,
     #data-set-info .date {
         line-height: 30px;
+    }
+    
+}
+
+@media (max-width: 350px) {
+    
+    #data-set-current-value {
+        padding: 5px 0 3px 50px;
+        font-size: 22px;
     }
     
 }
