@@ -293,7 +293,7 @@ var DATA_LOAD = {
         reader.onload = function (e) {
             
             // generate an object from JSON string
-            DATA_LOAD.parseJSON(_.target(e).result);
+            DATA_LOAD.parseJSON(_.target(e).result, true);
             
         }
         
@@ -301,7 +301,7 @@ var DATA_LOAD = {
     
     // parses a string into a JSON object,
     // then sends the object to visualizeObject()
-    parseJSON : function (str) {
+    parseJSON : function (str, showConfirmation) {
             
         // generate an object from JSON string
         let obj = _.parseJSON(str);
@@ -315,7 +315,7 @@ var DATA_LOAD = {
         }
 
         // visualize the object
-        DATA_LOAD.visualizeObject(obj);
+        DATA_LOAD.visualizeObject(obj, showConfirmation);
                 
     },
     
@@ -325,7 +325,7 @@ var DATA_LOAD = {
     
     // takes a data object and creates the corresponding chart,
     // then gives the animator the right animation values
-    visualizeObject : function (obj) {
+    visualizeObject : function (obj, showConfirmation) {
         
         // objects holding animation data and references to the columns
         let ani = {};
@@ -375,8 +375,10 @@ var DATA_LOAD = {
         ANIMATOR.setColumns(columns);
         ANIMATOR.stop();
             
-        // display 'file loaded' animation
-        _.addClass(DATA_LOAD.window, 'file-selected');
+        if (showConfirmation === true) {
+            // display 'file loaded' animation
+            _.addClass(DATA_LOAD.window, 'file-selected');
+        }
         
     },
     
@@ -754,6 +756,8 @@ var ANIMATOR = {
     // update the invidual chart of every key
     updateIndividualCharts : function () {
         
+        // TODO
+        
     }
     
 }
@@ -787,7 +791,7 @@ var MAIN = {
                 let json_text = request.responseText;
 
                 if (json_text != null && json_text != '') {
-                    DATA_LOAD.parseJSON(json_text);
+                    DATA_LOAD.parseJSON(json_text, false);
                 }
 
             }
