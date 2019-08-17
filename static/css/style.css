@@ -1077,7 +1077,7 @@ nav button.secondary:hover {
 @media (max-width: 550px) {
     
     #data-set-current-value {
-        padding: 10px 0 6px 50px;
+        padding: 10px 0 6px 2px;
         font-size: 35px;
     }
     
@@ -1100,7 +1100,7 @@ nav button.secondary:hover {
 @media (max-width: 350px) {
     
     #data-set-current-value {
-        padding: 5px 0 3px 50px;
+        padding-top: 5px; padding-bottom: 3px;
         font-size: 22px;
     }
     
@@ -1191,7 +1191,6 @@ nav button.secondary:hover {
 .column-container .value {
     display: inline-block; 
     position: absolute; top: 50%;
-    max-width: 85%;
     -o-transform: translate(0, -50%);
     -ms-transform: translate(0, -50%);
     -moz-transform: translate(0, -50%);
@@ -1201,20 +1200,26 @@ nav button.secondary:hover {
 
 .column-container .name {
     left: 15px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    font-size: 15px; letter-spacing: .2px; font-weight: 700; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,.6);
+    white-space: nowrap;
+    font-size: 15px; letter-spacing: .2px; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,.8);
 }
 
 .column-container .value {
     left: 100%;
     padding: 0 0 0 8px;
     font-size: 14px; letter-spacing: -.1px; color: #919191;
+    text-overflow: 0 0 3px rgba(0,0,0,.7);
+    
 }
 
 @media (max-width: 550px) {
 
     .column-container {
-        padding-right: 2px;
+        padding-right: 2px; padding-left: 2px;
+    }
+
+    .column-container .icon {
+        display: none;
     }
 
     .column-container .name,
