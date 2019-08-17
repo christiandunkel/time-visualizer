@@ -10,22 +10,34 @@ var NAV = {
     darkmode : false,
     darkmode_btn : null,
     
+    play_btn : null,
+    pause_btn : null,
+    stop_btn : null,
+    
     /* GENERAL */
     
     // add events to navigation buttons
     initialize : function () {
         
-        // get 'load data' button and window
+        // add event to open 'data load' window to 'load data' button
         this.data_load_btn = _.id('load-data');
-        
-        // add event for opening the 'data load' window
         _.addClick(this.data_load_btn, DATA_LOAD.open);
         
-        // get 'dark mode' button
+        // add event for toggling 'dark mode' to button
         this.darkmode_btn = _.id('toggle-darkmode');
-        
-        // add event for toggling the 'dark mode'
         _.addClick(this.darkmode_btn, this.toggle_dark_mode);
+        
+        // add event to start animation to play button
+        this.play_btn = _.id('play-button');
+        _.addClick(this.play_btn, ANIMATOR.play);
+        
+        // add event to pause animation to pause button
+        this.pause_btn = _.id('pause-button');
+        _.addClick(this.pause_btn, ANIMATOR.pause);
+        
+        // add event to pause animation to pause button
+        this.stop_btn = _.id('stop-button');
+        _.addClick(this.stop_btn, ANIMATOR.stop);
         
     },
     
@@ -294,12 +306,17 @@ var DATA_LOAD = {
         
     },
     
+    
+    
+    /* LOAD VISUALIZATION */
+    
     // takes a data object and creates the corresponding chart,
     // then gives the animator the right animation values
     visualizeObject : function (obj) {
         
-        // object holding animation data
+        // objects holding animation data and references to the columns
         let ani = {};
+        let columns = {};
         
         // load information into data set header
         this.data_set_info.title.innerHTML = obj.name;
@@ -316,14 +333,19 @@ var DATA_LOAD = {
                 return;
             }
             
-            // create a column and append it to the chart
+            // filter out bad icon values
             let icon = obj.keys[key].icon;
-            icon = (icon == '' || 
-                    icon == null || 
-                    icon == undefined) 
-                    ? null : icon;
+            icon = _.isString(icon) ? icon : null;
+            
+            // create a column and append it to the chart
             let column = this.getColumn(obj.keys[key].name, icon);
             _.append(this.column_chart, column);
+            
+            // add column to object holding references to columns
+            columns[key] = {
+                'meter' : _.class('meter', column)[0],
+                'value' : _.class('value', column)[0]
+            };
             
             // add key data to animation object
             ani[key] = this.generateDataPointArray(
@@ -337,6 +359,7 @@ var DATA_LOAD = {
         // stop animator and set new values
         ANIMATOR.setRange(obj.range.from, obj.range.to);
         ANIMATOR.setData(ani);
+        ANIMATOR.setColumns(columns);
         ANIMATOR.stop();
             
         // display 'file loaded' animation
@@ -383,6 +406,7 @@ var DATA_LOAD = {
         
     },
     
+    // returns a random color from a pre-defined selection
     getRandomColor : function () {
       
         let colors = [
@@ -463,19 +487,50 @@ var DATA_LOAD = {
             let next = 0;
             // go through all coming values, to find the next valid one
             for (let j = i + 1; j <= to; j++) {
-                console.warn('Key "' + i + '" is missing in JSON file.');
                 if (_.exists(data[j + ""])) {
                     next = data[j + ""];
                     checkForValidValue(next);
                     break;
                 }
             }
-            let average = (prev + next) / 2;
+            // if there's no valid next value, reuse previous value
+            let average = next == 0 ? prev : (prev + next) / 2;
             data_points[data_points.length] = average;
             
         }
         
-        return data_points;
+        // increase values by 50x, by adding values for 0.02, 0.04 to 0.98 between values
+        let upscaled_data_points = [];
+        let len = data_points.length;
+        for (let i = 0; i < len; i++) {
+            
+            // current data point
+            let curr = data_points[i];
+            
+            // put current value into array
+            let num = upscaled_data_points.length;
+            upscaled_data_points[num] = curr;
+            
+            // don't generate 50 new values after last data point
+            if (i == len - 1) {
+                break;
+            }
+            
+            // get next data point and calculate difference
+            let next = data_points[i + 1];
+            let diff = next - curr;
+            let hundreth = diff / 100;
+            
+            // generate 49 values in between current and next value
+            for (let j = 2; j <= 98; j += 2) {
+                let new_point = curr + (j * hundreth);
+                let len = upscaled_data_points.length;
+                upscaled_data_points[len] = new_point;
+            }
+            
+        }
+        
+        return upscaled_data_points;
         
     }
     
@@ -491,6 +546,7 @@ var ANIMATOR = {
     
     from : 0,
     to : 0,
+    
     current : 0,
     
     // holds update loop interval
@@ -499,16 +555,23 @@ var ANIMATOR = {
     // object holding the animation data
     data : null,
     
+    // object holding references to column HTML nodes
+    columns : null,
+    column_num : 0,
+    
     
     
     /* SETTER */
     
     setRange : function (from, to) {
+        
         // set range
         this.from = from;
         this.to = to;
+        
         // reset 'current' value
-        this.current = from;
+        this.current = 0;
+        
     },
     
     setTime : function (time) {
@@ -517,7 +580,15 @@ var ANIMATOR = {
     
     setData : function (obj) {
         this.data = obj;
-        console.log(this.data);
+        
+        // get data point amount (same for every column)
+        let first_key = Object.keys(obj)[0];
+        this.data_point_num = obj[first_key].length;
+    },
+    
+    setColumns : function (obj) {
+        this.columns = obj;
+        this.column_num = Object.keys(obj).length;
     },
     
     
@@ -527,66 +598,123 @@ var ANIMATOR = {
     // start playing animation
     play : function () {
         
-        this.is_running = true;
+        let $ = ANIMATOR;
+        
+        $.is_running = true;
         
         // set classes for use in CSS styles
         _.removeClass(html, 'animation-paused');
         _.addClass(html, 'animation-playing');
         
         // start update loop
-        this.loop = setInterval(this.update, 100);
+        $.loop = setInterval($.update, 40);
         
     },
     
     // pause currently playing animation
     pause : function () {
         
-        this.is_running = false;
+        let $ = ANIMATOR;
+        
+        $.is_running = false;
         
         // set classes for use in CSS styles
         _.removeClass(html, 'animation-playing');
         _.addClass(html, 'animation-paused');
         
         // stop update loop
-        clearInterval(this.loop);
-        this.loop = null;
+        clearInterval($.loop);
+        $.loop = null;
         
     },
     
-    // stop and reset current animation
-    stop : function () {
+    // triggers the end state, where one can not 'unpause', as it will restart, but the animation is still frozen in last frame 
+    end : function () {
+        
+        let $ = ANIMATOR;
         
         // stop animation
-        this.is_running = false;
-        this.current = this.from;
+        $.is_running = false;
+        $.current = 0;
         
         // set classes for use in CSS styles
         _.removeClass(html, 'animation-playing');
         _.addClass(html, 'animation-paused');
         
         // stop update loop
-        clearInterval(this.loop);
-        this.loop = null;
+        clearInterval($.loop);
+        $.loop = null;
+        
+    },
+    
+    // stops animation and resets it to start state
+    stop : function () {
+        
+        let $ = ANIMATOR;
+        
+        // end animation
+        $.end();
         
         // reset current frame to start state
-        this.update();
+        $.update();
         
     },
     
     // generate the current animation frame
     update : function () {
         
-        if (this.data == null) {
+        let $ = ANIMATOR;
+        
+        // never run on faulty data object
+        if ($.data == null) {
             return;
         }
         
-        this.updateTotalChart();
-        this.updateIndividualCharts();
+        // reset after one full round
+        if ($.current >= $.data_point_num) {
+            $.end();
+            return;
+        }
+        
+        $.updateTotalChart();
+        $.updateIndividualCharts();
         
     },
     
     // update chart containing all data
     updateTotalChart : function () {
+        
+        let $ = ANIMATOR;
+        
+        // get min and max value of current frame
+        let min = Number.MAX_VALUE;
+        let max = Number.MIN_VALUE;
+        for (let key in $.data) {
+            let val = $.data[key][$.current];
+            if (val < min) min = val;
+            if (val > max) max = val;
+        }
+        
+        // increase diff between min and max, so min column is always at least 20% of total size
+        let diff = max - min;
+        min -= (diff / 5); // min limit reduced by 20% of difference
+        
+        // set value and then width of column meter
+        for (let key in $.data) {
+            
+            let curr = $.data[key][$.current];
+            $.columns[key].value.innerHTML = curr;
+            
+            _.setStyles($.columns[key].meter, {
+                // (max - min) * x + min = curr
+                // --> x = width
+                'width' : (((curr - min) / (max - min)) * 100) + "%" 
+            });
+            
+        }
+        
+        console.log($.current);
+        $.current++;
         
     },
     

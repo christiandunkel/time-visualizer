@@ -94,6 +94,10 @@ var _ = {
             return console.error('No string given.');
         }
         
+        if (_.isDefined(settings) && !_.isObject(settings)) {
+            return console.error('No valid settings object was provided.');
+        }
+        
         let id = str.match(/#[^\.#\s]+/g);
         let classes = str.match(/\.[^#\s\.]+/g);
         let elem = document.createElement(str.replace(/#[^\.#\s]+|\.[^#\s]+|\s/g,''));
@@ -453,7 +457,7 @@ var _ = {
     // returns value of given css property
     getStyle : function (elem, style) {
         
-        if (_.exists(elem)) {
+        if (!_.exists(elem)) {
             return console.error('Element is not defined.');
         }
         
@@ -469,11 +473,27 @@ var _ = {
         }
         
     },
+    
+    setStyles : function (elem, styles) {
+        
+        if (!_.exists(elem)) {
+            return console.error('Element is not defined.');
+        }
+        
+        if (_.isDefined(styles) && !_.isObject(styles)) {
+            return console.error('No valid styles object was provided.');
+        }
+        
+        for (let name in styles) {
+            elem.style.setProperty(name, styles[name]);
+        }
+        
+    },
 
     // returns element height in pixel
     getHeight : function (elem) {
         
-        if (_.exists(elem)) {
+        if (!_.exists(elem)) {
             return console.error('Element is not defined.');
         }
         
@@ -485,7 +505,7 @@ var _ = {
     // returns element width in pixel
     getWidth : function (elem) {
         
-        if (_.exists(elem)) {
+        if (!_.exists(elem)) {
             return console.error('Element is not defined.');
         }
         
@@ -602,6 +622,10 @@ var _ = {
     
     // parses a JSON string to an object
     parseJSON : function (str) {
+        
+        if (!_.isString(str)) {
+            return console.error('No string was given.');
+        }
 
         let obj = null;
         

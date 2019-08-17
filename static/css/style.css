@@ -1148,10 +1148,10 @@ nav button.secondary:hover {
 }
 
 .animation-playing .column-container .meter {
-    -o-transition: .5s;
-    -moz-transition: .5s;
-    -webkit-transition: .5s;
-    transition: .5s;
+    -o-transition: .1s;
+    -moz-transition: .1s;
+    -webkit-transition: .1s;
+    transition: .1s;
 }
 
 .column-container .name,

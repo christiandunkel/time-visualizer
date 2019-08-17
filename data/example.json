@@ -11,6 +11,18 @@
         "company_2": {
             "name": "Steve's Steaks",
             "icon": "example_icon2.png"
+        },
+        "company_3": {
+            "name": "Cassy's Candies",
+            "icon": "example_icon3.png"
+        },
+        "company_4": {
+            "name": "Lance's Lobsters",
+            "icon": "example_icon4.png"
+        },
+        "company_5": {
+            "name": "Finn's Fish",
+            "icon": "example_icon5.png"
         }
     },
     "range": {
@@ -33,6 +45,21 @@
             "1993": 27300000,
             "1994": 29500000,
             "1995": 34500000
+        },
+        "company_3": {
+            "1990": 11000000,
+            "1995": 50000000
+        },
+        "company_4": {
+            "1990": 41000000,
+            "1991": 42000000,
+            "1995": 36000000
+        },
+        "company_5": {
+            "1990": 12000000,
+            "1992": 15000000,
+            "1993": 19000000,
+            "1995": 25000000
         }
     }
 }
