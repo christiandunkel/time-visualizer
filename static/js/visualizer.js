@@ -761,10 +761,14 @@ var MAIN = {
 
         request.onreadystatechange = function (e) {
             
-            let json = request.responseText;
-            
-            if (json != null && json != '') {
-                DATA_LOAD.parseJSON(request.responseText);
+            if (request.readyState === 4 && request.status === 200) {
+                
+                let json_text = request.responseText;
+
+                if (json_text != null && json_text != '') {
+                    DATA_LOAD.parseJSON(json_text);
+                }
+
             }
             
         }
