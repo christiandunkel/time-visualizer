@@ -501,8 +501,10 @@ var DATA_LOAD = {
             // otherwise, calculate the average of prev & next value
             let prev = data_points[data_points.length - 1];
             let next = 0;
+            let steps = 0;
             // go through all coming values, to find the next valid one
             for (let j = i + 1; j <= to; j++) {
+                steps++;
                 if (_.exists(data[j + ""])) {
                     next = data[j + ""];
                     checkForValidValue(next);
@@ -510,7 +512,7 @@ var DATA_LOAD = {
                 }
             }
             // if there's no valid next value, reuse previous value
-            let average = next == 0 ? prev : (prev + next) / 2;
+            let average = next == 0 ? prev : (prev + next) / (1 + steps);
             data_points[data_points.length] = average;
             
         }
