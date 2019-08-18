@@ -1242,7 +1242,6 @@ nav button.secondary:hover {
     left: 100%;
     padding: 0 0 0 8px;
     font-size: 14px; letter-spacing: -.1px; color: #919191;
-    text-overflow: 0 0 3px rgba(0,0,0,.7);
     
 }
 
@@ -1282,8 +1281,8 @@ nav button.secondary:hover {
     .column-container .value {
         top: auto; bottom: 6px; left: 15px;
         padding: 0;
-        color: white;
-        font-size: 12px;
+        text-shadow: 0 0 3px rgba(0,0,0,.7);
+        color: white; font-size: 12px;
     }
     
 }
