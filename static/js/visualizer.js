@@ -835,9 +835,13 @@ var ANIMATOR = {
             };
         }
         
-        // increase diff between min and max, so min column is always at least 20% of total size
+        // if min value is bigger than 0, set it to 0, to make scaling dependent on range 0 to max
+        if (min > 0) {
+            min = 0;
+        }
+        
+        // increase diff between min and max
         let diff = max - min;
-        min -= (diff / 5); // min limit reduced by 20% of difference
         
         // go through all columns
         for (let key in $.data) {
