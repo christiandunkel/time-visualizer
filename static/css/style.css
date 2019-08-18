@@ -1091,6 +1091,10 @@ nav button.secondary:hover {
     width: 0;
     background: #ff5454; border-radius: 5px;
     color: white;
+    -o-transition: .1s;
+    -moz-transition: .1s;
+    -webkit-transition: .1s;
+    transition: .1s;
 }
 .javascriptOn #data-set-current-value .indicator {
     display: inline-block;
