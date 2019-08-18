@@ -793,7 +793,7 @@ var ANIMATOR = {
         // sort all values from smallest to biggest
         function sortObject(obj, property) {
             return obj.sort(function (a, b) {
-                return a[property] < b[property];
+                return a[property] < b[property] ? 1 : -1;
             });
         }
         let sorted_values = sortObject(all_values, 'value');
