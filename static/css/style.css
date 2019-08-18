@@ -1076,26 +1076,24 @@ nav button.secondary:hover {
 
 #data-set-current-value .value,
 #data-set-current-value .indicator {
-    display: inline-block;
     max-width: 100%; padding: 3px;
     white-space: nowrap; overflow: hidden;
     font-size: inherit; line-height: 1em; letter-spacing: 1px; font-weight: 700;
 }
 
 #data-set-current-value .value {
-    position: relative; z-index: 1;
+    display: inline-block; position: relative; z-index: 1;
     opacity: .5;
-    text-overflow: ellipsis;
 }
 
 #data-set-current-value .indicator {
-    position: absolute; top: 0; left: 0; z-index: 2;
+    display: none; position: absolute; top: 0; left: 0; z-index: 2;
     width: 0;
     background: #ff5454; border-radius: 5px;
     color: white;
 }
-#data-set-current-value .indicator.hidden {
-    display: none;
+.javascriptOn #data-set-current-value .indicator {
+    display: inline-block;
 }
 
 @media (max-width: 750px) {
@@ -1160,11 +1158,11 @@ nav button.secondary:hover {
 .column-container {
     position: relative;
     width: 100%; margin: 2px 0; padding: 2px 122px 2px 50px;
-    text-align: left;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    text-align: left;
     -o-transition: 1s;
     -moz-transition: 1s;
     -webkit-transition: 1s;
@@ -1223,6 +1221,7 @@ nav button.secondary:hover {
 .column-container .value {
     display: inline-block; 
     position: absolute; top: 50%;
+    white-space: nowrap;
     -o-transform: translate(0, -50%);
     -ms-transform: translate(0, -50%);
     -moz-transform: translate(0, -50%);
@@ -1232,7 +1231,6 @@ nav button.secondary:hover {
 
 .column-container .name {
     left: 15px;
-    white-space: nowrap;
     font-size: 15px; letter-spacing: .2px; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,.8);
 }
 
@@ -1284,6 +1282,37 @@ nav button.secondary:hover {
         font-size: 12px;
     }
     
+}
+
+
+
+
+
+/*
+ * ##############
+ * ### FOOTER ###
+ * ##############
+ */
+
+footer {
+    max-width: 1100px; margin: 0 auto; padding: 0 20px;
+    -o-animation: hidden-elem 2s, fade-in 1s 2s;
+    -moz-animation: hidden-elem 2s, fade-in 1s 2s;
+    -webkit-animation: hidden-elem 2s, fade-in 1s 2s;
+    animation: hidden-elem 2s, fade-in 1s 2s;
+}
+
+#chart-number-note {
+    display: none;
+    opacity: .4;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 13px; line-height: 16px;
+}
+.javascriptOn #chart-number-note {
+    display: block;
 }
 
 

@@ -590,7 +590,6 @@ var ANIMATOR = {
         let container = _.id('data-set-current-value');
         this.current_value_elem = _.class('value', container)[0];
         this.current_indicator_elem = _.class('indicator', container)[0];
-        _.removeClass(this.current_indicator_elem, 'hidden');
         
     },
     
@@ -712,6 +711,72 @@ var ANIMATOR = {
         
     },
     
+    number_names : {
+        'Thousand' :          Math.pow(10, 3),
+        'Million' :           Math.pow(10, 6),
+        'Billion' :           Math.pow(10, 9),
+        'Trillion' :          Math.pow(10, 12),
+        'Quadrillion' :       Math.pow(10, 15),
+        'Quintillion' :       Math.pow(10, 18),
+        'Sextillion' :        Math.pow(10, 21),
+        'Septillion' :        Math.pow(10, 24),
+        'Octillion' :         Math.pow(10, 27),
+        'Nonillion' :         Math.pow(10, 30),
+        'Decillion' :         Math.pow(10, 33),
+        'Undecillion' :       Math.pow(10, 36),
+        'Duodecillion' :      Math.pow(10, 39),
+        'Tredecillion' :      Math.pow(10, 42),
+        'Quattuordecillion' : Math.pow(10, 45),
+        'Quindecillion' :     Math.pow(10, 48),
+        'Sexdecillion' :      Math.pow(10, 51),
+        'Septendecillion' :   Math.pow(10, 54),
+        'Octodecillion' :     Math.pow(10, 57),
+        'Novemdecillion' :    Math.pow(10, 60),
+        'Vigintillion' :      Math.pow(10, 63),
+        '*10^66' :            Math.pow(10, 66),
+        '*10^69' :            Math.pow(10, 69),
+        '*10^72' :            Math.pow(10, 72),
+        '*10^75' :            Math.pow(10, 75),
+        '*10^78' :            Math.pow(10, 78),
+        '*10^81' :            Math.pow(10, 81),
+        '*10^84' :            Math.pow(10, 84),
+        '*10^87' :            Math.pow(10, 87),
+        '*10^90' :            Math.pow(10, 90),
+        '*10^93' :            Math.pow(10, 93),
+        '*10^96' :            Math.pow(10, 96),
+        '*10^99' :            Math.pow(10, 99)
+    },
+    
+    // formats a number to its shortened word equivalent, aka 1000000 -> 1.000 Mil
+    formatNumber : function (num) {
+        
+        let $ = ANIMATOR;
+        
+        let word = '';
+        let short = 0;
+        
+        // if number is less than 1 thousand, don't change it
+        if (num < 1000) {
+            return num + '';
+        }
+        
+        // go through number types and assign the most fitting one
+        for (let name in $.number_names) {
+            
+            let value = $.number_names[name];
+            
+            if (num >= value && num < value * 1000) {
+                // round to 1 digit after the comma and append describing name
+                return Number(num / value).toFixed(1) + ' ' + name;
+            }
+            
+        }
+        
+        // if no fitting number name has been found, number is too large to display
+        return '&infin;';
+        
+    },
+    
     // generate the current animation frame
     update : function () {
         
@@ -750,7 +815,7 @@ var ANIMATOR = {
         let $ = ANIMATOR;
         
         
-        /* COLUMN LENGTH */
+        /* COLUMN LENGTH AND VALUE */
         
         // get min and max value of current frame
         let min = Number.MAX_VALUE;
@@ -772,12 +837,14 @@ var ANIMATOR = {
         let diff = max - min;
         min -= (diff / 5); // min limit reduced by 20% of difference
         
-        // set value and then width of column meter
+        // go through all columns
         for (let key in $.data) {
             
+            // set value to column
             let curr = $.data[key][$.current];
-            $.columns[key].value.innerHTML = curr;
+            $.columns[key].value.innerHTML = $.formatNumber(curr);
             
+            // set column length
             _.setStyles($.columns[key].meter, {
                 // (max - min) * x + min = curr
                 // --> x = width
