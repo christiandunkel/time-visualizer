@@ -11,22 +11,63 @@ var _ = {
      */
     
     // select element by id
-    id : function (elem, context) {
-        return (context || document).getElementById(elem);
+    id : function (query) {
+        
+        if (!_.isString(query)) {
+            console.error('No valid query given.');
+            return null;
+        }
+        
+        return document.getElementById(query);
+        
     },
     
     // select element by class
-    class : function (elem, context) {
-        return (context || document).getElementsByClassName(elem);
+    class : function (query, context) {
+        
+        if (!_.isString(query)) {
+            console.error('No valid query given.');
+            return null;
+        }
+        
+        if (_.isDefined(context) && context == null) {
+            console.error('No valid element provided as context (parent of some order). This parameter may is optional and remain empty.');
+            return null;
+        }
+        
+        return (context || document).getElementsByClassName(query);
+        
     },
     
     // select element by tage
-    tag : function (elem, context) {
-        return (context || document).getElementsByTagName(elem);
+    tag : function (query, context) {
+        
+        if (!_.isString(query)) {
+            console.error('No valid query given.');
+            return null;
+        }
+        
+        if (_.isDefined(context) && context == null) {
+            console.error('No valid element provided as context (parent of some order). This parameter may is optional and remain empty.');
+            return null;
+        }
+        
+        return (context || document).getElementsByTagName(query);
+        
     },
     
     // select element by a specific query
     select : function (query, context, callback) {
+        
+        if (!_.exists(child)) {
+            console.error('No valid element given.');
+            return null;
+        }
+        
+        if (_.isDefined(context) && context == null) {
+            console.error('No valid element provided as context (parent of some order). This parameter may is optional and remain empty.');
+            return null;
+        }
         
         // select DOM as context, if context is not properly defined
         if (!('getElementById' in context)) {
@@ -58,7 +99,19 @@ var _ = {
     
     // check if the first element contains the second
     contains : function (parent, child) {
+        
+        if (!_.exists(parent)) {
+            console.error('No valid parent element given.');
+            return null;
+        }
+        
+        if (!_.exists(child)) {
+            console.error('No valid child element given.');
+            return null;
+        }
+        
         return (parent == child ? false : parent.contains(child));
+        
     },
     
     // check if an element is defined, and optionally find it in DOM
@@ -73,7 +126,7 @@ var _ = {
             return false;
         }
         
-        return lookInDOM ? document.body.contains(elem) : true;
+        return lookInDOM === true ? document.body.contains(elem) : true;
         
     },
     

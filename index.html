@@ -127,16 +127,20 @@
             </div>
             
             <div class="no-file-selected">
+                
+                <div id="example-set-area">
 
-                <div class="heading">Select a data set...</div>
+                    <div class="heading">Select a data set...</div>
 
-                <button class="data-set-btn" onclick="load_data_set('global-imports.json')">Global Imports</button>
+                    <button class="data-set-btn" onclick="load_data_set('global-imports.json')">Global Imports</button>
 
-                <button class="data-set-btn" onclick="load_data_set('global-exports.json')">Global Exports</button>
+                    <button class="data-set-btn" onclick="load_data_set('global-exports.json')">Global Exports</button>
 
-                <div class="or">or</div>
+                    <div class="or">or</div>
+                    
+                </div>
 
-                <div id="file-reader-notice" class="notice red hidden">FileReader API must be supported by your browser!</div>
+                <div id="file-reader-notice" class="notice red hidden">FileReader API must be supported by your browser to load files!</div>
 
                 <div id="drop-area">
 
@@ -170,7 +174,7 @@
             
         </div>
         
-        <div id="data-set-current-value">
+        <div id="data-set-current-value" class="hidden">
             <div class="container">
                 <div class="value"></div>
                 <div class="indicator"></div>

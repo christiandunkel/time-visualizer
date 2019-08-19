@@ -70,6 +70,7 @@ var DATA_LOAD = {
     drop_area : null,
     select_file_input : null,
     
+    window_example_sets_area : null,
     file_reader_notice : null,
     
     // elements of data set info header
@@ -86,8 +87,11 @@ var DATA_LOAD = {
     
     initialize : function () {
         
+        /* DATA LOAD WINDOW */
+        
         // get window element
         this.window = _.id('data-load-window');
+        this.window_example_sets_area = _.id('example-set-area'); 
         
         // get closing cross button inside window
         this.close_btn = _.class('close', this.window)[0];
@@ -101,6 +105,10 @@ var DATA_LOAD = {
         
         // initialize the drag'n'drop area for files in the window
         this.initializeDropArea();
+        
+        
+        
+        /* CHART */
         
         // get elements of data set info header
         let context = _.id('data-set-info');
@@ -293,7 +301,7 @@ var DATA_LOAD = {
         reader.onload = function (e) {
             
             // generate an object from JSON string
-            DATA_LOAD.parseJSON(_.target(e).result, true);
+            DATA_LOAD.parseJSON(_.target(e).result);
             
         }
         
@@ -301,7 +309,7 @@ var DATA_LOAD = {
     
     // parses a string into a JSON object,
     // then sends the object to visualizeObject()
-    parseJSON : function (str, showConfirmation) {
+    parseJSON : function (str) {
             
         // generate an object from JSON string
         let obj = _.parseJSON(str);
@@ -310,12 +318,12 @@ var DATA_LOAD = {
         if (!obj) {
             
             alert('Could not parse the file as it is not in a valid JSON format.\nCheck your browser console for more information.');
-            return;
+            return false;
             
         }
 
         // visualize the object
-        DATA_LOAD.visualizeObject(obj, showConfirmation);
+        DATA_LOAD.visualizeObject(obj, true);
                 
     },
     
@@ -332,9 +340,10 @@ var DATA_LOAD = {
         let columns = {};
         
         // load information into data set header
-        this.data_set_info.title.innerHTML = obj.name;
-        this.data_set_info.version.innerHTML = obj.version;
-        this.data_set_info.date.innerHTML = obj.date;
+        let info = this.data_set_info;
+        info.title.innerHTML = obj.name;
+        info.version.innerHTML = obj.version;
+        info.date.innerHTML = obj.date;
         
         // empty chart of current columns
         _.empty(this.column_chart);
@@ -384,6 +393,9 @@ var DATA_LOAD = {
             // display 'file loaded' animation
             _.addClass(DATA_LOAD.window, 'file-selected');
         }
+        
+        // un-hide the 'data-set-current-value' HTML node
+        _.removeClass(ANIMATOR.current_value.container, 'hidden');
         
     },
     
@@ -560,8 +572,11 @@ var DATA_LOAD = {
 var ANIMATOR = {
     
     // HTML element displaying 'current' value
-    current_value_elem : null,
-    current_indicator_elem : null,
+    current_value : {
+        container : null,
+        value : null,
+        indicator : null
+    },
     
     is_running : false,
     time : 1,
@@ -588,10 +603,12 @@ var ANIMATOR = {
     
     initialize : function () {
         
+        let $ = this.current_value;
+        
         // get HTML node holding 'current' data value
-        let container = _.id('data-set-current-value');
-        this.current_value_elem = _.class('value', container)[0];
-        this.current_indicator_elem = _.class('indicator', container)[0];
+        $.container = _.id('data-set-current-value');
+        $.value = _.class('value', $.container)[0];
+        $.indicator = _.class('indicator', $.container)[0];
         
     },
     
@@ -798,11 +815,11 @@ var ANIMATOR = {
         // set current value
         if ($.current % 50 == 0) {
             let curr_val = parseInt($.from) + ($.current == 0 ? 0 : $.current / 50);
-            $.current_value_elem.innerHTML = curr_val;
-            $.current_indicator_elem.innerHTML = curr_val;
+            $.current_value.value.innerHTML = curr_val;
+            $.current_value.indicator.innerHTML = curr_val;
         }
         // set current indicator's width
-        _.setStyles($.current_indicator_elem, {
+        _.setStyles($.current_value.indicator, {
             'width': ($.current % 50 * 2) + '%'
         });
         
@@ -921,11 +938,25 @@ var MAIN = {
                 let json_text = request.responseText;
 
                 if (json_text != null && json_text != '') {
-                    DATA_LOAD.parseJSON(json_text, false);
+                    let json_obj = _.parseJSON(json_text);
+                    DATA_LOAD.visualizeObject(json_obj);
                 }
 
             }
             
+        }
+        
+        request.onerror = function (e) {
+            let error_msg = _.create('div.notice.red', {
+                'innerHTML': 'Loading the example data set failed. Are you running this project locally on your system? Try using the <i>Load data</i> button.'
+            });
+            _.append(DATA_LOAD.column_chart, error_msg);
+            
+            let warning = _.create('div.notice.red', {
+                'innerHTML': 'You may currently run this project locally on your computer. This restricts you to only selecting local files as data sets, excluding directly loading the online examples.'
+            });
+            _.empty(DATA_LOAD.window_example_sets_area);
+            _.append(DATA_LOAD.window_example_sets_area, warning);
         }
         
     }
