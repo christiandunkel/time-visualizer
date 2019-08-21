@@ -18,11 +18,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     
     <script type="text/javascript">
-    
-        let html = document.getElementsByTagName('html')[0];
         
-        html.className = html.className.replace(/javascriptOff/, 'javascriptOn');
-    
+        // set 'javascriptOn' class
+        (function () {
+            let html = document.getElementsByTagName('html')[0];
+            html.className = html.className.replace(/javascriptOff/, 'javascriptOn');
+        })();
+        
     </script>
     
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
@@ -197,7 +199,7 @@
         
         <!-- bottom of charts --> 
         
-        <div id="chart-number-note">*Number names have been assigned using the <a href="https://en.wikipedia.org/wiki/Names_of_large_numbers">short scale</a> used in American and modern British English.</div>
+        <div id="chart-number-note">* Number names have been assigned using the <a href="https://en.wikipedia.org/wiki/Names_of_large_numbers">short scale</a> used in American -/ British English.</div>
     
     </footer>
     

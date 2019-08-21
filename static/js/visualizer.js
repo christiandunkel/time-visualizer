@@ -880,7 +880,7 @@ var ANIMATOR = {
         
         /* COLUMN ORDER */
         
-        // sort all values from smallest to biggest
+        // sort all values in object after property, from smallest to biggest
         function sortObject(obj, property) {
             return obj.sort(function (a, b) {
                 return a[property] < b[property] ? 1 : -1;
@@ -888,6 +888,7 @@ var ANIMATOR = {
         }
         let sorted_values = sortObject(all_values, 'value');
         
+        // move columns up and down to their new positions
         for (let i = 0; i < $.column_num; i++) {
             let column = $.columns[sorted_values[i].key];
             let transform_by = (i - column.start_order) * $.pixels_between_columns;
@@ -920,17 +921,18 @@ var MAIN = {
         window.head = _.tag('head')[0];
         window.body = _.tag('body')[0];
 
-        // load parts
+        // load all parts
         NAV.initialize();
         DATA_LOAD.initialize();
         ANIMATOR.initialize();
         
-        // load example data set as chart
+        // load example data set from Github
         const request = new XMLHttpRequest();
         const example_json = 'data/example.json';
         request.open('GET', example_json);
         request.send();
 
+        // when received, transform the JSON into a chart
         request.onreadystatechange = function (e) {
             
             if (request.readyState === 4 && request.status === 200) {
@@ -946,17 +948,22 @@ var MAIN = {
             
         }
         
+        // on failed http request, load error messages
         request.onerror = function (e) {
+            
+            // error message on main page
             let error_msg = _.create('div.notice.red', {
                 'innerHTML': 'Loading the example data set failed. Are you running this project locally on your system? Try using the <i>Load data</i> button.'
             });
             _.append(DATA_LOAD.column_chart, error_msg);
             
-            let warning = _.create('div.notice.red', {
+            // warning message in 'data load' window
+            let warning = _.create('div.notice.blue', {
                 'innerHTML': 'You may currently run this project locally on your computer. This restricts you to only selecting local files as data sets, excluding directly loading the online examples.'
             });
             _.empty(DATA_LOAD.window_example_sets_area);
             _.append(DATA_LOAD.window_example_sets_area, warning);
+            
         }
         
     }
