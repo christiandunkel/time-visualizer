@@ -176,6 +176,18 @@ small {
 /* ### General ### */
 /* ############### */
 
+::-webkit-scrollbar {
+    width: 10px; height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #cbcbcb;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #5d5d5d;
+}
+
 html {
     min-height: 100%;
     -ms-text-size-adjust: none;
