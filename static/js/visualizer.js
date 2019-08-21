@@ -918,6 +918,7 @@ var MAIN = {
     initialize : function () {
         
         // set globals
+        window.html = _.tag('html')[0];
         window.head = _.tag('head')[0];
         window.body = _.tag('body')[0];
 
@@ -959,7 +960,7 @@ var MAIN = {
             
             // warning message in 'data load' window
             let warning = _.create('div.notice.blue', {
-                'innerHTML': 'You may currently run this project locally on your computer. This restricts you to only selecting local files as data sets, excluding directly loading the online examples.'
+                'innerHTML': 'You may currently run this project locally on your computer. This restricts you from selecting local files as data sets, excluding directly loading online examples.'
             });
             _.empty(DATA_LOAD.window_example_sets_area);
             _.append(DATA_LOAD.window_example_sets_area, warning);
