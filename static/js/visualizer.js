@@ -908,7 +908,7 @@ var ANIMATOR = {
 }
 
 /*
- * main method, called on page load
+ * main controller, called on page load
  */
 var MAIN = {
     
@@ -924,11 +924,18 @@ var MAIN = {
         DATA_LOAD.initialize();
         ANIMATOR.initialize();
         
+        let request = null;
+        
         // load example data set from Github
-        const request = new XMLHttpRequest();
-        const example_json = 'data/example.json';
-        request.open('GET', example_json);
+        request = new XMLHttpRequest();
+        request.open('GET', 'data/example.json');
         request.send();
+        
+        // request may fail with error when used locally on certain browsers
+        if (request.status === 0) {
+            MAIN.showXMLHttpWarnings();
+            return;
+        }
 
         // when received, transform the JSON into a chart
         request.onreadystatechange = function (e) {
@@ -947,22 +954,24 @@ var MAIN = {
         }
         
         // on failed http request, load error messages
-        request.onerror = function (e) {
-            
-            // error message on main page
-            let error_msg = _.create('div.notice.red', {
-                'innerHTML': '<b>Loading the example data set failed.</b><br />Are you running this project locally on your system? Try using the <i>Load data</i> button.'
-            });
-            _.append(DATA_LOAD.column_chart, error_msg);
-            
-            // warning message in 'data load' window
-            let warning = _.create('div.notice.blue', {
-                'innerHTML': 'You may currently run this project locally on your computer. This restricts you from selecting local files as data sets, excluding directly loading online examples.'
-            });
-            _.empty(DATA_LOAD.window_example_sets_area);
-            _.append(DATA_LOAD.window_example_sets_area, warning);
-            
-        }
+        request.onerror = MAIN.showXMLHttpWarnings;
+        
+    },
+    
+    showXMLHttpWarnings : function () {
+        
+        // error message on main page
+        let error_msg = _.create('div.notice.red', {
+            'innerHTML': '<b>Loading the example data set failed.</b><br />Are you running this project locally on your system? Try using the <i>Load data</i> button.'
+        });
+        _.append(DATA_LOAD.column_chart, error_msg);
+
+        // warning message in 'data load' window
+        let warning = _.create('div.notice.blue', {
+            'innerHTML': 'You may currently run this project locally on your computer. This restricts you from selecting local files as data sets, excluding directly loading online examples.'
+        });
+        _.empty(DATA_LOAD.window_example_sets_area);
+        _.append(DATA_LOAD.window_example_sets_area, warning);
         
     }
     
