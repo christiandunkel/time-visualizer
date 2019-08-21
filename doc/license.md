@@ -11,9 +11,9 @@
 
 **(2) You are not allowed to**:
 
-- copy large parts of the code base or this project in its entirety for private and commercial purposes
+- copy large parts of the code base or this project in its entirety for commercial purposes
 - reuse images or logos used in this project
-- to do anything not explicitely mentioned to be permitted under point (1)
+- do anything not explicitely mentioned to be permitted under point *(1)*
 
 ## External Resources
 
