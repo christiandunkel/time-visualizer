@@ -206,6 +206,20 @@ html *:before {
     box-sizing: border-box;
 }
 
+html a {
+    color: #6f6f6f; font-style: normal; text-decoration: underline;
+}
+html.darkMode a {
+    color: #b9b9b9;
+}
+
+html a:hover {
+    background: #ebebeb;
+}
+html.darkMode a:hover {
+    background: #585858;
+}
+
 body {
     position: relative;
     min-height: 100%; margin: 0 auto;
@@ -1311,8 +1325,29 @@ footer {
     user-select: none;
     font-size: 13px; line-height: 16px;
 }
+
 .javascriptOn #chart-number-note {
     display: block;
+}
+
+#bottom-logo {
+    width: 100px; height: 100px; margin: 60px auto 20px auto;
+    background: url('../img/raster/logo_bottom_grey.png') no-repeat center;
+}
+
+#bottom-links {
+    margin: 20px 0 50px 0;
+    opacity: .7;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    text-align: center; font-size: 12px; line-height: 14px;
+}
+
+#bottom-links a {
+    display: inline-block;
+    margin: 0 2px; padding: 2px;
 }
 
 
