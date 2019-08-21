@@ -297,13 +297,8 @@ header {
 }
 
 header #logo {
-    display: inline-block; float: left;
-    width: 40px; height: 40px; margin: 0 10px 0 0;
-    background: url('../img/favicon/favicon_512x512.png') no-repeat center left;
-    -o-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -webkit-background-size: 100% 100%;
-    background-size: 100% 100%;
+    display: block; float: left;
+    width: 50px; height: 50px; margin: 0 10px 0 0;
     -o-animation: fade-in-logo 2s;
     -moz-animation: fade-in-logo 2s;
     -webkit-animation: fade-in-logo 2s;
@@ -1323,7 +1318,7 @@ footer {
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-    font-size: 13px; line-height: 16px;
+    text-align: center; font-size: 13px; line-height: 16px;
 }
 
 .javascriptOn #chart-number-note {
@@ -1331,6 +1326,7 @@ footer {
 }
 
 #bottom-logo {
+    display: block;
     width: 100px; height: 100px; margin: 60px auto 20px auto;
     background: url('../img/raster/logo_bottom_grey.png') no-repeat center;
 }

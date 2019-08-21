@@ -17,4 +17,4 @@
 
 ## External Resources
 
-Resources not specifically created for this project that are provided by third parties may be used according to the license(s) provided by the third party.
+Resources not specifically created for this project that are provided by third parties may be used according to the license*(s)* provided by the third party.

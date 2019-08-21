@@ -951,7 +951,7 @@ var MAIN = {
             
             // error message on main page
             let error_msg = _.create('div.notice.red', {
-                'innerHTML': 'Loading the example data set failed. Are you running this project locally on your system? Try using the <i>Load data</i> button.'
+                'innerHTML': '<b>Loading the example data set failed.</b><br />Are you running this project locally on your system? Try using the <i>Load data</i> button.'
             });
             _.append(DATA_LOAD.column_chart, error_msg);
             
