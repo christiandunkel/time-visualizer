@@ -1032,25 +1032,19 @@ nav button.secondary:hover {
     border-color: #4b4b4b;
 }
 
-#data-set-info .title {
-    display: inline-block; float: left;
-    max-width: 350px; margin: 0 10px 0 0;
+#data-set-info > * {
+    display: inline-block;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+#data-set-info .title {
+    max-width: 350px; margin: 0 10px 0 0;
     font-size: 17px; font-weight: 100;
-}
-
-#data-set-info .version {
-    opacity: .8;
-    font-size: 15px;
-    line-height: 20px;
-}
-
-#data-set-info .version:before {
-    content: 'v';
 }
 
 #data-set-info .date {
     float: right;
+    max-width: 100px;
     opacity: .6;
     font-size: 14px; line-height: 20px;
 }
@@ -1125,8 +1119,8 @@ nav button.secondary:hover {
         width: 100%;
     }
     
-    #data-set-info .version,
     #data-set-info .date {
+        float: none;
         line-height: 30px;
     }
     
@@ -1212,6 +1206,8 @@ nav button.secondary:hover {
     position: relative;
     min-width: 1%; width: 100%; height: 44px;
     background: #67a2ff; border-radius: 5px;
+    -moz-box-shadow: 2px 2px 1px rgba(159, 159, 159, 0.43);
+    -webkit-box-shadow: 2px 2px 1px rgba(159, 159, 159, 0.43);
     box-shadow: 2px 2px 1px rgba(159, 159, 159, 0.43);
 }
 

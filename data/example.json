@@ -1,7 +1,5 @@
 {
-    "id": "000-000-001",
-    "name": "Company Revenue 1990-1995",
-    "version" : 1.0,
+    "name": "Company Revenue from 1990 to 1995",
     "date": "2019-08-11",
     "keys": {
         "company_1": {

@@ -76,7 +76,6 @@ var DATA_LOAD = {
     // elements of data set info header
     data_set_info : {
         title : null,
-        version : null,
         date : null
     },
     column_chart : null,
@@ -113,7 +112,6 @@ var DATA_LOAD = {
         // get elements of data set info header
         let context = _.id('data-set-info');
         this.data_set_info.title = _.class('title', context)[0];
-        this.data_set_info.version = _.class('version', context)[0];
         this.data_set_info.date = _.class('date', context)[0];
         
         // get container for column chart
@@ -342,7 +340,6 @@ var DATA_LOAD = {
         // load information into data set header
         let info = this.data_set_info;
         info.title.innerHTML = obj.name;
-        info.version.innerHTML = obj.version;
         info.date.innerHTML = obj.date;
         
         // empty chart of current columns
