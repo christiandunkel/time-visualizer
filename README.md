@@ -1,9 +1,14 @@
 
 # Time Visualizer
 
-This web tool accepts all *.json* files data sets in a given format, and visualizes them on a web page. Keys in the data set will be visually compared with each other, which includes all changes to the values over the range of indicators or time defined in the data set.
+This web app visualizes `.json` data sets. Keys (for example *years*) in the data set will be visually compared, which includes all changes to the values over a range of time as defined in the data set.
 
-Visit the *online demo* [here](https://christiandunkel.github.io/time-visualizer/)!
+## Try it out:
+
+You can download the project and use it locally on your machine, or on a local server. You may also visit the *online demo* by clicking on the following button:
+
+[![Show the online demo](/doc/img/online_demo_button.png)](https://christiandunkel.github.io/time-visualizer/)
 
 ## Links
 - [Credits](/doc/credits.md)
+- [License](/doc/license.md)
