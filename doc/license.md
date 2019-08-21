@@ -13,8 +13,8 @@
 
 - copy large parts of the code base or this project in its entirety for commercial purposes
 - reuse images or logos used in this project
-- do anything not explicitely mentioned to be permitted under point *(1)*
+- do anything not explicitely mentioned to be permitted under point **(1)**
 
 ## External Resources
 
-Resources not specifically created for this project that are provided by third parties may be used according to the license*(s)* provided by the third party.
+Resources not specifically created for this project that are provided by third parties may be used according to the license(s) provided by the third party.
