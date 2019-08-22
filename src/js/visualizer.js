@@ -840,7 +840,11 @@ var ANIMATOR = {
     initialize : function () {
         
         // canvas needs to be updated on size changes
-        _.addEvent(window, 'resize', this.refreshFrame);
+        _.addEvent(window, 'resize', function () {
+            if (NAV.individual_chart_opened) {
+                ANIMATOR.refreshFrame();
+            }
+        });
         
         // add events for individual chart menu
         _.addClick(NODE.back_to_column_chart_btn, NAV.showColumnChart);
@@ -1352,7 +1356,7 @@ var ANIMATOR = {
         }
         
         // draw time indicator line
-        if ($.current != 0) {
+        if ($.current != 0 && $.current != $.data_point_num - 1) {
 
             // set drawing color
             context.strokeStyle = '#e26565';
