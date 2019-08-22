@@ -198,7 +198,7 @@ html {
     -moz-osx-font-smoothing: auto; /* firefox font smoothing */ 
     -webkit-font-smoothing: subpixel-antialiased; /* chrome, opera, safari, etc. */
     scroll-behavior: smooth; /* prevent instant scroll, enable smooth movement */
-    background: #fdfdfd;
+    background: #fafafa;
     font-family: 'Arial', sans-serif; color: #484848;
     -o-transition: .2s;
     -moz-transition: .2s;
@@ -249,7 +249,7 @@ body {
 
 #top-area {
     margin: 0 0 70px 0; padding: 20px;
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wgOFCkeKc1WWgAAAS9JREFUeNrt3cENg0AQBMFLkwgvTb6EgKarMthp2eZjcQ4AAAAAAPzMvfexwvj2Igc+WCIHthY5sLHIgW1FDmwqcmBLkQMbihzYTuTAZiIHthI5sJHIgW1EDmwicmALkQMblCNnbi9Gzt1cOjj7rVU4PP/csTyAh8rhIcQdHkTc4WHEHR5I3OGhxB0eTNzh4cQdHlDc4SHFHR5U3OFhxR0eWNzhocUdHlxcAAAAAAAAAAAAAACAFH9dEVdkcUUWV+TesCIHBhU5MKTIgQFFDgwncmAwkQNDiRwYSOTAMCIHBhE5MIR3JnkxlsPd6mA3O9TtDrSBw2whbm8TcYe3EXd4I3GHtxJ3eDNxh7cTd3hDcYe3FHd4U3GHtxV3eGNxh7cWdziyuH4SAQAAAADg6wXopUK4vogTHAAAAABJRU5ErkJggg==') center;
+    background: #edf0f4 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wgOFCkeKc1WWgAAAS9JREFUeNrt3cENg0AQBMFLkwgvTb6EgKarMthp2eZjcQ4AAAAAAPzMvfexwvj2Igc+WCIHthY5sLHIgW1FDmwqcmBLkQMbihzYTuTAZiIHthI5sJHIgW1EDmwicmALkQMblCNnbi9Gzt1cOjj7rVU4PP/csTyAh8rhIcQdHkTc4WHEHR5I3OGhxB0eTNzh4cQdHlDc4SHFHR5U3OFhxR0eWNzhocUdHlxcAAAAAAAAAAAAAACAFH9dEVdkcUUWV+TesCIHBhU5MKTIgQFFDgwncmAwkQNDiRwYSOTAMCIHBhE5MIR3JnkxlsPd6mA3O9TtDrSBw2whbm8TcYe3EXd4I3GHtxJ3eDNxh7cTd3hDcYe3FHd4U3GHtxV3eGNxh7cWdziyuH4SAQAAAADg6wXopUK4vogTHAAAAABJRU5ErkJggg==') center;
     -o-background-size: 60px 60px;
     -moz-background-size: 60px 60px;
     -webkit-background-size: 60px 60px;
@@ -263,9 +263,10 @@ body {
     animation: fade-in .6s;
 }
 .darkMode #top-area {
-    -moz-box-shadow: 0 2px 16px #131313;
-    -webkit-box-shadow: 0 2px 16px #131313;
-    box-shadow: 0 2px 16px #131313;
+    background-color: #262a31;
+    -moz-box-shadow: 0 2px 16px #0e1722;
+    -webkit-box-shadow: 0 2px 16px #0e1722;
+    box-shadow: 0 2px 16px #0e1722;
 }
 
 main {
@@ -1039,9 +1040,9 @@ nav button.secondary.active {
 
 
 
-/* ###################### */
-/* ### CHART DATA SET ### */
-/* ###################### */
+/* ################# */
+/* ### CHART TOP ### */
+/* ################# */
 
 #data-set-info {
     margin: 50px auto 14px auto; padding: 10px 16px;
@@ -1077,6 +1078,21 @@ nav button.secondary.active {
     font-size: 14px; line-height: 20px;
 }
 
+
+
+
+
+/* ##################### */
+/* ### CHART CONTENT ### */
+/* ##################### */
+
+.content {
+    -o-animation: hidden-elem 1.2s, fade-in .6s 1.2s;
+    -moz-animation: hidden-elem 1.2s, fade-in .6s 1.2s;
+    -webkit-animation: hidden-elem 1.2s, fade-in .6s 1.2s;
+    animation: hidden-elem 1.2s, fade-in .6s 1.2s;
+}
+
 #data-set-current-value {
     padding: 15px 0 8px 50px;
     -ms-user-select: none;
@@ -1084,10 +1100,6 @@ nav button.secondary.active {
     -webkit-user-select: none;
     user-select: none;
     font-size: 70px;
-    -o-animation: hidden-elem 1.05s, fade-in .6s 1.05s;
-    -moz-animation: hidden-elem 1.05s, fade-in .6s 1.05s;
-    -webkit-animation: hidden-elem 1.05s, fade-in .6s 1.05s;
-    animation: hidden-elem 1.05s, fade-in .6s 1.05s;
 }
 #data-set-current-value.hidden {
     display: none;
@@ -1175,10 +1187,6 @@ nav button.secondary.active {
 
 #column-chart {
     width: 100%;
-    -o-animation: hidden-elem 1.2s, fade-in .6s 1.2s;
-    -moz-animation: hidden-elem 1.2s, fade-in .6s 1.2s;
-    -webkit-animation: hidden-elem 1.2s, fade-in .6s 1.2s;
-    animation: hidden-elem 1.2s, fade-in .6s 1.2s;
 }
 
 .column-container {
@@ -1321,10 +1329,10 @@ nav button.secondary.active {
 
 footer {
     max-width: 1100px; margin: 0 auto; padding: 0 20px;
-    -o-animation: hidden-elem 2s, fade-in 1s 2s;
-    -moz-animation: hidden-elem 2s, fade-in 1s 2s;
-    -webkit-animation: hidden-elem 2s, fade-in 1s 2s;
-    animation: hidden-elem 2s, fade-in 1s 2s;
+    -o-animation: hidden-elem 1.5s, fade-in .6s 1.5s;
+    -moz-animation: hidden-elem 1.5s, fade-in .6s 1.5s;
+    -webkit-animation: hidden-elem 1.5s, fade-in .6s 1.5s;
+    animation: hidden-elem 1.5s, fade-in .6s 1.5s;
 }
 
 #chart-number-note {
