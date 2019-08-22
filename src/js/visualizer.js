@@ -829,7 +829,7 @@ var ANIMATOR = {
     // object holding references to column HTML nodes
     columns : {},
     column_num : 0,
-    pixels_between_columns : 0,
+    pixels_between_columns : 52,
     
     individual_chart_keys : [],
     
@@ -905,17 +905,6 @@ var ANIMATOR = {
         
         this.columns = obj;
         this.column_num = Object.keys(obj).length;
-        
-        // if more than one column, they need to be ordered by length
-        if (this.column_num > 1) {
-            
-            // find out the pixel difference in position between two columns
-            let keys = Object.keys(obj);
-            let column_1_top_pos = obj[keys[0]].container.getBoundingClientRect().top;
-            let column_2_top_pos = obj[keys[1]].container.getBoundingClientRect().top;
-            this.pixels_between_columns = Math.abs(column_1_top_pos - column_2_top_pos);
-            
-        }
         
         // set CSS transition effects for animated column length
         this.setCSSTransitions();
@@ -1071,7 +1060,7 @@ var ANIMATOR = {
         }
         
         // if no fitting number name has been found, number is too large to display
-        return '&infin;';
+        return sign + '&infin;';
         
     },
     
