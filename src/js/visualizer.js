@@ -1043,12 +1043,19 @@ var ANIMATOR = {
     // formats a number to its shortened word equivalent, aka 1000000 -> 1.000 Mil
     formatNumber : function (num) {
         
+        let is_negative = num < 0 ? true : false;
+        let sign = is_negative ? '-' : '';
         let word = '';
         let short = 0;
         
+        // make number positive for conversion (re-add minus symbol later)
+        if (is_negative) {
+            num *= -1;
+        }
+        
         // if number is less than 1 thousand, don't change it
         if (num < 1000) {
-            return num + '';
+            return sign + num;
         }
         
         // go through number types and assign the most fitting one
@@ -1058,7 +1065,7 @@ var ANIMATOR = {
             
             if (num >= value && num < value * 1000) {
                 // round to 1 digit after the comma and append describing name
-                return Number(num / value).toFixed(1) + ' ' + name;
+                return sign + Number(num / value).toFixed(1) + ' ' + name;
             }
             
         }
