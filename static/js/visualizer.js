@@ -685,9 +685,11 @@ var ANIMATOR = {
         
         this.time = time;
         
-        // set loop to new time interval
-        this.stopLoop();
-        this.startLoop();
+        // set loop to new time interval if it's currently running
+        if (this.is_running) {
+            this.stopLoop();
+            this.startLoop();
+        }
         
     },
     
