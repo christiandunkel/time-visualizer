@@ -1339,10 +1339,16 @@ nav button.secondary.active {
  * ########################
  */
 
+#individual_chart_menu {
+    width: 100%;
+}
+
+#individual_chart_menu,
 #individual-chart {
     display: none;
 }
 
+#individual_chart_menu.active,
 #individual-chart.active {
     display: block;
 }

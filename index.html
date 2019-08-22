@@ -134,9 +134,9 @@
 
                     <div class="heading">Select a data set...</div>
 
-                    <button class="data-set-btn" onclick="load_data_set('global-imports.json')">Global Imports</button>
+                    <button class="data-set-btn">Global Imports</button>
 
-                    <button class="data-set-btn" onclick="load_data_set('global-exports.json')">Global Exports</button>
+                    <button class="data-set-btn">Global Exports</button>
 
                     <div class="or">or</div>
                     
@@ -178,6 +178,10 @@
         <!-- chart content -->
         
         <div class="content">
+
+
+
+            <!-- all data chart -->
         
             <div id="data-set-current-value" class="hidden">
                 <div class="container">
@@ -186,15 +190,13 @@
                 </div>
             </div>
 
-
-
-            <!-- all data chart -->
-
             <div id="column-chart" class="active"></div>
 
 
 
             <!-- individual data chart -->
+            
+            <div id="individual-chart-menu"></div>
 
             <canvas id="individual-chart" width="1px" height="400px"></canvas>
             

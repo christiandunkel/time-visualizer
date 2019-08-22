@@ -1,13 +1,12 @@
 "use strict";
 /*
- * manages the functionality of the navigation buttons
+ * safes all nodes
  */
-var NAV = {
+var NODE = {
+    
+    /* TOP NAVIGATION */
     
     data_load_btn : null,
-    data_load_window : null,
-    
-    darkmode : false,
     darkmode_btn : null,
     
     play_btn : null,
@@ -20,6 +19,129 @@ var NAV = {
         fast : null,
     },
     
+    initializeNavButtons : function () {
+        
+        this.data_load_btn = _.id('load-data');
+        this.darkmode_btn = _.id('toggle-darkmode');
+        
+        this.play_btn = _.id('play-button');
+        this.pause_btn = _.id('pause-button');
+        this.stop_btn = _.id('stop-button');
+        
+        this.time_btn.slow = _.id('animation-speed-0-5');
+        this.time_btn.normal = _.id('animation-speed-1-0');
+        this.time_btn.fast = _.id('animation-speed-2-0');
+        
+    },
+    
+    
+    
+    /* DATA LOAD WINDOW */
+    
+    data_load_window : null,
+    close_btn : null,
+    blur : null,
+    
+    drop_area : null,
+    select_file_input : null,
+    
+    window_example_sets_area : null,
+    file_reader_notice : null,
+    
+    initializeDataLoadWindow : function () {
+        
+        this.data_load_window = _.id('data-load-window');
+        this.close_btn = _.class('close', this.data_load_window)[0];
+        this.blur = _.class('blur', this.data_load_window)[0]; // dark, transparent background overlay
+        
+        this.window_example_sets_area = _.id('example-set-area');
+        this.file_reader_notice = _.id('file-reader-notice');
+        
+        // get area and input on which user can drop files
+        this.select_file_input = _.id('selected-file');
+        this.drop_area = _.id('drop-area');
+        
+    },
+    
+    
+    
+    /* COLUMN DATA CHART */
+    
+    // HTML element displaying 'current' value
+    current_value : {
+        container : null,
+        value : null,
+        indicator : null
+    },
+    
+    // elements of data set info header
+    data_set_info : {
+        title : null,
+        date : null
+    },
+    column_chart : null,
+    
+    initializeColumnChart : function () {
+        
+        // get elements of data set info header
+        let context = _.id('data-set-info');
+        this.data_set_info.title = _.class('title', context)[0];
+        this.data_set_info.date = _.class('date', context)[0];
+        
+        // get containers for charts
+        this.column_chart = _.id('column-chart');
+        
+        // get HTML node holding 'current' data value
+        let curr = this.current_value;
+        curr.container = _.id('data-set-current-value');
+        curr.value = _.class('value', curr.container)[0];
+        curr.indicator = _.class('indicator', curr.container)[0];
+        
+    },
+    
+    
+    
+    /* INDIVIDUAL DATA CHARTS */
+    
+    individual_chart_menu : null,
+    individual_chart : null,
+    
+    initializeIndividualCharts : function () {
+        
+        // get top menu
+        this.individual_chart_menu = _.id('individual-chart-menu');
+        this.individual_chart = _.id('individual-chart');
+        
+    },
+    
+    
+    
+    /* GENERAL */
+    
+    initialize : function () {
+        
+        // set default HTML nodes
+        this.html = _.tag('html')[0];
+        this.head = _.tag('head')[0];
+        this.body = _.tag('body')[0];
+        
+        // set custom nodes
+        this.initializeNavButtons();
+        this.initializeDataLoadWindow();
+        this.initializeColumnChart();
+        this.initializeIndividualCharts();
+        
+    }
+    
+}
+
+
+/*
+ * manages the functionality of the navigation buttons
+ */
+var NAV = {
+    
+    darkmode : false,
     individual_chart_opened : false,
     
     
@@ -29,33 +151,25 @@ var NAV = {
     // add events to navigation buttons
     initialize : function () {
         
-        // add event to open 'data load' window to 'load data' button
-        this.data_load_btn = _.id('load-data');
-        _.addClick(this.data_load_btn, DATA_LOAD.open);
+        // add event to open 'data load' window
+        _.addClick(NODE.data_load_btn, DATA_LOAD.open);
         
-        // add event for toggling 'dark mode' to button
-        this.darkmode_btn = _.id('toggle-darkmode');
-        _.addClick(this.darkmode_btn, this.toggleDarkMode);
+        // add event for toggling 'dark mode'
+        _.addClick(NODE.darkmode_btn, this.toggleDarkMode);
         
-        // add event to start animation to play button
-        this.play_btn = _.id('play-button');
-        _.addClick(this.play_btn, ANIMATOR.play);
+        // add event to start animation
+        _.addClick(NODE.play_btn, ANIMATOR.play);
         
-        // add event to pause animation to pause button
-        this.pause_btn = _.id('pause-button');
-        _.addClick(this.pause_btn, ANIMATOR.pause);
+        // add event to pause animation
+        _.addClick(NODE.pause_btn, ANIMATOR.pause);
         
-        // add event to pause animation to pause button
-        this.stop_btn = _.id('stop-button');
-        _.addClick(this.stop_btn, ANIMATOR.stop);
+        // add event to stop animation
+        _.addClick(NODE.stop_btn, ANIMATOR.stop);
         
         // add events to time change buttons
-        this.time_btn.slow = _.id('animation-speed-0-5');
-        _.addClick(this.time_btn.slow, NAV.setHalvedTime);
-        this.time_btn.normal = _.id('animation-speed-1-0');
-        _.addClick(this.time_btn.normal, NAV.setNormalTime);
-        this.time_btn.fast = _.id('animation-speed-2-0');
-        _.addClick(this.time_btn.fast, NAV.setDoubledTime);
+        _.addClick(NODE.time_btn.slow, NAV.setHalvedTime);
+        _.addClick(NODE.time_btn.normal, NAV.setNormalTime);
+        _.addClick(NODE.time_btn.fast, NAV.setDoubledTime);
         
     },
     
@@ -71,7 +185,9 @@ var NAV = {
     
     // set a button active, and all others inactive
     setExclusiveActive : function (btn) {
-        let btns = this.time_btn;
+        
+        let btns = NODE.time_btn;
+        
         for (let key in btns) {
             if (btns[key] === btn) {
                 this.setActive(btns[key]);
@@ -80,6 +196,7 @@ var NAV = {
                 this.setInactive(btns[key]);
             }
         }
+        
     },
     
     // toggle the currently opened chart
@@ -97,17 +214,31 @@ var NAV = {
     },
     
     showColumnChart : function () {
+        
         NAV.individual_chart_opened = false;
-        _.addClass(DATA_LOAD.column_chart, 'active');
-        _.removeClass(DATA_LOAD.individual_chart, 'active');
+        
+        // hide individual charts and show column chart
+        _.addClass(NODE.column_chart, 'active');
+        _.removeClass(NODE.current_value.container, 'hidden');
+        _.removeClass(NODE.individual_chart, 'active');
+        
+        // update charts
         ANIMATOR.refreshFrame();
+        
     },
     
     showIndividualChart : function () {
+        
         NAV.individual_chart_opened = true;
-        _.removeClass(DATA_LOAD.column_chart, 'active');
-        _.addClass(DATA_LOAD.individual_chart, 'active');
+        
+        // show individual charts and hide column chart
+        _.removeClass(NODE.column_chart, 'active');
+        _.addClass(NODE.current_value.container, 'hidden');
+        _.addClass(NODE.individual_chart, 'active');
+        
+        // update charts
         ANIMATOR.refreshFrame();
+        
     },
     
     
@@ -121,7 +252,7 @@ var NAV = {
         NAV.darkmode = !NAV.darkmode;
         
         // toggle darkmode class according to value
-        _[(NAV.darkmode ? 'add' : 'remove') + 'Class'](html, 'darkMode');
+        _[(NAV.darkmode ? 'add' : 'remove') + 'Class'](NODE.html, 'darkMode');
         
         // update rendered chart
         ANIMATOR.refreshFrame();
@@ -133,17 +264,17 @@ var NAV = {
     /* TIME */
     
     setHalvedTime : function () {
-        NAV.setExclusiveActive(NAV.time_btn.slow);
+        NAV.setExclusiveActive(NODE.time_btn.slow);
         ANIMATOR.setTime(0.5);
     },
     
     setNormalTime : function () {
-        NAV.setExclusiveActive(NAV.time_btn.normal);
+        NAV.setExclusiveActive(NODE.time_btn.normal);
         ANIMATOR.setTime(1.0);
     },
     
     setDoubledTime : function () {
-        NAV.setExclusiveActive(NAV.time_btn.fast);
+        NAV.setExclusiveActive(NODE.time_btn.fast);
         ANIMATOR.setTime(2.0);
     }
     
@@ -154,62 +285,16 @@ var NAV = {
  */
 var DATA_LOAD = {
     
-    window : null,
-    close_btn : null,
-    blur : null,
-    
-    drop_area : null,
-    select_file_input : null,
-    
-    window_example_sets_area : null,
-    file_reader_notice : null,
-    
-    // elements of data set info header
-    data_set_info : {
-        title : null,
-        date : null
-    },
-    
-    column_chart : null,
-    individual_chart : null,
-    
-    
-    
     /* GENERAL */
     
     initialize : function () {
         
-        /* DATA LOAD WINDOW */
-        
-        // get window element
-        this.window = _.id('data-load-window');
-        this.window_example_sets_area = _.id('example-set-area'); 
-        
-        // get closing cross button inside window
-        this.close_btn = _.class('close', this.window)[0];
-        
-        // get darkened, transparent background area
-        this.blur = _.class('blur', this.window)[0];
-        
         // add 'close window' events
-        _.addClick(this.blur, this.close);
-        _.addClick(this.close_btn, this.close);
+        _.addClick(NODE.blur, this.close);
+        _.addClick(NODE.close_btn, this.close);
         
         // initialize the drag'n'drop area for files in the window
         this.initializeDropArea();
-        
-        
-        
-        /* CHART */
-        
-        // get elements of data set info header
-        let context = _.id('data-set-info');
-        this.data_set_info.title = _.class('title', context)[0];
-        this.data_set_info.date = _.class('date', context)[0];
-        
-        // get containers for charts
-        this.column_chart = _.id('column-chart');
-        this.individual_chart = _.id('individual-chart');
         
     },
     
@@ -217,12 +302,12 @@ var DATA_LOAD = {
     open : function () {
         
         // open window
-        _.addClass(DATA_LOAD.window, 'visible');
+        _.addClass(NODE.data_load_window, 'visible');
         
         // with a little delay, set tab focus on close button
         // if set immediately, will be ignored or buggy
         setTimeout(function () {
-            DATA_LOAD.close_btn.focus();
+            NODE.close_btn.focus();
         }, 100);
         
     },
@@ -231,13 +316,13 @@ var DATA_LOAD = {
     close : function () {
         
         // close window
-        _.removeClass(DATA_LOAD.window, 'visible');
+        _.removeClass(NODE.data_load_window, 'visible');
         
         // close 'file selected' message inside window
-        _.removeClass(DATA_LOAD.window, 'file-selected');
+        _.removeClass(NODE.data_load_window, 'file-selected');
         
         // reset tab focus back to 'data load' button in navigation
-        NAV.data_load_btn.focus();
+        NODE.data_load_btn.focus();
         
     },
     
@@ -250,48 +335,41 @@ var DATA_LOAD = {
         // warn user if FileReader API is not supported
         if (typeof(window.FileReader) !== 'function') {
             
-            // get warning notice
-            this.file_reader_notice = _.id('file-reader-notice');
-            
             // make it visible
-            _.addClass(this.file_reader_notice, 'show');
+            _.addClass(NODE.file_reader_notice, 'show');
             
         }
         
-        // get area on which user can drop a file
-        this.drop_area = _.id('drop-area');
-        
         // prevent default browser actions on drag'n'drop
-        _.addEvent(this.drop_area, 'dragenter', _.preventDefault);
-        _.addEvent(this.drop_area, 'dragover', _.preventDefault);
-        _.addEvent(this.drop_area, 'dragleave', _.preventDefault);
-        _.addEvent(this.drop_area, 'drop', _.preventDefault);
+        _.addEvent(NODE.drop_area, 'dragenter', _.preventDefault);
+        _.addEvent(NODE.drop_area, 'dragover', _.preventDefault);
+        _.addEvent(NODE.drop_area, 'dragleave', _.preventDefault);
+        _.addEvent(NODE.drop_area, 'drop', _.preventDefault);
 
         // add highlight events, if user dragged file on top of area
-        _.addEvent(this.drop_area, 'dragenter', this.highlightDropArea);
-        _.addEvent(this.drop_area, 'dragover', this.highlightDropArea);
+        _.addEvent(NODE.drop_area, 'dragenter', this.highlightDropArea);
+        _.addEvent(NODE.drop_area, 'dragover', this.highlightDropArea);
 
         // unhighlight area if user's cursor with file left or dropped
-        _.addEvent(this.drop_area, 'dragleave', this.unhighlightDropArea);
-        _.addEvent(this.drop_area, 'drop', this.unhighlightDropArea);
+        _.addEvent(NODE.drop_area, 'dragleave', this.unhighlightDropArea);
+        _.addEvent(NODE.drop_area, 'drop', this.unhighlightDropArea);
 
         // add event to handle files dropped on drop area
-        _.addEvent(this.drop_area, 'drop', this.handleDroppedFile);
+        _.addEvent(NODE.drop_area, 'drop', this.handleDroppedFile);
         
         // add event for 'select file' button
-        this.select_file_input = _.id('selected-file');
-        _.addEvent(this.select_file_input, 'change', this.handleSelectedFile)
+        _.addEvent(NODE.select_file_input, 'change', this.handleSelectedFile)
         
     },
     
     // add 'highlight' effect to drop area
     highlightDropArea : function () {
-        _.addClass(DATA_LOAD.drop_area, 'dragged-over');
+        _.addClass(NODE.drop_area, 'dragged-over');
     },
     
     // remove 'highlight' effect from drop area
     unhighlightDropArea : function () {
-        _.removeClass(DATA_LOAD.drop_area, 'dragged-over');
+        _.removeClass(NODE.drop_area, 'dragged-over');
     },
     
     
@@ -432,12 +510,12 @@ var DATA_LOAD = {
         let columns = {};
         
         // load information into data set header
-        let info = this.data_set_info;
+        let info = NODE.data_set_info;
         info.title.innerHTML = obj.name;
         info.date.innerHTML = obj.date;
         
         // empty chart of current columns
-        _.empty(this.column_chart);
+        _.empty(NODE.column_chart);
         
         // load data columns in chart
         let counter = 0;
@@ -454,7 +532,7 @@ var DATA_LOAD = {
                 obj.keys[key].name, 
                 obj.keys[key].icon
             );
-            _.append(this.column_chart, column);
+            _.append(NODE.column_chart, column);
             
             // add column to object holding references to columns
             columns[key] = {
@@ -496,14 +574,14 @@ var DATA_LOAD = {
         ANIMATOR.refreshFrame();
         
         // un-hide the 'data-set-current-value' HTML node
-        _.removeClass(ANIMATOR.current_value.container, 'hidden');
+        _.removeClass(NODE.current_value.container, 'hidden');
         
         // hide individual chart, and only show column chart
         NAV.showColumnChart();
             
         if (showConfirmation === true) {
             // display 'file loaded' animation
-            _.addClass(DATA_LOAD.window, 'file-selected');
+            _.addClass(NODE.data_load_window, 'file-selected');
         }
         
     },
@@ -681,13 +759,6 @@ var DATA_LOAD = {
  */
 var ANIMATOR = {
     
-    // HTML element displaying 'current' value
-    current_value : {
-        container : null,
-        value : null,
-        indicator : null
-    },
-    
     is_running : false,
     time : 1.0,
     
@@ -714,13 +785,6 @@ var ANIMATOR = {
     /* GENERAL */
     
     initialize : function () {
-        
-        let $ = this.current_value;
-        
-        // get HTML node holding 'current' data value
-        $.container = _.id('data-set-current-value');
-        $.value = _.class('value', $.container)[0];
-        $.indicator = _.class('indicator', $.container)[0];
         
         // canvas needs to be updated on size changes
         _.addEvent(window, 'resize', this.refreshFrame);
@@ -811,50 +875,45 @@ var ANIMATOR = {
     
     startLoop : function () {
         
-        let $ = ANIMATOR;
+        // milliseconds between updates
+        let interval = 80 / ANIMATOR.time;
         
         // start update loop
-        $.loop = setInterval($.update, 80 / $.time);
+        ANIMATOR.loop = setInterval(ANIMATOR.update, interval);
         
     },
     
     stopLoop : function () {
         
-        let $ = ANIMATOR;
-        
         // stop update loop
-        clearInterval($.loop);
-        $.loop = null;
+        clearInterval(ANIMATOR.loop);
+        ANIMATOR.loop = null;
         
     },
     
     // start playing animation
     play : function () {
         
-        let $ = ANIMATOR;
-        
-        $.is_running = true;
+        ANIMATOR.is_running = true;
         
         // set classes for use in CSS styles
-        _.removeClass(html, 'animation-paused');
-        _.addClass(html, 'animation-playing');
+        _.removeClass(NODE.html, 'animation-paused');
+        _.addClass(NODE.html, 'animation-playing');
         
-        $.startLoop();
+        ANIMATOR.startLoop();
         
     },
     
     // pause currently playing animation
     pause : function () {
         
-        let $ = ANIMATOR;
-        
-        $.is_running = false;
+        ANIMATOR.is_running = false;
         
         // set classes for use in CSS styles
-        _.removeClass(html, 'animation-playing');
-        _.addClass(html, 'animation-paused');
+        _.removeClass(NODE.html, 'animation-playing');
+        _.addClass(NODE.html, 'animation-paused');
         
-        $.stopLoop();
+        ANIMATOR.stopLoop();
         
     },
     
@@ -866,30 +925,24 @@ var ANIMATOR = {
     // triggers the end state, where one can not 'unpause', as it will restart, but the animation is still frozen in last frame 
     end : function () {
         
-        let $ = ANIMATOR;
-        
         // stop animation
-        $.is_running = false;
-        $.current = 0;
+        ANIMATOR.is_running = false;
+        ANIMATOR.current = 0;
         
         // set classes for use in CSS styles
-        _.removeClass(html, 'animation-playing');
-        _.addClass(html, 'animation-paused');
+        _.removeClass(NODE.html, 'animation-playing');
+        _.addClass(NODE.html, 'animation-paused');
         
-        $.stopLoop();
+        ANIMATOR.stopLoop();
         
     },
     
     // stops animation and resets it to start state
     stop : function () {
         
-        let $ = ANIMATOR;
-        
-        // end animation
-        $.end();
-        
-        // reset current frame to start state
-        $.update();
+        // end animation and reset current frame to start state
+        ANIMATOR.end();
+        ANIMATOR.update();
         
     },
     
@@ -932,8 +985,6 @@ var ANIMATOR = {
     // formats a number to its shortened word equivalent, aka 1000000 -> 1.000 Mil
     formatNumber : function (num) {
         
-        let $ = ANIMATOR;
-        
         let word = '';
         let short = 0;
         
@@ -943,9 +994,9 @@ var ANIMATOR = {
         }
         
         // go through number types and assign the most fitting one
-        for (let name in $.number_names) {
+        for (let name in ANIMATOR.number_names) {
             
-            let value = $.number_names[name];
+            let value = ANIMATOR.number_names[name];
             
             if (num >= value && num < value * 1000) {
                 // round to 1 digit after the comma and append describing name
@@ -962,53 +1013,50 @@ var ANIMATOR = {
     // generate the current animation frame
     update : function () {
         
-        let $ = ANIMATOR;
-        
         // never run on faulty data object
-        if ($.data == null) {
+        if (ANIMATOR.data == null) {
             return;
         }
         
         // reset after one full round
-        if ($.current >= $.data_point_num) {
-            $.end();
+        if (ANIMATOR.current >= ANIMATOR.data_point_num) {
+            ANIMATOR.end();
             return;
         }
         
-        $.refreshFrame();
+        ANIMATOR.refreshFrame();
         
-        $.current++;
+        ANIMATOR.current++;
         
     },
     
     // refreshes frame to display current values
     refreshFrame : function () {
         
-        let $ = ANIMATOR;
-        
         // set current value
-        if ($.current % 50 == 0) {
-            let curr_val = parseInt($.from) + ($.current == 0 ? 0 : $.current / 50);
-            $.current_value.value.innerHTML = curr_val;
-            $.current_value.indicator.innerHTML = curr_val;
+        if (ANIMATOR.current % 50 == 0) {
+            let curr_val = parseInt(ANIMATOR.from) + (ANIMATOR.current == 0 ? 
+                                                    0 : ANIMATOR.current / 50);
+            NODE.current_value.value.innerHTML = curr_val;
+            NODE.current_value.indicator.innerHTML = curr_val;
         }
         // set current indicator's width
-        _.setStyles($.current_value.indicator, {
-            'width': ($.current % 50 * 2) + '%'
+        _.setStyles(NODE.current_value.indicator, {
+            'width': (ANIMATOR.current % 50 * 2) + '%'
         });
         
         // check what chart to update
         if (NAV.individual_chart_opened) {
-            $.updateIndividualCharts();
+            ANIMATOR.updateIndividualCharts();
         }
         else {
-            $.updateTotalChart();
+            ANIMATOR.updateColumnChart();
         }
         
     },
     
     // update chart containing all data
-    updateTotalChart : function () {
+    updateColumnChart : function () {
         
         let $ = ANIMATOR;
         
@@ -1084,13 +1132,13 @@ var ANIMATOR = {
         let $ = ANIMATOR;
         
         // get standard components and values
-        let canvas = DATA_LOAD.individual_chart;
+        let canvas = NODE.individual_chart;
         let context = canvas.getContext('2d');
         let keys = $.individual_chart_keys;
         let key_num = $.individual_chart_keys.length;
         
         // reset canvas width and content
-        canvas.width = _.getWidth(ANIMATOR.current_value.container);
+        canvas.width = _.getWidth(NODE.individual_chart_menu);
         context.clearRect(0, 0, canvas.width, canvas.height);
         
         // get total min and max values of the given columns (for y positions)
@@ -1121,6 +1169,8 @@ var ANIMATOR = {
         // draw the raster
         for (let i = $.from; i <= $.to; i++) {
             
+            /* RASTER LINES */
+            
             // set drawing color
             context.strokeStyle = NAV.darkmode ? '#191919' : '#f4f4f4';
             
@@ -1134,28 +1184,45 @@ var ANIMATOR = {
             // draw on the canvas
             context.stroke();
             
-            // draw label on raster at left and right-most limit, 
-            // also draw labels on other lines if screen size > 550px
-            if (
-                window.innerWidth > 550 || 
-                window.innerWidth <= 550 && ($.from == i || $.to == i)
-            ) {
-                
-                // draw text
-                let text = i + '';
-                context.font = '12px Arial sans-serif';
-                context.fillStyle = NAV.darkmode ? '#393939' : '#c4c4c4';
-                context.textBaseline = 'bottom';
-                context.textAlign = i == $.from ? 'left' : (i == $.to ? 'right' : 'center');
-                context.fillText(text, x_pos, canvas.height);
-                
-                let text_width = context.measureText(text).width;
-                console.log(text_width);
-
-                // draw on the canvas
-                context.stroke();
-        
+            
+            
+            /* LABELS */
+            
+            let limited_labels = false; // labels limited to right and left-most limits (lines)
+            
+            // get text and width (in pixels)
+            let text = i + '';
+            let text_width = context.measureText(text).width;
+            
+            // check if label text is small enough
+            if (text_width > 100) {
+                return;
             }
+            else if (text_width > 35) {
+                limited_labels = true;
+            }
+            // if text is well-sized, check window size (in pixels)
+            else if (window.innerWidth <= 550) {
+                limited_labels = true;
+            }
+            
+            // if labels are limited to only right and left-most limits,
+            // but current raster line is located in center -> return
+            if (limited_labels && ($.from != i && $.to != i)) {
+                return;
+            }
+                
+            // draw text
+            context.font = '12px Arial sans-serif';
+            context.fillStyle = NAV.darkmode ? '#393939' : '#c4c4c4';
+            context.textBaseline = 'bottom';
+            context.textAlign = 
+                i == $.from ? 'left' : 
+                    (i == $.to ? 'right' : 'center');
+            context.fillText(text, x_pos, canvas.height);
+
+            // draw on the canvas
+            context.stroke();
             
         }
         
@@ -1190,8 +1257,6 @@ var ANIMATOR = {
     
     drawIndividualKey : function (canvas, context, padding, color, min, max, data, key) {
         
-        let $ = ANIMATOR;
-        
         // set drawing attributes
         let point_radius = 2; // in pixels
         let width_minus_padding = canvas.width - padding.left - padding.right;
@@ -1200,10 +1265,10 @@ var ANIMATOR = {
         // get all key data points (excludes the 49 points generated between them by the program)
         let points = [];
         let points_num = points.length;
-        for (let i = 0; i <= $.data_point_num; i += 50) {
+        for (let i = 0; i <= ANIMATOR.data_point_num; i += 50) {
                 
             // get point x position
-            let width_ratio = (i + 1) / $.data_point_num; // how far to the right is the current point
+            let width_ratio = (i + 1) / ANIMATOR.data_point_num; // how far to the right is the current point
             let x_pos = padding.left + width_minus_padding * width_ratio;
             
             // get point y position
@@ -1268,18 +1333,21 @@ var ANIMATOR = {
 var MAIN = {
     
     initialize : function () {
-        
-        // set globals
-        window.html = _.tag('html')[0];
-        window.head = _.tag('head')[0];
-        window.body = _.tag('body')[0];
 
         // load all parts
+        NODE.initialize();
         NAV.initialize();
         DATA_LOAD.initialize();
         ANIMATOR.initialize();
         
-        // load example data set from Github
+        // load example data set into chart
+        MAIN.loadExampleDataset();
+        
+    },
+    
+    loadExampleDataset : function () {
+        
+        // load example data set (only works on localhost or web server)
         let request = new XMLHttpRequest();
         request.open('GET', 'data/example-data-set.json');
         request.send();
@@ -1311,7 +1379,7 @@ var MAIN = {
         let error_msg = _.create('div.notice.red', {
             'innerHTML': '<b>Loading the example data set failed.</b><br />Are you running this project locally on your system? Try using the <i>Load data</i> button.'
         });
-        _.append(DATA_LOAD.column_chart, error_msg);
+        _.append(NODE.column_chart, error_msg);
 
         // warning message in 'data load' window
         let warning = _.create('div.notice.blue', {
@@ -1320,8 +1388,8 @@ var MAIN = {
                 'margin-bottom': '20px'
             }
         });
-        _.empty(DATA_LOAD.window_example_sets_area);
-        _.append(DATA_LOAD.window_example_sets_area, warning);
+        _.empty(NODE.window_example_sets_area);
+        _.append(NODE.window_example_sets_area, warning);
         
     }
     
