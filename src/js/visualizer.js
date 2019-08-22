@@ -981,7 +981,7 @@ var ANIMATOR = {
         });
         
         // check what chart to update
-        if (individual_chart_opened) {
+        if (NAV.individual_chart_opened) {
             $.updateIndividualCharts();
         }
         else {
