@@ -1214,11 +1214,40 @@ var ANIMATOR = {
             top : 5,
             left : 5,
             bottom : 80,
-            right : 120
+            right : 5
         };
+            
+        // determine right-side labels with their respective lengths
+        let label_top = ANIMATOR.formatNumber(max) + '';
+        let label_bottom = ANIMATOR.formatNumber(min) + '';
+        let label_top_width = context.measureText(label_top).width;
+        let label_bottom_width = context.measureText(label_bottom).width;
+        
+        // adjust right-side padding according to the longer text of the two
+        let max_width = label_top_width;
+        if (max_width < label_bottom_width) max_width = label_bottom_width;
+        padding.right = padding.right + max_width + 5;
         
         // reserve more space at bottom for additional keys in the legend 
         padding.bottom = padding.bottom + 18 * key_num;
+        
+        // draw labels on right side
+        for (let i = 0; i < 2; i++) {
+            
+            // prepare label text
+            context.font = '12px Arial sans-serif';
+            context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
+            context.textBaseline = i == 0 ? 'top' : 'bottom';
+            context.textAlign = 'left';
+            context.fillText(
+                i == 0 ? label_top : label_bottom, 
+                canvas.width - padding.right + 5, 
+                i == 0 ? padding.top : canvas.height - padding.bottom
+            );
+
+            // draw on the canvas
+            context.stroke();
+        }
         
         
         let width_minus_padding = canvas.width - padding.left - padding.right;
@@ -1282,26 +1311,6 @@ var ANIMATOR = {
             // draw on the canvas
             context.stroke();
             
-        }
-            
-        // draw labels on right side
-        let label_top = ANIMATOR.formatNumber(max) + '';
-        let label_bottom = ANIMATOR.formatNumber(min) + '';
-        for (let i = 0; i < 2; i++) {
-            
-            // prepare label text
-            context.font = '12px Arial sans-serif';
-            context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
-            context.textBaseline = i == 0 ? 'top' : 'bottom';
-            context.textAlign = 'left';
-            context.fillText(
-                i == 0 ? label_top : label_bottom, 
-                canvas.width - padding.right + 5, 
-                i == 0 ? padding.top : canvas.height - padding.bottom
-            );
-
-            // draw on the canvas
-            context.stroke();
         }
         
         // draw legend headline
