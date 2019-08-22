@@ -20,6 +20,9 @@ var NAV = {
         fast : null,
     },
     
+    individual_chart_opened : false,
+    
+    
     
     /* GENERAL */
     
@@ -32,7 +35,7 @@ var NAV = {
         
         // add event for toggling 'dark mode' to button
         this.darkmode_btn = _.id('toggle-darkmode');
-        _.addClick(this.darkmode_btn, this.toggle_dark_mode);
+        _.addClick(this.darkmode_btn, this.toggleDarkMode);
         
         // add event to start animation to play button
         this.play_btn = _.id('play-button');
@@ -79,12 +82,38 @@ var NAV = {
         }
     },
     
+    // toggle the currently opened chart
+    toggleChart : function () {
+        
+        // if individual chart is opened, close it
+        if (NAV.individual_chart_opened) {
+            NAV.showColumnChart();
+        }
+        // otherwise, open it
+        else {
+            NAV.showIndividualChart();
+        }
+        
+    },
+    
+    showColumnChart : function () {
+        NAV.individual_chart_opened = false;
+        _.addClass(DATA_LOAD.column_chart, 'active');
+        _.removeClass(DATA_LOAD.individual_chart, 'active');
+    },
+    
+    showIndividualChart : function () {
+        NAV.individual_chart_opened = true;
+        _.removeClass(DATA_LOAD.column_chart, 'active');
+        _.addClass(DATA_LOAD.individual_chart, 'active');
+    },
+    
     
     
     /* DARKMODE */
     
     // toggle the website's theme between light and dark
-    toggle_dark_mode : function () {
+    toggleDarkMode : function () {
 
         // toggle darkmode value
         this.darkmode = !this.darkmode;
@@ -135,7 +164,9 @@ var DATA_LOAD = {
         title : null,
         date : null
     },
+    
     column_chart : null,
+    individual_chart : null,
     
     
     
@@ -171,8 +202,9 @@ var DATA_LOAD = {
         this.data_set_info.title = _.class('title', context)[0];
         this.data_set_info.date = _.class('date', context)[0];
         
-        // get container for column chart
+        // get containers for charts
         this.column_chart = _.id('column-chart');
+        this.individual_chart = _.id('individual-chart');
         
     },
     
@@ -412,6 +444,7 @@ var DATA_LOAD = {
             
             // create a column and append it to the chart
             let column = this.getColumn(
+                key,
                 counter,
                 obj.keys[key].name, 
                 obj.keys[key].icon
@@ -423,8 +456,21 @@ var DATA_LOAD = {
                 'container' : column,
                 'meter' : _.class('meter', column)[0],
                 'value' : _.class('value', column)[0],
-                'start_order' : counter // order as node in HTML chart (from top to bottom) 
+                // order is the position node in HTML chart (from top to bottom)
+                'start_order' : counter 
             };
+            
+            // add click event to open an individual chart
+            _.addClick(column, function (e) {
+                
+                // open individual chart
+                NAV.showIndividualChart();
+                
+                // send column key to animator object
+                let column_key = _.target(e).getAttribute('column-id');
+                ANIMATOR.setInvidualChart(column_key);
+                
+            });
             
             // add key data to animation object
             ani[key] = this.generateDataPointArray(
@@ -442,23 +488,29 @@ var DATA_LOAD = {
         ANIMATOR.setData(ani);
         ANIMATOR.setColumns(columns);
         ANIMATOR.stop();
+        
+        // un-hide the 'data-set-current-value' HTML node
+        _.removeClass(ANIMATOR.current_value.container, 'hidden');
+        
+        // hide individual chart, and only show column chart
+        NAV.showColumnChart();
             
         if (showConfirmation === true) {
             // display 'file loaded' animation
             _.addClass(DATA_LOAD.window, 'file-selected');
         }
         
-        // un-hide the 'data-set-current-value' HTML node
-        _.removeClass(ANIMATOR.current_value.container, 'hidden');
-        
     },
     
     // generates DOM node for a column in the chart
-    getColumn : function (column_index, key_name, icon_url) {
+    getColumn : function (key, column_index, key_name, icon_url) {
         
         // containing element
-        let container = _.create('button.column-container', {
-            'title' : 'Open statistics for ' + key_name
+        let container = _.create('button.column-container');
+        
+        let clickEvent = _.create('div.clickEvent', {
+            'title' : 'Open statistics for ' + key_name,
+            'column-id' : key
         });
         
         // graphic left of column
@@ -486,6 +538,7 @@ var DATA_LOAD = {
         _.append(column, meter);
         _.append(container, icon);
         _.append(container, column);
+        _.append(container, clickEvent);
         
         return container;
         
@@ -651,6 +704,8 @@ var ANIMATOR = {
     column_num : 0,
     pixels_between_columns : 0,
     
+    individual_chart_key : '',
+    
     
     
     /* GENERAL */
@@ -737,6 +792,11 @@ var ANIMATOR = {
         // set CSS transition effects for animated column length
         this.setCSSTransitions();
         
+    },
+    
+    // set key which data needs to be animated for the individual chart
+    setInvidualChart : function (key) {
+        this.individual_chart_key = key;
     },
     
     
@@ -920,8 +980,13 @@ var ANIMATOR = {
             'width': ($.current % 50 * 2) + '%'
         });
         
-        $.updateTotalChart();
-        $.updateIndividualCharts();
+        // check what chart to update
+        if (individual_chart_opened) {
+            $.updateIndividualCharts();
+        }
+        else {
+            $.updateTotalChart();
+        }
         
     },
     
