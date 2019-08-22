@@ -1217,7 +1217,7 @@ var ANIMATOR = {
             top : 5,
             left : 5,
             bottom : 20,
-            right : 5
+            right : 120
         };
         
         let width_minus_padding = canvas.width - padding.left - padding.right;
@@ -1243,7 +1243,7 @@ var ANIMATOR = {
             
             
             
-            /* LABELS */
+            /* LABELS BOTTOM */
             
             let limited_labels = false; // labels limited to right and left-most limits (lines)
             
@@ -1281,6 +1281,26 @@ var ANIMATOR = {
             // draw on the canvas
             context.stroke();
             
+        }
+            
+        // draw labels on right side
+        let label_top = ANIMATOR.formatNumber(max) + '';
+        let label_bottom = ANIMATOR.formatNumber(min) + '';
+        for (let i = 0; i < 2; i++) {
+            
+            // prepare label text
+            context.font = '12px Arial sans-serif';
+            context.fillStyle = NAV.darkmode ? '#575757' : '#b5b5b5';
+            context.textBaseline = i == 0 ? 'top' : 'bottom';
+            context.textAlign = 'left';
+            context.fillText(
+                i == 0 ? label_top : label_bottom, 
+                canvas.width - padding.right + 5, 
+                i == 0 ? padding.top : canvas.height - padding.bottom
+            );
+
+            // draw on the canvas
+            context.stroke();
         }
         
         // go through all keys and draw statistic
@@ -1326,7 +1346,7 @@ var ANIMATOR = {
                 
             // get point x position
             let width_ratio = (i + 1) / ANIMATOR.data_point_num; // how far to the right is the current point
-            let x_pos = padding.left + width_minus_padding * width_ratio;
+            let x_pos = i == 0 ? padding.left : padding.left + width_minus_padding * width_ratio;
             
             // get point y position
             let percentage_to_top = (((data[i] - min) / (max - min)) * 100);
