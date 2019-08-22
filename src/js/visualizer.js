@@ -106,10 +106,18 @@ var NODE = {
     individual_chart_menu : null,
     individual_chart : null,
     
+    back_to_column_chart_btn : null,
+    download_png_btn : null,
+    compare_btn: null,
+    
     initializeIndividualCharts : function () {
         
-        // get top menu
+        // get top menu and buttons
         this.individual_chart_menu = _.id('individual-chart-menu');
+        this.back_to_column_chart_btn = _.id('back-to-column-chart-btn');
+        this.download_png_btn = _.id('download-chart-as-image');
+        this.compare_btn = _.id('compare-btn');
+        
         this.individual_chart = _.id('individual-chart');
         
     },
@@ -221,6 +229,7 @@ var NAV = {
         _.addClass(NODE.column_chart, 'active');
         _.removeClass(NODE.current_value.container, 'hidden');
         _.removeClass(NODE.individual_chart, 'active');
+        _.removeClass(NODE.individual_chart_menu, 'active');
         
         // update charts
         ANIMATOR.refreshFrame();
@@ -235,6 +244,7 @@ var NAV = {
         _.removeClass(NODE.column_chart, 'active');
         _.addClass(NODE.current_value.container, 'hidden');
         _.addClass(NODE.individual_chart, 'active');
+        _.addClass(NODE.individual_chart_menu, 'active');
         
         // update charts
         ANIMATOR.refreshFrame();
@@ -276,6 +286,36 @@ var NAV = {
     setDoubledTime : function () {
         NAV.setExclusiveActive(NODE.time_btn.fast);
         ANIMATOR.setTime(2.0);
+    },
+    
+    
+    
+    /* CHARTS */
+    
+    downloadChartImage : function () {
+        
+        let image_uri = NODE.individual_chart.toDataURL('image/png');
+        
+        // get current time and date, convert it to string
+        let date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth()+1;
+        let date_str = (day > 9 ? '' : '0') + day + '-' +
+                       (month > 9 ? '' : '0') + month + '-' +
+                       date.getFullYear() + ' ' +
+                       date.getHours() + '-' +
+                       date.getMinutes() + '-' +
+                       date.getSeconds();
+        
+        let link = _.create('a', {
+            'download' : 'chart ' + ANIMATOR.individual_chart_keys[0].replace(/[^a-z0-9\-\_]/g, '') + ' ' + date_str + '.png',
+            'href' : image_uri
+        });
+        
+        _.append(NODE.body, link);
+        link.click();
+        _.remove(link);
+
     }
     
 }
@@ -755,6 +795,18 @@ var DATA_LOAD = {
 }
 
 /*
+ * manages the window for selecting keys
+ * to be compared in the individual charts
+ */
+var COMPARE = {
+    
+    open : function () {
+        
+    }
+    
+}
+
+/*
  * manages the animation of the charts
  */
 var ANIMATOR = {
@@ -788,6 +840,11 @@ var ANIMATOR = {
         
         // canvas needs to be updated on size changes
         _.addEvent(window, 'resize', this.refreshFrame);
+        
+        // add events for individual chart menu
+        _.addClick(NODE.back_to_column_chart_btn, NAV.showColumnChart);
+        _.addClick(NODE.download_png_btn, NAV.downloadChartImage);
+        _.addClick(NODE.compare_btn, COMPARE.open);
         
     },
     

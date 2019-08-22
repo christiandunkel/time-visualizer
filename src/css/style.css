@@ -1182,9 +1182,9 @@ nav button.secondary.active {
 
 
 /*
- * ###################
- * ### TOTAL CHART ###
- * ###################
+ * ####################
+ * ### COLUMN CHART ###
+ * ####################
  */
 
 #column-chart {
@@ -1339,16 +1339,28 @@ nav button.secondary.active {
  * ########################
  */
 
-#individual_chart_menu {
-    width: 100%;
+#individual-chart-menu {
+    width: 100%; margin: 0 0 20px 0;
+    overflow: hidden;
 }
 
-#individual_chart_menu,
+#individual-chart-menu button {
+    min-height: 32px; padding: 8px 11px;
+    background: #f9f9f9; border: 1px solid #e6e6e6; border-radius: 5px;
+    color: #979797; font-size: 16px; line-height: 16px;
+}
+
+#individual-chart-menu button.right {
+    float: right;
+    margin: 0 0 0 5px;
+}
+
+#individual-chart-menu,
 #individual-chart {
     display: none;
 }
 
-#individual_chart_menu.active,
+#individual-chart-menu.active,
 #individual-chart.active {
     display: block;
 }
