@@ -924,7 +924,6 @@ var ANIMATOR = {
     // set key which data needs to be animated for the individual chart
     setInvidualChartKeys : function (keys) {
         this.individual_chart_keys = keys;
-        this.refreshFrame();
     },
     
     
@@ -1382,7 +1381,7 @@ var ANIMATOR = {
             
             // get point y position
             let percentage_to_top = (((data[i] - min) / (max - min)) * 100);
-            let y_pos = canvas.height - padding.top - (height_minus_padding / (100 / percentage_to_top));
+            let y_pos = canvas.height - padding.bottom - (height_minus_padding / (100 / percentage_to_top));
             
             // add point to array
             points[points.length] = {
@@ -1393,8 +1392,6 @@ var ANIMATOR = {
             points_num++;
                 
         }
-        
-        console.log(points);
         
         // get circle angles
         let start_angle = 0;
