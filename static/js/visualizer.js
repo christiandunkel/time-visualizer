@@ -252,7 +252,7 @@ var DATA_LOAD = {
         _.addClass(DATA_LOAD.drop_area, 'dragged-over');
     },
     
-    // remove 'highlight' from drop area
+    // remove 'highlight' effect from drop area
     unhighlightDropArea : function () {
         _.removeClass(DATA_LOAD.drop_area, 'dragged-over');
     },

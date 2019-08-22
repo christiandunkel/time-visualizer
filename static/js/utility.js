@@ -39,7 +39,7 @@ var _ = {
         
     },
     
-    // select element by tage
+    // select element by tag
     tag : function (query, context) {
         
         if (!_.isString(query)) {
