@@ -113,15 +113,6 @@ input[type="submit"] {
     transition: .3s, outline 0s;
 }
 
-a:focus,
-button:focus {
-    outline: 1px solid rgba(0, 98, 255, 0.5);
-}
-.darkMode a:focus,
-.darkMode button:focus {
-    outline-color: rgba(72, 163, 255, 0.5);
-}
-
 h1 {
     font-size: 28px;
 }
@@ -566,6 +557,7 @@ nav button {
 }
 
 nav button:not(.active):hover,
+nav button:not(.active):focus,
 nav button:not(.active):active {
     background: #e6e6e6;
     -moz-box-shadow: 0 0 0 #bebebe, 0 0 2px rgba(0, 0, 0, 0.1);
@@ -582,6 +574,7 @@ nav button:not(.active):active {
     transition: .15s;
 }
 .darkMode nav button:not(.active):hover,
+.darkMode nav button:not(.active):focus,
 .darkMode nav button:not(.active):active {
     background: #6c6c6c;
     -moz-box-shadow: 0 0 0 #6f6f6f, 0 0 2px rgba(255, 255, 255, 0.2);
