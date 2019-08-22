@@ -577,6 +577,7 @@ var DATA_LOAD = {
             // add column to object holding references to columns
             columns[key] = {
                 'container' : column,
+                'name' : obj.keys[key].name,
                 'meter' : _.class('meter', column)[0],
                 'value' : _.class('value', column)[0],
                 // order is the position node in HTML chart (from top to bottom)
@@ -1271,7 +1272,7 @@ var ANIMATOR = {
                 
             // draw text
             context.font = '12px Arial sans-serif';
-            context.fillStyle = NAV.darkmode ? '#575757' : '#b5b5b5';
+            context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
             context.textBaseline = 'bottom';
             context.textAlign = 
                 i == $.from ? 'left' : 
@@ -1290,7 +1291,7 @@ var ANIMATOR = {
             
             // prepare label text
             context.font = '12px Arial sans-serif';
-            context.fillStyle = NAV.darkmode ? '#575757' : '#b5b5b5';
+            context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
             context.textBaseline = i == 0 ? 'top' : 'bottom';
             context.textAlign = 'left';
             context.fillText(
@@ -1303,9 +1304,9 @@ var ANIMATOR = {
             context.stroke();
         }
         
-        // draw legend
+        // draw legend headline
         context.font = '14px Arial sans-serif';
-        context.fillStyle = NAV.darkmode ? '#575757' : '#b5b5b5';
+        context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
         context.textBaseline = 'middle';
         context.textAlign = 'left';
         context.fillText('Legend', padding.left, canvas.height - padding.bottom + 50);
@@ -1319,17 +1320,16 @@ var ANIMATOR = {
             let key = keys[i];
             let color = _.getStyle($.columns[key].meter, 'background-color'); // color from column meter
             
+            // draw graph for key
             $.drawIndividualKey(canvas, context, padding, color, min, max, $.data[key], key);
-            
-            
             
             // add key to legend
             let y_pos = canvas.height - padding.bottom + 66 + (18 * i);
             context.font = '12px Arial sans-serif';
-            context.fillStyle = NAV.darkmode ? '#575757' : '#b5b5b5';
+            context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
             context.textBaseline = 'top';
             context.textAlign = 'left';
-            context.fillText(key, padding.left + 20, y_pos);
+            context.fillText($.columns[key].name, padding.left + 20, y_pos);
 
             // draw on the canvas
             context.stroke();

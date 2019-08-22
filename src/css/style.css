@@ -1328,11 +1328,20 @@ nav button.secondary.active {
     -webkit-transition: .3s;
     transition: .3s;
 }
+.darkMode #individual-chart-menu button {
+    background-color: #242424; border-color: #3e3e3e;
+    color: #898989;
+}
 
 #individual-chart-menu button:hover {
     -moz-box-shadow: 1px 1px 5px rgba(0,0,0,.2);
     -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,.2);
     box-shadow: 1px 1px 5px rgba(0,0,0,.2);
+}
+.darkMode #individual-chart-menu button:hover {
+    -moz-box-shadow: 2px 2px 5px rgba(255,255,255,.3);
+    -webkit-box-shadow: 2px 2px 5px rgba(255,255,255,.3);
+    box-shadow: 2px 2px 5px rgba(255,255,255,.3);
 }
 
 #individual-chart-menu button.right {
@@ -1343,6 +1352,10 @@ nav button.secondary.active {
 #individual-chart-menu button#back-to-column-chart-btn {
     background: #ffdddd; border-color: #ffa6a6;
     color: #c92f2f;
+}
+.darkMode #individual-chart-menu button#back-to-column-chart-btn {
+    background: #3e0d0d; border-color: #8c3d3d;
+    color: #ea6969;
 }
 
 #individual-chart-menu,
