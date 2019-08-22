@@ -636,8 +636,6 @@ var DATA_LOAD = {
             
         }
         
-        console.log(data_points);
-        
         // increase values by 50x, by adding values for 0.02, 0.04 to 0.98 between values
         let upscaled_data_points = [];
         let len = data_points.length;
@@ -1116,6 +1114,25 @@ var ANIMATOR = {
             
         }
         
+        // draw time indicator line
+        if ($.is_running) {
+
+            // set drawing color
+            context.strokeStyle = '#e26565';
+            
+            let padding = 5;
+            let width_ratio = ($.current + 1) / $.data_point_num; // how far to the right is the current point
+            let width_minus_padding = canvas.width - 2 * padding;
+            let x_pos = padding + width_minus_padding * width_ratio;
+            
+            context.moveTo(x_pos, 5);
+            context.lineTo(x_pos, canvas.height - 5);
+        
+            // draw on the canvas
+            context.stroke();
+            
+        }
+        
     },
     
     drawIndividualKey : function (canvas, context, color, min, max, data, key) {
@@ -1125,6 +1142,8 @@ var ANIMATOR = {
         // set drawing attributes
         let padding = 5; // at each side of canvas, in pixels
         let point_radius = 2; // in pixels
+        let width_minus_padding = canvas.width - 2 * padding;
+        let height_minus_padding = canvas.height - 2 * padding;
         
         // get all key data points (excludes the 49 points generated between them by the program)
         let points = [];
@@ -1132,12 +1151,10 @@ var ANIMATOR = {
         for (let i = 0; i <= $.data_point_num; i += 50) {
                 
             // get point x position
-            let width_minus_padding = canvas.width - 2 * padding;
             let width_ratio = (i + 1) / $.data_point_num; // how far to the right is the current point
             let x_pos = padding + width_minus_padding * width_ratio;
             
             // get point y position
-            let height_minus_padding = canvas.height - 2 * padding;
             let percentage_to_top = (((data[i] - min) / (max - min)) * 100);
             let y_pos = canvas.height - padding - (height_minus_padding / (100 / percentage_to_top));
             
@@ -1154,12 +1171,12 @@ var ANIMATOR = {
         // get circle angles
         let start_angle = 0;
         let end_angle = 2 * Math.PI;
+            
+        // set drawing color
+        context.strokeStyle = color;
         
         // draw all elements
         for (let i = 0; i < points.length; i++) {
-            
-            // set drawing color
-            context.strokeStyle = color;
             
             // get coordinates of current point
             let x = points[i].x;
@@ -1168,6 +1185,8 @@ var ANIMATOR = {
             // draw point
             context.beginPath();
             context.arc(x, y, point_radius, start_angle, end_angle);
+
+            // draw on the canvas
             context.stroke();
             
             // draw line between point and next point (except if already reached last point)
@@ -1179,6 +1198,8 @@ var ANIMATOR = {
                 
                 context.moveTo(x, y);
                 context.lineTo(x_next, y_next);
+        
+                // draw on the canvas
                 context.stroke();
                 
             }
