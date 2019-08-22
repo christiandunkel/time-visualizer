@@ -924,6 +924,7 @@ var ANIMATOR = {
     // set key which data needs to be animated for the individual chart
     setInvidualChartKeys : function (keys) {
         this.individual_chart_keys = keys;
+        this.refreshFrame();
     },
     
     
@@ -1121,7 +1122,7 @@ var ANIMATOR = {
         /* COLUMN LENGTH AND VALUE */
         
         // get min and max value of current frame
-        let min = Number.MAX_VALUE;
+        let min = 0; // min must be 0 at least
         let max = Number.MIN_VALUE;
         // and get an array of all key value pairs (for later sorting)
         let all_values = []
@@ -1134,11 +1135,6 @@ var ANIMATOR = {
                 'key' : key, 
                 'value' : val
             };
-        }
-        
-        // if min value is bigger than 0, set it to 0, to make scaling dependent on range 0 to max
-        if (min > 0) {
-            min = 0;
         }
         
         // increase diff between min and max
@@ -1194,8 +1190,9 @@ var ANIMATOR = {
         let keys = $.individual_chart_keys;
         let key_num = $.individual_chart_keys.length;
         
-        // reset canvas width and content
+        // reset canvas content, width and height
         canvas.width = _.getWidth(NODE.individual_chart_menu);
+        canvas.height = 500 + (18 * (key_num - 1));
         context.clearRect(0, 0, canvas.width, canvas.height);
         
         // get total min and max values of the given columns (for y positions)
@@ -1216,9 +1213,13 @@ var ANIMATOR = {
         let padding = {
             top : 5,
             left : 5,
-            bottom : 20,
+            bottom : 80,
             right : 120
         };
+        
+        // reserve more space at bottom for additional keys in the legend 
+        padding.bottom = padding.bottom + 18 * key_num;
+        
         
         let width_minus_padding = canvas.width - padding.left - padding.right;
         let number_of_keys = (($.data_point_num - 1) / 50) + 1;
@@ -1276,7 +1277,7 @@ var ANIMATOR = {
             context.textAlign = 
                 i == $.from ? 'left' : 
                     (i == $.to ? 'right' : 'center');
-            context.fillText(text, x_pos, canvas.height);
+            context.fillText(text, x_pos, canvas.height - padding.bottom + 20);
 
             // draw on the canvas
             context.stroke();
@@ -1303,6 +1304,16 @@ var ANIMATOR = {
             context.stroke();
         }
         
+        // draw legend
+        context.font = '14px Arial sans-serif';
+        context.fillStyle = NAV.darkmode ? '#575757' : '#b5b5b5';
+        context.textBaseline = 'middle';
+        context.textAlign = 'left';
+        context.fillText('Legend', padding.left, canvas.height - padding.bottom + 50);
+
+        // draw on the canvas
+        context.stroke();
+        
         // go through all keys and draw statistic
         for (let i = 0; i < key_num; i++) {
             
@@ -1310,6 +1321,27 @@ var ANIMATOR = {
             let color = _.getStyle($.columns[key].meter, 'background-color'); // color from column meter
             
             $.drawIndividualKey(canvas, context, padding, color, min, max, $.data[key], key);
+            
+            
+            
+            // add key to legend
+            let y_pos = canvas.height - padding.bottom + 66 + (18 * i);
+            context.font = '12px Arial sans-serif';
+            context.fillStyle = NAV.darkmode ? '#575757' : '#b5b5b5';
+            context.textBaseline = 'top';
+            context.textAlign = 'left';
+            context.fillText(key, padding.left + 20, y_pos);
+
+            // draw on the canvas
+            context.stroke();
+            
+            // add colored rectangle in front of key in legend
+            context.rect(padding.left + 4, y_pos, 10, 10);
+            context.fillStyle = color;
+            context.fill();
+
+            // draw on the canvas
+            context.stroke();
             
         }
         
@@ -1361,6 +1393,8 @@ var ANIMATOR = {
             points_num++;
                 
         }
+        
+        console.log(points);
         
         // get circle angles
         let start_angle = 0;
