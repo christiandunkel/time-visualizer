@@ -756,7 +756,7 @@ var ANIMATOR = {
         
         for (let column in this.columns) {
             _.setStyles(this.columns[column].meter, {
-                'transition': ((1 / this.time) / 10) + 's'
+                'transition': ((1 / this.time) / 5) + 's'
             });
         }
         
@@ -808,7 +808,7 @@ var ANIMATOR = {
         let $ = ANIMATOR;
         
         // start update loop
-        $.loop = setInterval($.update, 40 / $.time);
+        $.loop = setInterval($.update, 80 / $.time);
         
     },
     
