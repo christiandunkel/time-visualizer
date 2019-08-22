@@ -25,6 +25,10 @@
         "company_6": {
             "name": "Peter's Pommes",
             "icon": "example_icon6.png"
+        },
+        "company_7": {
+            "name": "Pamela's Parmesan",
+            "icon": "example_icon7.png"
         }
     },
     "range": {
@@ -65,6 +69,9 @@
         },
         "company_6": {
             "1995": 70000000
+        },
+        "company_7": {
+            "1992": 14000000
         }
     }
 }

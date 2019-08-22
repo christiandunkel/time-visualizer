@@ -489,7 +489,8 @@ var DATA_LOAD = {
         ANIMATOR.setRange(obj.range.from, obj.range.to);
         ANIMATOR.setData(ani);
         ANIMATOR.setColumns(columns);
-        ANIMATOR.stop();
+        ANIMATOR.end();
+        ANIMATOR.refreshFrame();
         
         // un-hide the 'data-set-current-value' HTML node
         _.removeClass(ANIMATOR.current_value.container, 'hidden');
@@ -595,10 +596,7 @@ var DATA_LOAD = {
         for (let i = from; i <= to; i++) {
             
             // check for a value for the iteration in the data
-            if (
-                _.exists(data[i + ""]) && 
-                _.isNumber(data[i + ""])
-            ) {
+            if (_.exists(data[i + ""]) && _.isNumber(data[i + ""])) {
                 
                 // get the value from the data
                 let value = data[i + ""];
@@ -621,7 +619,7 @@ var DATA_LOAD = {
             
             // otherwise, calculate the average of prev & next value
             let prev = data_points[data_points.length - 1];
-            let next = 0;
+            let next = null;
             let steps = 0;
             // go through all coming values, to find the next valid one
             for (let j = i + 1; j <= to; j++) {
@@ -632,11 +630,13 @@ var DATA_LOAD = {
                     break;
                 }
             }
+            let average = prev + ((next - prev) / (1 + steps));
             // if there's no valid next value, reuse previous value
-            let average = next == 0 ? prev : (prev + next) / (1 + steps);
-            data_points[data_points.length] = average;
+            data_points[data_points.length] = next == null ? prev : average;
             
         }
+        
+        console.log(data_points);
         
         // increase values by 50x, by adding values for 0.02, 0.04 to 0.98 between values
         let upscaled_data_points = [];
@@ -974,17 +974,6 @@ var ANIMATOR = {
             return;
         }
         
-        // set current value
-        if ($.current % 50 == 0) {
-            let curr_val = parseInt($.from) + ($.current == 0 ? 0 : $.current / 50);
-            $.current_value.value.innerHTML = curr_val;
-            $.current_value.indicator.innerHTML = curr_val;
-        }
-        // set current indicator's width
-        _.setStyles($.current_value.indicator, {
-            'width': ($.current % 50 * 2) + '%'
-        });
-        
         $.refreshFrame();
         
         $.current++;
@@ -995,6 +984,17 @@ var ANIMATOR = {
     refreshFrame : function () {
         
         let $ = ANIMATOR;
+        
+        // set current value
+        if ($.current % 50 == 0) {
+            let curr_val = parseInt($.from) + ($.current == 0 ? 0 : $.current / 50);
+            $.current_value.value.innerHTML = curr_val;
+            $.current_value.indicator.innerHTML = curr_val;
+        }
+        // set current indicator's width
+        _.setStyles($.current_value.indicator, {
+            'width': ($.current % 50 * 2) + '%'
+        });
         
         // check what chart to update
         if (NAV.individual_chart_opened) {
