@@ -1229,9 +1229,6 @@ nav button.secondary.active {
     -moz-box-shadow: 2px 2px 1px rgba(159, 159, 159, 0.43);
     -webkit-box-shadow: 2px 2px 1px rgba(159, 159, 159, 0.43);
     box-shadow: 2px 2px 1px rgba(159, 159, 159, 0.43);
-}
-
-.animation-playing .column-container .meter {
     -o-transition: .1s;
     -moz-transition: .1s;
     -webkit-transition: .1s;

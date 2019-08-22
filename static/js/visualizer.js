@@ -691,14 +691,31 @@ var ANIMATOR = {
             this.startLoop();
         }
         
+        // set new duration for transition effects on column meters
+        this.setCSSTransitions();
+        
+    },
+    
+    // update transition duration for animated column length
+    setCSSTransitions : function () {
+        
+        for (let column in this.columns) {
+            _.setStyles(this.columns[column].meter, {
+                'transition': ((1 / this.time) / 10) + 's'
+            });
+        }
+        
     },
     
     setData : function (obj) {
+        
+        // hold data object
         this.data = obj;
         
         // get data point amount (same for every column)
         let first_key = Object.keys(obj)[0];
         this.data_point_num = obj[first_key].length;
+        
     },
     
     setColumns : function (obj) {
@@ -716,6 +733,9 @@ var ANIMATOR = {
             this.pixels_between_columns = Math.abs(column_1_top_pos - column_2_top_pos);
             
         }
+        
+        // set CSS transition effects for animated column length
+        this.setCSSTransitions();
         
     },
     
