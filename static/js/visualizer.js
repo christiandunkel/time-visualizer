@@ -1060,7 +1060,10 @@ var MAIN = {
 
         // warning message in 'data load' window
         let warning = _.create('div.notice.blue', {
-            'innerHTML': 'You may currently run this project locally on your computer. This restricts you from selecting local files as data sets, excluding directly loading online examples.'
+            'innerHTML': 'You may currently run this project locally on your computer. This restricts you from selecting local files as data sets, excluding directly loading online examples.',
+            'style': {
+                'margin-bottom': '20px'
+            }
         });
         _.empty(DATA_LOAD.window_example_sets_area);
         _.append(DATA_LOAD.window_example_sets_area, warning);

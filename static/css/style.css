@@ -198,7 +198,7 @@ html {
     -moz-osx-font-smoothing: auto; /* firefox font smoothing */ 
     -webkit-font-smoothing: subpixel-antialiased; /* chrome, opera, safari, etc. */
     scroll-behavior: smooth; /* prevent instant scroll, enable smooth movement */
-    background: white;
+    background: #fdfdfd;
     font-family: 'Arial', sans-serif; color: #484848;
     -o-transition: .2s;
     -moz-transition: .2s;
@@ -206,7 +206,7 @@ html {
     transition: .2s;
 }
 html.darkMode {
-    background: #272727;
+    background-color: #1d1d1d;
     color: #b9b9b9;
 }
 
@@ -230,6 +230,14 @@ html a:hover {
 }
 html.darkMode a:hover {
     background: #585858;
+}
+
+.content {
+    padding: 30px;
+    background: white; border: 1px solid #ebebeb; border-radius: 5px;
+}
+.darkMode .content {
+    background-color: #000000; border-color: #333;
 }
 
 body {
@@ -1365,7 +1373,7 @@ footer {
  */
 
 .notice {
-    width: 100%; margin: 30px auto; padding: 20px 40px;
+    width: 100%; margin: 0 auto; padding: 20px 40px;
     border-style: solid; border-width: 1px; border-radius: 2px;
     font-size: 16px; line-height: 1.4em;
 }
