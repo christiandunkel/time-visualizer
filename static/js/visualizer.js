@@ -14,6 +14,13 @@ var NAV = {
     pause_btn : null,
     stop_btn : null,
     
+    time_btn : {
+        slow : null,
+        normal : null,
+        fast : null,
+    },
+    
+    
     /* GENERAL */
     
     // add events to navigation buttons
@@ -39,6 +46,37 @@ var NAV = {
         this.stop_btn = _.id('stop-button');
         _.addClick(this.stop_btn, ANIMATOR.stop);
         
+        // add events to time change buttons
+        this.time_btn.slow = _.id('animation-speed-0-5');
+        _.addClick(this.time_btn.slow, NAV.setHalvedTime);
+        this.time_btn.normal = _.id('animation-speed-1-0');
+        _.addClick(this.time_btn.normal, NAV.setNormalTime);
+        this.time_btn.fast = _.id('animation-speed-2-0');
+        _.addClick(this.time_btn.fast, NAV.setDoubledTime);
+        
+    },
+    
+    // set a button active
+    setActive : function (btn) {
+        _.addClass(btn, 'active');
+    },
+    
+    // set a button inactive
+    setInactive : function (btn) {
+        _.removeClass(btn, 'active');
+    },
+    
+    // set a button active, and all others inactive
+    setExclusiveActive : function (btn) {
+        let btns = this.time_btn;
+        for (let key in btns) {
+            if (btns[key] === btn) {
+                this.setActive(btns[key]);
+            }
+            else {
+                this.setInactive(btns[key]);
+            }
+        }
     },
     
     
@@ -52,8 +90,27 @@ var NAV = {
         this.darkmode = !this.darkmode;
 
         // toggle darkmode class according to value
-        html.classList[this.darkmode ? 'add' : 'remove']('darkMode');
+        _[(this.darkmode ? 'add' : 'remove') + 'Class'](html, 'darkMode');
         
+    },
+    
+    
+    
+    /* TIME */
+    
+    setHalvedTime : function () {
+        NAV.setExclusiveActive(NAV.time_btn.slow);
+        ANIMATOR.setTime(0.5);
+    },
+    
+    setNormalTime : function () {
+        NAV.setExclusiveActive(NAV.time_btn.normal);
+        ANIMATOR.setTime(1.0);
+    },
+    
+    setDoubledTime : function () {
+        NAV.setExclusiveActive(NAV.time_btn.fast);
+        ANIMATOR.setTime(2.0);
     }
     
 }
@@ -576,7 +633,7 @@ var ANIMATOR = {
     },
     
     is_running : false,
-    time : 1,
+    time : 1.0,
     
     from : 0,
     to : 0,
@@ -625,7 +682,13 @@ var ANIMATOR = {
     },
     
     setTime : function (time) {
+        
         this.time = time;
+        
+        // set loop to new time interval
+        this.stopLoop();
+        this.startLoop();
+        
     },
     
     setData : function (obj) {
@@ -637,6 +700,7 @@ var ANIMATOR = {
     },
     
     setColumns : function (obj) {
+        
         this.columns = obj;
         this.column_num = Object.keys(obj).length;
         
@@ -657,6 +721,25 @@ var ANIMATOR = {
     
     /* CONTROLS */
     
+    startLoop : function () {
+        
+        let $ = ANIMATOR;
+        
+        // start update loop
+        $.loop = setInterval($.update, 40 / $.time);
+        
+    },
+    
+    stopLoop : function () {
+        
+        let $ = ANIMATOR;
+        
+        // stop update loop
+        clearInterval($.loop);
+        $.loop = null;
+        
+    },
+    
     // start playing animation
     play : function () {
         
@@ -668,8 +751,7 @@ var ANIMATOR = {
         _.removeClass(html, 'animation-paused');
         _.addClass(html, 'animation-playing');
         
-        // start update loop
-        $.loop = setInterval($.update, 40);
+        $.startLoop();
         
     },
     
@@ -684,9 +766,7 @@ var ANIMATOR = {
         _.removeClass(html, 'animation-playing');
         _.addClass(html, 'animation-paused');
         
-        // stop update loop
-        clearInterval($.loop);
-        $.loop = null;
+        $.stopLoop();
         
     },
     
@@ -708,9 +788,7 @@ var ANIMATOR = {
         _.removeClass(html, 'animation-playing');
         _.addClass(html, 'animation-paused');
         
-        // stop update loop
-        clearInterval($.loop);
-        $.loop = null;
+        $.stopLoop();
         
     },
     
@@ -924,18 +1002,10 @@ var MAIN = {
         DATA_LOAD.initialize();
         ANIMATOR.initialize();
         
-        let request = null;
-        
         // load example data set from Github
-        request = new XMLHttpRequest();
+        let request = new XMLHttpRequest();
         request.open('GET', 'data/example.json');
         request.send();
-        
-        // request may fail with error when used locally on certain browsers
-        if (request.status === 0) {
-            MAIN.showXMLHttpWarnings();
-            return;
-        }
 
         // when received, transform the JSON into a chart
         request.onreadystatechange = function (e) {

@@ -692,7 +692,6 @@ nav button#toggle-darkmode:after {
 nav button.secondary {
     min-width: 32px; min-height: 32px;
     margin-top: 8px; padding: 8px 8px;
-    opacity: .6;
     font-size: 14px; line-height: 16px; font-weight: 700; letter-spacing: .7px; text-align: center;
 }
 
@@ -700,10 +699,10 @@ nav button.secondary.active {
     cursor: auto;
 }
 
-nav button.secondary.non-transparent,
-nav button.secondary.active,
-nav button.secondary:hover {
-    opacity: 1;
+nav button.secondary.active {
+    background: #6e95ff;
+    box-shadow: 2px 2px 0 #9cbdfb, 1px 1px 4px rgba(11, 46, 163, 0.3);
+    color: white;
 }
 
 
