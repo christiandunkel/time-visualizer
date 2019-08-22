@@ -100,12 +100,14 @@ var NAV = {
         NAV.individual_chart_opened = false;
         _.addClass(DATA_LOAD.column_chart, 'active');
         _.removeClass(DATA_LOAD.individual_chart, 'active');
+        ANIMATOR.refreshFrame();
     },
     
     showIndividualChart : function () {
         NAV.individual_chart_opened = true;
         _.removeClass(DATA_LOAD.column_chart, 'active');
         _.addClass(DATA_LOAD.individual_chart, 'active');
+        ANIMATOR.refreshFrame();
     },
     
     
@@ -463,12 +465,12 @@ var DATA_LOAD = {
             // add click event to open an individual chart
             _.addClick(column, function (e) {
                 
-                // open individual chart
-                NAV.showIndividualChart();
-                
                 // send column key to animator object
                 let column_key = _.target(e).getAttribute('column-id');
-                ANIMATOR.setInvidualChart(column_key);
+                ANIMATOR.setInvidualChartKeys([column_key]);
+                
+                // open individual chart
+                NAV.showIndividualChart();
                 
             });
             
@@ -704,7 +706,7 @@ var ANIMATOR = {
     column_num : 0,
     pixels_between_columns : 0,
     
-    individual_chart_key : '',
+    individual_chart_keys : [],
     
     
     
@@ -718,6 +720,9 @@ var ANIMATOR = {
         $.container = _.id('data-set-current-value');
         $.value = _.class('value', $.container)[0];
         $.indicator = _.class('indicator', $.container)[0];
+        
+        // canvas needs to be updated on size changes
+        _.addEvent(window, 'resize', this.refreshFrame);
         
     },
     
@@ -795,8 +800,8 @@ var ANIMATOR = {
     },
     
     // set key which data needs to be animated for the individual chart
-    setInvidualChart : function (key) {
-        this.individual_chart_key = key;
+    setInvidualChartKeys : function (keys) {
+        this.individual_chart_keys = keys;
     },
     
     
@@ -980,6 +985,17 @@ var ANIMATOR = {
             'width': ($.current % 50 * 2) + '%'
         });
         
+        $.refreshFrame();
+        
+        $.current++;
+        
+    },
+    
+    // refreshes frame to display current values
+    refreshFrame : function () {
+        
+        let $ = ANIMATOR;
+        
         // check what chart to update
         if (NAV.individual_chart_opened) {
             $.updateIndividualCharts();
@@ -1059,14 +1075,115 @@ var ANIMATOR = {
             });
         }
         
-        $.current++;
-        
     },
     
     // update the invidual chart of every key
     updateIndividualCharts : function () {
         
-        // TODO
+        let $ = ANIMATOR;
+        
+        // get standard components and values
+        let canvas = DATA_LOAD.individual_chart;
+        let context = canvas.getContext('2d');
+        let keys = $.individual_chart_keys;
+        let key_num = $.individual_chart_keys.length;
+        
+        // reset canvas width and content
+        canvas.width = _.getWidth(ANIMATOR.current_value.container);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // get total min and max values of the given columns (for y positions)
+        let min = 0; // can't be higher than 0
+        let max = Number.MIN_VALUE;
+        // go through all keys
+        for (let i = 0; i < key_num; i++) {
+            // go through all data points
+            for (let j = 0; j < $.data_point_num; j++) {
+                let key = keys[i];
+                let val = $.data[key][j];
+                if (val < min) min = val;
+                if (val > max) max = val;
+            }
+        }
+        
+        // go through all keys and draw statistic
+        for (let i = 0; i < key_num; i++) {
+            
+            let key = keys[i];
+            let color = _.getStyle($.columns[key].meter, 'background-color'); // color from column meter
+            
+            $.drawIndividualKey(canvas, context, color, min, max, $.data[key], key);
+            
+        }
+        
+    },
+    
+    drawIndividualKey : function (canvas, context, color, min, max, data, key) {
+        
+        let $ = ANIMATOR;
+        
+        // set drawing attributes
+        let padding = 5; // at each side of canvas, in pixels
+        let point_radius = 2; // in pixels
+        
+        // get all key data points (excludes the 49 points generated between them by the program)
+        let points = [];
+        let points_num = points.length;
+        for (let i = 0; i <= $.data_point_num; i += 50) {
+                
+            // get point x position
+            let width_minus_padding = canvas.width - 2 * padding;
+            let width_ratio = (i + 1) / $.data_point_num; // how far to the right is the current point
+            let x_pos = padding + width_minus_padding * width_ratio;
+            
+            // get point y position
+            let height_minus_padding = canvas.height - 2 * padding;
+            let percentage_to_top = (((data[i] - min) / (max - min)) * 100);
+            let y_pos = canvas.height - padding - (height_minus_padding / (100 / percentage_to_top));
+            
+            // add point to array
+            points[points.length] = {
+                x : x_pos, 
+                y : y_pos
+            };
+            
+            points_num++;
+                
+        }
+        
+        // get circle angles
+        let start_angle = 0;
+        let end_angle = 2 * Math.PI;
+        
+        // draw all elements
+        for (let i = 0; i < points.length; i++) {
+            
+            // set drawing color
+            context.strokeStyle = color;
+            
+            // get coordinates of current point
+            let x = points[i].x;
+            let y = points[i].y;
+
+            // draw point
+            context.beginPath();
+            context.arc(x, y, point_radius, start_angle, end_angle);
+            context.stroke();
+            
+            // draw line between point and next point (except if already reached last point)
+            if (i != points.length - 1) {
+                
+                // get coordinates of next point
+                let x_next = points[i + 1].x;
+                let y_next = points[i + 1].y;
+                
+                context.moveTo(x, y);
+                context.lineTo(x_next, y_next);
+                context.stroke();
+                
+            }
+                
+        }
         
     }
     

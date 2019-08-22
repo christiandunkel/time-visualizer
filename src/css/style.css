@@ -265,6 +265,14 @@ main {
     background-color: #000000; border-color: #333;
 }
 
+@media (max-width: 550px) {
+    
+    .content {
+        padding: 15px;
+    }
+    
+}
+
 @-o-keyframes hidden-elem {
     0%, 100% {opacity: 0; pointer-events: none;}
 }
@@ -1333,7 +1341,6 @@ nav button.secondary.active {
 
 #individual-chart {
     display: none;
-    width: 100%; height: 400px;
 }
 
 #individual-chart.active {

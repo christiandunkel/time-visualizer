@@ -514,7 +514,7 @@ var _ = {
             return console.error('Element is not defined.');
         }
         
-        if (!_.isString(elem)) {
+        if (!_.isString(style)) {
             return console.error('Given style is not a string.');
         }
         
