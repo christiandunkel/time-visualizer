@@ -118,10 +118,13 @@ var NAV = {
     toggleDarkMode : function () {
 
         // toggle darkmode value
-        this.darkmode = !this.darkmode;
-
+        NAV.darkmode = !NAV.darkmode;
+        
         // toggle darkmode class according to value
-        _[(this.darkmode ? 'add' : 'remove') + 'Class'](html, 'darkMode');
+        _[(NAV.darkmode ? 'add' : 'remove') + 'Class'](html, 'darkMode');
+        
+        // update rendered chart
+        ANIMATOR.refreshFrame();
         
     },
     
@@ -1104,29 +1107,79 @@ var ANIMATOR = {
             }
         }
         
+        // define padding in canvas per side
+        let padding = {
+            top : 5,
+            left : 5,
+            bottom : 20,
+            right : 5
+        };
+        
+        let width_minus_padding = canvas.width - padding.left - padding.right;
+        let number_of_keys = (($.data_point_num - 1) / 50) + 1;
+        
+        // draw the raster
+        for (let i = $.from; i <= $.to; i++) {
+            
+            // set drawing color
+            context.strokeStyle = NAV.darkmode ? '#191919' : '#f4f4f4';
+            
+            let x_pos = i == $.from ? 
+                padding.left : padding.left + (width_minus_padding * ((i - $.from) / (number_of_keys - 1)));
+            
+            // draw line
+            context.moveTo(x_pos, padding.top);
+            context.lineTo(x_pos, canvas.height - padding.bottom);
+        
+            // draw on the canvas
+            context.stroke();
+            
+            // draw label on raster at left and right-most limit, 
+            // also draw labels on other lines if screen size > 550px
+            if (
+                window.innerWidth > 550 || 
+                window.innerWidth <= 550 && ($.from == i || $.to == i)
+            ) {
+                
+                // draw text
+                let text = i + '';
+                context.font = '12px Arial sans-serif';
+                context.fillStyle = NAV.darkmode ? '#393939' : '#c4c4c4';
+                context.textBaseline = 'bottom';
+                context.textAlign = i == $.from ? 'left' : (i == $.to ? 'right' : 'center');
+                context.fillText(text, x_pos, canvas.height);
+                
+                let text_width = context.measureText(text).width;
+                console.log(text_width);
+
+                // draw on the canvas
+                context.stroke();
+        
+            }
+            
+        }
+        
         // go through all keys and draw statistic
         for (let i = 0; i < key_num; i++) {
             
             let key = keys[i];
             let color = _.getStyle($.columns[key].meter, 'background-color'); // color from column meter
             
-            $.drawIndividualKey(canvas, context, color, min, max, $.data[key], key);
+            $.drawIndividualKey(canvas, context, padding, color, min, max, $.data[key], key);
             
         }
         
         // draw time indicator line
-        if ($.is_running) {
+        if ($.current != 0) {
 
             // set drawing color
             context.strokeStyle = '#e26565';
             
-            let padding = 5;
             let width_ratio = ($.current + 1) / $.data_point_num; // how far to the right is the current point
-            let width_minus_padding = canvas.width - 2 * padding;
-            let x_pos = padding + width_minus_padding * width_ratio;
+            let x_pos = padding.left + width_minus_padding * width_ratio;
             
-            context.moveTo(x_pos, 5);
-            context.lineTo(x_pos, canvas.height - 5);
+            context.moveTo(x_pos, padding.top);
+            context.lineTo(x_pos, canvas.height - padding.bottom);
         
             // draw on the canvas
             context.stroke();
@@ -1135,15 +1188,14 @@ var ANIMATOR = {
         
     },
     
-    drawIndividualKey : function (canvas, context, color, min, max, data, key) {
+    drawIndividualKey : function (canvas, context, padding, color, min, max, data, key) {
         
         let $ = ANIMATOR;
         
         // set drawing attributes
-        let padding = 5; // at each side of canvas, in pixels
         let point_radius = 2; // in pixels
-        let width_minus_padding = canvas.width - 2 * padding;
-        let height_minus_padding = canvas.height - 2 * padding;
+        let width_minus_padding = canvas.width - padding.left - padding.right;
+        let height_minus_padding = canvas.height - padding.top - padding.bottom;
         
         // get all key data points (excludes the 49 points generated between them by the program)
         let points = [];
@@ -1152,11 +1204,11 @@ var ANIMATOR = {
                 
             // get point x position
             let width_ratio = (i + 1) / $.data_point_num; // how far to the right is the current point
-            let x_pos = padding + width_minus_padding * width_ratio;
+            let x_pos = padding.left + width_minus_padding * width_ratio;
             
             // get point y position
             let percentage_to_top = (((data[i] - min) / (max - min)) * 100);
-            let y_pos = canvas.height - padding - (height_minus_padding / (100 / percentage_to_top));
+            let y_pos = canvas.height - padding.top - (height_minus_padding / (100 / percentage_to_top));
             
             // add point to array
             points[points.length] = {
