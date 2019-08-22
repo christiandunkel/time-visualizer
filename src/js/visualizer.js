@@ -1229,7 +1229,7 @@ var ANIMATOR = {
             /* RASTER LINES */
             
             // set drawing color
-            context.strokeStyle = NAV.darkmode ? '#191919' : '#f4f4f4';
+            context.strokeStyle = NAV.darkmode ? '#242424' : '#ededed';
             
             let x_pos = i == $.from ? 
                 padding.left : padding.left + (width_minus_padding * ((i - $.from) / (number_of_keys - 1)));
@@ -1265,13 +1265,13 @@ var ANIMATOR = {
             
             // if labels are limited to only right and left-most limits,
             // but current raster line is located in center -> return
-            if (limited_labels && ($.from != i && $.to != i)) {
-                return;
+            if (limited_labels && $.from != i && $.to != i) {
+                continue;
             }
                 
             // draw text
             context.font = '12px Arial sans-serif';
-            context.fillStyle = NAV.darkmode ? '#393939' : '#c4c4c4';
+            context.fillStyle = NAV.darkmode ? '#575757' : '#b5b5b5';
             context.textBaseline = 'bottom';
             context.textAlign = 
                 i == $.from ? 'left' : 

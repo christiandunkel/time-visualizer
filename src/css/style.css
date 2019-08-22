@@ -93,10 +93,6 @@ button {
     appearance: none;
     width: auto; margin: 0; padding: 0;
     background: transparent; border: none; overflow: visible; cursor: pointer;
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
     color: inherit; font: inherit; line-height: normal;
 }
 
@@ -190,6 +186,10 @@ html {
     -webkit-font-smoothing: subpixel-antialiased; /* chrome, opera, safari, etc. */
     scroll-behavior: smooth; /* prevent instant scroll, enable smooth movement */
     background: #fafafa;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
     font-family: 'Arial', sans-serif; color: #484848;
     -o-transition: .2s;
     -moz-transition: .2s;
@@ -311,10 +311,6 @@ main {
 header {
     position: relative;
     max-width: 1100px; margin: 0 auto;
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
 }
 
 header #logo {
@@ -473,10 +469,6 @@ header #title span:nth-child(2) {
 nav {
     max-width: 1100px; margin: 20px auto 0 auto; padding: 25px;
     background: #f9f9f9; border: 1px solid #f0f0f0; border-radius: 8px;
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
     -o-animation: hidden-elem .6s, fade-in .6s .6s;
     -moz-animation: hidden-elem .6s, fade-in .6s .6s;
     -webkit-animation: hidden-elem .6s, fade-in .6s .6s;
@@ -847,10 +839,6 @@ nav button.secondary.active {
 /* ######################## */
 
 #data-load-window {
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
     color: #979595;
 }
 
@@ -1048,10 +1036,6 @@ nav button.secondary.active {
 
 #data-set-info {
     margin: 50px auto 14px auto; padding: 10px 16px;
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
     background: #555555; border-radius: 5px;
     color: white;
     -o-animation: hidden-elem .9s, fade-in .6s .9s;
@@ -1097,10 +1081,6 @@ nav button.secondary.active {
 
 #data-set-current-value {
     padding: 15px 0 8px 50px;
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
     font-size: 70px;
 }
 #data-set-current-value.hidden {
@@ -1199,10 +1179,6 @@ nav button.secondary.active {
 .column-container {
     position: relative;
     width: 100%; margin: 2px 0; padding: 2px 122px 2px 50px;
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
     text-align: left;
     -o-transition: 1s;
     -moz-transition: 1s;
@@ -1341,18 +1317,32 @@ nav button.secondary.active {
 
 #individual-chart-menu {
     width: 100%; margin: 0 0 20px 0;
-    overflow: hidden;
 }
 
 #individual-chart-menu button {
-    min-height: 32px; padding: 8px 11px;
-    background: #f9f9f9; border: 1px solid #e6e6e6; border-radius: 5px;
-    color: #979797; font-size: 16px; line-height: 16px;
+    padding: 10px 12px;
+    background: #f4f4f4; border: 1px solid #e6e6e6; border-radius: 5px;
+    color: #979797; font-size: 14px; line-height: 14px;
+    -o-transition: .3s;
+    -moz-transition: .3s;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+
+#individual-chart-menu button:hover {
+    -moz-box-shadow: 1px 1px 5px rgba(0,0,0,.2);
+    -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,.2);
+    box-shadow: 1px 1px 5px rgba(0,0,0,.2);
 }
 
 #individual-chart-menu button.right {
     float: right;
     margin: 0 0 0 5px;
+}
+
+#individual-chart-menu button#back-to-column-chart-btn {
+    background: #ffdddd; border-color: #ffa6a6;
+    color: #c92f2f;
 }
 
 #individual-chart-menu,
@@ -1363,6 +1353,16 @@ nav button.secondary.active {
 #individual-chart-menu.active,
 #individual-chart.active {
     display: block;
+}
+
+@media (max-width: 550px) {
+    
+    #individual-chart-menu button,
+    #individual-chart-menu button.right {
+        display: block; float: none;
+        width: 100%; margin: 0 0 5px 0; padding: 12px;
+    }
+    
 }
 
 
@@ -1386,10 +1386,6 @@ footer {
 #chart-number-note {
     display: none;
     opacity: .4;
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
     text-align: center; font-size: 13px; line-height: 16px;
 }
 
@@ -1406,10 +1402,6 @@ footer {
 #bottom-links {
     margin: 20px 0 50px 0;
     opacity: .7;
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
     text-align: center; font-size: 12px; line-height: 14px;
 }
 
