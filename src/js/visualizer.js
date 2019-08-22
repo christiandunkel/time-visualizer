@@ -1214,15 +1214,17 @@ var ANIMATOR = {
         };
             
         // determine right-side labels with their respective lengths
+        let label_font = '12px Arial sans-serif';
         let label_top = ANIMATOR.formatNumber(max) + '';
         let label_bottom = ANIMATOR.formatNumber(min) + '';
+        context.font = label_font;
         let label_top_width = context.measureText(label_top).width;
         let label_bottom_width = context.measureText(label_bottom).width;
         
         // adjust right-side padding according to the longer text of the two
         let max_width = label_top_width;
         if (max_width < label_bottom_width) max_width = label_bottom_width;
-        padding.right = padding.right + max_width + 5;
+        padding.right = padding.right + max_width + 15;
         
         // reserve more space at bottom for additional keys in the legend 
         padding.bottom = padding.bottom + 18 * key_num;
@@ -1231,7 +1233,7 @@ var ANIMATOR = {
         for (let i = 0; i < 2; i++) {
             
             // prepare label text
-            context.font = '12px Arial sans-serif';
+            context.font = label_font;
             context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
             context.textBaseline = i == 0 ? 'top' : 'bottom';
             context.textAlign = 'left';
@@ -1295,8 +1297,8 @@ var ANIMATOR = {
                 continue;
             }
                 
-            // draw text
-            context.font = '12px Arial sans-serif';
+            // draw bottom labels
+            context.font = label_font;
             context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
             context.textBaseline = 'bottom';
             context.textAlign = 
