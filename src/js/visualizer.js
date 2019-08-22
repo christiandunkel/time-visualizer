@@ -1026,7 +1026,7 @@ var MAIN = {
         
         // load example data set from Github
         let request = new XMLHttpRequest();
-        request.open('GET', 'data/example.json');
+        request.open('GET', 'data/example-data-set.json');
         request.send();
 
         // when received, transform the JSON into a chart
