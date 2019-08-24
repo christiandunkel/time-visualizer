@@ -1,0 +1,84 @@
+@mixin animation($value) {
+    -o-animation: $value;
+    -moz-animation: $value;
+    -webkit-animation: $value;
+    animation: $value;
+}
+
+@mixin appearance($value) {
+    -moz-appearance: $value;
+    -webkit-appearance: $value;
+    appearance: $value;
+}
+
+@mixin background-size($value) {
+    -o-background-size: $value;
+    -moz-background-size: $value;
+    -webkit-background-size: $value;
+    background-size: $value;
+}
+
+@mixin border-radius($value) {
+    -moz-border-radius: $value;
+    -webkit-border-radius: $value;
+    border-radius: $value;
+}
+
+@mixin box-shadow($value) {
+    -moz-box-shadow: $value;
+    -webkit-box-shadow: $value;
+    box-shadow: $value;
+}
+
+@mixin box-sizing($value) {
+    -moz-box-sizing: $value;
+    -webkit-box-sizing: $value;
+    box-sizing: $value;
+}
+
+@mixin keyframes($name) {
+    @-o-keyframes #{$name} {
+        @content;
+    }
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+    @keyframes #{$name} {
+        @content;
+    }
+}
+
+@mixin opacity($value) {
+    opacity: $value;
+    filter: alpha(opacity=($value * 100)); //IE8
+}
+
+@mixin text-overflow($value) {
+    -o-text-overflow: $value;
+    text-overflow: $value;
+}
+
+@mixin transform($value) {
+    -o-transform: $value;
+    -ms-transform: $value;
+    -moz-transform: $value;
+    -webkit-transform: $value;
+    transform: $value;
+}
+
+@mixin transition($value) {
+    -o-transition: $value;
+    -moz-transition: $value;
+    -webkit-transition: $value;
+    transition: $value;
+}
+
+@mixin user-select($value) {
+    -ms-user-select: $value;
+    -moz-user-select: $value;
+    -webkit-user-select: $value;
+    user-select: $value;
+}

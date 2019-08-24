@@ -1,0 +1,33 @@
+@function pow($base, $exponent) {
+    $result: 1;
+    @for $i from 1 through $exponent {
+        $result: $result * $base;
+    }
+    @return $result;
+}
+
+@function sum($numbers...) {
+    $sum: 0;
+    @each $number in $numbers {
+        $sum: $sum + $number;
+    }
+    @return $sum;
+}
+
+@mixin text-wrap($type: ellipsis) {
+    white-space: nowrap;
+    overflow-x: hidden;
+    @include text-overflow($type);
+}
+
+@mixin size($width, $height: false) {
+    @if $height {
+        width: $width;
+        height: $height;
+    }
+    @else {
+        // if no height set, take width for height
+        width: $width;
+        height: $width;
+    }
+}

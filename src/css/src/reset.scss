@@ -1,0 +1,167 @@
+div, span, h1, h2, h3, h4, h5, h6, p, pre, a, del, img, ins, small, strike, strong, b, u, i, center, ol, ul, li, form, label, table, caption, tbody, tfoot, thead, tr, th, td, figure, figcaption, header, main, footer, menu, nav, input {
+    font: inherit; font-size: 100%;
+}
+
+div, span, h1, h2, h3, h4, p, pre, a, del, img, ins, small, strike, strong, b, u, i, center, ol, ul, li, form, label, table, caption, tbody, tfoot, thead, tr, th, td, figure, figcaption, header, main, footer, menu, nav, input {
+    vertical-align: baseline;
+	margin: 0; padding: 0;
+	border: 0;
+}
+
+div {
+    font-size: 0;
+}
+
+article, aside, details, figcaption, figure, header, main, footer, hgroup, menu, nav, section {
+	display: block;
+}
+
+blockquote, q {
+    
+    &:before, &:after {
+	   content: '';
+	   content: none;
+    }
+    
+}
+
+
+
+// tables
+
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-color: transparent;
+}
+
+thead,
+tbody,
+tfoot {
+    vertical-align: middle;
+    border-color: transparent;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tbody {
+    display: table-row-group;
+}
+
+tfoot {
+    display: table-footer-group;
+}
+
+th, td {
+    display: table-cell;
+    vertical-align: inherit;
+    border-color: transparent;
+}
+
+th {
+    font-weight: normal;
+    text-align: center;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: transparent;
+}
+
+
+
+// inputs
+
+textarea {
+    font-family: inherit;
+    
+    &:focus {
+        outline: none;
+    }
+    
+}
+
+input {
+    font-family: inherit;
+    
+    &:focus {
+        outline: none;
+    }
+    
+    &[type="hidden"] {
+        display: none;
+    }
+    
+    &[type="submit"] {
+        cursor: pointer;
+        @include transition(.3s, outline 0s);
+    }
+    
+}
+
+button {
+    width: auto; margin: 0; padding: 0;
+    background: transparent; border: none; overflow: visible; cursor: pointer;
+    color: inherit; font: inherit; line-height: normal;
+    @include appearance(none);
+    @include transition(.3s, outline 0s);
+    
+    &::-moz-focus-inner {
+        padding: 0;
+        border: 0;
+    }
+    
+}
+
+
+
+// headlines
+
+h1 {
+    font-size: 28px;
+}
+
+h2 {
+    margin: 45px 0 0 0;
+    font-size: 22px;
+}
+
+h1, h2, h3 {
+    line-height: 1.3em;
+}
+
+p {
+    margin: 18px 0;
+    font-size: 14px; line-height: 20px; color: #3b3b3b;
+}
+
+b {
+    font-weight: 700;
+}
+
+u {
+    text-decoration: underline;
+}
+
+i {
+    font-style: italic;
+}
+
+strike,
+del {
+    text-decoration: line-through;
+}
+
+small {
+    font-size: .7em; line-height: 1.1em;
+}
+
+ul {
+    list-style: inside;
+    margin: 24px 0; padding: 0 0 0 20px;
+    font-size: 14px; line-height: 20px;
+}
