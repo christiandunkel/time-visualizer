@@ -64,7 +64,6 @@ header {
             @include box-shadow(0 0 20px rgba(0, 0, 0, .5));
             @include transition(1s);
         }
-        
     }
     
     * {
@@ -86,6 +85,10 @@ header {
         width: 48px; height: 48px;
         background: $github-icon-white no-repeat center;
         @include background-size(100% 100%);
+        
+        .darkMode & {
+            background-image: $github-icon-black;
+        }
     }
     
     .background {
@@ -93,16 +96,12 @@ header {
         background: -moz-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(54,54,54,1) 51%, rgba(124,124,124,1) 100%);
         background: -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(54,54,54,1) 51%,rgba(124,124,124,1) 100%);
         background: linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(54,54,54,1) 51%,rgba(124,124,124,1) 100%);
+        
+        .darkMode & {
+            background: -moz-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
+            background: -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
+            background: linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
+        }
     }
     
-}
-
-.darkMode #github-link .icon {
-    background-image: $github-icon-black;
-}
-
-.darkMode #github-link .background {
-        background: -moz-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
-        background: -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
-        background: linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
 }

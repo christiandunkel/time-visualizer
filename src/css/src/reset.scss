@@ -36,32 +36,38 @@ table {
     border-color: transparent;
 }
 
-thead,
-tbody,
-tfoot {
+%table-part {
     vertical-align: middle;
     border-color: transparent;
 }
 
 thead {
+    @extend %table-part;
     display: table-header-group;
 }
 
 tbody {
+    @extend %table-part;
     display: table-row-group;
 }
 
 tfoot {
+    @extend %table-part;
     display: table-footer-group;
 }
 
-th, td {
+%table-cell {
     display: table-cell;
     vertical-align: inherit;
     border-color: transparent;
 }
 
+td {
+    @extend %table-cell;
+}
+
 th {
+    @extend %table-cell;
     font-weight: normal;
     text-align: center;
 }
@@ -121,17 +127,19 @@ button {
 
 // headlines
 
+%headline {
+    line-height: 1.3em;
+}
+
 h1 {
+    @extend %headline;
     font-size: 28px;
 }
 
 h2 {
+    @extend %headline;
     margin: 45px 0 0 0;
     font-size: 22px;
-}
-
-h1, h2, h3 {
-    line-height: 1.3em;
 }
 
 p {

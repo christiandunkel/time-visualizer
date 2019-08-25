@@ -35,19 +35,21 @@ html {
         background-color: #1d1d1d;
         color: #b9b9b9;
     }
-    
 }
 
 a {
     color: #6f6f6f; font-style: normal; text-decoration: underline;
+    
     &:hover {
         background: #ebebeb;
     }
-}
-.darkMode a {
-    color: #b9b9b9;
-    &:hover {
-        background: #585858;
+    
+    .darkMode & {
+        color: #b9b9b9;
+        
+        &:hover {
+            background: #585858;
+        }
     }
 }
 
@@ -60,14 +62,15 @@ body {
 
 #top-area {
     margin: 0 0 70px 0; padding: 20px;
-    background: #edf0f4 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wgOFCkeKc1WWgAAAS9JREFUeNrt3cENg0AQBMFLkwgvTb6EgKarMthp2eZjcQ4AAAAAAPzMvfexwvj2Igc+WCIHthY5sLHIgW1FDmwqcmBLkQMbihzYTuTAZiIHthI5sJHIgW1EDmwicmALkQMblCNnbi9Gzt1cOjj7rVU4PP/csTyAh8rhIcQdHkTc4WHEHR5I3OGhxB0eTNzh4cQdHlDc4SHFHR5U3OFhxR0eWNzhocUdHlxcAAAAAAAAAAAAAACAFH9dEVdkcUUWV+TesCIHBhU5MKTIgQFFDgwncmAwkQNDiRwYSOTAMCIHBhE5MIR3JnkxlsPd6mA3O9TtDrSBw2whbm8TcYe3EXd4I3GHtxJ3eDNxh7cTd3hDcYe3FHd4U3GHtxV3eGNxh7cWdziyuH4SAQAAAADg6wXopUK4vogTHAAAAABJRU5ErkJggg==') center;
+    background: #edf0f4 $top-area-background center;
     @include background-size(60px 60px);
     @include box-shadow(0 2px 12px #e6e6e6);
     @include animation(fade-in .6s);
-}
-.darkMode #top-area {
-    background-color: #262a31;
-    @include box-shadow(0 2px 16px #0e1722);
+    
+    .darkMode & {
+        background-color: #262a31;
+        @include box-shadow(0 2px 16px #0e1722);
+    }
 }
 
 main {
@@ -78,17 +81,14 @@ main {
     position: relative;
     padding: 30px;
     background: white; border: 1px solid #ebebeb; border-radius: 5px;
-}
-.darkMode .content {
-    background-color: #000000; border-color: #333;
-}
-
-@media (max-width: 550px) {
     
-    .content {
-        padding: 15px;
+    .darkMode & {
+        background-color: #000000; border-color: #333;
     }
     
+    @media (max-width: 550px) {
+        padding: 15px;
+    }
 }
 
 @include keyframes(hidden-elem) {
