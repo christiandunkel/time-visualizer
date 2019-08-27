@@ -12,7 +12,7 @@ nav {
         margin: 0 8px 0 0;
         font-size: 13px; line-height: 1.2em; color: #b2b2b2; font-weight: 700;
         
-        .hidden {
+        &.hidden {
             display: none;
         }
         
@@ -99,11 +99,8 @@ nav {
             }
         }
 
-        html.animation-playing &#play-button {
-            display: none;
-        }
-
-        html.animation-paused &#play-button {
+        html.animation-playing &#play-button,
+        html.animation-paused &#pause-button {
             display: none;
         }
         
@@ -141,17 +138,12 @@ nav {
 
         &:after {
             content: '';
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
+            position: absolute; top: 30%; left: 30%;
+            width: 40%; height: 40%;
             background: no-repeat center;
-        }
-        
-        %background-size {
-            @include background-size(40% 40%);
         }
             
         &#play-button:after {
-            @extend %background-size;
             background-image: $play-button-grey;
             
             .darkMode & {
@@ -160,7 +152,6 @@ nav {
         }
         
         &#pause-button:after {
-            @extend %background-size;
             background-image: $pause-button-grey;
             
             .darkMode & {
@@ -169,15 +160,16 @@ nav {
         }
         
         &#stop-button:after {
-            @extend %background-size;
-            background-image: $pause-button-grey;
+            background-image: $stop-button-grey;
             
             .darkMode & {
-                background-image: $pause-button-white;
+                background-image: $stop-button-white;
             }
         }
         
         &#toggle-darkmode:after {
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background-image: $moon-grey;
             
             .darkMode & {

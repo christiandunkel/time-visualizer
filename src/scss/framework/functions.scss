@@ -26,6 +26,11 @@
     }
 }
 
+@mixin on-phone {
+    @include on-mobile {
+        @content;
+    }
+}
 @mixin on-mobile {
     @media (max-width: 550px) {
         @content;
