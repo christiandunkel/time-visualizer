@@ -31,3 +31,15 @@
         height: $width;
     }
 }
+
+@mixin on-pc {
+    @media (min-width: 551px) {
+        @content;
+    }
+}
+
+@mixin on-mobile {
+    @media (max-width: 550px) {
+        @content;
+    }
+}

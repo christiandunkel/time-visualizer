@@ -86,7 +86,7 @@ main {
         background-color: #000000; border-color: #333;
     }
     
-    @media (max-width: 550px) {
+    @include on-mobile {
         padding: 15px;
     }
 }

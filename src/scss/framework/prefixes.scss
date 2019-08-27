@@ -1,8 +1,8 @@
-@mixin animation($value) {
-    -o-animation: $value;
-    -moz-animation: $value;
-    -webkit-animation: $value;
-    animation: $value;
+@mixin animation($animations...) {
+    -o-animation: $animations;
+    -moz-animation: $animations;
+    -webkit-animation: $animations;
+    animation: $animations;
 }
 
 @mixin appearance($value) {
@@ -24,10 +24,10 @@
     border-radius: $value;
 }
 
-@mixin box-shadow($value) {
-    -moz-box-shadow: $value;
-    -webkit-box-shadow: $value;
-    box-shadow: $value;
+@mixin box-shadow($shadows...) {
+    -moz-box-shadow: $shadows;
+    -webkit-box-shadow: $shadows;
+    box-shadow: $shadows;
 }
 
 @mixin box-sizing($value) {
@@ -69,11 +69,11 @@
     transform: $value;
 }
 
-@mixin transition($value) {
-    -o-transition: $value;
-    -moz-transition: $value;
-    -webkit-transition: $value;
-    transition: $value;
+@mixin transition($transitions...) {
+    -o-transition: $transitions;
+    -moz-transition: $transitions;
+    -webkit-transition: $transitions;
+    transition: $transitions;
 }
 
 @mixin user-select($value) {
