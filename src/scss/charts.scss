@@ -151,11 +151,12 @@
         .name {
             left: 15px;
             text-shadow: 1px 1px 2px rgba(0,0,0,.8);
+            white-space: nowrap;
             font-size: 15px; letter-spacing: .2px; font-weight: 700; color: white;
             
             @include on-pc {
                 max-width: 85%;
-                @include text-wrap;
+                text-overflow: ellipsis; overflow: hidden;
             }
         }
         
