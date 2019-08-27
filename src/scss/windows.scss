@@ -1,0 +1,238 @@
+.hidden-window {
+    position: fixed; top: 0; left: 0; z-index: 9999;
+    width: 100%; height: 100%;
+    visibility: hidden; pointer-events: none;
+    @include opacity(0);
+    @include transition(.3s, visibility 0s .3s);
+    
+    .blur {
+        position: absolute; top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: black; 
+        @include opacity(.6);
+        
+        .darkMode & {
+            @include opacity(.8);
+        }
+    }
+    
+    .close {
+        position: absolute; top: 8px; right: 8px;
+        width: 1em; height: 1em;
+        font-size: 18px; color: #d10000;
+        
+        .cross {
+            position: absolute; top: 0; left: 0;
+            width: 1em; height: 1em;
+            font-size: 1em; color: currentColor;
+            @include transition(.3s);
+            
+            &:after,
+            &:before {
+                content: '';
+                position: absolute; top: 50%; left: 0; z-index: 2;
+                width: 1em; height: .1em;
+                background: currentColor; 
+                @include border-radius(2px);
+            }
+            
+            &:after {
+                @include transform(translate(0, -50%) rotate(45deg));
+            }
+            
+            &:before {
+                @include transform(translate(0, -50%) rotate(-45deg));
+            }
+        }
+        
+        &:hover .cross {
+            @include opacity(.6);
+        }
+        
+        &:active.cross {
+            @include transform(scale(.8));
+            @include transition(.06s);
+        }
+    }
+    
+    .content {
+        position: absolute; top: 50%; left: 50%;
+        max-width: 550px; width: 90%; max-height: 330px; height: 90%; padding: 24px;
+        background: white; overflow-y: auto;
+        @include border-radius(8px);
+        @include transform(translate(-50%, -50%) scale(1.1));
+        @include transition(.5s);
+        
+        .darkMode & {
+            background: #2f2f2f;
+        }
+        
+        > *:last-child {
+            margin-bottom: 20px;
+        }
+    }
+    
+    &.visible {
+        visibility: visible; pointer-events: auto;
+        @include opacity(1);
+        @include transition(.3s, visibility 0s);
+        
+        .content {
+            @include transform(translate(-50%, -50%));
+        }
+    }
+    
+}
+
+
+
+// data load window
+
+#data-load-window {
+    color: #979595;
+    
+    .heading {
+        font-size: 20px; line-height: 23px;
+    }
+    
+    .data-set-btn {
+        margin: 8px 8px 0 0; padding: 8px 14px;
+        border: 1px dashed currentColor;
+        color: #5a94ff; font-size: 14px; line-height: 16px;
+        @include border-radius(5px);
+        @include transition(.3s);
+        
+        .darkMode & {
+            color: #88b2ff;
+        }
+        
+        &:hover {
+            background: rgba(58, 103, 255, 0.1); border-style: solid;
+            
+            .darkMode & {
+                background: rgba(79, 113, 255, 0.2);
+            }
+        }
+    }
+    
+    .or {
+        position: relative;
+        width: 40px; margin: 20px auto;
+        font-size: 20px; line-height: 24px;
+        text-align: center;
+        
+        %or-pseudo-class {
+            content: '';
+            position: absolute; top: 11px;
+            width: 60px; height: 2px;
+            background: currentColor;
+        }
+        
+        &:after {
+            @extend %or-pseudo-class;
+            right: 110%;
+        }
+        
+        &:before {
+            @extend %or-pseudo-class;
+            left: 110%;
+        }
+    }
+    
+    .file-selected {
+        position: relative;
+        width: 100%; height: 100%;
+        
+        .circle {
+            position: absolute; top: 48%; left: 50%;
+            width: 100px; height: 100px;
+            background: currentColor;
+            color: #3e9eff;
+            @include border-radius(50%);
+            @include transform(translate(-50%, -50%));
+            @include animation(appear-circle .4s);
+        }
+        
+        .tick {
+            position: absolute; top: 50%; left: 50%;
+            width: 30px; height: 30px;
+            background: $tick-white no-repeat center;
+            @include transform(translate(-50%, -50%));
+        }
+        
+        .text {
+            position: absolute; left: 0; bottom: -29px;
+            width: 100%;
+            text-align: center; font-size: 15px; line-height: 18px; font-weight: 700;
+            @include opacity(.8);
+            @include animation(hidden-elem .4s, fade-in .4s .4s);
+        }
+    }
+    
+    .file-selected,
+    &.file-selected .no-file-selected {
+        display: none;
+    }
+    
+    &.file-selected .file-selected,
+    .no-file-selected {
+        display: block;
+    }
+    
+    #drop-area {
+        position: relative;
+        width: 100%; height: 150px;
+        border: 2px dashed currentColor;
+        color: #c1c1c1;
+        @include border-radius(6px);
+        @include transition(.15s);
+        
+        .darkMode & {
+            color: #767676;
+        }
+        
+        &.dragged-over {
+            color: #d8d8d8;
+            
+            .darkMode & {
+                color: #666;
+            }
+        }
+        
+        .text {
+            position: absolute; top: 40px; left: 0;
+            width: 100%;
+            text-align: center; font-size: 16px; line-height: 18px; font-weight: 700;
+            @include transition(.15s);
+        }
+        
+        #selected-file {
+            position: absolute; z-index: -1;
+            width: 0.1px; height: 0.1px;
+            overflow: hidden;
+            @include opacity(0);
+            
+            + label {
+                display: block; position: absolute; bottom: 25px; left: 50%;
+                padding: 10px 18px;
+                background: #4f7dff; cursor: pointer;
+                text-align: center; color: white; font-size: 16px; line-height: 18px;
+                @include border-radius(3px);
+                @include box-shadow(2px 2px 4px rgba(37, 63, 255, 0.3));
+                @include transform(translate(-50%,0));
+                @include transition(.3s);
+                
+                &:hover {
+                    background-color: #6d93ff;
+                    @include box-shadow(2px 2px 8px rgba(69, 133, 255, 0.6));
+                }
+            }
+        }
+    }
+}
+
+@include keyframes(appear-circle) {
+    0% {@include transform(translate(-50%, -50%) scale(1.5));}
+    55% {@include transform(translate(-50%, -50%) scale(.8));}
+    80% {@include transform(translate(-50%, -50%) scale(1.1));}
+}

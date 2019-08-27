@@ -104,3 +104,215 @@ main {
         pointer-events: none;
     }
 }
+
+
+
+// header
+
+header {
+    position: relative;
+    max-width: 1100px; margin: 0 auto;
+    
+    #logo {
+        display: block; float: left;
+        width: 50px; height: 50px; margin: 0 10px 0 0;
+        @include animation(fade-in-logo 2s);
+    }
+    
+    #title {
+        display: inline-block;
+        
+        span {
+            display: block;
+            line-height: 1em; font-weight: 700;
+            
+            &:nth-child(1) {
+                font-size: 30px; color: #4196ff; 
+                @include animation(fade-in-logo 2.2s);
+            }
+            
+            &:nth-child(2) {
+                padding: 0 0 0 8px;
+                font-size: 18px; color: #4f9eff;
+                @include animation(fade-in-logo 2.4s);
+            }
+        }
+        
+    }
+    
+    
+    
+}
+
+@include keyframes(fade-in-logo) {
+    0%, 20% {
+        @include transform(translate(50px, 0)); 
+        @include opacity(0);
+    }
+}
+
+
+
+
+
+// Github icon in top right corner
+
+#github-link {
+    display: block; position: absolute; top: 0; right: 0;
+    width: 70px; height: 70px;
+    @include transition(.9s);
+    
+    &:hover {
+        width: 100px; height: 100px;
+        @include transition(.3s);
+    }
+    
+    &:active, &:focus {
+        width: 220px; height: 220px;
+        @include transition(1s);
+        
+        .curl {
+            @include box-shadow(0 0 20px rgba(0, 0, 0, .5));
+            @include transition(1s);
+        }
+    }
+    
+    * {
+        display: block; position: absolute; top: 0; right: 0;
+        width: 100%; height: 100%;
+    }
+    
+    .curl {
+        z-index: 3;
+        background: -moz-linear-gradient(45deg, rgba(157,157,157,1) 0%, rgba(193,193,193,1) 14%, rgba(255,255,255,1) 35%, rgba(203,203,203,1) 49%, rgba(141,141,141,1) 51%, rgba(0,0,0,0) 52%);
+        background: -webkit-linear-gradient(45deg, rgba(157,157,157,1) 0%,rgba(193,193,193,1) 14%,rgba(255,255,255,1) 35%,rgba(203,203,203,1) 49%,rgba(141,141,141,1) 51%,rgba(0,0,0,0) 52%);
+        background: linear-gradient(45deg, rgba(157,157,157,1) 0%,rgba(193,193,193,1) 14%,rgba(255,255,255,1) 35%,rgba(203,203,203,1) 49%,rgba(141,141,141,1) 51%,rgba(0,0,0,0) 52%);
+        @include box-shadow(0 0 6px rgba(0,0,0,.5));
+        @include transition(.9s);
+    }
+    
+    .icon {
+        top: 8px; right: 8px; z-index: 2;
+        width: 48px; height: 48px;
+        background: $github-icon-white no-repeat center;
+        @include background-size(100% 100%);
+        
+        .darkMode & {
+            background-image: $github-icon-black;
+        }
+    }
+    
+    .background {
+        z-index: 1;
+        background: -moz-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(54,54,54,1) 51%, rgba(124,124,124,1) 100%);
+        background: -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(54,54,54,1) 51%,rgba(124,124,124,1) 100%);
+        background: linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(54,54,54,1) 51%,rgba(124,124,124,1) 100%);
+        
+        .darkMode & {
+            background: -moz-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
+            background: -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
+            background: linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
+        }
+    }
+    
+}
+
+
+
+// footer
+
+footer {
+    max-width: 1100px; margin: 0 auto; padding: 0 20px;
+    @include animation(hidden-elem 1.5s, fade-in .6s 1.5s);
+    
+    #chart-number-note {
+        display: none;
+        opacity: .4;
+        text-align: center; font-size: 13px; line-height: 16px;
+        
+        .javascriptOn & {
+            display: block;
+        }
+    }
+    
+    #bottom-logo {
+        display: block;
+        width: 100px; height: 100px; margin: 60px auto 20px auto;
+    }
+    
+    #bottom-links {
+        margin: 20px 0 50px 0;
+        opacity: .7;
+        text-align: center; font-size: 12px; line-height: 14px;
+    }
+
+    #bottom-links a {
+        display: inline-block;
+        margin: 0 2px; padding: 2px;
+    }
+    
+}
+
+
+
+// warning boxes / notices
+
+.notice {
+    width: 100%; margin: 0 auto; padding: 20px 40px;
+    border-style: solid; border-width: 1px; border-radius: 2px;
+    font-size: 16px; line-height: 1.4em;
+    
+    &.blue,
+    &.info {
+        background: #e9f2ff; border-color: #bfc7ff;
+        color: #485dff;
+        
+        .darkMode & {
+            background: #4f4f9c; border-color: #6b76c5;
+            color: #dde1fb;
+        }
+    }
+    
+    &.red,
+    &.javascript {
+        background: #ffd4d4; border-color: #ffb0b0;
+        color: #a91111;
+        
+        .darkMode & {
+            background: #710909; border-color: #a53737;
+            color: #ffd1d1;
+        }
+    }
+    
+    &.green {
+        background: #e6ffe9; border-color: #d0ffd0;
+        color: #00520d;
+        
+        .darkMode & {
+            background: #112913; border-color: #264e26;
+            color: #b3ffbf;
+        }
+    }
+    
+    &.yellow,
+    &.warning {
+        background: #fdffbc; border-color: #e5cc52;
+        color: #a06707;
+        
+        .darkMode & {
+            background: #5f6143; border-color: #d4e400;
+            color: #fffc70;
+        }
+    }
+    
+    &.hidden.show,
+    &.javascript {
+        @include animation(hidden-elem .3s, fade-in .6s .3s);
+    }
+    
+    &.hidden:not(.show),
+    .javascriptOn &.javascript {
+        display: none;
+    }
+    
+}

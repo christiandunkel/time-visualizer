@@ -20,18 +20,6 @@
     @include text-overflow($type);
 }
 
-@mixin size($width, $height: false) {
-    @if $height {
-        width: $width;
-        height: $height;
-    }
-    @else {
-        // if no height set, take width for height
-        width: $width;
-        height: $width;
-    }
-}
-
 @mixin on-pc {
     @media (min-width: 551px) {
         @content;

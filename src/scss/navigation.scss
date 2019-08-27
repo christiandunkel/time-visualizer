@@ -153,34 +153,38 @@ nav {
         &#play-button:after {
             @extend %background-size;
             background-image: $play-button-grey;
-        }
-        .darkMode &#play-button:after {
-            background-image: $play-button-white;
+            
+            .darkMode & {
+                background-image: $play-button-white;
+            }
         }
         
         &#pause-button:after {
             @extend %background-size;
             background-image: $pause-button-grey;
-        }
-        .darkMode &#pause-button:after {
-            background-image: $pause-button-white;
+            
+            .darkMode & {
+                background-image: $pause-button-white;
+            }
         }
         
         &#stop-button:after {
             @extend %background-size;
             background-image: $pause-button-grey;
-        }
-        .darkMode &#stop-button:after {
-            background-image: $pause-button-white;
+            
+            .darkMode & {
+                background-image: $pause-button-white;
+            }
         }
         
         &#toggle-darkmode:after {
             background-image: $moon-grey;
-        }
-        .darkMode &#toggle-darkmode:after {
-            background-image: $sun-white;
-            background-repeat: no-repeat;
-            background-position: center;
+            
+            .darkMode & {
+                background-image: $sun-white;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
         }
     }
     
