@@ -20,9 +20,8 @@
 	- use images or logos of this project for commercial purposes
 	- maliciously modify the source code, for example, to contain (hidden) harmful content
 	- do anything not explicitely mentioned to be permitted under point (1)
-	
-	There is no guarantee and warranty for the correctness and completeness of the source code and produce of this project. 
-	You may use the code in the confines of the license at your own risk.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSEm MERCHANTABILITY, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. YOU MAY USE THE SOFTWARE IN THE CONFINES OF THIS LICENSE AT YOUR OWN RISK.
 
 ## External Resources
 
