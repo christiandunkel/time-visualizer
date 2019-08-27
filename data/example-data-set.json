@@ -4,31 +4,31 @@
     "keys": {
         "company_1": {
             "name": "Bob's Burger",
-            "icon": "example_icon1.png"
+            "icon": "img/raster/example/burger.png"
         },
         "company_2": {
             "name": "Steve's Steaks",
-            "icon": "example_icon2.png"
+            "icon": "img/raster/example/steak.png"
         },
         "company_3": {
             "name": "Cassy's Candies",
-            "icon": "example_icon3.png"
+            "icon": "img/raster/example/chocolate.png"
         },
         "company_4": {
             "name": "Lance's Lobsters",
-            "icon": "example_icon4.png"
+            "icon": "img/raster/example/lobster.png"
         },
         "company_5": {
             "name": "Finn's Fish",
-            "icon": "example_icon5.png"
+            "icon": "img/raster/example/fish.png"
         },
         "company_6": {
             "name": "Peter's Pommes",
-            "icon": "example_icon6.png"
+            "icon": "img/raster/example/fries.png"
         },
         "company_7": {
             "name": "Pamela's Parmesan",
-            "icon": "example_icon7.png"
+            "icon": "img/raster/example/cheese.png"
         }
     },
     "range": {
