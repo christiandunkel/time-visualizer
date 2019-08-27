@@ -646,7 +646,7 @@ var _ = {
     // encodes HTML reserved characters
     encodeHTML : function (str) {
         
-        if (!_.isString(class_)) {
+        if (!_.isString(str)) {
             return console.error('No string was given.');
         }
         
