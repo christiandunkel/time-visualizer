@@ -537,8 +537,8 @@ var _ = {
             return console.error('No valid styles object was provided.');
         }
         
-        for (let name in styles) {
-            elem.style.setProperty(name, styles[name]);
+        for (let style_name in styles) {
+            elem.style.setProperty(style_name, styles[name]);
         }
         
     },
