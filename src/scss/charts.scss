@@ -1,0 +1,275 @@
+// chart top
+
+#data-set-info {
+    margin: 50px auto 14px auto; padding: 10px 16px;
+    background: #555555;
+    color: white;
+    @include border-radius(5px);
+    @include animation(hidden-elem .9s, fade-in .6s .9s);
+    
+    .darkMode & {
+        border-color: #4b4b4b;
+    }
+    
+    > * {
+        display: inline-block;
+        @include text-wrap;
+    }
+    
+    .title {
+        max-width: 350px; margin: 0 10px 0 0;
+        font-size: 17px; font-weight: 100;
+    }
+    
+    .date {
+        float: right;
+        max-width: 100px;
+        font-size: 14px; line-height: 20px;
+        @include opacity(.6);
+    }
+    
+    @include on-mobile {
+        padding-top: 17px;
+        
+        .title {
+            display: block; float: none;
+            width: 100%;
+        }
+
+        .date {
+            float: none;
+            line-height: 30px;
+        }
+    }
+}
+
+
+
+// chart content
+
+.content {
+    @include animation(hidden-elem 1.2s, fade-in .6s 1.2s);
+}
+
+#data-set-current-value {
+    padding: 15px 0 8px 50px;
+    font-size: 70px;
+    
+    &.hidden {
+        display: none;
+    }
+    
+    .container {
+        display: inline-block; position: relative;
+        max-width: 100%;
+        font-size: inherit;
+    }
+    
+    .value,
+    .indicator {
+        max-width: 100%; padding: 3px;
+        white-space: nowrap; overflow: hidden;
+        font-size: inherit; line-height: 1em; letter-spacing: 1px; font-weight: 700;
+    }
+    
+    .value {
+        display: inline-block; position: relative; z-index: 1;
+        @include opacity(.5);
+    }
+    
+    .indicator {
+        display: inline-block; position: absolute; top: 0; left: 0; z-index: 2;
+        width: 0;
+        background: #ff5454;
+        color: white;
+        @include border-radius(5px);
+        @include transition(.1s);
+    }
+    
+    @media (max-width: 750px) {
+        padding: 10px 0 6px 50px;
+        font-size: 50px;
+    }
+    
+    @include on-mobile {
+        padding: 10px 0 6px 2px;
+        font-size: 35px;
+    }
+    
+    @media (max-width: 350px) {
+        padding-top: 5px; padding-bottom: 3px;
+        font-size: 22px;
+    }
+    
+}
+
+
+
+// column chart
+
+#column-chart {
+    display: none;
+    width: 100%;
+    
+    &.active {
+        display: block;
+    }
+    
+    .column-container {
+        position: relative;
+        width: 100%; margin: 2px 0; padding: 2px 122px 2px 50px;
+        text-align: left;
+        @include transition(1s);
+        
+        .clickEvent {
+            position: absolute; top: 0; left: 0; z-index: 5;
+            width: 100%; height: 100%;
+        }
+        
+        .icon {
+            position: absolute; top: 2px; left: 2px;
+            width: 44px; height: 44px;
+            background: no-repeat contain;
+            background-position: center right;
+            @include transition(.8s);
+        }
+        
+        .meter {
+            position: relative;
+            min-width: 1%; width: 100%; height: 44px;
+            background: #67a2ff; 
+            @include border-radius(5px);
+            @include box-shadow(2px 2px 1px rgba(159, 159, 159, 0.43));
+            @include transition(.1s);
+        }
+        
+        .name,
+        .value {
+            display: inline-block; 
+            position: absolute; top: 50%;
+            @include transform(translate(0, -50%));
+        }
+        
+        .name {
+            left: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,.8);
+            font-size: 15px; letter-spacing: .2px; font-weight: 700; color: white;
+            
+            @include on-pc {
+                max-width: 85%;
+                @include text-wrap;
+            }
+        }
+        
+        .value {
+            left: 100%;
+            padding: 0 0 0 8px;
+            font-size: 14px; letter-spacing: -.1px; color: #919191;
+        }
+        
+        &:hover,
+        &:active {
+            background: #f8f7f7; border-radius: 10px;
+            @include transition(.3s);
+            
+            .darkMode & {
+                background: #1a1a1a;
+            }
+            
+            .meter,
+            .icon {
+                @include opacity(.5);
+                @include transition(.3s);
+            }
+        }
+        
+        @include on-mobile {
+            padding-right: 2px; padding-left: 2px;
+            
+            .icon {
+                display: none;
+            }
+            
+            .name,
+            .value {
+                @include transform(none);
+            }
+            
+            .name {
+                top: 6px;
+                font-size: 15px;
+            }
+            
+            .value {
+                top: auto; bottom: 6px; left: 15px;
+                padding: 0;
+                text-shadow: 0 0 3px rgba(0,0,0,.7);
+                color: white; font-size: 12px;
+            }
+        }
+        
+    }
+}
+
+
+
+
+// individual chart
+
+#individual-chart-menu {
+    width: 100%; margin: 0 0 20px 0;
+    
+    button {
+        padding: 10px 12px;
+        background: #f4f4f4; border: 1px solid #e6e6e6; border-radius: 5px;
+        color: #979797; font-size: 14px; line-height: 14px;
+        @include transition(.3s);
+        
+        .darkMode & {
+            background-color: #242424; border-color: #3e3e3e;
+            color: #898989;
+        }
+        
+        &:hover {
+            @include box-shadow(1px 1px 5px rgba(0,0,0,.2));
+            
+            .darkMode & {
+                @include box-shadow(2px 2px 5px rgba(255,255,255,.3));
+            }
+        }
+        
+        &.right {
+            float: right;
+            margin: 0 0 0 5px;
+        }
+        
+        &#back-to-column-chart-btn {
+            background: #ffdddd; border-color: #ffa6a6;
+            color: #c92f2f;
+            
+            .darkMode & {
+                background: #3e0d0d; border-color: #8c3d3d;
+                color: #ea6969;
+            }
+        }
+        
+        @include on-mobile {
+            &,
+            &.right {
+                display: block; float: none;
+                width: 100%; margin: 0 0 5px 0; padding: 12px;
+            }
+        }
+    }
+}
+
+
+
+#individual-chart-menu,
+#individual-chart {
+    display: none;
+    
+    &.active {
+        display: block;
+    }
+}
