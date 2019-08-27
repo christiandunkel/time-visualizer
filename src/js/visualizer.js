@@ -1,8 +1,3 @@
-// include utility functions using Koala
-// @koala-prepend "utility.js"
-
-
-
 /*
  * safes all nodes
  */

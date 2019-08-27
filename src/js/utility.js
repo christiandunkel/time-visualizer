@@ -538,7 +538,7 @@ var _ = {
         }
         
         for (let style_name in styles) {
-            elem.style.setProperty(style_name, styles[name]);
+            elem.style.setProperty(style_name, styles[style_name]);
         }
         
     },
