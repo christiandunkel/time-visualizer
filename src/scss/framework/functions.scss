@@ -16,7 +16,7 @@
 
 @mixin text-wrap($type: ellipsis) {
     white-space: nowrap;
-    overflow-x: hidden;
+    overflow: hidden;
     @include text-overflow($type);
 }
 

@@ -100,6 +100,18 @@ var NODE = {
     
     
     
+    /* COLUMN RATIO CHART */
+    
+    ratio_chart : null,
+    
+    initializeRatioChart : function () {
+        
+        this.ratio_chart = _.id('column-ratio');
+        
+    },
+    
+    
+    
     /* INDIVIDUAL DATA CHARTS */
     
     individual_chart_menu : null,
@@ -136,6 +148,7 @@ var NODE = {
         this.initializeNavButtons();
         this.initializeDataLoadWindow();
         this.initializeColumnChart();
+        this.initializeRatioChart();
         this.initializeIndividualCharts();
         
     }
@@ -544,9 +557,10 @@ var DATA_LOAD = {
     // then gives the animator the right animation values
     visualizeObject : function (obj, showConfirmation) {
         
-        // objects holding animation data and references to the columns
+        // objects holding animation data, references to the columns and references to ratio parts
         let ani = {};
         let columns = {};
+        let ratio_parts = {};
         
         // load information into data set header
         let info = NODE.data_set_info;
@@ -555,6 +569,7 @@ var DATA_LOAD = {
         
         // empty chart of current columns
         _.empty(NODE.column_chart);
+        _.empty(NODE.ratio_chart);
         
         // load data columns in chart
         let counter = 0;
@@ -563,6 +578,10 @@ var DATA_LOAD = {
             if (!obj.data.hasOwnProperty(key)) {
                 return;
             }
+            
+            
+            
+            /* COLUMN */
             
             // create a column and append it to the chart
             let column = this.getColumn(
@@ -584,16 +603,35 @@ var DATA_LOAD = {
             };
             
             // add click event to open an individual chart
-            _.addClick(column, function (e) {
-                
-                // send column key to animator object
-                let column_key = _.target(e).getAttribute('column-id');
-                ANIMATOR.setInvidualChartKeys([column_key]);
-                
-                // open individual chart
-                NAV.showIndividualChart();
-                
-            });
+            _.addClick(column, this.openIndividualChart);
+            
+            
+            
+            /* RATIO PART */
+            
+            // create a ratio part and append it to the ratio chart
+            let ratio_part = this.getRatioChartPart(
+                key,
+                counter,
+                obj.keys[key].name, 
+                obj.keys[key].icon
+            );
+            _.append(NODE.ratio_chart, ratio_part);
+            
+            // add ratio part to object
+            ratio_parts[key] = {
+                'container' : ratio_part,
+                'percentage' : _.class('percentage', ratio_part)[0],
+                'tooltip' : _.class('tooltip', ratio_part)[0]
+            };
+            ratio_parts[key].tooltip_percentage = _.class('percentage', ratio_parts[key].tooltip)[0];
+            
+            // add click event to open an individual chart
+            _.addClick(column, this.openIndividualChart);
+            
+            
+            
+            /* ANIMATION DATA */
             
             // add key data to animation object
             ani[key] = this.generateDataPointArray(
@@ -606,10 +644,16 @@ var DATA_LOAD = {
             
         }
             
-        // stop animator and set new values
+        // set new animation values
         ANIMATOR.setRange(obj.range.from, obj.range.to);
         ANIMATOR.setData(ani);
+        
+        // set elements that will be animated
         ANIMATOR.setColumns(columns);
+        ANIMATOR.setRatioParts(ratio_parts);
+        ANIMATOR.setCSSTransitions();
+        
+        // stop animator running
         ANIMATOR.end();
         ANIMATOR.refreshFrame();
         
@@ -626,12 +670,74 @@ var DATA_LOAD = {
         
     },
     
+    // click event to open individual chart
+    openIndividualChart : function (e) {
+        
+        // send column key to animator object
+        let column_key = _.target(e).getAttribute('column-id');
+        ANIMATOR.setInvidualChartKeys([column_key]);
+
+        // open individual chart
+        NAV.showIndividualChart();
+        
+    },
+    
+    // get HTML construct for the child of the column ratio chart
+    getRatioChartPart : function (key, column_index, key_name, icon_url) {
+        
+        let container = _.create('div.part-container', {
+            'style' : {
+                'background-color' : this.getColumnColor(column_index)
+            }
+        });
+        
+        // overlay click event
+        let clickEvent = _.create('button.clickEvent', {
+            'title' : 'Open statistics for ' + key_name,
+            'column-id' : key
+        });
+        
+        // graphic left of column
+        let icon = _.create('img.icon', {
+            'src' : _.isString(icon_url) ? _.encodeHTML(icon_url) : ''
+        });
+        
+        // tooltip parts
+        let tooltip = _.create('div.tooltip');
+        let tooltip_name = _.create('div.name', {
+            'innerHTML' : key_name
+        });
+        let tooltip_description = _.create('div.description', {
+            'innerHTML' : '' +
+                '<b>Avg:</b> 255.5 Million<br>' +
+                '<b>Min:</b> 255.5 Million<br>' +
+                '<b>Max:</b> 255.5 Million'
+        });
+        
+        // percentage values
+        let tooltip_percentage = _.create('div.percentage');
+        let percentage = _.create('div.percentage');
+        
+        // append elements to container
+        _.append(tooltip, icon);
+        _.append(tooltip, tooltip_percentage);
+        _.append(tooltip, tooltip_name);
+        _.append(tooltip, tooltip_description);
+        _.append(container, tooltip);
+        _.append(container, percentage);
+        _.append(container, clickEvent);
+        
+        return container;
+        
+    },
+    
     // generates DOM node for a column in the chart
     getColumn : function (key, column_index, key_name, icon_url) {
         
         // containing element
         let container = _.create('button.column-container');
         
+        // overlay click event
         let clickEvent = _.create('div.clickEvent', {
             'title' : 'Open statistics for ' + key_name,
             'column-id' : key
@@ -646,7 +752,7 @@ var DATA_LOAD = {
         let column = _.create('div.column');
         let meter = _.create('div.meter', {
             'style' : {
-                'background' : this.getColumnColor(column_index)
+                'background-color' : this.getColumnColor(column_index)
             }
         });
         let name = _.create('div.name', {
@@ -828,6 +934,10 @@ var ANIMATOR = {
     column_num : 0,
     pixels_between_columns : 52,
     
+    // object holding references to the parts of the column ratio chart
+    ratio_parts : {},
+    ratio_parts_num : 0,
+    
     individual_chart_keys : [],
     
     
@@ -880,12 +990,22 @@ var ANIMATOR = {
         
     },
     
-    // update transition duration for animated column length
+    // update transition duration of column chart and column ratio chart
     setCSSTransitions : function () {
         
+        let transition_time = ((1 / this.time) / 5) + 's';
+        
+        // set CSS transition effects for animated column length
         for (let column in this.columns) {
             _.setStyles(this.columns[column].meter, {
-                'transition': ((1 / this.time) / 5) + 's'
+                'transition': transition_time
+            });
+        }
+        
+        // set CSS transition effects for column ratio chart
+        for (let part in this.ratio_parts) {
+            _.setStyles(this.ratio_parts[part].container, {
+                'transition': transition_time
             });
         }
         
@@ -907,8 +1027,12 @@ var ANIMATOR = {
         this.columns = obj;
         this.column_num = Object.keys(obj).length;
         
-        // set CSS transition effects for animated column length
-        this.setCSSTransitions();
+    },
+    
+    setRatioParts : function (obj) {
+        
+        this.ratio_parts = obj;
+        this.ratio_parts_num = Object.keys(obj).length;
         
     },
     
@@ -1106,6 +1230,7 @@ var ANIMATOR = {
         }
         else {
             ANIMATOR.updateColumnChart();
+            ANIMATOR.updateColumnRatioChart();
         }
         
     },
@@ -1173,6 +1298,12 @@ var ANIMATOR = {
                 'transform': 'translate(0px, ' + transform_by + 'px)'
             });
         }
+        
+    },
+    
+    updateColumnRatioChart : function () {
+        
+        
         
     },
     
@@ -1499,7 +1630,7 @@ var MAIN = {
 
         // warning message in 'data load' window
         let warning = _.create('div.notice.blue', {
-            'innerHTML': 'You may currently run this project locally on your computer. This restricts you from selecting local files as data sets, excluding directly loading online examples.',
+            'innerHTML': 'You may currently run this project locally on your computer. This restricts you to only load local data set files. You can\'t load online examples.',
             'style': {
                 'margin-bottom': '20px'
             }

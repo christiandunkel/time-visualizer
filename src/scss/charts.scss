@@ -168,7 +168,8 @@
         
         &:hover,
         &:active {
-            background: #f8f7f7; border-radius: 10px;
+            background: #f8f7f7;
+            @include border-radius(10px);
             @include transition(.3s);
             
             .darkMode & {
@@ -210,6 +211,83 @@
     }
 }
 
+#column-ratio {
+    margin: 20px 0 0 0;
+    
+    .part-container {
+        display: inline-block; position: relative;
+        height: 80px;
+        background: #575757; border: solid white; border-width: 0 2px;
+        @include transition(.5s);
+        
+        .percentage {
+            display: inline-block; position: absolute; top: 50%; left: 0; z-index: 1;
+            width: 100%; padding: 0 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+            color: white; text-align: center; font-size: 15px; line-height: 1em; font-weight: 700;
+            @include text-wrap;
+            @include transform(translate(0, -50%));
+        }
+        
+        .clickEvent {
+            position: absolute; top: 0; left: 0; z-index: 2;
+            width: 100%; height: 100%;
+            cursor: pointer;
+        }
+        
+        .tooltip {
+            display: none; position: absolute; top: 100%; left: 50%;
+            max-width: 220px; min-width: 100%; padding: 15px;
+            background: #191919;
+            text-shadow: 1px 1px 3px rgba(0,0,0,.3);
+            color: white; text-align: center;
+            @include border-radius(3px);
+            @include transform(translate(-50%, 25px));
+            
+            // arrow
+            &:after {
+                content: '';
+                display: block; position: absolute; top: -14px; left: 50%;
+                width: 0; height: 0; 
+                border-left: 15px solid transparent;
+                border-right: 15px solid transparent;
+                border-bottom: 15px solid #191919;
+                @include transform(translate(-50%, 0));
+            }
+            
+            .icon {
+                width: 30px; height: 30px; margin: 10px 0 0 0;
+            }
+            
+            .percentage {
+                display: inline; position: relative; top: -8px;
+                width: auto; padding: 0 0 0 10px;
+                line-height: 30px;
+            }
+            
+            .name {
+                margin: 12px 0 8px 0;
+                font-size: 15px; line-height: 1em; font-weight: 700;
+                @include text-wrap;
+            }
+            
+            .description {
+                font-size: 14px; line-height: 16px;
+            }
+        }
+        
+        &:hover {
+            @include opacity(.7);
+            @include transition(.15s);
+            
+            .tooltip {
+                display: inline-block;
+            }
+        }
+        
+    }
+}
+
 
 
 
@@ -220,8 +298,9 @@
     
     button {
         padding: 10px 12px;
-        background: #f4f4f4; border: 1px solid #e6e6e6; border-radius: 5px;
+        background: #f4f4f4; border: 1px solid #e6e6e6;
         color: #979797; font-size: 14px; line-height: 14px;
+        @include border-radius(5px);
         @include transition(.3s);
         
         .darkMode & {

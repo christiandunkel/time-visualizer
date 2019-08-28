@@ -80,7 +80,8 @@ main {
 .content {
     position: relative;
     padding: 30px;
-    background: white; border: 1px solid #ebebeb; border-radius: 5px;
+    background: white; border: 1px solid #ebebeb;
+    @include border-radius(5px);
     
     .darkMode & {
         background-color: #000000; border-color: #333;
@@ -259,8 +260,9 @@ footer {
 
 .notice {
     width: 100%; margin: 0 auto; padding: 20px 40px;
-    border-style: solid; border-width: 1px; border-radius: 2px;
+    border-style: solid; border-width: 1px;
     font-size: 16px; line-height: 1.4em;
+    @include border-radius(2px);
     
     &.blue,
     &.info {
