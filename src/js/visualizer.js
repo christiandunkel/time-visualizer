@@ -684,7 +684,7 @@ var DATA_LOAD = {
             };
             
             // add click event to open an individual chart
-            _.addClick(column, this.openIndividualChart);
+            _.addClick(_.class('clickEvent', column)[0], this.openIndividualChart);
             
             
             
@@ -709,7 +709,7 @@ var DATA_LOAD = {
             };
             
             // add click event to open an individual chart
-            _.addClick(ratio_part, this.openIndividualChart);
+            _.addClick(_.class('clickEvent', ratio_part)[0], this.openIndividualChart);
             
             
             
