@@ -1,3 +1,16 @@
+// chart container
+
+#chart-container-1,
+#chart-container-2 {
+    display: none;
+    
+    &.active {
+        display: block;
+    }
+}
+
+
+
 // chart top
 
 #data-set-info {
@@ -108,12 +121,7 @@
 // column chart
 
 #column-chart {
-    display: none;
     width: 100%;
-    
-    &.active {
-        display: block;
-    }
     
     .column-container {
         position: relative;
@@ -337,16 +345,5 @@
                 width: 100%; margin: 0 0 5px 0; padding: 12px;
             }
         }
-    }
-}
-
-
-
-#individual-chart-menu,
-#individual-chart {
-    display: none;
-    
-    &.active {
-        display: block;
     }
 }

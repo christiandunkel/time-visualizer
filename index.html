@@ -182,32 +182,42 @@
 
 
             <!-- all data chart -->
-        
-            <div id="data-set-current-value" class="hidden">
-                <div class="container">
-                    <div class="value"></div>
-                    <div class="indicator"></div>
-                </div>
-            </div>
-
-            <div id="column-chart" class="active"></div>
             
-            <div id="column-ratio"></div>
+            <div id="chart-container-1" class="active">
+        
+                <div id="data-set-current-value" class="hidden">
+                    <div class="container">
+                        <div class="value"></div>
+                        <div class="indicator"></div>
+                    </div>
+                </div>
+
+                <div id="column-chart"></div>
+
+                <div id="column-ratio"></div>
+                
+            </div>
 
 
 
             <!-- individual data chart -->
             
-            <div id="individual-chart-menu">
-                
-                <button id="back-to-column-chart-btn" title="Back to column chart">&larr; Back</button>
-                
-                <button id="compare-btn" class="right" title="Compare key with other keys">Compare</button>
-                <button id="download-chart-as-image" class="right" title="Download charts as an image">Download PNG</button>
+            <div id="chart-container-2">
+            
+                <div id="individual-chart-menu">
+
+                    <button id="back-to-column-chart-btn" title="Back to column chart">&larr; Back</button>
+
+                    <button id="compare-btn" class="right" title="Compare key with other keys">Compare</button>
+                    <button id="download-chart-as-image" class="right" title="Download charts as an image">Download PNG</button>
+
+                </div>
+
+                <canvas id="individual-chart" width="1" height="500"></canvas>
                 
             </div>
-
-            <canvas id="individual-chart" width="1" height="500"></canvas>
+            
+            
             
         </div>
     

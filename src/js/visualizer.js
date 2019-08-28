@@ -66,6 +66,8 @@ var NODE = {
     
     /* COLUMN DATA CHART */
     
+    chart_container_1 : null,
+    
     // HTML element displaying 'current' value
     current_value : {
         container : null,
@@ -80,7 +82,11 @@ var NODE = {
     },
     column_chart : null,
     
+    ratio_chart : null,
+    
     initializeColumnChart : function () {
+        
+        this.chart_container_1 = _.id('chart-container-1');
         
         // get elements of data set info header
         let context = _.id('data-set-info');
@@ -96,16 +102,7 @@ var NODE = {
         curr.value = _.class('value', curr.container)[0];
         curr.indicator = _.class('indicator', curr.container)[0];
         
-    },
-    
-    
-    
-    /* COLUMN RATIO CHART */
-    
-    ratio_chart : null,
-    
-    initializeRatioChart : function () {
-        
+        // column ratio chart / bar below big column chart
         this.ratio_chart = _.id('column-ratio');
         
     },
@@ -113,6 +110,8 @@ var NODE = {
     
     
     /* INDIVIDUAL DATA CHARTS */
+    
+    chart_container_2 : null,
     
     individual_chart_menu : null,
     individual_chart : null,
@@ -122,6 +121,8 @@ var NODE = {
     compare_btn: null,
     
     initializeIndividualCharts : function () {
+        
+        this.chart_container_2 = _.id('chart-container-2');
         
         // get top menu and buttons
         this.individual_chart_menu = _.id('individual-chart-menu');
@@ -148,7 +149,6 @@ var NODE = {
         this.initializeNavButtons();
         this.initializeDataLoadWindow();
         this.initializeColumnChart();
-        this.initializeRatioChart();
         this.initializeIndividualCharts();
         
     }
@@ -307,11 +307,9 @@ var NAV = {
         
         NAV.individual_chart_opened = false;
         
-        // hide individual charts and show column chart
-        _.addClass(NODE.column_chart, 'active');
-        _.removeClass(NODE.current_value.container, 'hidden');
-        _.removeClass(NODE.individual_chart, 'active');
-        _.removeClass(NODE.individual_chart_menu, 'active');
+        // hide individual chart and show column chart
+        _.addClass(NODE.chart_container_1, 'active');
+        _.removeClass(NODE.chart_container_2, 'active');
         
         // update charts
         ANIMATOR.refreshFrame();
@@ -322,11 +320,9 @@ var NAV = {
         
         NAV.individual_chart_opened = true;
         
-        // show individual charts and hide column chart
-        _.removeClass(NODE.column_chart, 'active');
-        _.addClass(NODE.current_value.container, 'hidden');
-        _.addClass(NODE.individual_chart, 'active');
-        _.addClass(NODE.individual_chart_menu, 'active');
+        // show individual chart and hide column chart
+        _.removeClass(NODE.chart_container_1, 'active');
+        _.addClass(NODE.chart_container_2, 'active');
         
         // update charts
         ANIMATOR.refreshFrame();
