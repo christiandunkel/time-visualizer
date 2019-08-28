@@ -172,6 +172,54 @@ var MATH = {
                 return a[property] > b[property] ? 1 : -1;
             }
         });
+    },
+    
+    // returns the average of an array of values
+    getAverage : function (arr) {
+        
+        let total = 0;
+        let len = arr.length;
+        
+        for (let i = 0; i < len; i++) {
+            total += arr[i];
+        }
+        
+        return total / len;
+        
+    },
+    
+    // returns the smallest value of an array of values
+    getMin : function (arr, start_minimum = Number.MAX_VALUE) {
+        
+        let min = start_minimum;
+        let len = arr.length;
+        
+        for (let i = 0; i < len; i++) {
+            let curr = arr[i];
+            if (curr < min) {
+                min = curr;
+            }
+        }
+        
+        return min;
+        
+    },
+    
+    // returns the highest value of an array of values
+    getMax : function (arr, start_maximum = Number.MIN_VALUE) {
+        
+        let max = start_maximum;
+        let len = arr.length;
+        
+        for (let i = 0; i < len; i++) {
+            let curr = arr[i];
+            if (curr > max) {
+                max = curr;
+            }
+        }
+        
+        return max;
+        
     }
     
 }
@@ -605,6 +653,17 @@ var DATA_LOAD = {
             
             
             
+            /* ANIMATION DATA */
+            
+            // add key data to animation object
+            ani[key] = this.generateDataPointArray(
+                obj.data[key], 
+                obj.range.from, 
+                obj.range.to
+            );
+            
+            
+            
             /* COLUMN */
             
             // create a column and append it to the chart
@@ -637,6 +696,7 @@ var DATA_LOAD = {
             let ratio_part = this.getRatioChartPart(
                 key,
                 color,
+                ani[key],
                 obj.keys[key].name, 
                 obj.keys[key].icon
             );
@@ -654,15 +714,6 @@ var DATA_LOAD = {
             _.addClick(ratio_part, this.openIndividualChart);
             
             
-            
-            /* ANIMATION DATA */
-            
-            // add key data to animation object
-            ani[key] = this.generateDataPointArray(
-                obj.data[key], 
-                obj.range.from, 
-                obj.range.to
-            );
             
             counter++;
             
@@ -707,7 +758,7 @@ var DATA_LOAD = {
     },
     
     // get HTML construct for the child of the column ratio chart
-    getRatioChartPart : function (key, color, key_name, icon_url) {
+    getRatioChartPart : function (key, color, data, key_name, icon_url) {
         
         let container = _.create('div.part-container', {
             'style' : {
@@ -731,11 +782,16 @@ var DATA_LOAD = {
         let tooltip_name = _.create('div.name', {
             'innerHTML' : key_name
         });
+        
+        let avg = MATH.getAverage(data);
+        let min = MATH.getMin(data);
+        let max = MATH.getMax(data);
+        
         let tooltip_description = _.create('div.description', {
             'innerHTML' : '' +
-                '<b>Avg:</b> 255.5 Million<br>' +
-                '<b>Min:</b> 255.5 Million<br>' +
-                '<b>Max:</b> 255.5 Million'
+                '<b>Avg:</b> ' + ANIMATOR.formatNumber(avg) + '<br>' +
+                '<b>Min:</b> ' + ANIMATOR.formatNumber(min) + '<br>' +
+                '<b>Max:</b> ' + ANIMATOR.formatNumber(max)
         });
         
         // percentage values
