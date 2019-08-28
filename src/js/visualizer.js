@@ -579,6 +579,8 @@ var DATA_LOAD = {
                 return;
             }
             
+            let color = this.getColumnColor(counter);
+            
             
             
             /* COLUMN */
@@ -586,7 +588,7 @@ var DATA_LOAD = {
             // create a column and append it to the chart
             let column = this.getColumn(
                 key,
-                counter,
+                color,
                 obj.keys[key].name, 
                 obj.keys[key].icon
             );
@@ -612,7 +614,7 @@ var DATA_LOAD = {
             // create a ratio part and append it to the ratio chart
             let ratio_part = this.getRatioChartPart(
                 key,
-                counter,
+                color,
                 obj.keys[key].name, 
                 obj.keys[key].icon
             );
@@ -622,9 +624,9 @@ var DATA_LOAD = {
             ratio_parts[key] = {
                 'container' : ratio_part,
                 'percentage' : _.class('percentage', ratio_part)[0],
-                'tooltip' : _.class('tooltip', ratio_part)[0]
+                'tooltip' : _.class('tooltip', ratio_part)[0],
+                'tooltip_percentage' : _.class('tooltip-percentage', ratio_part)[0]
             };
-            ratio_parts[key].tooltip_percentage = _.class('percentage', ratio_parts[key].tooltip)[0];
             
             // add click event to open an individual chart
             _.addClick(column, this.openIndividualChart);
@@ -683,11 +685,11 @@ var DATA_LOAD = {
     },
     
     // get HTML construct for the child of the column ratio chart
-    getRatioChartPart : function (key, column_index, key_name, icon_url) {
+    getRatioChartPart : function (key, color, key_name, icon_url) {
         
         let container = _.create('div.part-container', {
             'style' : {
-                'background-color' : this.getColumnColor(column_index)
+                'background-color' : color
             }
         });
         
@@ -715,7 +717,7 @@ var DATA_LOAD = {
         });
         
         // percentage values
-        let tooltip_percentage = _.create('div.percentage');
+        let tooltip_percentage = _.create('div.tooltip-percentage');
         let percentage = _.create('div.percentage');
         
         // append elements to container
@@ -732,7 +734,7 @@ var DATA_LOAD = {
     },
     
     // generates DOM node for a column in the chart
-    getColumn : function (key, column_index, key_name, icon_url) {
+    getColumn : function (key, color, key_name, icon_url) {
         
         // containing element
         let container = _.create('button.column-container');
@@ -752,7 +754,7 @@ var DATA_LOAD = {
         let column = _.create('div.column');
         let meter = _.create('div.meter', {
             'style' : {
-                'background-color' : this.getColumnColor(column_index)
+                'background-color' : color
             }
         });
         let name = _.create('div.name', {
@@ -1303,7 +1305,33 @@ var ANIMATOR = {
     
     updateColumnRatioChart : function () {
         
+        let $ = ANIMATOR;
         
+        // get total for current time
+        let total = 0;
+        for (let key in $.data) {
+            total += $.data[key][$.current];
+        }
+        
+        for (let key in this.data) {
+            
+            let ratio_part = this.ratio_parts[key];
+            let percentage = 100 / (total / $.data[key][$.current]);
+            
+            // filter out parts smaller than 0.2%
+            _[(percentage < 0.2 ? 'add' : 'remove') + 'Class'](ratio_part.container, 'hidden');
+            
+            // make ratio part as wide as calculated percentage
+            _.setStyles(ratio_part.container, {
+                'width' : percentage + '%'
+            });
+            
+            // set displayed percentage values on chart
+            let rounded_percentage = percentage.toFixed(1);
+            ratio_part.percentage.innerHTML = rounded_percentage + '%';
+            ratio_part.tooltip_percentage.innerHTML = rounded_percentage + '%';
+            
+        }
         
     },
     

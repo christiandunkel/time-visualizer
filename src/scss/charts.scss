@@ -212,13 +212,17 @@
 }
 
 #column-ratio {
-    margin: 20px 0 0 0;
+    height: 80px; margin: 40px 0 0 0;
     
     .part-container {
         display: inline-block; position: relative;
-        height: 80px;
-        background: #575757; border: solid white; border-width: 0 2px;
+        height: 100%;
+        background: #575757; border: solid white; border-width: 0 1px;
         @include transition(.5s);
+        
+        &.hidden {
+            display: none;
+        }
         
         .percentage {
             display: inline-block; position: absolute; top: 50%; left: 0; z-index: 1;
@@ -236,9 +240,9 @@
         }
         
         .tooltip {
-            display: none; position: absolute; top: 100%; left: 50%;
-            max-width: 220px; min-width: 100%; padding: 15px;
-            background: #191919;
+            display: none; position: absolute; top: 100%; left: 50%; z-index: 3;
+            max-width: 300px; width: 100%; min-width: 200px; padding: 15px;
+            background: #313131;
             text-shadow: 1px 1px 3px rgba(0,0,0,.3);
             color: white; text-align: center;
             @include border-radius(3px);
@@ -251,7 +255,7 @@
                 width: 0; height: 0; 
                 border-left: 15px solid transparent;
                 border-right: 15px solid transparent;
-                border-bottom: 15px solid #191919;
+                border-bottom: 15px solid #313131;
                 @include transform(translate(-50%, 0));
             }
             
@@ -259,7 +263,7 @@
                 width: 30px; height: 30px; margin: 10px 0 0 0;
             }
             
-            .percentage {
+            .tooltip-percentage {
                 display: inline; position: relative; top: -8px;
                 width: auto; padding: 0 0 0 10px;
                 line-height: 30px;
@@ -277,7 +281,7 @@
         }
         
         &:hover {
-            @include opacity(.7);
+            background: #414141 !important;
             @include transition(.15s);
             
             .tooltip {
