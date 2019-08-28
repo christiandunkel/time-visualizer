@@ -82,6 +82,7 @@ var NODE = {
     },
     column_chart : null,
     
+    column_chart_total : null,
     ratio_chart : null,
     
     initializeColumnChart : function () {
@@ -103,6 +104,7 @@ var NODE = {
         curr.indicator = _.class('indicator', curr.container)[0];
         
         // column ratio chart / bar below big column chart
+        this.column_chart_total = _.id('column-chart-total');
         this.ratio_chart = _.id('column-ratio');
         
     },
@@ -1380,6 +1382,9 @@ var ANIMATOR = {
         for (let key in $.data) {
             total += $.data[key][$.current];
         }
+        
+        // set column total in line on top of ratio bar 
+        NODE.column_chart_total.innerHTML = ANIMATOR.formatNumber(total);
         
         // get ratio percentages
         let order = [];

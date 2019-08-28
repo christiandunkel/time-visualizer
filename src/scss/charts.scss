@@ -219,8 +219,20 @@
     }
 }
 
+#column-chart-total {
+    width: 100%; margin: 45px 0 8px 0;
+    opacity: .55;
+    font-size: 15px; line-height: 1.2em; font-weight: 700;
+    
+    &:before {
+        content: 'Total';
+        margin: 0 10px 0 0;
+        font-size: 12px;
+    }
+}
+
 #column-ratio {
-    height: 80px; margin: 40px 0 0 0;
+    height: 80px;
     
     .part-container {
         display: inline-block; position: relative;
