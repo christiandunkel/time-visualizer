@@ -156,6 +156,28 @@ var NODE = {
 }
 
 
+
+/*
+ * contains useful methods for calculation 
+ */
+var MATH = {
+    
+    // sort array containing objects of the same type by a given property (and its value)
+    sortObject : function (obj, property, ascending = true) {
+        return obj.sort(function (a, b) {
+            if (ascending) {
+                return a[property] < b[property] ? 1 : -1;
+            }
+            else {
+                return a[property] > b[property] ? 1 : -1;
+            }
+        });
+    }
+    
+}
+
+
+
 /*
  * manages the functionality of the navigation buttons
  */
@@ -629,7 +651,7 @@ var DATA_LOAD = {
             };
             
             // add click event to open an individual chart
-            _.addClick(column, this.openIndividualChart);
+            _.addClick(ratio_part, this.openIndividualChart);
             
             
             
@@ -1284,13 +1306,7 @@ var ANIMATOR = {
         
         /* COLUMN ORDER */
         
-        // sort all values in object after property, from smallest to biggest
-        function sortObject(obj, property) {
-            return obj.sort(function (a, b) {
-                return a[property] < b[property] ? 1 : -1;
-            });
-        }
-        let sorted_values = sortObject(all_values, 'value');
+        let sorted_values = MATH.sortObject(all_values, 'value');
         
         // move columns up and down to their new positions
         for (let i = 0; i < $.column_num; i++) {
@@ -1313,13 +1329,37 @@ var ANIMATOR = {
             total += $.data[key][$.current];
         }
         
-        for (let key in this.data) {
+        // get ratio percentages
+        let order = [];
+        for (let key in $.data) {
             
-            let ratio_part = this.ratio_parts[key];
             let percentage = 100 / (total / $.data[key][$.current]);
             
+            order[order.length] = {
+                'key' : key, 
+                'value' : percentage
+            }
+            
+        }
+        let sorted_parts = MATH.sortObject(order, 'value', false);
+        
+        for (let i = 0; i < $.ratio_parts_num; i++) {
+            
+            let key = sorted_parts[i].key;
+            let percentage = sorted_parts[i].value;
+            let ratio_part = $.ratio_parts[key];
+            
             // filter out parts smaller than 0.2%
-            _[(percentage < 0.2 ? 'add' : 'remove') + 'Class'](ratio_part.container, 'hidden');
+            if (percentage < 0.2) {
+                _.addClass(ratio_part.container, 'hidden');
+                continue;
+            }
+            else {
+                _.removeClass(ratio_part.container, 'hidden');
+            }
+            
+            // set order of ratio parts
+            _.append(NODE.ratio_chart, ratio_part.container);
             
             // make ratio part as wide as calculated percentage
             _.setStyles(ratio_part.container, {

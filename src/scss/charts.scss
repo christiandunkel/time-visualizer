@@ -218,7 +218,6 @@
         display: inline-block; position: relative;
         height: 100%;
         background: #575757; border: solid white; border-width: 0 1px;
-        @include transition(.5s);
         
         &.hidden {
             display: none;
@@ -229,7 +228,7 @@
             width: 100%; padding: 0 10px;
             text-shadow: 1px 1px 3px rgba(0,0,0,.5);
             color: white; text-align: center; font-size: 15px; line-height: 1em; font-weight: 700;
-            @include text-wrap;
+            white-space: nowrap; overflow: hidden;
             @include transform(translate(0, -50%));
         }
         
@@ -264,6 +263,7 @@
             }
             
             .tooltip-percentage {
+                @extend .percentage;
                 display: inline; position: relative; top: -8px;
                 width: auto; padding: 0 0 0 10px;
                 line-height: 30px;
@@ -280,13 +280,8 @@
             }
         }
         
-        &:hover {
-            background: #414141 !important;
-            @include transition(.15s);
-            
-            .tooltip {
-                display: inline-block;
-            }
+        &:hover .tooltip {
+            display: inline-block;
         }
         
     }
