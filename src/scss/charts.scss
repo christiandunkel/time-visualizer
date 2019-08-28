@@ -350,6 +350,29 @@
             }
         }
         
+        &:after {
+            content: '';
+            float: left;
+            width: 1em; height: 1em; margin: 0 .5em 0 0;
+            background-repeat: no-repeat;
+            background-position: center;
+            @include background-size(100% 100%);
+        }
+        
+        &#back-to-column-chart-btn:after {
+            background-image: $arrow-left-red;
+        }
+        
+        &#compare-btn:after {
+            background-image: $compare-icon;
+            @include opacity(.4);
+        }
+        
+        &#download-chart-as-image:after {
+            background-image: $download-icon;
+            @include opacity(.4);
+        }
+        
         @include on-mobile {
             &,
             &.right {
