@@ -1,3 +1,5 @@
+// math functions
+
 @function pow($base, $exponent) {
     $result: 1;
     @for $i from 1 through $exponent {
@@ -14,11 +16,19 @@
     @return $sum;
 }
 
+
+
+// css short-cuts
+
 @mixin text-wrap($type: ellipsis) {
     white-space: nowrap;
     overflow: hidden;
     @include text-overflow($type);
 }
+
+
+
+// media queries
 
 @mixin on-pc {
     @media (min-width: 551px) {

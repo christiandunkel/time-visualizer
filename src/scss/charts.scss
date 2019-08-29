@@ -1,4 +1,8 @@
-// chart container
+// general elements
+
+.content {
+    @include animation(hidden-elem 1.2s, fade-in .6s 1.2s);
+}
 
 #chart-container-1,
 #chart-container-2 {
@@ -11,7 +15,7 @@
 
 
 
-// chart top
+// bar above charts displaying meta information about the data set
 
 #data-set-info {
     margin: 50px auto 14px auto; padding: 10px 16px;
@@ -58,11 +62,7 @@
 
 
 
-// chart content
-
-.content {
-    @include animation(hidden-elem 1.2s, fade-in .6s 1.2s);
-}
+// chart listing all keys as animated columns
 
 #data-set-current-value {
     padding: 15px 0 8px 50px;
@@ -115,10 +115,6 @@
     }
     
 }
-
-
-
-// column chart
 
 #column-chart {
     width: 100%;
@@ -218,6 +214,10 @@
         
     }
 }
+
+
+
+// single bar below column chart display percentage ratio between keys
 
 #column-chart-total {
     width: 100%; margin: 45px 0 8px 0;
@@ -322,7 +322,7 @@
 
 
 
-// individual chart
+// menu bar on top of individual chart
 
 #individual-chart-menu {
     width: 100%; margin: 0 0 20px 0;

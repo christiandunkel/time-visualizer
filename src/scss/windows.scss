@@ -1,3 +1,5 @@
+// general structure of a hidden pop-up window
+
 .hidden-window {
     position: fixed; top: 0; left: 0; z-index: 9999;
     width: 0; height: 0;
@@ -88,7 +90,7 @@
 
 
 
-// window for loading / selecting files
+// window for loading or selecting data sets
 
 #data-load-window {
     

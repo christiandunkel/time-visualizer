@@ -1,3 +1,5 @@
+// custom scrollbar in webkit browsers
+
 ::-webkit-scrollbar {
     width: 10px; height: 10px;
 }
@@ -9,6 +11,10 @@
 ::-webkit-scrollbar-thumb {
     background: #5d5d5d;
 }
+
+
+
+// general elements
 
 *,
 *:after,
@@ -114,7 +120,7 @@ main {
 
 
 
-// header
+// area on top of page
 
 header {
     position: relative;
@@ -162,7 +168,7 @@ header {
 
 
 
-// Github icon in top right corner
+// icon of github with page curl effect in top right corner
 
 #github-link {
     display: block; position: absolute; top: 0; right: 0;
@@ -226,7 +232,7 @@ header {
 
 
 
-// footer
+// area at bottom of page
 
 footer {
     max-width: 1100px; margin: 0 auto; padding: 0 20px;
