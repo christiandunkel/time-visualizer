@@ -700,6 +700,37 @@ var DATA_LOAD = {
     
     
     
+    /* ONLINE DATA SET PER HTTP REQUEST */
+    
+    // request a data set from an url (must be same origin server!)
+    loadHttpDataSet : function (url) {
+        
+        // load example data set (only works on localhost or web server)
+        let request = new XMLHttpRequest();
+        request.open('GET', url);
+        request.send();
+
+        // when received, transform the JSON into a chart
+        request.onreadystatechange = function (e) {
+            
+            if (request.readyState === 4 && request.status === 200) {
+                
+                let json_text = request.responseText;
+
+                if (json_text != null && json_text != '') {
+                    let json_obj = _.parseJSON(json_text);
+                    DATA_LOAD.visualizeObject(json_obj);
+                }
+
+            }
+            
+        }
+        
+        return request;
+        
+    },
+    
+    
     /* LOAD VISUALIZATION */
     
     // takes a data object and creates the corresponding chart,
@@ -1954,32 +1985,7 @@ var MAIN = {
         ANIMATOR.initialize();
         
         // load example data set into chart
-        MAIN.loadExampleDataset();
-        
-    },
-    
-    loadExampleDataset : function () {
-        
-        // load example data set (only works on localhost or web server)
-        let request = new XMLHttpRequest();
-        request.open('GET', 'data/example-data-set.json');
-        request.send();
-
-        // when received, transform the JSON into a chart
-        request.onreadystatechange = function (e) {
-            
-            if (request.readyState === 4 && request.status === 200) {
-                
-                let json_text = request.responseText;
-
-                if (json_text != null && json_text != '') {
-                    let json_obj = _.parseJSON(json_text);
-                    DATA_LOAD.visualizeObject(json_obj);
-                }
-
-            }
-            
-        }
+        let request = DATA_LOAD.loadHttpDataSet('data/example-data-set.json');
         
         // on failed http request, load error messages
         request.onerror = MAIN.showXMLHttpWarnings;
