@@ -1874,24 +1874,26 @@ var ANIMATOR = {
         
         // get all key data points (excludes the 49 points generated between them by the program)
         let points = [];
-        let points_num = points.length;
         for (let i = 0; i <= ANIMATOR.data_point_num; i += 50) {
                 
-            // get point x position
-            let width_ratio = (i + 1) / ANIMATOR.data_point_num; // how far to the right is the current point
-            let x_pos = i == 0 ? padding.left : padding.left + width_minus_padding * width_ratio;
+            // get x position of point
+            let width_ratio = 0;
+            if (i > 0) {
+                // how far to the right is the current point
+                width_ratio = i / (ANIMATOR.data_point_num - 1);
+            }
+            let x_pos = padding.left + width_minus_padding * width_ratio;
             
-            // get point y position
+            // get y position of point
             let percentage_to_top = (((data[i] - min) / (max - min)) * 100);
-            let y_pos = canvas.height - padding.bottom - (height_minus_padding / (100 / percentage_to_top));
+            let y_pos = canvas.height - padding.bottom;
+            y_pos -= height_minus_padding / (100 / percentage_to_top);
             
             // add point to array
             points[points.length] = {
                 x : x_pos, 
                 y : y_pos
             };
-            
-            points_num++;
                 
         }
         
