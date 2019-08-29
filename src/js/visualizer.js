@@ -494,6 +494,13 @@ var DATA_LOAD = {
         _.addClick(NODE.blur, this.close);
         _.addClick(NODE.close_btn, this.close);
         
+        // add 'load data set' functionality to buttons
+        let btns = _.tag('button', NODE.window_example_sets_area);
+        let btns_num = btns.length;
+        for (let i = 0; i < btns_num; i++) {
+            _.addClick(btns[i], this.startDataSetLoading);
+        }
+        
         // initialize the drag'n'drop area for files in the window
         this.initializeDropArea();
         
@@ -701,6 +708,16 @@ var DATA_LOAD = {
     
     
     /* ONLINE DATA SET PER HTTP REQUEST */
+    
+    // called from a button to load a specific data set defined in its 'load-data' HTML property
+    startDataSetLoading : function (e) {
+        
+        let btn = _.target(e);
+        let url = 'data/' + btn.getAttribute('load-data') + '.json';
+        
+        DATA_LOAD.loadHttpDataSet(url);
+        
+    },
     
     // request a data set from an url (must be same origin server!)
     loadHttpDataSet : function (url) {
