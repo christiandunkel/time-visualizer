@@ -104,7 +104,7 @@
     
     .data-set-btn {
         margin: 8px 8px 0 0; padding: 8px 14px;
-        border: 1px dashed currentColor;
+        border: 1px solid currentColor;
         color: #5a94ff; font-size: 14px; line-height: 16px;
         @include border-radius(5px);
         @include transition(.3s);
@@ -114,10 +114,27 @@
         }
         
         &:hover {
-            background: rgba(58, 103, 255, 0.1); border-style: solid;
+            background: #dce3ff;
             
             .darkMode & {
-                background: rgba(79, 113, 255, 0.2);
+                background: #454f7c;
+            }
+        }
+        
+        &.example-data-set {
+            border-style: dashed;
+            color: #8b92a2;
+            
+            .darkMode & {
+                color: #85878d;
+            }
+        
+            &:hover {
+                background: #eaeaea;
+
+                .darkMode & {
+                    background: #414141;
+                }
             }
         }
     }
