@@ -26,6 +26,10 @@
     @include text-overflow($type);
 }
 
+@mixin tab-effect() {
+    outline: 2px solid #868686;
+}
+
 
 
 // media queries

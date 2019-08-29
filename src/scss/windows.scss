@@ -34,6 +34,10 @@
         width: 1em; height: 1em;
         font-size: 18px; color: #d10000;
         
+        &:focus {
+            outline: 2px solid currentColor;
+        }
+        
         .cross {
             position: absolute; top: 0; left: 0;
             width: 1em; height: 1em;
@@ -119,6 +123,10 @@
             .darkMode & {
                 background: #454f7c;
             }
+        }
+        
+        &:focus {
+            @include tab-effect;
         }
         
         &.example-data-set {
@@ -235,6 +243,10 @@
             width: 0.1px; height: 0.1px;
             overflow: hidden;
             @include opacity(0);
+            
+            &:focus + label {
+                @include tab-effect;
+            }
             
             + label {
                 display: block; position: absolute; bottom: 25px; left: 50%;

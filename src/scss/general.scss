@@ -52,7 +52,7 @@ a {
     }
     
     &:focus {
-        outline: 2px solid #868686;
+        @include tab-effect;
     }
     
     .darkMode & {
