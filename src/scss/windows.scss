@@ -260,6 +260,7 @@
         text-shadow: 1px 1px 3px rgba(0,0,0,.5);
         color: white; font-size: 14px; line-height: 1em;
         @include text-wrap;
+        @include box-shadow(1px 1px 3px rgba(0,0,0,.4));
         @include border-radius(5px);
         @include transition(.2s);
         
@@ -268,10 +269,14 @@
         }
     }
     
-    .selected-keys {
+    %keys-area {
         padding: 15px;
-        border: 2px solid #e6e6e6;
         @include border-radius(5px);
+    }
+    
+    .selected-keys {
+        @extend %keys-area;
+        background-color: rgba(0,255,0,.1); border: 2px solid rgba(0,255,0,.1);
         
         .darkMode & {
             border-color: #222222;
@@ -292,7 +297,9 @@
     }
     
     .unselected-keys {
+        @extend %keys-area;
         margin: 0 0 24px 0;
+        background-color: rgba(255,0,0,.1); border: 2px solid rgba(255,0,0,.1);
     }
     
 }
