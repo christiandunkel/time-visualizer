@@ -133,7 +133,15 @@
         .icon {
             position: absolute; top: 6px; left: 2px;
             width: 36px; height: 36px;
+            background-repeat: no-repeat;
+            background-position: center;
+            @include background-size(contain);
+            @include filter(drop-shadow(2px 2px 2px rgba(0,0,0,.3)));
             @include transition(.8s);
+            
+            .darkMode & {
+                @include filter(drop-shadow(1px 1px 2px rgba(217, 217, 217, 0.5)));
+            }
         }
         
         .meter {
@@ -291,7 +299,11 @@
             }
             
             .icon {
+                display: inline-block;
                 width: 30px; height: 30px; margin: 10px 0 0 0;
+                background-repeat: no-repeat;
+                background-position: center;
+                @include background-size(contain);
             }
             
             .tooltip-percentage {

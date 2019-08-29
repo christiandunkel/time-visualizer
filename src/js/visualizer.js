@@ -905,8 +905,10 @@ var DATA_LOAD = {
         });
         
         // graphic left of column
-        let icon = _.create('img.icon', {
-            'src' : _.isString(icon_url) ? _.encodeHTML(icon_url) : ''
+        let icon = _.create('div.icon', {
+            'style' : {
+                'background-image' : 'url(' + (_.isString(icon_url) ? _.encodeHTML(icon_url) : '') + ')'
+            }
         });
         
         // tooltip parts
@@ -956,8 +958,10 @@ var DATA_LOAD = {
         });
         
         // graphic left of column
-        let icon = _.create('img.icon', {
-            'src' : _.isString(icon_url) ? _.encodeHTML(icon_url) : ''
+        let icon = _.create('div.icon', {
+            'style' : {
+                'background-image' : 'url(' + (_.isString(icon_url) ? _.encodeHTML(icon_url) : '') + ')'
+            }
         });
         
         // column with values

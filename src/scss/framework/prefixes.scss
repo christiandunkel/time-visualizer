@@ -36,6 +36,11 @@
     box-sizing: $value;
 }
 
+@mixin filter($value) {
+    -webkit-filter: $value;
+    filter: $value;
+}
+
 @mixin keyframes($name) {
     @-o-keyframes #{$name} {
         @content;
