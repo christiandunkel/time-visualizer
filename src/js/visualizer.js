@@ -309,11 +309,21 @@ var NAV = {
     // set a button active
     setActive : function (btn) {
         _.addClass(btn, 'active');
+        btn.setAttribute('aria-disabled', 'false');
+        btn.setAttribute('originalTabIndex', btn.getAttribute('tabIndex'));
+        btn.setAttribute('tabIndex', '-1');
     },
     
     // set a button inactive
     setInactive : function (btn) {
         _.removeClass(btn, 'active');
+        btn.setAttribute('aria-disabled', 'true');
+        let originalTabIndex = btn.getAttribute('originalTabIndex');
+        if (originalTabIndex == null) {
+            originalTabIndex = btn.getAttribute('tabIndex');
+            btn.setAttribute('originalTabIndex', originalTabIndex);
+        }
+        btn.setAttribute('tabIndex', originalTabIndex);
     },
     
     // set a button active, and all others inactive
@@ -395,18 +405,48 @@ var NAV = {
     /* TIME */
     
     setHalvedTime : function () {
-        NAV.setExclusiveActive(NODE.time_btn.slow);
+        
+        let btn = NODE.time_btn.slow;
+        
+        // don't do anything, if button is already active
+        if (_.hasClass(btn, 'active')) {
+            return;
+        }
+        
+        // activate button and set time
+        NAV.setExclusiveActive(btn);
         ANIMATOR.setTime(0.5);
+        
     },
     
     setNormalTime : function () {
-        NAV.setExclusiveActive(NODE.time_btn.normal);
+        
+        let btn = NODE.time_btn.normal;
+        
+        // don't do anything, if button is already active
+        if (_.hasClass(btn, 'active')) {
+            return;
+        }
+        
+        // activate button and set time
+        NAV.setExclusiveActive(btn);
         ANIMATOR.setTime(1.0);
+        
     },
     
     setDoubledTime : function () {
-        NAV.setExclusiveActive(NODE.time_btn.fast);
+        
+        let btn = NODE.time_btn.fast;
+        
+        // don't do anything, if button is already active
+        if (_.hasClass(btn, 'active')) {
+            return;
+        }
+        
+        // activate button and set time
+        NAV.setExclusiveActive(btn);
         ANIMATOR.setTime(2.0);
+        
     },
     
     

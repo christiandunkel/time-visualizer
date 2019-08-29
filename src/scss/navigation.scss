@@ -89,6 +89,10 @@ nav {
                 @include box-shadow(0 0 0 #6f6f6f, 0 0 2px rgba(255, 255, 255, 0.2));
             }
         }
+        
+        &:focus {
+            outline: 2px solid #868686;
+        }
 
         &#load-data {
             background-color: #6091ff;
@@ -96,6 +100,7 @@ nav {
             @include box-shadow(2px 2px 0 #91b8ff, 1px 1px 4px rgba(0, 0, 0, 0.3));
 
             &:hover,
+            &:focus,
             &:active {
                 @include box-shadow(0 0 0 #91b8ff, 0 0 2px rgba(0, 0, 0, 0.1));
             }

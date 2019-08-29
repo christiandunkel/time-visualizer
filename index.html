@@ -36,7 +36,7 @@
     
     <!-- fixed on top right corner -->
         
-    <a id="github-link" href="https://github.com/christiandunkel/time-visualizer" title="Look at the code on Github">
+    <a id="github-link" href="https://github.com/christiandunkel/time-visualizer" title="Look at the code on Github" tabIndex="999">
         <div class="curl"></div>
         <div class="icon"></div>
         <div class="background"></div>
@@ -65,9 +65,9 @@
 
             <div id="top-menu">
 
-                <button id="toggle-darkmode" class="right" title="Toggle dark mode"></button>
+                <button id="toggle-darkmode" class="right" title="Toggle dark mode" tabIndex="2"></button>
 
-                <button id="load-data">Load data</button>
+                <button id="load-data" tabIndex="1">Load data</button>
 
             </div>
 
@@ -77,11 +77,11 @@
 
                     <div class="descriptor">Animation Speed</div>
 
-                    <button id="animation-speed-0-5" class="secondary" title="Set animation speed to 0.5">.5</button>
+                    <button id="animation-speed-0-5" class="secondary" title="Set animation speed to 0.5" tabIndex="6">.5</button>
 
-                    <button id="animation-speed-1-0" class="secondary active" title="Set animation speed to 1 (default)">1</button>
+                    <button id="animation-speed-1-0" class="secondary active" title="Set animation speed to 1 (default)" aria-disabled="true" tabIndex="-1" originalTabIndex="7">1</button>
 
-                    <button id="animation-speed-2-0" class="secondary" title="Set animation speed to 2">2</button>
+                    <button id="animation-speed-2-0" class="secondary" title="Set animation speed to 2" tabIndex="8">2</button>
 
                 </div>
 
@@ -89,11 +89,11 @@
 
                     <div class="descriptor hidden">Animation Controls</div>
 
-                    <button id="play-button" class="secondary non-transparent" title="Play animation"></button>
+                    <button id="play-button" class="secondary non-transparent" title="Play animation" tabIndex="3"></button>
 
-                    <button id="pause-button" class="secondary non-transparent" title="Pause animation"></button>
+                    <button id="pause-button" class="secondary non-transparent" title="Pause animation" tabIndex="4"></button>
 
-                    <button id="stop-button" class="secondary non-transparent" title="Stop animation"></button>
+                    <button id="stop-button" class="secondary non-transparent" title="Stop animation" tabIndex="5"></button>
 
                 </div>
 
