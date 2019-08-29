@@ -706,6 +706,10 @@ var DATA_LOAD = {
     // then gives the animator the right animation values
     visualizeObject : function (obj, showConfirmation) {
         
+        // un-hide column ratio bar and total headline
+        _.removeClass(NODE.column_chart_total, 'hidden');
+        _.removeClass(NODE.ratio_chart, 'hidden');
+        
         // objects holding animation data, references to the columns and references to ratio parts
         let ani = {};
         let columns = {};

@@ -229,15 +229,27 @@
         margin: 0 10px 0 0;
         font-size: 12px;
     }
+    
+    &.hidden {
+        display: none;
+    }
 }
 
 #column-ratio {
     height: 80px;
     
+    &.hidden {
+        display: none;
+    }
+    
     .part-container {
         display: inline-block; position: relative;
         height: 100%;
         background: #575757; border: solid white; border-width: 0 1px;
+        
+        .darkMode & {
+            border-color: black;
+        }
         
         &.hidden {
             display: none;
