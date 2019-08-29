@@ -1,9 +1,20 @@
 .hidden-window {
     position: fixed; top: 0; left: 0; z-index: 9999;
-    width: 100%; height: 100%;
+    width: 0; height: 0;
     visibility: hidden; pointer-events: none;
     @include opacity(0);
-    @include transition(.3s, visibility 0s .3s);
+    @include transition(all 0s .3s, opacity .3s);
+    
+    &.visible {
+        visibility: visible; pointer-events: auto;
+        width: 100%; height: 100%;
+        @include opacity(1);
+        @include transition(all 0s, opacity .3s);
+        
+        .content {
+            @include transform(translate(-50%, -50%));
+        }
+    }
     
     .blur {
         position: absolute; top: 0; left: 0;
@@ -59,6 +70,7 @@
         position: absolute; top: 50%; left: 50%;
         max-width: 550px; width: 90%; max-height: 330px; height: 90%; padding: 24px;
         background: white; overflow-y: auto;
+        color: #979595;
         @include border-radius(8px);
         @include transform(translate(-50%, -50%) scale(1.1));
         @include transition(.5s);
@@ -72,24 +84,13 @@
         }
     }
     
-    &.visible {
-        visibility: visible; pointer-events: auto;
-        @include opacity(1);
-        @include transition(.3s, visibility 0s);
-        
-        .content {
-            @include transform(translate(-50%, -50%));
-        }
-    }
-    
 }
 
 
 
-// data load window
+// window for loading / selecting files
 
 #data-load-window {
-    color: #979595;
     
     .heading {
         font-size: 20px; line-height: 23px;
@@ -239,4 +240,59 @@
     0% {@include transform(translate(-50%, -50%) scale(1.5));}
     55% {@include transform(translate(-50%, -50%) scale(.8));}
     80% {@include transform(translate(-50%, -50%) scale(1.1));}
+}
+
+
+
+// window to select keys for comparison
+
+#compare-selection-window {
+    
+    .heading {
+        margin: 0 0 6px 0;
+        font-size: 16px; line-height: 18px;
+    }
+    
+    .comparison-key {
+        position: relative;
+        margin: 3px; padding: 10px 12px;
+        background: #3c3c3c;
+        text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+        color: white; font-size: 14px; line-height: 1em;
+        @include text-wrap;
+        @include border-radius(5px);
+        @include transition(.2s);
+        
+        &:hover {
+            @include opacity(.7);
+        }
+    }
+    
+    .selected-keys {
+        padding: 15px;
+        border: 2px solid #e6e6e6;
+        @include border-radius(5px);
+        
+        .darkMode & {
+            border-color: #222222;
+        }
+        
+        .comparison-key {
+            padding-right: 28px;
+            
+            &:after {
+                content: '';
+                position: absolute; top: 10px; right: 8px;
+                width: 1em; height: 1em;
+                background-image: $cross-red;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+        }
+    }
+    
+    .unselected-keys {
+        margin: 0 0 24px 0;
+    }
+    
 }

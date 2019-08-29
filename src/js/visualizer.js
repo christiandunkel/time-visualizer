@@ -64,6 +64,34 @@ var NODE = {
     
     
     
+    /* COMPARE SELECTION WINDOW */
+    
+    compare_selection : {
+        
+        window : null,
+        close_btn : null,
+        blur : null,
+        
+        unselected_keys : null,
+        selected_keys : null
+        
+    },
+    
+    initializeCompareSelectionWindow : function () {
+        
+        let $ = NODE.compare_selection;
+        
+        $.window = _.id('compare-selection-window');
+        $.close_btn = _.class('close', $.window)[0];
+        $.blur = _.class('blur', $.window)[0];
+        
+        $.unselected_keys = _.class('unselected-keys', $.window)[0];
+        $.selected_keys = _.class('selected-keys', $.window)[0];
+        
+    },
+    
+    
+    
     /* COLUMN DATA CHART */
     
     chart_container_1 : null,
@@ -151,6 +179,7 @@ var NODE = {
         this.initializeNavButtons();
         this.initializeDataLoadWindow();
         this.initializeColumnChart();
+        this.initializeCompareSelectionWindow();
         this.initializeIndividualCharts();
         
     }
@@ -222,6 +251,18 @@ var MATH = {
         
         return max;
         
+    },
+    
+    // removes an index from an array
+    removeArrayIndex : function (arr, index) {
+        let len = arr.length;
+        // remove index
+        for (let i = index; i < len - 1; i++) {
+            arr[i] = arr[i+1];
+        }
+        // remove last value
+        arr.pop();
+        return arr;
     }
     
 }
@@ -677,6 +718,7 @@ var DATA_LOAD = {
             columns[key] = {
                 'container' : column,
                 'name' : obj.keys[key].name,
+                'color' : color,
                 'meter' : _.class('meter', column)[0],
                 'value' : _.class('value', column)[0],
                 // order is the position node in HTML chart (from top to bottom)
@@ -982,7 +1024,108 @@ var DATA_LOAD = {
  */
 var COMPARE = {
     
+    /* GENERAL */
+    
+    initialize : function () {
+        
+        // add event to open 'compare selection' window
+        _.addClick(NODE.compare_btn, this.open);
+        
+        // add 'close window' events
+        _.addClick(NODE.compare_selection.blur, this.close);
+        _.addClick(NODE.compare_selection.close_btn, this.close);
+        
+    },
+    
+    // open the 'data load' window
     open : function () {
+        
+        // open window
+        _.addClass(NODE.compare_selection.window, 'visible');
+        
+        // clear areas and load current keys
+        _.empty(NODE.compare_selection.unselected_keys);
+        _.empty(NODE.compare_selection.selected_keys);
+        COMPARE.loadKeys();
+        
+        // with a little delay, set tab focus on close button
+        // if set immediately, will be ignored or buggy
+        setTimeout(function () {
+            NODE.compare_selection.close_btn.focus();
+        }, 100);
+        
+    },
+    
+    // close the 'data load' window
+    close : function () {
+        
+        // close window
+        _.removeClass(NODE.compare_selection.window, 'visible');
+        
+        // reset tab focus back to 'data load' button in navigation
+        NODE.compare_btn.focus();
+        
+    },
+    
+    moveKey : function (e) {
+        
+        let btn = _.target(e);
+        let key = btn.getAttribute('key-id');
+        
+        // check if the button's key needs to be included to or excluded from the 'key selection' array
+        let include = false;
+        if (_.hasClass(btn.parentElement, 'unselected-keys')) {
+            include = true;
+        }
+        
+        if (include) {
+            ANIMATOR.addIndividualKey(key);
+        }
+        else {
+            ANIMATOR.removeIndividualKey(key);
+        }
+        
+        COMPARE.loadKeys();
+        
+    },
+    
+    loadKeys : function () {
+        
+        // empty key button containers
+        _.empty(NODE.compare_selection.selected_keys);
+        _.empty(NODE.compare_selection.unselected_keys);
+        
+        // add key buttons
+        for (let key in ANIMATOR.data) {
+            
+            // check if key is included in list of keys to be rendered
+            let included = false;
+            let len = ANIMATOR.individual_chart_keys.length;
+            for (let i = 0; i < len; i++) {
+                if (ANIMATOR.individual_chart_keys[i] === key) {
+                    included = true;
+                    break;
+                }
+            }
+            
+            // create button
+            let btn = _.create('button.comparison-key', {
+                'key-id' : key,
+                'innerHTML' : ANIMATOR.columns[key].name,
+                'style' : {
+                    'background' : ANIMATOR.columns[key].color
+                }
+            });
+            
+            // add event to select / unselect key
+            _.addClick(btn, COMPARE.moveKey);
+            
+            // append button to right box
+            _.append(NODE.compare_selection[(included ? '' : 'un') + 'selected_keys'], btn);
+            
+        }
+        
+        ANIMATOR.refreshFrame();
         
     }
     
@@ -1117,6 +1260,50 @@ var ANIMATOR = {
     // set key which data needs to be animated for the individual chart
     setInvidualChartKeys : function (keys) {
         this.individual_chart_keys = keys;
+    },
+    
+    addIndividualKey : function (key) {
+        
+        if (!this.hasIndividualKey()) {
+            let len = this.individual_chart_keys.length;
+            this.individual_chart_keys[len] = key;
+        }
+        
+    },
+    
+    removeIndividualKey : function (key) {
+            
+        let keys = this.individual_chart_keys;
+        let len = keys.length;
+
+        // go through all keys and find indexes of the desired key
+        // (should only be 1 index, but you can't be careful enough)
+        let indexes = [];
+        for (let i = 0; i < len; i++) {
+            if (keys[i] === key) {
+                indexes[indexes.length] = i;
+            }
+        }
+        
+        // remove the indexes from the array
+        let indexes_num = indexes.length;
+        for (let i = 0; i < indexes_num; i++) {
+            keys = MATH.removeArrayIndex(keys, indexes[i]);
+        }
+        
+        this.setInvidualChartKeys(keys);
+        
+    },
+    
+    hasIndividualKey : function (key) {
+        let keys = this.individual_chart_keys.length;
+        let len = keys.length;
+        for (let i = 0; i < len; i++) {
+            if (keys[i] === key) {
+                return true;
+            }
+        }
+        return false;
     },
     
     
@@ -1441,7 +1628,14 @@ var ANIMATOR = {
         let canvas = NODE.individual_chart;
         let context = canvas.getContext('2d');
         let keys = $.individual_chart_keys;
-        let key_num = $.individual_chart_keys.length;
+        
+        // return if no keys are selected
+        if (keys == null) {
+            canvas.width = 0;
+            return;
+        }
+        
+        let key_num = $.individual_chart_keys.length;;
         
         // reset canvas content, width and height
         canvas.width = _.getWidth(NODE.individual_chart_menu);
@@ -1582,7 +1776,7 @@ var ANIMATOR = {
         for (let i = 0; i < key_num; i++) {
             
             let key = keys[i];
-            let color = _.getStyle($.columns[key].meter, 'background-color'); // color from column meter
+            let color = $.columns[key].color; // color from column meter
             
             // draw graph for key
             $.drawIndividualKey(canvas, context, padding, color, min, max, $.data[key], key);
@@ -1710,6 +1904,7 @@ var MAIN = {
         NODE.initialize();
         NAV.initialize();
         DATA_LOAD.initialize();
+        COMPARE.initialize();
         ANIMATOR.initialize();
         
         // load example data set into chart
