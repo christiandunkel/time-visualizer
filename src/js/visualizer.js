@@ -127,6 +127,7 @@ var NODE = {
     column_chart : null,
     
     column_chart_total : null,
+    ratio_chart_container : null,
     ratio_chart : null,
     
     initializeColumnChart : function () {
@@ -149,6 +150,7 @@ var NODE = {
         
         // column ratio chart / bar below big column chart
         this.column_chart_total = _.id('column-chart-total');
+        this.ratio_chart_container = _.id('column-ratio-container');
         this.ratio_chart = _.id('column-ratio');
         
     },
@@ -859,7 +861,7 @@ var DATA_LOAD = {
         
         // un-hide column ratio bar and total headline
         _.removeClass(NODE.column_chart_total, 'hidden');
-        _.removeClass(NODE.ratio_chart, 'hidden');
+        _.removeClass(NODE.ratio_chart_container, 'hidden');
         
         // objects holding animation data, references to the columns and references to ratio parts
         let ani = {};

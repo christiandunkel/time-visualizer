@@ -244,19 +244,25 @@
 }
 
 #column-ratio-container {
-    width: 100%;
-}
-
-#column-ratio {
-    height: 80px;
+    width: 100%; height: 80px;
     
     &.hidden {
         display: none;
     }
     
+    tbody,
+    thead,
+    tr,
+    td,
+    th {
+        height: 80px;
+    }
+}
+
+#column-ratio {
+    
     .part-container {
         position: relative;
-        height: 100%;
         background: #575757; border: solid white; border-width: 0 1px;
         
         .darkMode & {
