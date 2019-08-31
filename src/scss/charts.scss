@@ -168,6 +168,9 @@
             
             @include on-pc {
                 max-width: 85%;
+                // calculate current width by (100% meter width - left:15px - 5px)
+                max-width: -webkit-calc(100% - 20px);
+                max-width: calc(100% - 20px);
                 text-overflow: ellipsis; overflow: hidden;
             }
         }
