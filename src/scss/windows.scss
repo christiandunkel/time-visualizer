@@ -183,21 +183,21 @@
             @include border-radius(50%);
             @include transform(translate(-50%, -50%));
             @include animation(appear-circle .4s);
-        }
-        
-        .tick {
-            position: absolute; top: 50%; left: 50%;
-            width: 30px; height: 30px;
-            background: $tick-white no-repeat center;
-            @include transform(translate(-50%, -50%));
-        }
-        
-        .text {
-            position: absolute; left: 0; bottom: -29px;
-            width: 100%;
-            text-align: center; font-size: 15px; line-height: 18px; font-weight: 700;
-            @include opacity(.8);
-            @include animation(hidden-elem .4s, fade-in .4s .4s);
+            
+            .tick {
+                position: absolute; top: 50%; left: 50%;
+                width: 30px; height: 30px;
+                background: $tick-white no-repeat center;
+                @include transform(translate(-50%, -50%));
+            }
+
+            .text {
+                position: absolute; left: -25%; bottom: -29px;
+                width: 150%;
+                text-align: center; font-size: 15px; line-height: 18px; font-weight: 700;
+                @include opacity(.8);
+                @include animation(hidden-elem .4s, fade-in .4s .4s);
+            }
         }
     }
     
