@@ -151,9 +151,9 @@ var _ = {
             return console.error('No valid settings object was provided.');
         }
         
-        let id = str.match(/#[^\.#\s]+/g);
-        let classes = str.match(/\.[^#\s\.]+/g);
-        let elem = document.createElement(str.replace(/#[^\.#\s]+|\.[^#\s]+|\s/g,''));
+        var id = str.match(/#[^\.#\s]+/g);
+        var classes = str.match(/\.[^#\s\.]+/g);
+        var elem = document.createElement(str.replace(/#[^\.#\s]+|\.[^#\s]+|\s/g,''));
 
         // apply id from string as attribute
         if (id) {
@@ -173,7 +173,7 @@ var _ = {
             }
             else {
 
-                for (let key in settings) {
+                for (var key in settings) {
 
                     // skip iteration if the current property belongs to the prototype
                     if (settings.hasOwnProperty(key)) {
@@ -184,7 +184,7 @@ var _ = {
                                 break;
 
                             case 'style':
-                                for (let prop in settings[key]) {
+                                for (var prop in settings[key]) {
                                     elem.style.setProperty(prop, settings[key][prop]);
                                 }
                                 break;
@@ -537,7 +537,7 @@ var _ = {
             return console.error('No valid styles object was provided.');
         }
         
-        for (let style_name in styles) {
+        for (var style_name in styles) {
             elem.style.setProperty(style_name, styles[style_name]);
         }
         
@@ -550,7 +550,7 @@ var _ = {
             return console.error('Element is not defined.');
         }
         
-        let r = elem.getBoundingClientRect();
+        var r = elem.getBoundingClientRect();
         return r.bottom - r.top;
         
     },
@@ -562,7 +562,7 @@ var _ = {
             return console.error('Element is not defined.');
         }
         
-        let r = elem.getBoundingClientRect();
+        var r = elem.getBoundingClientRect();
         return r.right - r.left;
         
     },
@@ -680,7 +680,7 @@ var _ = {
             return console.error('No string was given.');
         }
 
-        let obj = null;
+        var obj = null;
         
         try {
             obj = JSON.parse(str);

@@ -95,7 +95,7 @@ var NODE = {
     
     initializeCompareSelectionWindow : function () {
         
-        let $ = NODE.compare_selection;
+        var $ = NODE.compare_selection;
         
         $.window = _.id('compare-selection-window');
         $.close_btn = _.class('close', $.window)[0];
@@ -135,7 +135,7 @@ var NODE = {
         this.chart_container_1 = _.id('chart-container-1');
         
         // get elements of data set info header
-        let context = _.id('data-set-info');
+        var context = _.id('data-set-info');
         this.data_set_info.title = _.class('title', context)[0];
         this.data_set_info.date = _.class('date', context)[0];
         
@@ -143,7 +143,7 @@ var NODE = {
         this.column_chart = _.id('column-chart');
         
         // get HTML node holding 'current' data value
-        let curr = this.current_value;
+        var curr = this.current_value;
         curr.container = _.id('data-set-current-value');
         curr.value = _.class('value', curr.container)[0];
         curr.indicator = _.class('indicator', curr.container)[0];
@@ -226,10 +226,10 @@ var MATH = {
     // returns the average of an array of values
     getAverage : function (arr) {
         
-        let total = 0;
-        let len = arr.length;
+        var total = 0;
+        var len = arr.length;
         
-        for (let i = 0; i < len; i++) {
+        for (var i = 0; i < len; i++) {
             total += arr[i];
         }
         
@@ -240,11 +240,11 @@ var MATH = {
     // returns the smallest value of an array of values
     getMin : function (arr, start_minimum = Number.MAX_VALUE) {
         
-        let min = start_minimum;
-        let len = arr.length;
+        var min = start_minimum;
+        var len = arr.length;
         
-        for (let i = 0; i < len; i++) {
-            let curr = arr[i];
+        for (var i = 0; i < len; i++) {
+            var curr = arr[i];
             if (curr < min) {
                 min = curr;
             }
@@ -257,11 +257,11 @@ var MATH = {
     // returns the highest value of an array of values
     getMax : function (arr, start_maximum = Number.MIN_VALUE) {
         
-        let max = start_maximum;
-        let len = arr.length;
+        var max = start_maximum;
+        var len = arr.length;
         
-        for (let i = 0; i < len; i++) {
-            let curr = arr[i];
+        for (var i = 0; i < len; i++) {
+            var curr = arr[i];
             if (curr > max) {
                 max = curr;
             }
@@ -273,9 +273,9 @@ var MATH = {
     
     // removes an index from an array
     removeArrayIndex : function (arr, index) {
-        let len = arr.length;
+        var len = arr.length;
         // remove index
-        for (let i = index; i < len - 1; i++) {
+        for (var i = index; i < len - 1; i++) {
             arr[i] = arr[i+1];
         }
         // remove last value
@@ -340,7 +340,7 @@ var NAV = {
     setInactive : function (btn) {
         _.removeClass(btn, 'active');
         btn.setAttribute('aria-disabled', 'true');
-        let originalTabIndex = btn.getAttribute('originalTabIndex');
+        var originalTabIndex = btn.getAttribute('originalTabIndex');
         if (originalTabIndex == null) {
             originalTabIndex = btn.getAttribute('tabIndex');
             btn.setAttribute('originalTabIndex', originalTabIndex);
@@ -351,9 +351,9 @@ var NAV = {
     // set a button active, and all others inactive
     setExclusiveActive : function (btn) {
         
-        let btns = NODE.time_btn;
+        var btns = NODE.time_btn;
         
-        for (let key in btns) {
+        for (var key in btns) {
             if (btns[key] === btn) {
                 this.setActive(btns[key]);
             }
@@ -428,7 +428,7 @@ var NAV = {
     
     setHalvedTime : function () {
         
-        let btn = NODE.time_btn.slow;
+        var btn = NODE.time_btn.slow;
         
         // don't do anything, if button is already active
         if (_.hasClass(btn, 'active')) {
@@ -443,7 +443,7 @@ var NAV = {
     
     setNormalTime : function () {
         
-        let btn = NODE.time_btn.normal;
+        var btn = NODE.time_btn.normal;
         
         // don't do anything, if button is already active
         if (_.hasClass(btn, 'active')) {
@@ -458,7 +458,7 @@ var NAV = {
     
     setDoubledTime : function () {
         
-        let btn = NODE.time_btn.fast;
+        var btn = NODE.time_btn.fast;
         
         // don't do anything, if button is already active
         if (_.hasClass(btn, 'active')) {
@@ -473,8 +473,8 @@ var NAV = {
     
     setCustomTime : function () {
         
-        let input = NODE.time_selection.input;
-        let time = input.value;
+        var input = NODE.time_selection.input;
+        var time = input.value;
         
         // replace commas with points
         if (time.match(/[,]+/)) {
@@ -528,7 +528,7 @@ var NAV = {
         _.addClass(NODE.time_selection.container_2, 'active');
         
         // put current defined time value into input element 
-        let input = NODE.time_selection.input;
+        var input = NODE.time_selection.input;
         input.value = ANIMATOR.time + '';
         _.addClass(input, 'correct-time');
         
@@ -540,7 +540,7 @@ var NAV = {
         _.removeClass(NODE.time_selection.container_2, 'active');
         
         // put value of selected 'defined time' button as current time 
-        let defined_time = 0;
+        var defined_time = 0;
         if (_.hasClass(NODE.time_btn.slow, 'active')) {
             defined_time = 0.5;
         }
@@ -560,20 +560,20 @@ var NAV = {
     
     downloadChartImage : function () {
         
-        let image_uri = NODE.individual_chart.toDataURL('image/png');
+        var image_uri = NODE.individual_chart.toDataURL('image/png');
         
         // get current time and date, convert it to string
-        let date = new Date();
-        let day = date.getDate();
-        let month = date.getMonth()+1;
-        let date_str = (day > 9 ? '' : '0') + day + '-' +
+        var date = new Date();
+        var day = date.getDate();
+        var month = date.getMonth()+1;
+        var date_str = (day > 9 ? '' : '0') + day + '-' +
                        (month > 9 ? '' : '0') + month + '-' +
                        date.getFullYear() + ' ' +
                        date.getHours() + '-' +
                        date.getMinutes() + '-' +
                        date.getSeconds();
         
-        let link = _.create('a', {
+        var link = _.create('a', {
             'download' : 'chart ' + ANIMATOR.individual_chart_keys[0].replace(/[^a-z0-9\-\_]/g, '') + ' ' + date_str + '.png',
             'href' : image_uri
         });
@@ -600,9 +600,9 @@ var DATA_LOAD = {
         _.addClick(NODE.close_btn, this.close);
         
         // add 'load data set' functionality to buttons
-        let btns = _.tag('button', NODE.window_example_sets_area);
-        let btns_num = btns.length;
-        for (let i = 0; i < btns_num; i++) {
+        var btns = _.tag('button', NODE.window_example_sets_area);
+        var btns_num = btns.length;
+        for (var i = 0; i < btns_num; i++) {
             _.addClick(btns[i], this.startDataSetLoading);
         }
         
@@ -694,11 +694,11 @@ var DATA_LOAD = {
         
         _.preventDefault(e);
 
-        let file = null;
+        var file = null;
 
         if (e.dataTransfer.items) {
 
-            let items = e.dataTransfer.items;
+            var items = e.dataTransfer.items;
 
             if (items.length > 1) {
                 alert('Dropping multiple files is forbidden.');
@@ -716,14 +716,14 @@ var DATA_LOAD = {
         }
         else {
 
-            let items = e.dataTransfer.files;
+            var items = e.dataTransfer.files;
 
             if (items.length > 1) {
                 alert('Dropping multiple files is forbidden.');
                 return;
             }
 
-            let file = items[0];
+            var file = items[0];
 
         }
         
@@ -735,8 +735,8 @@ var DATA_LOAD = {
     handleSelectedFile : function (e) {
         
         // get file from event handeler
-        let items = this.files;
-        let file = items[0];
+        var items = this.files;
+        var file = items[0];
         
         DATA_LOAD.processFile(file);
         
@@ -795,7 +795,7 @@ var DATA_LOAD = {
     parseJSON : function (str) {
             
         // generate an object from JSON string
-        let obj = _.parseJSON(str);
+        var obj = _.parseJSON(str);
 
         // warn user, if the string could not be parsed
         if (!obj) {
@@ -817,8 +817,8 @@ var DATA_LOAD = {
     // called from a button to load a specific data set defined in its 'load-data' HTML property
     startDataSetLoading : function (e) {
         
-        let btn = _.target(e);
-        let url = 'data/' + btn.getAttribute('load-data') + '.json';
+        var btn = _.target(e);
+        var url = 'data/' + btn.getAttribute('load-data') + '.json';
         
         DATA_LOAD.loadHttpDataSet(url, true);
         
@@ -828,7 +828,7 @@ var DATA_LOAD = {
     loadHttpDataSet : function (url, showConfirmation) {
         
         // load example data set (only works on localhost or web server)
-        let request = new XMLHttpRequest();
+        var request = new XMLHttpRequest();
         request.open('GET', url);
         request.send();
 
@@ -837,10 +837,10 @@ var DATA_LOAD = {
             
             if (request.readyState === 4 && request.status === 200) {
                 
-                let json_text = request.responseText;
+                var json_text = request.responseText;
 
                 if (json_text != null && json_text != '') {
-                    let json_obj = _.parseJSON(json_text);
+                    var json_obj = _.parseJSON(json_text);
                     DATA_LOAD.visualizeObject(json_obj, showConfirmation);
                 }
 
@@ -864,12 +864,12 @@ var DATA_LOAD = {
         _.removeClass(NODE.ratio_chart_container, 'hidden');
         
         // objects holding animation data, references to the columns and references to ratio parts
-        let ani = {};
-        let columns = {};
-        let ratio_parts = {};
+        var ani = {};
+        var columns = {};
+        var ratio_parts = {};
         
         // load information into data set header
-        let info = NODE.data_set_info;
+        var info = NODE.data_set_info;
         info.title.innerHTML = obj.name;
         info.date.innerHTML = obj.date;
         
@@ -878,14 +878,14 @@ var DATA_LOAD = {
         _.empty(NODE.ratio_chart);
         
         // load data columns in chart
-        let counter = 0;
-        for (let key in obj.data) {
+        var counter = 0;
+        for (var key in obj.data) {
            
             if (!obj.data.hasOwnProperty(key)) {
                 return;
             }
             
-            let color = this.getColumnColor(counter);
+            var color = this.getColumnColor(counter);
             
             
             
@@ -903,7 +903,7 @@ var DATA_LOAD = {
             /* COLUMN */
             
             // create a column and append it to the chart
-            let column = this.getColumn(
+            var column = this.getColumn(
                 key,
                 color,
                 obj.keys[key].name, 
@@ -930,7 +930,7 @@ var DATA_LOAD = {
             /* RATIO PART */
             
             // create a ratio part and append it to the ratio chart
-            let ratio_part = this.getRatioChartPart(
+            var ratio_part = this.getRatioChartPart(
                 key,
                 color,
                 ani[key],
@@ -986,7 +986,7 @@ var DATA_LOAD = {
     openIndividualChart : function (e) {
         
         // send column key to animator object
-        let column_key = _.target(e).getAttribute('column-id');
+        var column_key = _.target(e).getAttribute('column-id');
         ANIMATOR.setInvidualChartKeys([column_key]);
 
         // open individual chart
@@ -997,36 +997,36 @@ var DATA_LOAD = {
     // get HTML construct for the child of the column ratio chart
     getRatioChartPart : function (key, color, data, key_name, icon_url) {
         
-        let container = _.create('td.part-container', {
+        var container = _.create('td.part-container', {
             'style' : {
                 'background-color' : color
             }
         });
         
         // overlay click event
-        let clickEvent = _.create('button.clickEvent', {
+        var clickEvent = _.create('button.clickEvent', {
             'title' : 'Open statistics for ' + key_name,
             'column-id' : key
         });
         
         // graphic left of column
-        let icon = _.create('div.icon', {
+        var icon = _.create('div.icon', {
             'style' : {
                 'background-image' : 'url(' + (_.isString(icon_url) ? _.encodeHTML(icon_url) : '') + ')'
             }
         });
         
         // tooltip parts
-        let tooltip = _.create('div.tooltip');
-        let tooltip_name = _.create('div.name', {
+        var tooltip = _.create('div.tooltip');
+        var tooltip_name = _.create('div.name', {
             'innerHTML' : key_name
         });
         
-        let avg = MATH.getAverage(data);
-        let min = MATH.getMin(data);
-        let max = MATH.getMax(data);
+        var avg = MATH.getAverage(data);
+        var min = MATH.getMin(data);
+        var max = MATH.getMax(data);
         
-        let tooltip_description = _.create('div.description', {
+        var tooltip_description = _.create('div.description', {
             'innerHTML' : '' +
                 '<b>Avg:</b> ' + ANIMATOR.formatNumber(avg) + '<br>' +
                 '<b>Min:</b> ' + ANIMATOR.formatNumber(min) + '<br>' +
@@ -1034,8 +1034,8 @@ var DATA_LOAD = {
         });
         
         // percentage values
-        let tooltip_percentage = _.create('div.tooltip-percentage');
-        let percentage = _.create('div.percentage');
+        var tooltip_percentage = _.create('div.tooltip-percentage');
+        var percentage = _.create('div.percentage');
         
         // append elements to container
         _.append(tooltip, icon);
@@ -1054,32 +1054,32 @@ var DATA_LOAD = {
     getColumn : function (key, color, key_name, icon_url) {
         
         // containing element
-        let container = _.create('button.column-container');
+        var container = _.create('button.column-container');
         
         // overlay click event
-        let clickEvent = _.create('div.clickEvent', {
+        var clickEvent = _.create('div.clickEvent', {
             'title' : 'Open statistics for ' + key_name,
             'column-id' : key
         });
         
         // graphic left of column
-        let icon = _.create('div.icon', {
+        var icon = _.create('div.icon', {
             'style' : {
                 'background-image' : 'url(' + (_.isString(icon_url) ? _.encodeHTML(icon_url) : '') + ')'
             }
         });
         
         // column with values
-        let column = _.create('div.column');
-        let meter = _.create('div.meter', {
+        var column = _.create('div.column');
+        var meter = _.create('div.meter', {
             'style' : {
                 'background-color' : color
             }
         });
-        let name = _.create('div.name', {
+        var name = _.create('div.name', {
             'innerHTML' : key_name
         });
-        let value = _.create('div.value');
+        var value = _.create('div.value');
         
         // append elements to container
         _.append(meter, name);
@@ -1096,7 +1096,7 @@ var DATA_LOAD = {
     // returns a random color from a pre-defined selection
     getColumnColor : function (index) {
       
-        let colors = [
+        var colors = [
             
             '#099b9b', // darkaqua
             '#a52a2a', // brown
@@ -1136,16 +1136,16 @@ var DATA_LOAD = {
             
         }
         
-        let data_points = [];
+        var data_points = [];
         
         // go through range and generate a value for each iteration
-        for (let i = from; i <= to; i++) {
+        for (var i = from; i <= to; i++) {
             
             // check for a value for the iteration in the data
             if (_.exists(data[i + ""]) && _.isNumber(data[i + ""])) {
                 
                 // get the value from the data
-                let value = data[i + ""];
+                var value = data[i + ""];
                 checkForValidValue(value);
                 
                 // check if the number is really a value
@@ -1164,11 +1164,11 @@ var DATA_LOAD = {
             }
             
             // otherwise, calculate the average of prev & next value
-            let prev = data_points[data_points.length - 1];
-            let next = null;
-            let steps = 0;
+            var prev = data_points[data_points.length - 1];
+            var next = null;
+            var steps = 0;
             // go through all coming values, to find the next valid one
-            for (let j = i + 1; j <= to; j++) {
+            for (var j = i + 1; j <= to; j++) {
                 steps++;
                 if (_.exists(data[j + ""])) {
                     next = data[j + ""];
@@ -1176,22 +1176,22 @@ var DATA_LOAD = {
                     break;
                 }
             }
-            let average = prev + ((next - prev) / (1 + steps));
+            var average = prev + ((next - prev) / (1 + steps));
             // if there's no valid next value, reuse previous value
             data_points[data_points.length] = next == null ? prev : average;
             
         }
         
         // increase values by 50x, by adding values for 0.02, 0.04 to 0.98 between values
-        let upscaled_data_points = [];
-        let len = data_points.length;
-        for (let i = 0; i < len; i++) {
+        var upscaled_data_points = [];
+        var len = data_points.length;
+        for (var i = 0; i < len; i++) {
             
             // current data point
-            let curr = data_points[i];
+            var curr = data_points[i];
             
             // put current value into array as a string
-            let num = upscaled_data_points.length;
+            var num = upscaled_data_points.length;
             upscaled_data_points[num] = curr;
             
             // don't generate 50 new values after last data point
@@ -1200,14 +1200,14 @@ var DATA_LOAD = {
             }
             
             // get next data point and calculate difference
-            let next = data_points[i + 1];
-            let diff = next - curr;
-            let hundreth = diff / 100;
+            var next = data_points[i + 1];
+            var diff = next - curr;
+            var hundreth = diff / 100;
             
             // generate 49 values in between current and next value
-            for (let j = 2; j <= 98; j += 2) {
-                let new_point = curr + (j * hundreth);
-                let len = upscaled_data_points.length;
+            for (var j = 2; j <= 98; j += 2) {
+                var new_point = curr + (j * hundreth);
+                var len = upscaled_data_points.length;
                 upscaled_data_points[len] = new_point;
             }
             
@@ -1270,11 +1270,11 @@ var COMPARE = {
     
     moveKey : function (e) {
         
-        let btn = _.target(e);
-        let key = btn.getAttribute('key-id');
+        var btn = _.target(e);
+        var key = btn.getAttribute('key-id');
         
         // check if the button's key needs to be included to or excluded from the 'key selection' array
-        let include = false;
+        var include = false;
         if (_.hasClass(btn.parentElement, 'unselected-keys')) {
             include = true;
         }
@@ -1297,12 +1297,12 @@ var COMPARE = {
         _.empty(NODE.compare_selection.unselected_keys);
         
         // add key buttons
-        for (let key in ANIMATOR.data) {
+        for (var key in ANIMATOR.data) {
             
             // check if key is included in list of keys to be rendered
-            let included = false;
-            let len = ANIMATOR.individual_chart_keys.length;
-            for (let i = 0; i < len; i++) {
+            var included = false;
+            var len = ANIMATOR.individual_chart_keys.length;
+            for (var i = 0; i < len; i++) {
                 if (ANIMATOR.individual_chart_keys[i] === key) {
                     included = true;
                     break;
@@ -1310,7 +1310,7 @@ var COMPARE = {
             }
             
             // create button
-            let btn = _.create('button.comparison-key', {
+            var btn = _.create('button.comparison-key', {
                 'key-id' : key,
                 'innerHTML' : ANIMATOR.columns[key].name,
                 'style' : {
@@ -1415,17 +1415,17 @@ var ANIMATOR = {
     // update transition duration of column chart and column ratio chart
     setCSSTransitions : function () {
         
-        let transition_time = ((1 / this.time) / 5) + 's';
+        var transition_time = ((1 / this.time) / 5) + 's';
         
         // set CSS transition effects for animated column length
-        for (let column in this.columns) {
+        for (var column in this.columns) {
             _.setStyles(this.columns[column].meter, {
                 'transition': transition_time
             });
         }
         
         // set CSS transition effects for column ratio chart
-        for (let part in this.ratio_parts) {
+        for (var part in this.ratio_parts) {
             _.setStyles(this.ratio_parts[part].container, {
                 'transition': transition_time
             });
@@ -1444,7 +1444,7 @@ var ANIMATOR = {
         this.data = obj;
         
         // get data point amount (same for every column)
-        let first_key = Object.keys(obj)[0];
+        var first_key = Object.keys(obj)[0];
         this.data_point_num = obj[first_key].length;
         
     },
@@ -1471,7 +1471,7 @@ var ANIMATOR = {
     addIndividualKey : function (key) {
         
         if (!this.hasIndividualKey()) {
-            let len = this.individual_chart_keys.length;
+            var len = this.individual_chart_keys.length;
             this.individual_chart_keys[len] = key;
         }
         
@@ -1479,21 +1479,21 @@ var ANIMATOR = {
     
     removeIndividualKey : function (key) {
             
-        let keys = this.individual_chart_keys;
-        let len = keys.length;
+        var keys = this.individual_chart_keys;
+        var len = keys.length;
 
         // go through all keys and find indexes of the desired key
         // (should only be 1 index, but you can't be careful enough)
-        let indexes = [];
-        for (let i = 0; i < len; i++) {
+        var indexes = [];
+        for (var i = 0; i < len; i++) {
             if (keys[i] === key) {
                 indexes[indexes.length] = i;
             }
         }
         
         // remove the indexes from the array
-        let indexes_num = indexes.length;
-        for (let i = 0; i < indexes_num; i++) {
+        var indexes_num = indexes.length;
+        for (var i = 0; i < indexes_num; i++) {
             keys = MATH.removeArrayIndex(keys, indexes[i]);
         }
         
@@ -1502,9 +1502,9 @@ var ANIMATOR = {
     },
     
     hasIndividualKey : function (key) {
-        let keys = this.individual_chart_keys.length;
-        let len = keys.length;
-        for (let i = 0; i < len; i++) {
+        var keys = this.individual_chart_keys.length;
+        var len = keys.length;
+        for (var i = 0; i < len; i++) {
             if (keys[i] === key) {
                 return true;
             }
@@ -1519,7 +1519,7 @@ var ANIMATOR = {
     startLoop : function () {
         
         // milliseconds between updates
-        let interval = 80 / ANIMATOR.time;
+        var interval = 80 / ANIMATOR.time;
         
         // start update loop
         ANIMATOR.loop = setInterval(ANIMATOR.update, interval);
@@ -1628,10 +1628,10 @@ var ANIMATOR = {
     // formats a number to its shortened word equivalent, aka 1000000 -> 1.000 Mil
     formatNumber : function (num) {
         
-        let is_negative = num < 0 ? true : false;
-        let sign = is_negative ? '-' : '';
-        let word = '';
-        let short = 0;
+        var is_negative = num < 0 ? true : false;
+        var sign = is_negative ? '-' : '';
+        var word = '';
+        var short = 0;
         
         // make number positive for conversion (re-add minus symbol later)
         if (is_negative) {
@@ -1644,9 +1644,9 @@ var ANIMATOR = {
         }
         
         // go through number types and assign the most fitting one
-        for (let name in ANIMATOR.number_names) {
+        for (var name in ANIMATOR.number_names) {
             
-            let value = ANIMATOR.number_names[name];
+            var value = ANIMATOR.number_names[name];
             
             if (num >= value && num < value * 1000) {
                 // round to 1 digit after the comma and append describing name
@@ -1685,7 +1685,7 @@ var ANIMATOR = {
         
         // set current value
         if (ANIMATOR.current % 50 == 0) {
-            let curr_val = parseInt(ANIMATOR.from) + (ANIMATOR.current == 0 ? 
+            var curr_val = parseInt(ANIMATOR.from) + (ANIMATOR.current == 0 ? 
                                                     0 : ANIMATOR.current / 50);
             NODE.current_value.value.innerHTML = curr_val;
             NODE.current_value.indicator.innerHTML = curr_val;
@@ -1709,18 +1709,18 @@ var ANIMATOR = {
     // update chart containing all data
     updateColumnChart : function () {
         
-        let $ = ANIMATOR;
+        var $ = ANIMATOR;
         
         
         /* COLUMN LENGTH AND VALUE */
         
         // get min and max value of current frame
-        let min = 0; // min must be 0 at least
-        let max = Number.MIN_VALUE;
+        var min = 0; // min must be 0 at least
+        var max = Number.MIN_VALUE;
         // and get an array of all key value pairs (for later sorting)
-        let all_values = []
-        for (let key in $.data) {
-            let val = $.data[key][$.current];
+        var all_values = []
+        for (var key in $.data) {
+            var val = $.data[key][$.current];
             if (val < min) min = val;
             if (val > max) max = val;
             
@@ -1731,13 +1731,13 @@ var ANIMATOR = {
         }
         
         // increase diff between min and max
-        let diff = max - min;
+        var diff = max - min;
         
         // go through all columns
-        for (let key in $.data) {
+        for (var key in $.data) {
             
             // set value to column
-            let curr = $.data[key][$.current];
+            var curr = $.data[key][$.current];
             $.columns[key].value.innerHTML = $.formatNumber(curr);
             
             // set column length
@@ -1753,12 +1753,12 @@ var ANIMATOR = {
         
         /* COLUMN ORDER */
         
-        let sorted_values = MATH.sortObject(all_values, 'value');
+        var sorted_values = MATH.sortObject(all_values, 'value');
         
         // move columns up and down to their new positions
-        for (let i = 0; i < $.column_num; i++) {
-            let column = $.columns[sorted_values[i].key];
-            let transform_by = (i - column.start_order) * $.pixels_between_columns;
+        for (var i = 0; i < $.column_num; i++) {
+            var column = $.columns[sorted_values[i].key];
+            var transform_by = (i - column.start_order) * $.pixels_between_columns;
             _.setStyles(column.container, {
                 'transform': 'translate(0px, ' + transform_by + 'px)'
             });
@@ -1768,11 +1768,11 @@ var ANIMATOR = {
     
     updateColumnRatioChart : function () {
         
-        let $ = ANIMATOR;
+        var $ = ANIMATOR;
         
         // get total for current time
-        let total = 0;
-        for (let key in $.data) {
+        var total = 0;
+        for (var key in $.data) {
             total += $.data[key][$.current];
         }
         
@@ -1780,10 +1780,10 @@ var ANIMATOR = {
         NODE.column_chart_total.innerHTML = ANIMATOR.formatNumber(total);
         
         // get ratio percentages
-        let order = [];
-        for (let key in $.data) {
+        var order = [];
+        for (var key in $.data) {
             
-            let percentage = 100 / (total / $.data[key][$.current]);
+            var percentage = 100 / (total / $.data[key][$.current]);
             
             order[order.length] = {
                 'key' : key, 
@@ -1791,13 +1791,13 @@ var ANIMATOR = {
             }
             
         }
-        let sorted_parts = MATH.sortObject(order, 'value', false);
+        var sorted_parts = MATH.sortObject(order, 'value', false);
         
-        for (let i = 0; i < $.ratio_parts_num; i++) {
+        for (var i = 0; i < $.ratio_parts_num; i++) {
             
-            let key = sorted_parts[i].key;
-            let percentage = sorted_parts[i].value;
-            let ratio_part = $.ratio_parts[key];
+            var key = sorted_parts[i].key;
+            var percentage = sorted_parts[i].value;
+            var ratio_part = $.ratio_parts[key];
             
             // filter out parts smaller than 0.2%
             if (percentage < 0.2) {
@@ -1817,7 +1817,7 @@ var ANIMATOR = {
             });
             
             // set displayed percentage values on chart
-            let rounded_percentage = percentage.toFixed(1);
+            var rounded_percentage = percentage.toFixed(1);
             ratio_part.percentage.innerHTML = rounded_percentage + '%';
             ratio_part.tooltip_percentage.innerHTML = rounded_percentage + '%';
             
@@ -1828,12 +1828,12 @@ var ANIMATOR = {
     // update the invidual chart of every key
     updateIndividualCharts : function () {
         
-        let $ = ANIMATOR;
+        var $ = ANIMATOR;
         
         // get standard components and values
-        let canvas = NODE.individual_chart;
-        let context = canvas.getContext('2d');
-        let keys = $.individual_chart_keys;
+        var canvas = NODE.individual_chart;
+        var context = canvas.getContext('2d');
+        var keys = $.individual_chart_keys;
         
         // return if no keys are selected
         if (keys == null) {
@@ -1841,7 +1841,7 @@ var ANIMATOR = {
             return;
         }
         
-        let key_num = $.individual_chart_keys.length;;
+        var key_num = $.individual_chart_keys.length;;
         
         // reset canvas content, width and height
         canvas.width = _.getWidth(NODE.individual_chart_menu);
@@ -1849,21 +1849,21 @@ var ANIMATOR = {
         context.clearRect(0, 0, canvas.width, canvas.height);
         
         // get total min and max values of the given columns (for y positions)
-        let min = 0; // can't be higher than 0
-        let max = Number.MIN_VALUE;
+        var min = 0; // can't be higher than 0
+        var max = Number.MIN_VALUE;
         // go through all keys
-        for (let i = 0; i < key_num; i++) {
+        for (var i = 0; i < key_num; i++) {
             // go through all data points
-            for (let j = 0; j < $.data_point_num; j++) {
-                let key = keys[i];
-                let val = $.data[key][j];
+            for (var j = 0; j < $.data_point_num; j++) {
+                var key = keys[i];
+                var val = $.data[key][j];
                 if (val < min) min = val;
                 if (val > max) max = val;
             }
         }
         
         // define padding in canvas per side
-        let padding = {
+        var padding = {
             top : 5,
             left : 5,
             bottom : 80,
@@ -1871,15 +1871,15 @@ var ANIMATOR = {
         };
             
         // determine right-side labels with their respective lengths
-        let label_font = '12px Arial sans-serif';
-        let label_top = ANIMATOR.formatNumber(max) + '';
-        let label_bottom = ANIMATOR.formatNumber(min) + '';
+        var label_font = '12px Arial sans-serif';
+        var label_top = ANIMATOR.formatNumber(max) + '';
+        var label_bottom = ANIMATOR.formatNumber(min) + '';
         context.font = label_font;
-        let label_top_width = context.measureText(label_top).width;
-        let label_bottom_width = context.measureText(label_bottom).width;
+        var label_top_width = context.measureText(label_top).width;
+        var label_bottom_width = context.measureText(label_bottom).width;
         
         // adjust right-side padding according to the longer text of the two
-        let max_width = label_top_width;
+        var max_width = label_top_width;
         if (max_width < label_bottom_width) max_width = label_bottom_width;
         padding.right = padding.right + max_width + 15;
         
@@ -1887,7 +1887,7 @@ var ANIMATOR = {
         padding.bottom = padding.bottom + 18 * key_num;
         
         // draw labels on right side
-        for (let i = 0; i < 2; i++) {
+        for (var i = 0; i < 2; i++) {
             
             // prepare label text
             context.font = label_font;
@@ -1905,18 +1905,18 @@ var ANIMATOR = {
         }
         
         
-        let width_minus_padding = canvas.width - padding.left - padding.right;
-        let number_of_keys = (($.data_point_num - 1) / 50) + 1;
+        var width_minus_padding = canvas.width - padding.left - padding.right;
+        var number_of_keys = (($.data_point_num - 1) / 50) + 1;
         
         // draw the raster
-        for (let i = $.from; i <= $.to; i++) {
+        for (var i = $.from; i <= $.to; i++) {
             
             /* RASTER LINES */
             
             // set drawing color
             context.strokeStyle = NAV.darkmode ? '#242424' : '#ededed';
             
-            let x_pos = i == $.from ? 
+            var x_pos = i == $.from ? 
                 padding.left : padding.left + (width_minus_padding * ((i - $.from) / (number_of_keys - 1)));
             
             // draw line
@@ -1930,11 +1930,11 @@ var ANIMATOR = {
             
             /* LABELS BOTTOM */
             
-            let limited_labels = false; // labels limited to right and left-most limits (lines)
+            var limited_labels = false; // labels limited to right and left-most limits (lines)
             
             // get text and width (in pixels)
-            let text = i + '';
-            let text_width = context.measureText(text).width;
+            var text = i + '';
+            var text_width = context.measureText(text).width;
             
             // check if label text is small enough
             if (text_width > 100) {
@@ -1979,16 +1979,16 @@ var ANIMATOR = {
         context.stroke();
         
         // go through all keys and draw statistic
-        for (let i = 0; i < key_num; i++) {
+        for (var i = 0; i < key_num; i++) {
             
-            let key = keys[i];
-            let color = $.columns[key].color; // color from column meter
+            var key = keys[i];
+            var color = $.columns[key].color; // color from column meter
             
             // draw graph for key
             $.drawIndividualKey(canvas, context, padding, color, min, max, $.data[key], key);
             
             // add key to legend
-            let y_pos = canvas.height - padding.bottom + 66 + (18 * i);
+            var y_pos = canvas.height - padding.bottom + 66 + (18 * i);
             context.font = '12px Arial sans-serif';
             context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
             context.textBaseline = 'top';
@@ -2014,8 +2014,8 @@ var ANIMATOR = {
             // set drawing color
             context.strokeStyle = '#e26565';
             
-            let width_ratio = ($.current + 1) / $.data_point_num; // how far to the right is the current point
-            let x_pos = padding.left + width_minus_padding * width_ratio;
+            var width_ratio = ($.current + 1) / $.data_point_num; // how far to the right is the current point
+            var x_pos = padding.left + width_minus_padding * width_ratio;
             
             context.moveTo(x_pos, padding.top);
             context.lineTo(x_pos, canvas.height - padding.bottom);
@@ -2030,25 +2030,25 @@ var ANIMATOR = {
     drawIndividualKey : function (canvas, context, padding, color, min, max, data, key) {
         
         // set drawing attributes
-        let point_radius = 2; // in pixels
-        let width_minus_padding = canvas.width - padding.left - padding.right;
-        let height_minus_padding = canvas.height - padding.top - padding.bottom;
+        var point_radius = 2; // in pixels
+        var width_minus_padding = canvas.width - padding.left - padding.right;
+        var height_minus_padding = canvas.height - padding.top - padding.bottom;
         
         // get all key data points (excludes the 49 points generated between them by the program)
-        let points = [];
-        for (let i = 0; i <= ANIMATOR.data_point_num; i += 50) {
+        var points = [];
+        for (var i = 0; i <= ANIMATOR.data_point_num; i += 50) {
                 
             // get x position of point
-            let width_ratio = 0;
+            var width_ratio = 0;
             if (i > 0) {
                 // how far to the right is the current point
                 width_ratio = i / (ANIMATOR.data_point_num - 1);
             }
-            let x_pos = padding.left + width_minus_padding * width_ratio;
+            var x_pos = padding.left + width_minus_padding * width_ratio;
             
             // get y position of point
-            let percentage_to_top = (((data[i] - min) / (max - min)) * 100);
-            let y_pos = canvas.height - padding.bottom;
+            var percentage_to_top = (((data[i] - min) / (max - min)) * 100);
+            var y_pos = canvas.height - padding.bottom;
             y_pos -= height_minus_padding / (100 / percentage_to_top);
             
             // add point to array
@@ -2060,18 +2060,18 @@ var ANIMATOR = {
         }
         
         // get circle angles
-        let start_angle = 0;
-        let end_angle = 2 * Math.PI;
+        var start_angle = 0;
+        var end_angle = 2 * Math.PI;
             
         // set drawing color
         context.strokeStyle = color;
         
         // draw all elements
-        for (let i = 0; i < points.length; i++) {
+        for (var i = 0; i < points.length; i++) {
             
             // get coordinates of current point
-            let x = points[i].x;
-            let y = points[i].y;
+            var x = points[i].x;
+            var y = points[i].y;
 
             // draw point
             context.beginPath();
@@ -2084,8 +2084,8 @@ var ANIMATOR = {
             if (i != points.length - 1) {
                 
                 // get coordinates of next point
-                let x_next = points[i + 1].x;
-                let y_next = points[i + 1].y;
+                var x_next = points[i + 1].x;
+                var y_next = points[i + 1].y;
                 
                 context.moveTo(x, y);
                 context.lineTo(x_next, y_next);
@@ -2116,7 +2116,7 @@ var MAIN = {
         ANIMATOR.initialize();
         
         // load example data set into chart
-        let request = DATA_LOAD.loadHttpDataSet('data/example-data-set.json', false);
+        var request = DATA_LOAD.loadHttpDataSet('data/example-data-set.json', false);
         
         // on failed http request, load error messages
         request.onerror = MAIN.showXMLHttpWarnings;
@@ -2126,13 +2126,13 @@ var MAIN = {
     showXMLHttpWarnings : function () {
         
         // error message on main page
-        let error_msg = _.create('div.notice.red', {
+        var error_msg = _.create('div.notice.red', {
             'innerHTML': '<b>Loading the example data set failed.</b><br />Are you running this project locally on your system? Try using the <i>Load data</i> button.'
         });
         _.append(NODE.column_chart, error_msg);
 
         // warning message in 'data load' window
-        let warning = _.create('div.notice.blue', {
+        var warning = _.create('div.notice.blue', {
             'innerHTML': 'You may currently run this project locally on your computer. This restricts you to only load local data set files. You can\'t load online examples.',
             'style': {
                 'margin-bottom': '20px'
