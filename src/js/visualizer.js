@@ -995,7 +995,7 @@ var DATA_LOAD = {
     // get HTML construct for the child of the column ratio chart
     getRatioChartPart : function (key, color, data, key_name, icon_url) {
         
-        let container = _.create('div.part-container', {
+        let container = _.create('td.part-container', {
             'style' : {
                 'background-color' : color
             }

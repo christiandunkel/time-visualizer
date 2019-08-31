@@ -243,6 +243,10 @@
     }
 }
 
+#column-ratio-container {
+    width: 100%;
+}
+
 #column-ratio {
     height: 80px;
     
@@ -251,7 +255,7 @@
     }
     
     .part-container {
-        display: inline-block; position: relative;
+        position: relative;
         height: 100%;
         background: #575757; border: solid white; border-width: 0 1px;
         
