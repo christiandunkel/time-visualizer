@@ -212,7 +212,11 @@ var NODE = {
 var MATH = {
     
     // sort array containing objects of the same type by a given property (and its value)
-    sortObject : function (obj, property, ascending = true) {
+    sortObject : function (obj, property, ascending) {
+        
+        // make default value of ascending 'true'
+        ascending = true || ascending;
+        
         return obj.sort(function (a, b) {
             if (ascending) {
                 return a[property] < b[property] ? 1 : -1;
@@ -221,6 +225,7 @@ var MATH = {
                 return a[property] > b[property] ? 1 : -1;
             }
         });
+        
     },
     
     // returns the average of an array of values
@@ -238,7 +243,9 @@ var MATH = {
     },
     
     // returns the smallest value of an array of values
-    getMin : function (arr, start_minimum = Number.MAX_VALUE) {
+    getMin : function (arr, start_minimum) {
+        
+        start_maximum = Number.MAX_VALUE || start_maximum;
         
         var min = start_minimum;
         var len = arr.length;
@@ -255,7 +262,9 @@ var MATH = {
     },
     
     // returns the highest value of an array of values
-    getMax : function (arr, start_maximum = Number.MIN_VALUE) {
+    getMax : function (arr, start_maximum) {
+        
+        start_maximum = Number.MIN_VALUE || start_maximum;
         
         var max = start_maximum;
         var len = arr.length;
