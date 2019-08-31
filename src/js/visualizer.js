@@ -820,12 +820,12 @@ var DATA_LOAD = {
         let btn = _.target(e);
         let url = 'data/' + btn.getAttribute('load-data') + '.json';
         
-        DATA_LOAD.loadHttpDataSet(url);
+        DATA_LOAD.loadHttpDataSet(url, true);
         
     },
     
     // request a data set from an url (must be same origin server!)
-    loadHttpDataSet : function (url) {
+    loadHttpDataSet : function (url, showConfirmation) {
         
         // load example data set (only works on localhost or web server)
         let request = new XMLHttpRequest();
@@ -841,7 +841,7 @@ var DATA_LOAD = {
 
                 if (json_text != null && json_text != '') {
                     let json_obj = _.parseJSON(json_text);
-                    DATA_LOAD.visualizeObject(json_obj);
+                    DATA_LOAD.visualizeObject(json_obj, showConfirmation);
                 }
 
             }
@@ -2116,7 +2116,7 @@ var MAIN = {
         ANIMATOR.initialize();
         
         // load example data set into chart
-        let request = DATA_LOAD.loadHttpDataSet('data/example-data-set.json');
+        let request = DATA_LOAD.loadHttpDataSet('data/example-data-set.json', false);
         
         // on failed http request, load error messages
         request.onerror = MAIN.showXMLHttpWarnings;
