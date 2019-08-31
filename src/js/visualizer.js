@@ -500,8 +500,8 @@ var NAV = {
         }
         
         // cut off time value if it's too big or too small 
-        if (time > 10) {
-            time = 10;
+        if (time > 4) {
+            time = 4;
         }
         else if (time < 0.1) {
             time = 0.1;
@@ -1428,6 +1428,11 @@ var ANIMATOR = {
                 'transition': transition_time
             });
         }
+        
+        // set CSS transition effects for time indicator
+        _.setStyles(NODE.current_value.indicator, {
+            'transition': transition_time
+        });
         
     },
     
