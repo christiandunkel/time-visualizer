@@ -187,4 +187,70 @@ nav {
         }
     }
     
+    #pre-defined-animation-speeds,
+    #custom-animation-speed-area {
+        display: none;
+        
+        &.active {
+            display: inline-block;
+        }
+    }
+        
+    %custom-ani-speed-btn {
+        background: none;
+        color: transparent;
+        @include box-shadow(none);
+        
+        &:after {
+            top: 8px; left: 8px;
+            width: 16px; height: 16px;
+            @include opacity(.8);
+        }
+
+        &:hover,
+        &:focus {
+            background-color: #eaeaea;
+            @include transform(none);
+            
+            .darkMode & {
+                background-color: #343434;
+            }
+            
+            &:after {
+                @include opacity(1);
+            }
+        }
+    }
+        
+    button#custom-animation-speed {
+        @extend %custom-ani-speed-btn;
+
+        &:after {
+            background-image: $pencil-grey;
+        }
+    }
+    
+    button#close-custom-animation-speed-area {
+        @extend %custom-ani-speed-btn;
+        
+        &:after {
+            background-image: $cross-grey;
+        }
+    }
+    
+    input#custom-animation-speed-value {
+        width: 112px; height: 32px; margin: 0 8px 0 0; padding: 6px 12px;
+        border: 2px solid #b48080;
+        color: #656565; font-size: 16px; line-height: 20px;
+        
+        .darkMode & {
+            background: black;
+            color: #a6a6a6;
+        }
+        
+        &.correct-time {
+            border-color: #80bf80;
+        }
+    }
+    
 }

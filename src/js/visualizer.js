@@ -12,10 +12,18 @@ var NODE = {
     pause_btn : null,
     stop_btn : null,
     
+    time_selection : {
+        container_1 : null,
+        container_2 : null,
+        input : null,
+        custom : null,
+        close_custom : null
+    },
+    
     time_btn : {
         slow : null,
         normal : null,
-        fast : null,
+        fast : null
     },
     
     initializeNavButtons : function () {
@@ -27,9 +35,17 @@ var NODE = {
         this.pause_btn = _.id('pause-button');
         this.stop_btn = _.id('stop-button');
         
+        // animation speed menu (pre-defined)
+        this.time_selection.container_1 = _.id('pre-defined-animation-speeds');
         this.time_btn.slow = _.id('animation-speed-0-5');
         this.time_btn.normal = _.id('animation-speed-1-0');
         this.time_btn.fast = _.id('animation-speed-2-0');
+        
+        // animation speed menu (custom)
+        this.time_selection.container_2 = _.id('custom-animation-speed-area');
+        this.time_selection.input = _.id('custom-animation-speed-value');
+        this.time_selection.custom = _.id('custom-animation-speed');
+        this.time_selection.close_custom = _.id('close-custom-animation-speed-area');
         
     },
     
@@ -304,6 +320,10 @@ var NAV = {
         _.addClick(NODE.time_btn.normal, NAV.setNormalTime);
         _.addClick(NODE.time_btn.fast, NAV.setDoubledTime);
         
+        _.addEvent(NODE.time_selection.input, 'input', NAV.setCustomTime);
+        _.addClick(NODE.time_selection.custom, NAV.setCustomTimeContainer);
+        _.addClick(NODE.time_selection.close_custom, NAV.setDefinedTimeContainer);
+        
     },
     
     // set a button active
@@ -446,6 +466,89 @@ var NAV = {
         // activate button and set time
         NAV.setExclusiveActive(btn);
         ANIMATOR.setTime(2.0);
+        
+    },
+    
+    setCustomTime : function () {
+        
+        let input = NODE.time_selection.input;
+        let time = input.value;
+        
+        // replace commas with points
+        if (time.match(/[,]+/)) {
+            time = time.replace(/[,]+/, '.');
+            input.value = time;
+        }
+        
+        // remove non-number and non-point characters
+        if (time.match(/[^0-9\.]+/)) {
+            time = time.replace(/[^0-9\.]+/, '');
+            input.value = time;
+        }
+        
+        // return if time isn't in right format
+        if (!time.match(/^([0-9]+|[0-9]+\.[0-9]+)$/)) {
+            _.removeClass(input, 'correct-time');
+            return;
+        }
+        
+        // parse time string to float
+        time = parseFloat(time);
+        // round number to 1 number after comma
+        if (time % 1 != 0) {
+            time = time.toFixed(1);
+        }
+        
+        // cut off time value if it's too big or too small 
+        if (time > 10) {
+            time = 10;
+        }
+        else if (time < 0.1) {
+            time = 0.1;
+        }
+        
+        _.addClass(input, 'correct-time');
+        
+        // send value to animator object
+        ANIMATOR.setTime(time);
+        
+        // if time value was corrected by regex, replace input value with it
+        time = "" + time;
+        if (time != input.value) {
+            input.value = time;
+        }
+        
+    },
+    
+    setCustomTimeContainer : function () {
+        
+        _.removeClass(NODE.time_selection.container_1, 'active');
+        _.addClass(NODE.time_selection.container_2, 'active');
+        
+        // put current defined time value into input element 
+        let input = NODE.time_selection.input;
+        input.value = ANIMATOR.time + '';
+        _.addClass(input, 'correct-time');
+        
+    },
+    
+    setDefinedTimeContainer : function () {
+        
+        _.addClass(NODE.time_selection.container_1, 'active');
+        _.removeClass(NODE.time_selection.container_2, 'active');
+        
+        // put value of selected 'defined time' button as current time 
+        let defined_time = 0;
+        if (_.hasClass(NODE.time_btn.slow, 'active')) {
+            defined_time = 0.5;
+        }
+        else if (_.hasClass(NODE.time_btn.normal, 'active')) {
+            defined_time = 1;
+        }
+        else {
+            defined_time = 2;
+        }
+        ANIMATOR.setTime(defined_time);
         
     },
     
