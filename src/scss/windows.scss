@@ -153,7 +153,8 @@
         font-size: 20px; line-height: 24px;
         text-align: center;
         
-        %or-pseudo-class {
+        &:after,
+        &:before {
             content: '';
             position: absolute; top: 11px;
             width: 60px; height: 2px;
@@ -161,12 +162,10 @@
         }
         
         &:after {
-            @extend %or-pseudo-class;
             right: 110%;
         }
         
         &:before {
-            @extend %or-pseudo-class;
             left: 110%;
         }
     }
