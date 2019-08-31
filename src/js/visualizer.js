@@ -282,14 +282,19 @@ var MATH = {
     
     // removes an index from an array
     removeArrayIndex : function (arr, index) {
+        
         var len = arr.length;
+        
         // remove index
         for (var i = index; i < len - 1; i++) {
             arr[i] = arr[i+1];
         }
+        
         // remove last value
         arr.pop();
+        
         return arr;
+        
     }
     
 }
@@ -339,22 +344,30 @@ var NAV = {
     
     // set a button active
     setActive : function (btn) {
+        
         _.addClass(btn, 'active');
         btn.setAttribute('aria-disabled', 'false');
+        
         btn.setAttribute('originalTabIndex', btn.getAttribute('tabIndex'));
         btn.setAttribute('tabIndex', '-1');
+        
     },
     
     // set a button inactive
     setInactive : function (btn) {
+        
         _.removeClass(btn, 'active');
         btn.setAttribute('aria-disabled', 'true');
+        
         var originalTabIndex = btn.getAttribute('originalTabIndex');
+        
         if (originalTabIndex == null) {
             originalTabIndex = btn.getAttribute('tabIndex');
             btn.setAttribute('originalTabIndex', originalTabIndex);
         }
+        
         btn.setAttribute('tabIndex', originalTabIndex);
+        
     },
     
     // set a button active, and all others inactive
@@ -559,6 +572,7 @@ var NAV = {
         else {
             defined_time = 2;
         }
+        
         ANIMATOR.setTime(defined_time);
         
     },
@@ -1194,7 +1208,7 @@ var DATA_LOAD = {
         // increase values by 50x, by adding values for 0.02, 0.04 to 0.98 between values
         var upscaled_data_points = [];
         var len = data_points.length;
-        for (var i = 0; i < len; i++) {
+        for (i = 0; i < len; i++) {
             
             // current data point
             var curr = data_points[i];
@@ -1214,7 +1228,7 @@ var DATA_LOAD = {
             var hundreth = diff / 100;
             
             // generate 49 values in between current and next value
-            for (var j = 2; j <= 98; j += 2) {
+            for (j = 2; j <= 98; j += 2) {
                 var new_point = curr + (j * hundreth);
                 var len = upscaled_data_points.length;
                 upscaled_data_points[len] = new_point;
