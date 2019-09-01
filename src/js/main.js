@@ -35,8 +35,8 @@ var MAIN = {
                 'margin-bottom': '20px'
             }
         });
-        _.empty(NODE.window_example_sets_area);
-        _.append(NODE.window_example_sets_area, warning);
+        _.empty(NODE.data_load.example_sets_area);
+        _.append(NODE.data_load.example_sets_area, warning);
         
     }
     

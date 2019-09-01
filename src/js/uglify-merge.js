@@ -1,14 +1,10 @@
-/*
- * @required
- *      NodeJS
- *      UglifyJS
+/**
+ * combines and minifies javascript source files into a single minified file
  *
- * @usage
- *      execute using this command from the project root directory:
- *      node src/js/uglify-merge.js
- * 
- * @description
- *      combine and minify javascript source files to a single minified.js
+ * execute using this command from the project root directory:
+ * node src/js/uglify-merge.js
+ *
+ * @required NodeJS, UglifyJS
  */
 
 'use strict';

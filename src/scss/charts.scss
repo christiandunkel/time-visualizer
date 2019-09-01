@@ -230,7 +230,7 @@
 
 // single bar below column chart display percentage ratio between keys
 
-#column-chart-total {
+#ratio-total {
     width: 100%; margin: 45px 0 8px 0;
     opacity: .55;
     font-size: 15px; line-height: 1.2em; font-weight: 700;
@@ -246,7 +246,7 @@
     }
 }
 
-#column-ratio-container {
+#ratio-chart {
     width: 100%; height: 80px;
     
     &.hidden {
@@ -260,9 +260,6 @@
     th {
         height: 80px;
     }
-}
-
-#column-ratio {
     
     .part-container {
         position: relative;
@@ -377,13 +374,17 @@
             margin: 0 0 0 5px;
         }
         
-        &#back-to-column-chart-btn {
+        &#close-individual-chart {
             background: #ffdddd; border-color: #ffa6a6;
             color: #c92f2f;
             
             .darkMode & {
                 background: #3e0d0d; border-color: #8c3d3d;
                 color: #ea6969;
+            }
+            
+            &:after {
+                background-image: $arrow-left-red;
             }
         }
         
@@ -394,10 +395,6 @@
             background-repeat: no-repeat;
             background-position: center;
             @include background-size(100% 100%);
-        }
-        
-        &#back-to-column-chart-btn:after {
-            background-image: $arrow-left-red;
         }
         
         &#compare-btn:after {
@@ -411,7 +408,7 @@
         }
         
         @include on-mobile {
-            &,
+            &, 
             &.right {
                 display: block; float: none;
                 width: 100%; margin: 0 0 5px 0; padding: 12px;

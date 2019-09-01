@@ -7,12 +7,14 @@ var DATA_LOAD = {
     
     initialize : function () {
         
+        var $ = NODE.data_load;
+        
         // add 'close window' events
-        _.addClick(NODE.blur, this.close);
-        _.addClick(NODE.close_btn, this.close);
+        _.addClick($.blur, this.close);
+        _.addClick($.close_btn, this.close);
         
         // add 'load data set' functionality to buttons
-        var btns = _.tag('button', NODE.window_example_sets_area);
+        var btns = _.tag('button', $.example_sets_area);
         var btns_num = btns.length;
         for (var i = 0; i < btns_num; i++) {
             _.addClick(btns[i], this.startDataSetLoading);
@@ -27,12 +29,12 @@ var DATA_LOAD = {
     open : function () {
         
         // open window
-        _.addClass(NODE.data_load_window, 'visible');
+        _.addClass(NODE.data_load.window, 'visible');
         
         // with a little delay, set tab focus on close button
         // if set immediately, will be ignored or buggy
         setTimeout(function () {
-            NODE.close_btn.focus();
+            NODE.data_load.close_btn.focus();
         }, 100);
         
     },
@@ -41,10 +43,10 @@ var DATA_LOAD = {
     close : function () {
         
         // close window
-        _.removeClass(NODE.data_load_window, 'visible');
+        _.removeClass(NODE.data_load.window, 'visible');
         
         // close 'file selected' message inside window
-        _.removeClass(NODE.data_load_window, 'file-selected');
+        _.removeClass(NODE.data_load.window, 'file-selected');
         
         // reset tab focus back to 'data load' button in navigation
         NODE.data_load_btn.focus();
@@ -57,44 +59,46 @@ var DATA_LOAD = {
     
     initializeDropArea : function () {
         
+        var $ = NODE.data_load;
+        
         // warn user if FileReader API is not supported
         if (typeof(window.FileReader) !== 'function') {
             
             // make it visible
-            _.addClass(NODE.file_reader_notice, 'show');
+            _.addClass($.notice, 'show');
             
         }
         
         // prevent default browser actions on drag'n'drop
-        _.addEvent(NODE.drop_area, 'dragenter', _.preventDefault);
-        _.addEvent(NODE.drop_area, 'dragover', _.preventDefault);
-        _.addEvent(NODE.drop_area, 'dragleave', _.preventDefault);
-        _.addEvent(NODE.drop_area, 'drop', _.preventDefault);
+        _.addEvent($.drop_area, 'dragenter', _.preventDefault);
+        _.addEvent($.drop_area, 'dragover', _.preventDefault);
+        _.addEvent($.drop_area, 'dragleave', _.preventDefault);
+        _.addEvent($.drop_area, 'drop', _.preventDefault);
 
         // add highlight events, if user dragged file on top of area
-        _.addEvent(NODE.drop_area, 'dragenter', this.highlightDropArea);
-        _.addEvent(NODE.drop_area, 'dragover', this.highlightDropArea);
+        _.addEvent($.drop_area, 'dragenter', this.highlightDropArea);
+        _.addEvent($.drop_area, 'dragover', this.highlightDropArea);
 
         // unhighlight area if user's cursor with file left or dropped
-        _.addEvent(NODE.drop_area, 'dragleave', this.unhighlightDropArea);
-        _.addEvent(NODE.drop_area, 'drop', this.unhighlightDropArea);
+        _.addEvent($.drop_area, 'dragleave', this.unhighlightDropArea);
+        _.addEvent($.drop_area, 'drop', this.unhighlightDropArea);
 
         // add event to handle files dropped on drop area
-        _.addEvent(NODE.drop_area, 'drop', this.handleDroppedFile);
+        _.addEvent($.drop_area, 'drop', this.handleDroppedFile);
         
         // add event for 'select file' button
-        _.addEvent(NODE.select_file_input, 'change', this.handleSelectedFile)
+        _.addEvent($.select_file_input, 'change', this.handleSelectedFile)
         
     },
     
     // add 'highlight' effect to drop area
     highlightDropArea : function () {
-        _.addClass(NODE.drop_area, 'dragged-over');
+        _.addClass($.drop_area, 'dragged-over');
     },
     
     // remove 'highlight' effect from drop area
     unhighlightDropArea : function () {
-        _.removeClass(NODE.drop_area, 'dragged-over');
+        _.removeClass($.drop_area, 'dragged-over');
     },
     
     
@@ -387,7 +391,7 @@ var DATA_LOAD = {
             
         if (showConfirmation === true) {
             // display 'file loaded' animation
-            _.addClass(NODE.data_load_window, 'file-selected');
+            _.addClass(NODE.data_load.window, 'file-selected');
         }
         
     },

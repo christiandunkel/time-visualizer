@@ -187,8 +187,8 @@ nav {
         }
     }
     
-    #pre-defined-animation-speeds,
-    #custom-animation-speed-area {
+    #pre-defined-speed,
+    #custom-speed {
         display: none;
         
         &.active {
@@ -196,7 +196,7 @@ nav {
         }
     }
         
-    %custom-ani-speed-btn {
+    %toggle-speed-menu {
         background: none;
         color: transparent;
         @include box-shadow(none);
@@ -222,23 +222,23 @@ nav {
         }
     }
         
-    button#custom-animation-speed {
-        @extend %custom-ani-speed-btn;
+    button#open-custom-speed-menu {
+        @extend %toggle-speed-menu;
 
         &:after {
             background-image: $pencil-grey;
         }
     }
     
-    button#close-custom-animation-speed-area {
-        @extend %custom-ani-speed-btn;
+    button#close-custom-speed-menu {
+        @extend %toggle-speed-menu;
         
         &:after {
             background-image: $cross-grey;
         }
     }
     
-    input#custom-animation-speed-value {
+    input#custom-speed-input {
         width: 112px; height: 32px; margin: 0 8px 0 0; padding: 6px 12px;
         border: 2px solid #b48080;
         color: #656565; font-size: 16px; line-height: 20px;
