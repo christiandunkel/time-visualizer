@@ -212,19 +212,22 @@ var NODE = {
 var MATH = {
     
     // sort array containing objects of the same type by a given property (and its value)
-    sortObject : function (obj, property, ascending) {
+    sortObject : function (obj, property, descending) {
         
-        // make default value of ascending 'true'
-        ascending = true || ascending;
-        
-        return obj.sort(function (a, b) {
-            if (ascending) {
+        if (descending) {
+            
+            return obj.sort(function (a, b) {
                 return a[property] < b[property] ? 1 : -1;
-            }
-            else {
+            });
+            
+        }
+        else {
+            
+            return obj.sort(function (a, b) {
                 return a[property] > b[property] ? 1 : -1;
-            }
-        });
+            });
+            
+        }
         
     },
     
@@ -245,8 +248,7 @@ var MATH = {
     // returns the smallest value of an array of values
     getMin : function (arr, start_minimum) {
         
-        start_maximum = Number.MAX_VALUE || start_maximum;
-        
+        var start_minimum = _.isNumber(start_minimum) ? start_minimum : Number.MIN_VALUE;
         var min = start_minimum;
         var len = arr.length;
         
@@ -264,8 +266,7 @@ var MATH = {
     // returns the highest value of an array of values
     getMax : function (arr, start_maximum) {
         
-        start_maximum = Number.MIN_VALUE || start_maximum;
-        
+        var start_maximum = _.isNumber(start_maximum) ? start_maximum : Number.MAX_VALUE;
         var max = start_maximum;
         var len = arr.length;
         
@@ -910,8 +911,6 @@ var DATA_LOAD = {
             
             var color = this.getColumnColor(counter);
             
-            
-            
             /* ANIMATION DATA */
             
             // add key data to animation object
@@ -1178,6 +1177,7 @@ var DATA_LOAD = {
                 
                 data_points[data_points.length] = value;
                 continue;
+                
             }
             
             // if not, set value to 0, if it's the first iteration
@@ -1208,7 +1208,7 @@ var DATA_LOAD = {
         // increase values by 50x, by adding values for 0.02, 0.04 to 0.98 between values
         var upscaled_data_points = [];
         var len = data_points.length;
-        for (i = 0; i < len; i++) {
+        for (var i = 0; i < len; i++) {
             
             // current data point
             var curr = data_points[i];
@@ -1228,10 +1228,10 @@ var DATA_LOAD = {
             var hundreth = diff / 100;
             
             // generate 49 values in between current and next value
-            for (j = 2; j <= 98; j += 2) {
+            for (var j = 2; j <= 98; j += 2) {
                 var new_point = curr + (j * hundreth);
-                var len = upscaled_data_points.length;
-                upscaled_data_points[len] = new_point;
+                var this_len = upscaled_data_points.length;
+                upscaled_data_points[this_len] = new_point;
             }
             
         }
@@ -1776,7 +1776,7 @@ var ANIMATOR = {
         
         /* COLUMN ORDER */
         
-        var sorted_values = MATH.sortObject(all_values, 'value');
+        var sorted_values = MATH.sortObject(all_values, 'value', true);
         
         // move columns up and down to their new positions
         for (var i = 0; i < $.column_num; i++) {
@@ -1814,7 +1814,7 @@ var ANIMATOR = {
             }
             
         }
-        var sorted_parts = MATH.sortObject(order, 'value', false);
+        var sorted_parts = MATH.sortObject(order, 'value');
         
         for (var i = 0; i < $.ratio_parts_num; i++) {
             
