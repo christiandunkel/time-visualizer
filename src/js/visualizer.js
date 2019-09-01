@@ -248,8 +248,7 @@ var MATH = {
     // returns the smallest value of an array of values
     getMin : function (arr, start_minimum) {
         
-        var start_minimum = _.isNumber(start_minimum) ? start_minimum : Number.MIN_VALUE;
-        var min = start_minimum;
+        var min = _.isNumber(start_minimum) ? start_minimum : Number.MAX_VALUE;
         var len = arr.length;
         
         for (var i = 0; i < len; i++) {
@@ -266,8 +265,7 @@ var MATH = {
     // returns the highest value of an array of values
     getMax : function (arr, start_maximum) {
         
-        var start_maximum = _.isNumber(start_maximum) ? start_maximum : Number.MAX_VALUE;
-        var max = start_maximum;
+        var max = _.isNumber(start_maximum) ? start_maximum : Number.MIN_VALUE;
         var len = arr.length;
         
         for (var i = 0; i < len; i++) {
