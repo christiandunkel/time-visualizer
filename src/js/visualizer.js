@@ -1,5 +1,5 @@
 /*
- * safes all nodes
+ * saves references to HTML nodes for later use
  */
 var NODE = {
     
