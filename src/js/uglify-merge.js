@@ -4,12 +4,11 @@
  *      UglifyJS
  *
  * @usage
- *      executing using the following from project root:
+ *      execute using this command from the project root directory:
  *      node src/js/uglify-merge.js
  * 
  * @description
- *      get all files in directory, 
- *      combine and minify them to ../minified.js
+ *      combine and minify javascript source files to a single minified.js
  */
 
 'use strict';
