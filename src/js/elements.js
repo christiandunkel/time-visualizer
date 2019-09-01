@@ -3,7 +3,7 @@
  * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
  */
 
-/** @global */
+/** @module NODE */
 var NODE = {
         
     /* default HTML nodes */
@@ -59,9 +59,9 @@ var NODE = {
     },
     
     /**
+     * @function
+     * @memberof module:NODE
      * @desc adds references to the empty HTML nodes in this sections
-     * @param {undefined}
-     * @returns {undefined}
      */
     initializeDataLoadWindow : function () {
         
@@ -93,9 +93,9 @@ var NODE = {
     },
     
     /**
+     * @function
+     * @memberof module:NODE
      * @desc adds references to the empty HTML nodes in this sections
-     * @param {undefined}
-     * @returns {undefined}
      */
     initializeCompareSelectionWindow : function () {
         
@@ -141,9 +141,9 @@ var NODE = {
     ratio_chart                 : null,
     
     /**
+     * @function
+     * @memberof module:NODE
      * @desc adds references to the empty HTML nodes in this sections
-     * @param {undefined}
-     * @returns {undefined}
      */
     initializeColumnChart : function () {
         
@@ -183,9 +183,9 @@ var NODE = {
     /* GENERAL */
     
     /**
+     * @function
+     * @memberof module:NODE
      * @desc adds references to the empty HTML nodes in this sections
-     * @param {undefined}
-     * @returns {undefined}
      */
     initialize : function () {
         

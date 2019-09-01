@@ -5,7 +5,7 @@
 
 "use strict";
 
-/** @global */
+/** @module _ */
 var _ = {
     
     /*
@@ -15,9 +15,12 @@ var _ = {
      */
     
     /**
-     * @desc select HTML element by id
-     * @param {string} selector
-     * @returns {(HTML Node|null)} returns null on error
+     * @function
+     * @memberof module:_
+     * @desc selects HTML element by id
+     * @param {string} selector - string containing a HTML id
+     * @returns {Object} if an element was found, returns HTML node
+     * @returns {null} if a wrong selector was given or no element was found
      */
     id : function (selector) {
         
@@ -31,10 +34,13 @@ var _ = {
     },
     
     /**
-     * @desc select HTML element(s) by class
-     * @param {string} selector
+     * @function
+     * @memberof module:_
+     * @desc selects HTML element(s) by class
+     * @param {string} selector - string containing one or multiple space-seperated HTML classes
      * @param {string} context - container element in which to search for class
-     * @returns {(HTMLCollection|null)} returns null on error
+     * @returns {HTMLCollection} if the selector and context (if given) were valid
+     * @returns {null} if non-valid selector or context was given
      */
     class : function (selector, context) {
         
@@ -53,10 +59,13 @@ var _ = {
     },
     
     /**
-     * @desc select HTML element(s) by tag
-     * @param {string} selector
+     * @function
+     * @memberof module:_
+     * @desc selects HTML element(s) by tag
+     * @param {string} selector - string containing a HTML tag
      * @param {string} context - container element in which to search for tag
-     * @returns {(HTMLCollection|null)} returns null on error
+     * @returns {HTMLCollection} if the selector and context (if given) were valid
+     * @returns {null} if non-valid selector or context was given
      */
     tag : function (selector, context) {
         
@@ -75,11 +84,14 @@ var _ = {
     },
     
     /**
-     * @desc select HTML element(s) using a CSS selector
-     * @param {string} selector
+     * @function
+     * @memberof module:_
+     * @desc selects HTML element(s) using a CSS selector
+     * @param {string} selector - string containing a valid CSS selector
      * @param {string} context - container element in which to search for tag
      * @param {function} callback - called when querySelector is not supported by browser
-     * @returns {(HTMLCollection|null)} returns null on error
+     * @returns {HTMLCollection} if the selector and context (if given) were valid
+     * @returns {null} if non-valid selector or context was given
      */
     select : function (selector, context, callback) {
         
@@ -94,7 +106,7 @@ var _ = {
         }
         
         // select DOM as context, if context is not properly defined
-        if (!('getElementById' in context)) {
+        if (typeof(context) === 'undefined') {
             context = document;
         }
         

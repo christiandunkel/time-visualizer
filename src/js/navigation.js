@@ -3,7 +3,7 @@
  * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
  */
 
-/** @global */
+/** @module NAV */
 var NAV = {
     
     darkmode                : false,
@@ -12,9 +12,9 @@ var NAV = {
     
     
     /**
+     * @function
+     * @memberof module:NAV
      * @desc initializes navigation elements with events
-     * @param {undefined}
-     * @returns {undefined}
      */
     initialize : function () {
         
@@ -51,9 +51,9 @@ var NAV = {
     },
     
     /**
+     * @function
+     * @memberof module:NAV
      * @desc toggles dark mode setting
-     * @param {undefined}
-     * @returns {undefined}
      */
     toggleDarkMode : function () {
 
@@ -69,9 +69,10 @@ var NAV = {
     },
     
     /**
+     * @function
+     * @memberof module:NAV
      * @desc enables a button
-     * @param {HTML Node} btn
-     * @returns {undefined}
+     * @param {Object} btn - HTML node
      */
     enableButton : function (btn) {
         
@@ -84,9 +85,10 @@ var NAV = {
     },
     
     /**
+     * @function
+     * @memberof module:NAV
      * @desc disables a button
-     * @param {HTML Node} btn
-     * @returns {undefined}
+     * @param {Object} btn - HTML node
      */
     disableButton : function (btn) {
         
@@ -105,9 +107,10 @@ var NAV = {
     },
     
     /**
+     * @function
+     * @memberof module:NAV
      * @desc sets a specific 'speed setter' button active and disables all others
-     * @param {HTML Node} btn
-     * @returns {undefined}
+     * @param {Object} btn - HTML node
      */
     onlyEnableButton : function (btn) {
         
@@ -125,9 +128,9 @@ var NAV = {
     },
     
     /**
-     * @desc show the column chart and hides the individual chart
-     * @param {undefined}
-     * @returns {undefined}
+     * @function
+     * @memberof module:NAV
+     * @desc shows the 'column chart' and hides the 'individual chart'
      */
     showColumnChart : function () {
         
@@ -143,9 +146,9 @@ var NAV = {
     },
     
     /**
-     * @desc show the individual chart and hides the column chart
-     * @param {undefined}
-     * @returns {undefined}
+     * @function
+     * @memberof module:NAV
+     * @desc shows the 'individual chart' and hides the 'column chart'
      */
     showIndividualChart : function () {
         
@@ -161,9 +164,10 @@ var NAV = {
     },
     
     /**
+     * @function
+     * @memberof module:NAV
      * @desc sets the animation speed in ANIMATOR relative to the button pressed
      * @param {event} e - from click on animation speed buttons
-     * @returns {undefined}
      */
     setSpeed : function (e) {
         
@@ -197,9 +201,10 @@ var NAV = {
     },
     
     /**
+     * @function
+     * @memberof module:NAV
      * @desc sets a custom animation speed defined by input value of text input
      * @param {event} e - from input on custom animation speed text input
-     * @returns {undefined}
      */
     setCustomSpeed : function (e) {
         
@@ -250,9 +255,9 @@ var NAV = {
     },
     
     /**
-     * @desc show 'custom speed' menu and hide 'defined speed' menu
-     * @param {undefined}
-     * @returns {undefined}
+     * @function
+     * @memberof module:NAV
+     * @desc shows 'custom speed' menu and hides 'defined speed' menu
      */
     showCustomSpeedMenu : function () {
         
@@ -270,9 +275,9 @@ var NAV = {
     },
     
     /**
-     * @desc show 'defined speed' menu and hide 'custom speed' menu
-     * @param {undefined}
-     * @returns {undefined}
+     * @function
+     * @memberof module:NAV
+     * @desc shows 'defined speed' menu and hides 'custom speed' menu
      */
     showDefinedSpeedMenu : function () {
         
@@ -297,9 +302,9 @@ var NAV = {
     },
     
     /**
-     * @desc download canvas in 'individual chart' as .png image
-     * @param {undefined}
-     * @returns {undefined}
+     * @function
+     * @memberof module:NAV
+     * @desc downloads 'individual chart' canvas as .png image
      */
     downloadIndividualChart : function () {
         

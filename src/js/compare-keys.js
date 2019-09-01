@@ -3,7 +3,7 @@
  * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
  */
 
-/** @global */
+/** @module COMPARE */
 var COMPARE = {
     
     /* GENERAL */
