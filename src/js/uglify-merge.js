@@ -19,7 +19,7 @@ let path = require('path');
 
 // combine file content
 let file_order = [
-    'utility.js',
+    'utils.js',
     'visualizer.js'
 ];
 let file_num = file_order.length;
