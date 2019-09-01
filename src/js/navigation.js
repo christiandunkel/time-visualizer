@@ -32,9 +32,9 @@ var NAV = {
         _.addClick(NODE.stop_btn, ANIMATOR.stop);
         
         // add events to time change buttons
-        _.addClick(NODE.time_btn.slow, NAV.setHalvedTime);
-        _.addClick(NODE.time_btn.normal, NAV.setNormalTime);
-        _.addClick(NODE.time_btn.fast, NAV.setDoubledTime);
+        _.addClick(NODE.time_btn.slow, NAV.setAnimationSpeed);
+        _.addClick(NODE.time_btn.normal, NAV.setAnimationSpeed);
+        _.addClick(NODE.time_btn.fast, NAV.setAnimationSpeed);
         
         _.addEvent(NODE.time_selection.input, 'input', NAV.setCustomTime);
         _.addClick(NODE.time_selection.custom, NAV.setCustomTimeContainer);
@@ -148,48 +148,34 @@ var NAV = {
     
     /* TIME */
     
-    setHalvedTime : function () {
+    /**
+     * @desc sets the animation speed in ANIMATOR relative to the button pressed
+     * @param {event} e
+     * @returns {undefined}
+     */
+    setAnimationSpeed : function (e) {
         
-        var btn = NODE.time_btn.slow;
+        var btn = _.target(e);
         
-        // don't do anything, if button is already active
+        // don't set speed again anything, if button is already set active
         if (_.hasClass(btn, 'active')) {
             return;
         }
         
-        // activate button and set time
+        // activate button and disable all others
         NAV.setExclusiveActive(btn);
-        ANIMATOR.setTime(0.5);
         
-    },
-    
-    setNormalTime : function () {
-        
-        var btn = NODE.time_btn.normal;
-        
-        // don't do anything, if button is already active
-        if (_.hasClass(btn, 'active')) {
-            return;
+        // determine speed and send value to animator object
+        var speed = 1;
+        switch (btn.id) {
+            case 'half-speed':
+                speed = 0.5;
+                break;
+            case 'double-speed':
+                speed = 2;
+                break;
         }
-        
-        // activate button and set time
-        NAV.setExclusiveActive(btn);
-        ANIMATOR.setTime(1.0);
-        
-    },
-    
-    setDoubledTime : function () {
-        
-        var btn = NODE.time_btn.fast;
-        
-        // don't do anything, if button is already active
-        if (_.hasClass(btn, 'active')) {
-            return;
-        }
-        
-        // activate button and set time
-        NAV.setExclusiveActive(btn);
-        ANIMATOR.setTime(2.0);
+        ANIMATOR.setTime(speed);
         
     },
     

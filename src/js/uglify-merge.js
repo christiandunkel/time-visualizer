@@ -49,6 +49,12 @@ let minified = require('uglify-js').minify(total_code, {
     
 });
 
-// create a single minified javascript file
-let output_path = path.join(__dirname, '..', 'minified.js');
-fs.writeFileSync(output_path, minified.code, 'utf8');
+// check if the minification failed
+if (typeof(minified.code) === 'undefined') {
+    console.error('ERROR: Minified code equals "undefined". Uglify.js probably failed. Are there any ES6 components or errors in the source code?');
+}
+else {
+    // create a single minified javascript file
+    let output_path = path.join(__dirname, '..', 'minified.js');
+    fs.writeFileSync(output_path, minified.code, 'utf8'); 
+}
