@@ -72,6 +72,9 @@ var NODE = {
         // dark, transparent background overlay
         $.blur = _.class('blur', $.window)[0];
         
+        // remove function from memory
+        delete this.initializeDataLoadWindow;
+        
     },
     
     
@@ -106,6 +109,9 @@ var NODE = {
         // areas holding keys
         $.unselected_keys = _.class('unselected-keys', $.window)[0];
         $.selected_keys = _.class('selected-keys', $.window)[0];
+        
+        // remove function from memory
+        delete this.initializeCompareSelectionWindow;
         
     },
     
@@ -154,6 +160,9 @@ var NODE = {
         // ratio chart inside container
         this.ratio_chart = _.tag('tr', this.ratio_chart_container)[0];
         
+        // remove function from memory
+        delete this.initializeColumnChart;
+        
     },
     
     
@@ -183,6 +192,9 @@ var NODE = {
         this.initializeDataLoadWindow();
         this.initializeColumnChart();
         this.initializeCompareSelectionWindow();
+        
+        // remove function from memory
+        delete this.initialize;
         
     }
     

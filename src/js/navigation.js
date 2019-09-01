@@ -6,44 +6,74 @@
 /** @global */
 var NAV = {
     
-    darkmode : false,
+    darkmode                : false,
     individual_chart_opened : false,
     
     
     
-    /* GENERAL */
-    
-    // add events to navigation buttons
+    /**
+     * @desc initializes navigation elements with events
+     * @param {undefined}
+     * @returns {undefined}
+     */
     initialize : function () {
         
-        // add event to open 'data load' window
+        // open 'data load' window
         _.addClick(NODE.data_load_btn, DATA_LOAD.open);
         
-        // add event for toggling 'dark mode'
+        // toggle 'dark mode'
         _.addClick(NODE.darkmode_btn, this.toggleDarkMode);
         
-        // add event to start animation
+        // start animation
         _.addClick(NODE.play_btn, ANIMATOR.play);
         
-        // add event to pause animation
+        // pause animation
         _.addClick(NODE.pause_btn, ANIMATOR.pause);
         
-        // add event to stop animation
+        // stop animation
         _.addClick(NODE.stop_btn, ANIMATOR.stop);
         
-        // add events to time change buttons
-        _.addClick(NODE.time_btn.slow, NAV.setAnimationSpeed);
-        _.addClick(NODE.time_btn.normal, NAV.setAnimationSpeed);
-        _.addClick(NODE.time_btn.fast, NAV.setAnimationSpeed);
+        // speed setter buttons
+        _.addClick(NODE.time_btn.slow, NAV.setSpeed);
+        _.addClick(NODE.time_btn.normal, NAV.setSpeed);
+        _.addClick(NODE.time_btn.fast, NAV.setSpeed);
         
-        _.addEvent(NODE.time_selection.input, 'input', NAV.setCustomTime);
-        _.addClick(NODE.time_selection.custom, NAV.setCustomTimeContainer);
-        _.addClick(NODE.time_selection.close_custom, NAV.setDefinedTimeContainer);
+        // elements for setting custom speed
+        _.addEvent(NODE.time_selection.input, 'input', NAV.setCustomSpeed);
+        _.addClick(NODE.time_selection.custom, NAV.showCustomSpeedMenu);
+        _.addClick(NODE.time_selection.close_custom, NAV.showDefinedSpeedMenu);
+        
+        // buttons in 'individual chart' menu
+        _.addClick(NODE.back_to_column_chart_btn, NAV.showColumnChart);
+        _.addClick(NODE.download_png_btn, NAV.downloadIndividualChart);
+        _.addClick(NODE.compare_btn, COMPARE.open);
         
     },
     
-    // set a button active
-    setActive : function (btn) {
+    /**
+     * @desc toggles dark mode setting
+     * @param {undefined}
+     * @returns {undefined}
+     */
+    toggleDarkMode : function () {
+
+        // toggle darkmode value
+        NAV.darkmode = !NAV.darkmode;
+        
+        // toggle darkmode class according to value
+        _[(NAV.darkmode ? 'add' : 'remove') + 'Class'](NODE.html, 'darkMode');
+        
+        // update rendered chart
+        ANIMATOR.refreshFrame();
+        
+    },
+    
+    /**
+     * @desc enables a button
+     * @param {HTML Node} btn
+     * @returns {undefined}
+     */
+    enableButton : function (btn) {
         
         _.addClass(btn, 'active');
         btn.setAttribute('aria-disabled', 'false');
@@ -53,8 +83,12 @@ var NAV = {
         
     },
     
-    // set a button inactive
-    setInactive : function (btn) {
+    /**
+     * @desc disables a button
+     * @param {HTML Node} btn
+     * @returns {undefined}
+     */
+    disableButton : function (btn) {
         
         _.removeClass(btn, 'active');
         btn.setAttribute('aria-disabled', 'true');
@@ -70,36 +104,31 @@ var NAV = {
         
     },
     
-    // set a button active, and all others inactive
-    setExclusiveActive : function (btn) {
+    /**
+     * @desc sets a specific 'speed setter' button active and disables all others
+     * @param {HTML Node} btn
+     * @returns {undefined}
+     */
+    onlyEnableButton : function (btn) {
         
         var btns = NODE.time_btn;
         
         for (var key in btns) {
             if (btns[key] === btn) {
-                this.setActive(btns[key]);
+                this.enableButton(btns[key]);
             }
             else {
-                this.setInactive(btns[key]);
+                this.disableButton(btns[key]);
             }
         }
         
     },
     
-    // toggle the currently opened chart
-    toggleChart : function () {
-        
-        // if individual chart is opened, close it
-        if (NAV.individual_chart_opened) {
-            NAV.showColumnChart();
-        }
-        // otherwise, open it
-        else {
-            NAV.showIndividualChart();
-        }
-        
-    },
-    
+    /**
+     * @desc show the column chart and hides the individual chart
+     * @param {undefined}
+     * @returns {undefined}
+     */
     showColumnChart : function () {
         
         NAV.individual_chart_opened = false;
@@ -113,6 +142,11 @@ var NAV = {
         
     },
     
+    /**
+     * @desc show the individual chart and hides the column chart
+     * @param {undefined}
+     * @returns {undefined}
+     */
     showIndividualChart : function () {
         
         NAV.individual_chart_opened = true;
@@ -126,34 +160,12 @@ var NAV = {
         
     },
     
-    
-    
-    /* DARKMODE */
-    
-    // toggle the website's theme between light and dark
-    toggleDarkMode : function () {
-
-        // toggle darkmode value
-        NAV.darkmode = !NAV.darkmode;
-        
-        // toggle darkmode class according to value
-        _[(NAV.darkmode ? 'add' : 'remove') + 'Class'](NODE.html, 'darkMode');
-        
-        // update rendered chart
-        ANIMATOR.refreshFrame();
-        
-    },
-    
-    
-    
-    /* TIME */
-    
     /**
      * @desc sets the animation speed in ANIMATOR relative to the button pressed
-     * @param {event} e
+     * @param {event} e - from click on animation speed buttons
      * @returns {undefined}
      */
-    setAnimationSpeed : function (e) {
+    setSpeed : function (e) {
         
         var btn = _.target(e);
         
@@ -163,25 +175,35 @@ var NAV = {
         }
         
         // activate button and disable all others
-        NAV.setExclusiveActive(btn);
+        NAV.onlyEnableButton(btn);
         
-        // determine speed and send value to animator object
+        // determine animation speed from button id's
         var speed = 1;
         switch (btn.id) {
+                
             case 'half-speed':
                 speed = 0.5;
                 break;
+                
             case 'double-speed':
                 speed = 2;
                 break;
+                
         }
+        
+        // send value to animator object
         ANIMATOR.setTime(speed);
         
     },
     
-    setCustomTime : function () {
+    /**
+     * @desc sets a custom animation speed defined by input value of text input
+     * @param {event} e - from input on custom animation speed text input
+     * @returns {undefined}
+     */
+    setCustomSpeed : function (e) {
         
-        var input = NODE.time_selection.input;
+        var input = _.target(e);
         var time = input.value;
         
         // replace commas with points
@@ -198,52 +220,63 @@ var NAV = {
         
         // return if time isn't in right format
         if (!time.match(/^([0-9]+|[0-9]+\.[0-9]+)$/)) {
-            _.removeClass(input, 'correct-time');
+            _.removeClass(input, 'correct-speed');
             return;
         }
         
         // parse time string to float
         time = parseFloat(time);
+        
         // round number to 1 number after comma
         if (time % 1 != 0) {
             time = time.toFixed(1);
         }
         
-        // cut off time value if it's too big or too small 
-        if (time > 4) {
-            time = 4;
-        }
-        else if (time < 0.1) {
-            time = 0.1;
-        }
+        // time has to be 0.1 <= time <= 4  
+        time = _.limitNumber(time, 0.1, 4);
         
-        _.addClass(input, 'correct-time');
+        // add class so CSS knows the input value is correct
+        _.addClass(input, 'correct-speed');
         
         // send value to animator object
         ANIMATOR.setTime(time);
         
         // if time value was corrected by regex, replace input value with it
-        time = "" + time;
+        time += "";
         if (time != input.value) {
             input.value = time;
         }
         
     },
     
-    setCustomTimeContainer : function () {
+    /**
+     * @desc show 'custom speed' menu and hide 'defined speed' menu
+     * @param {undefined}
+     * @returns {undefined}
+     */
+    showCustomSpeedMenu : function () {
         
+        // switch 'active' class between the two menus
         _.removeClass(NODE.time_selection.container_1, 'active');
         _.addClass(NODE.time_selection.container_2, 'active');
         
-        // put current defined time value into input element 
+        // put currently-defined speed value into input element 
         var input = NODE.time_selection.input;
         input.value = ANIMATOR.time + '';
-        _.addClass(input, 'correct-time');
+        
+        // tell CSS using a class that the current speed value is correct
+        _.addClass(input, 'correct-speed');
         
     },
     
-    setDefinedTimeContainer : function () {
+    /**
+     * @desc show 'defined speed' menu and hide 'custom speed' menu
+     * @param {undefined}
+     * @returns {undefined}
+     */
+    showDefinedSpeedMenu : function () {
         
+        // switch 'active' class between the two menus
         _.addClass(NODE.time_selection.container_1, 'active');
         _.removeClass(NODE.time_selection.container_2, 'active');
         
@@ -263,13 +296,15 @@ var NAV = {
         
     },
     
-    
-    
-    /* CHARTS */
-    
-    downloadChartImage : function () {
+    /**
+     * @desc download canvas in 'individual chart' as .png image
+     * @param {undefined}
+     * @returns {undefined}
+     */
+    downloadIndividualChart : function () {
         
-        var image_uri = NODE.individual_chart.toDataURL('image/png');
+        // get canvas as image data URI
+        var image_URI = NODE.individual_chart.toDataURL('image/png');
         
         // get current time and date, convert it to string
         var date = new Date();
@@ -282,11 +317,17 @@ var NAV = {
                        date.getMinutes() + '-' +
                        date.getSeconds();
         
+        // generate a file name
+        var file_name = 'chart ' + ANIMATOR.individual_chart_keys[0].replace(/[^a-z0-9\-\_]/g, '') + 
+                        ' ' + date_str + '.png';
+        
+        // create a link HTML node to the image data uri
         var link = _.create('a', {
-            'download' : 'chart ' + ANIMATOR.individual_chart_keys[0].replace(/[^a-z0-9\-\_]/g, '') + ' ' + date_str + '.png',
-            'href' : image_uri
+            'download' : file_name,
+            'href' : image_URI
         });
         
+        // append link, force-click it and remove it again
         _.append(NODE.body, link);
         link.click();
         _.remove(link);

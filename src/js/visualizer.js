@@ -44,11 +44,6 @@ var ANIMATOR = {
             }
         });
         
-        // add events for individual chart menu
-        _.addClick(NODE.back_to_column_chart_btn, NAV.showColumnChart);
-        _.addClick(NODE.download_png_btn, NAV.downloadChartImage);
-        _.addClick(NODE.compare_btn, COMPARE.open);
-        
     },
     
     

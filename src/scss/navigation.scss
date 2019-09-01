@@ -248,7 +248,8 @@ nav {
             color: #a6a6a6;
         }
         
-        &.correct-time {
+        // set by javascript if input value is correct
+        &.correct-speed {
             border-color: #80bf80;
         }
     }

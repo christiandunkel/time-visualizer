@@ -14,62 +14,82 @@ var _ = {
      * =====================
      */
     
-    // select element by id
-    id : function (query) {
+    /**
+     * @desc select HTML element by id
+     * @param {string} selector
+     * @returns {(HTML Node|null)} returns null on error
+     */
+    id : function (selector) {
         
-        if (!_.isString(query)) {
-            console.error('No valid query given.');
+        if (!_.isString(selector)) {
+            console.error('No valid selector given.');
             return null;
         }
         
-        return document.getElementById(query);
+        return document.getElementById(selector);
         
     },
     
-    // select element by class
-    class : function (query, context) {
+    /**
+     * @desc select HTML element(s) by class
+     * @param {string} selector
+     * @param {string} context - container element in which to search for class
+     * @returns {(HTMLCollection|null)} returns null on error
+     */
+    class : function (selector, context) {
         
-        if (!_.isString(query)) {
-            console.error('No valid query given.');
+        if (!_.isString(selector)) {
+            console.error('No valid selector given.');
             return null;
         }
         
         if (_.isDefined(context) && context == null) {
-            console.error('No valid element provided as context (parent of some order). This parameter may is optional and remain empty.');
+            console.error('No valid element provided as context (parent of some order). This parameter is optional and may remain empty.');
             return null;
         }
         
-        return (context || document).getElementsByClassName(query);
+        return (context || document).getElementsByClassName(selector);
         
     },
     
-    // select element by tag
-    tag : function (query, context) {
+    /**
+     * @desc select HTML element(s) by tag
+     * @param {string} selector
+     * @param {string} context - container element in which to search for tag
+     * @returns {(HTMLCollection|null)} returns null on error
+     */
+    tag : function (selector, context) {
         
-        if (!_.isString(query)) {
-            console.error('No valid query given.');
+        if (!_.isString(selector)) {
+            console.error('No valid selector given.');
             return null;
         }
         
         if (_.isDefined(context) && context == null) {
-            console.error('No valid element provided as context (parent of some order). This parameter may is optional and remain empty.');
+            console.error('No valid element provided as context (parent of some order). This parameter is optional and may remain empty.');
             return null;
         }
         
-        return (context || document).getElementsByTagName(query);
+        return (context || document).getElementsByTagName(selector);
         
     },
     
-    // select element by a specific query
-    select : function (query, context, callback) {
+    /**
+     * @desc select HTML element(s) using a CSS selector
+     * @param {string} selector
+     * @param {string} context - container element in which to search for tag
+     * @param {function} callback - called when querySelector is not supported by browser
+     * @returns {(HTMLCollection|null)} returns null on error
+     */
+    select : function (selector, context, callback) {
         
-        if (!_.exists(child)) {
-            console.error('No valid element given.');
+        if (!_.isString(selector)) {
+            console.error('No valid selector given.');
             return null;
         }
         
         if (_.isDefined(context) && context == null) {
-            console.error('No valid element provided as context (parent of some order). This parameter may is optional and remain empty.');
+            console.error('No valid element provided as context (parent of some order). This parameter is optional and may remain empty.');
             return null;
         }
         
@@ -78,21 +98,21 @@ var _ = {
             context = document;
         }
         
-        // look up simple elements in DOM
-        if (/^(#?[\w\-]+|\.[\w\-\.]+)$/.test(query)) {
-            switch (query.charAt(0)) {
+        // look up simple classes, ids or tags directly in DOM
+        if (/^(#?[\w\-]+|\.[\w\-\.]+)$/.test(selector)) {
+            switch (selector.charAt(0)) {
                 case '#':
-                    return [context.getElementById(query.substr(1))];
+                    return [context.getElementById(selector.substr(1))];
                 case '.':
-                    return context.getElementsByClassName(query.substr(1).replace(/\./g, ' '));
+                    return context.getElementsByClassName(selector.substr(1).replace(/\./g, ' '));
                 default:
-                    return context.getElementsByTagName(query);
+                    return context.getElementsByTagName(selector);
             }
         }
         
         // use query selector API
         if (context.querySelectorAll) {
-            return context.querySelectorAll(n);
+            return context.querySelectorAll(selector);
         }
         // call callback function if querySelector is not supported
         else if (_.isFunction(callback)) {
@@ -789,6 +809,20 @@ var _ = {
         arr.pop();
         
         return arr;
+        
+    },
+    
+    // replaces a number if it exceeds the given upper or lower limit
+    limitNumber : function (num, min, max) {
+        
+        if (num < min) {
+            num = min;
+        }
+        else if (num > max) {
+            num = max;
+        }
+        
+        return num;
         
     }
     
