@@ -1,13 +1,13 @@
 /**
- * combines and minifies javascript source files into a single minified file
- *
  * execute using this command from the project root directory:
  * node src/js/uglify-merge.js
  *
- * @required NodeJS, UglifyJS
+ * @file combines and minifies javascript source files into a single minified file
+ * @requires NodeJS, UglifyJS
+ * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
  */
 
-'use strict';
+"use strict";
 
 // get all filesystem
 let fs = require('fs');

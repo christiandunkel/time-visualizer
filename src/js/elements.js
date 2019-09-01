@@ -1,9 +1,9 @@
 /**
- * saves references to HTML nodes for later use
- *
- * @defines NODE
+ * @file saves references to HTML nodes for later use
+ * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
  */
 
+/** @global */
 var NODE = {
         
     /* default HTML nodes */
@@ -14,7 +14,7 @@ var NODE = {
     
     
     
-    /* Navigation UI */
+    /* navigation UI */
     
     data_load_btn               : _.id('load-data'),
     darkmode_btn                : _.id('toggle-darkmode'),
@@ -41,7 +41,7 @@ var NODE = {
     
     
     
-    /* DATA LOAD WINDOW */
+    /* 'data load' window */
     
     data_load : {
         
@@ -59,8 +59,7 @@ var NODE = {
     },
     
     /**
-     * adds references to the empty HTML nodes in this sections
-     *
+     * @desc adds references to the empty HTML nodes in this sections
      * @param {undefined}
      * @returns {undefined}
      */
@@ -77,7 +76,7 @@ var NODE = {
     
     
     
-    /* COMPARE SELECTION WINDOW */
+    /* 'compare selection' window */
     
     compare_selection : {
         
@@ -91,8 +90,7 @@ var NODE = {
     },
     
     /**
-     * adds references to the empty HTML nodes in this sections
-     *
+     * @desc adds references to the empty HTML nodes in this sections
      * @param {undefined}
      * @returns {undefined}
      */
@@ -137,8 +135,7 @@ var NODE = {
     ratio_chart                 : null,
     
     /**
-     * adds references to the empty HTML nodes in this sections
-     *
+     * @desc adds references to the empty HTML nodes in this sections
      * @param {undefined}
      * @returns {undefined}
      */
@@ -177,8 +174,7 @@ var NODE = {
     /* GENERAL */
     
     /**
-     * adds references to all empty HTML nodes of NODE
-     *
+     * @desc adds references to the empty HTML nodes in this sections
      * @param {undefined}
      * @returns {undefined}
      */

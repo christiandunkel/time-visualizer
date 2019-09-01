@@ -1,6 +1,9 @@
-/*
- * manages the functionality of the navigation buttons
+/**
+ * @file manages the functionality of the navigation buttons
+ * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
  */
+
+/** @global */
 var NAV = {
     
     darkmode : false,

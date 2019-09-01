@@ -1,6 +1,9 @@
-/*
- * manages loading JSON data from files over the 'data load window'
+/**
+ * @file manages loading JSON data from files over the 'data load window'
+ * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
  */
+
+/** @global */
 var DATA_LOAD = {
     
     /* GENERAL */

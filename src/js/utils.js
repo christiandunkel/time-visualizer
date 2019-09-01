@@ -1,9 +1,11 @@
-/*
- * defines utility functions used in different parts of the code base
+/**
+ * @file defines utility functions used in different parts of the code base
+ * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
  */
 
 "use strict";
 
+/** @global */
 var _ = {
     
     /*
