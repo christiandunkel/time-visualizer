@@ -207,100 +207,6 @@ var NODE = {
 
 
 /*
- * contains useful methods for calculation 
- */
-var MATH = {
-    
-    // sort array containing objects of the same type by a given property (and its value)
-    sortObject : function (obj, property, descending) {
-        
-        if (descending) {
-            
-            return obj.sort(function (a, b) {
-                return a[property] < b[property] ? 1 : -1;
-            });
-            
-        }
-        else {
-            
-            return obj.sort(function (a, b) {
-                return a[property] > b[property] ? 1 : -1;
-            });
-            
-        }
-        
-    },
-    
-    // returns the average of an array of values
-    getAverage : function (arr) {
-        
-        var total = 0;
-        var len = arr.length;
-        
-        for (var i = 0; i < len; i++) {
-            total += arr[i];
-        }
-        
-        return total / len;
-        
-    },
-    
-    // returns the smallest value of an array of values
-    getMin : function (arr, start_minimum) {
-        
-        var min = _.isNumber(start_minimum) ? start_minimum : Number.MAX_VALUE;
-        var len = arr.length;
-        
-        for (var i = 0; i < len; i++) {
-            var curr = arr[i];
-            if (curr < min) {
-                min = curr;
-            }
-        }
-        
-        return min;
-        
-    },
-    
-    // returns the highest value of an array of values
-    getMax : function (arr, start_maximum) {
-        
-        var max = _.isNumber(start_maximum) ? start_maximum : Number.MIN_VALUE;
-        var len = arr.length;
-        
-        for (var i = 0; i < len; i++) {
-            var curr = arr[i];
-            if (curr > max) {
-                max = curr;
-            }
-        }
-        
-        return max;
-        
-    },
-    
-    // removes an index from an array
-    removeArrayIndex : function (arr, index) {
-        
-        var len = arr.length;
-        
-        // remove index
-        for (var i = index; i < len - 1; i++) {
-            arr[i] = arr[i+1];
-        }
-        
-        // remove last value
-        arr.pop();
-        
-        return arr;
-        
-    }
-    
-}
-
-
-
-/*
  * manages the functionality of the navigation buttons
  */
 var NAV = {
@@ -1042,9 +948,9 @@ var DATA_LOAD = {
             'innerHTML' : key_name
         });
         
-        var avg = MATH.getAverage(data);
-        var min = MATH.getMin(data);
-        var max = MATH.getMax(data);
+        var avg = _.getAverage(data);
+        var min = _.getMin(data);
+        var max = _.getMax(data);
         
         var tooltip_description = _.create('div.description', {
             'innerHTML' : '' +
@@ -1515,7 +1421,7 @@ var ANIMATOR = {
         // remove the indexes from the array
         var indexes_num = indexes.length;
         for (var i = 0; i < indexes_num; i++) {
-            keys = MATH.removeArrayIndex(keys, indexes[i]);
+            keys = _.removeArrayIndex(keys, indexes[i]);
         }
         
         this.setInvidualChartKeys(keys);
@@ -1774,7 +1680,7 @@ var ANIMATOR = {
         
         /* COLUMN ORDER */
         
-        var sorted_values = MATH.sortObject(all_values, 'value', true);
+        var sorted_values = _.sortObject(all_values, 'value', true);
         
         // move columns up and down to their new positions
         for (var i = 0; i < $.column_num; i++) {
@@ -1812,7 +1718,7 @@ var ANIMATOR = {
             }
             
         }
-        var sorted_parts = MATH.sortObject(order, 'value');
+        var sorted_parts = _.sortObject(order, 'value');
         
         for (var i = 0; i < $.ratio_parts_num; i++) {
             
