@@ -15,7 +15,7 @@ let fs = require('fs');
 let path = require('path');
 
 // combine file content
-let file_order = [
+let files_in_order = [
     'utils.js',
     'elements.js',
     'navigation.js',
@@ -24,18 +24,18 @@ let file_order = [
     'visualizer.js',
     'main.js'
 ];
-let file_num = file_order.length;
 
 // read all files in order and combine code
 let total_code = '';
-for (let i = 0; i < file_num; i++) {
+files_in_order.forEach(file => {
     
-    let file = file_order[i];
+    // get directory path to file
     let file_path = path.join(__dirname, file);
     
+    // read file and add string to total code
     total_code += fs.readFileSync(file_path, 'utf-8');
     
-}
+});
 
 // minify using uglify component
 let minified = require('uglify-js').minify(total_code, {
