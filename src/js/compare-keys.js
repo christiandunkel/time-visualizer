@@ -1,13 +1,16 @@
 /**
- * @file manages the window for selecting keys to be compared in the individual charts
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/LICENSE.md
+ * @file manages the window, that allows selecting keys that are to be compared in the individual chart
+ * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
 /** @module COMPARE */
 var COMPARE = {
     
-    /* GENERAL */
-    
+    /**
+     * @function
+     * @memberof module:COMPARE
+     * @desc initializes the 'compare keys' window
+     */
     initialize : function () {
         
         // add event to open 'compare selection' window
@@ -19,7 +22,11 @@ var COMPARE = {
         
     },
     
-    // open the 'data load' window
+    /**
+     * @function
+     * @memberof module:COMPARE
+     * @desc opens the 'compare keys' window
+     */
     open : function () {
         
         // open window
@@ -38,7 +45,11 @@ var COMPARE = {
         
     },
     
-    // close the 'data load' window
+    /**
+     * @function
+     * @memberof module:COMPARE
+     * @desc closes the 'compare keys' window
+     */
     close : function () {
         
         // close window
@@ -49,6 +60,13 @@ var COMPARE = {
         
     },
     
+    
+    /**
+     * @function
+     * @memberof module:COMPARE
+     * @desc handles the click on buttons in 'compare keys' window, and selects or unselects the corresponding key for comparison in 'individual chart'
+     * @param {event} e - click event
+     */
     moveKey : function (e) {
         
         var btn = _.target(e);
@@ -71,6 +89,11 @@ var COMPARE = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:COMPARE
+     * @desc loads the buttons in the right position in the 'compare keys' window
+     */
     loadKeys : function () {
         
         // empty key button containers
