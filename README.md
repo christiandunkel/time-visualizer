@@ -11,4 +11,4 @@ You can download the project and use it locally on your machine, or on a local s
 
 ## Links
 - [Credits](/doc/credits.md)
-- [License](/doc/license.md)
+- [License](LICENSE.md)
