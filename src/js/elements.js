@@ -1,6 +1,6 @@
 /**
  * @file saves references to HTML nodes for later use
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
+ * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
 /** @module NODE */
@@ -61,7 +61,7 @@ var NODE = {
     /**
      * @function
      * @memberof module:NODE
-     * @desc adds references to the empty HTML nodes in this sections
+     * @desc adds missing references to HTML nodes for 'data load' window
      */
     initializeDataLoadWindow : function () {
         
@@ -95,7 +95,7 @@ var NODE = {
     /**
      * @function
      * @memberof module:NODE
-     * @desc adds references to the empty HTML nodes in this sections
+     * @desc adds missing references to HTML nodes for 'compare keys' window
      */
     initializeCompareSelectionWindow : function () {
         
@@ -143,7 +143,7 @@ var NODE = {
     /**
      * @function
      * @memberof module:NODE
-     * @desc adds references to the empty HTML nodes in this sections
+     * @desc adds missing references to HTML nodes for 'column chart'
      */
     initializeColumnChart : function () {
         
@@ -185,7 +185,7 @@ var NODE = {
     /**
      * @function
      * @memberof module:NODE
-     * @desc adds references to the empty HTML nodes in this sections
+     * @desc adds missing references to HTML nodes
      */
     initialize : function () {
         

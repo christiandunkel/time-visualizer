@@ -1,6 +1,6 @@
 /**
- * @file manages the functionality of the navigation buttons
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
+ * @file manages the functionality of the elements in the navigation
+ * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
 /** @module NAV */

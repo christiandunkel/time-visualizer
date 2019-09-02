@@ -1,13 +1,16 @@
 /**
- * @file manages loading JSON data from files over the 'data load window'
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
+ * @file manages loading JSON data online or via files using the 'data load window'
+ * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
 /** @module DATA_LOAD */
 var DATA_LOAD = {
     
-    /* GENERAL */
-    
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc initializes the 'data load' window
+     */
     initialize : function () {
         
         var $ = NODE.data_load;
@@ -28,7 +31,15 @@ var DATA_LOAD = {
         
     },
     
-    // open the 'data load' window
+    
+    
+    /* DATA LOAD WINDOW */
+    
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc opens the 'data load' window
+     */
     open : function () {
         
         // open window
@@ -42,7 +53,11 @@ var DATA_LOAD = {
         
     },
     
-    // close the 'data load' window
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc closes the 'data load' window
+     */
     close : function () {
         
         // close window
@@ -60,6 +75,11 @@ var DATA_LOAD = {
     
     /* FILE DROP AREA */
     
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc initializes the file drop area in the 'data load' window
+     */
     initializeDropArea : function () {
         
         var $ = NODE.data_load;
@@ -94,12 +114,20 @@ var DATA_LOAD = {
         
     },
     
-    // add 'highlight' effect to drop area
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc adds the 'highlight' effect to the file drop area
+     */
     highlightDropArea : function () {
         _.addClass($.drop_area, 'dragged-over');
     },
     
-    // remove 'highlight' effect from drop area
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc removes the 'highlight' effect from the file drop area
+     */
     unhighlightDropArea : function () {
         _.removeClass($.drop_area, 'dragged-over');
     },
@@ -108,7 +136,12 @@ var DATA_LOAD = {
     
     /* FILE HANDLING */
     
-    // gets a file from the drop area and sends it to processFile()
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc handles dropped file in drop area and sends it to processFile()
+     * @param {event} e - drop event
+     */
     handleDroppedFile : function (e) {
         
         _.preventDefault(e);
@@ -150,7 +183,12 @@ var DATA_LOAD = {
         
     },
     
-    // gets a file from HTML <input> and sends it to processFile()
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc handles file from 'select button' in drop area and sends it to processFile()
+     * @param {event} e - event triggered as a file is selected
+     */
     handleSelectedFile : function (e) {
         
         // get file from event handeler
@@ -161,7 +199,12 @@ var DATA_LOAD = {
         
     },
     
-    // reads a given file and sends the string to parseJSON()
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc reads a given file and sends the string to parseJSON()
+     * @param {Object} file - file reference
+     */
     processFile : function (file) {
         
         // warn user if FileReader API is not supported
@@ -209,8 +252,12 @@ var DATA_LOAD = {
         
     },
     
-    // parses a string into a JSON object,
-    // then sends the object to visualizeObject()
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc parses a string into a JSON object and sends it to visualizeObject()
+     * @param {string} str - JSON data
+     */
     parseJSON : function (str) {
             
         // generate an object from JSON string
@@ -233,7 +280,12 @@ var DATA_LOAD = {
     
     /* ONLINE DATA SET PER HTTP REQUEST */
     
-    // called from a button to load a specific data set defined in its 'load-data' HTML property
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc called from a button to load a specific data set (name is in button's 'load-data' HTML property 
+     * @param {event} e - click event
+     */
     startDataSetLoading : function (e) {
         
         var btn = _.target(e);
@@ -243,7 +295,14 @@ var DATA_LOAD = {
         
     },
     
-    // request a data set from an url (must be same origin server!)
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc request a data set from an url (must be same origin server!)
+     * @param {string} url - link to JSON data set
+     * @param {boolean} [showConfirmation=false] - set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window
+     * @returns {Object} request - XMLHttpRequest
+     */
     loadHttpDataSet : function (url, showConfirmation) {
         
         // load example data set (only works on localhost or web server)
@@ -272,10 +331,16 @@ var DATA_LOAD = {
     },
     
     
-    /* LOAD VISUALIZATION */
     
-    // takes a data object and creates the corresponding chart,
-    // then gives the animator the right animation values
+    /* CREATE CHARTS */
+    
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc takes a 'data set' object and creates the HTML nodes need for the charts and sends the ANIMATOR object the right animation values
+     * @param {Object} obj - JSON data set as object
+     * @param {boolean} [showConfirmation=false] - set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window
+     */
     visualizeObject : function (obj, showConfirmation) {
         
         // un-hide column ratio bar and total headline
@@ -399,7 +464,12 @@ var DATA_LOAD = {
         
     },
     
-    // click event to open individual chart
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc click event to open the individual chart for a column
+     * @param {event} e - click event
+     */
     openIndividualChart : function (e) {
         
         // send column key to animator object
@@ -411,7 +481,17 @@ var DATA_LOAD = {
         
     },
     
-    // get HTML construct for the child of the column ratio chart
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc generates HTML node for data key of ratio chart
+     * @param {string} key - key in data set
+     * @param {string} color - HEX code with the color of this specific data key
+     * @param {Object} data
+     * @param {string} key_name - display name of key
+     * @param {string} [icon_url]
+     * @return {Object} HTML node for specific key of the ratio chart
+     */
     getRatioChartPart : function (key, color, data, key_name, icon_url) {
         
         var container = _.create('td.part-container', {
@@ -467,7 +547,16 @@ var DATA_LOAD = {
         
     },
     
-    // generates DOM node for a column in the chart
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc generates HTML node for a key of column chart
+     * @param {string} key - key in data set
+     * @param {string} color - HEX code with the color of this specific data key
+     * @param {string} key_name - display name of key
+     * @param {string} [icon_url]
+     * @return {Object} HTML node for specific key of the column chart
+     */
     getColumn : function (key, color, key_name, icon_url) {
         
         // containing element
@@ -510,7 +599,13 @@ var DATA_LOAD = {
         
     },
     
-    // returns a random color from a pre-defined selection
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc returns a HEX color code a selection of colors depending on the given index
+     * @param {number} index - must be integer
+     * @return {string} HEX color code
+     */
     getColumnColor : function (index) {
       
         var colors = [
@@ -541,7 +636,15 @@ var DATA_LOAD = {
         
     },
     
-    // generates an array of data values from given data object
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc generates an enlarged array of data values the animation data of a key
+     * @param {Object} data - JSON data
+     * @param {number} from - start data-point-key in data
+     * @param {number} to - end data-point-key in data
+     * @return {Array} animation values (50x the number of input data points)
+     */
     generateDataPointArray : function (data, from, to) {
         
         function checkForValidValue(val) {

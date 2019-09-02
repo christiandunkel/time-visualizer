@@ -1,6 +1,6 @@
 /**
  * @file manages the animation of the charts
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/doc/license.md
+ * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
 /** @module ANIMATOR */
