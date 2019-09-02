@@ -417,7 +417,7 @@ var ANIMATOR = {
         
         /* COLUMN ORDER */
         
-        var sorted_values = _.sortObject(all_values, 'value', true);
+        var sorted_values = _.sortArrayObjects(all_values, 'value', true);
         
         // move columns up and down to their new positions
         for (var i = 0; i < $.column_num; i++) {
@@ -455,7 +455,7 @@ var ANIMATOR = {
             }
             
         }
-        var sorted_parts = _.sortObject(order, 'value');
+        var sorted_parts = _.sortArrayObjects(order, 'value');
         
         for (var i = 0; i < $.ratio_parts_num; i++) {
             
