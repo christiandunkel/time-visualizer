@@ -739,9 +739,14 @@ var ANIMATOR = {
             context.font = label_font;
             context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
             context.textBaseline = 'bottom';
-            context.textAlign = 
-                i == $.from ? 'left' : 
-                    (i == $.to ? 'right' : 'center');
+            
+            if (limited_labels) {
+                context.textAlign = (i == $.from ? 'left' : 'right');
+            }
+            else {
+                context.textAlign = (i == $.from ? 'left' : 'center');
+            }
+            
             context.fillText(text, x_pos, canvas.height - padding.bottom + 20);
 
             // draw on the canvas
