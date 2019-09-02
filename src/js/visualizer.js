@@ -31,10 +31,11 @@ var ANIMATOR = {
     
     individual_chart_keys : [],
     
-    
-    
-    /* GENERAL */
-    
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc initializes the animator
+     */
     initialize : function () {
         
         // canvas needs to be updated on size changes
@@ -50,6 +51,13 @@ var ANIMATOR = {
     
     /* SETTER */
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc sets the range for the animation
+     * @param {number} from - start data-point-key
+     * @param {number} to - end data-point-key
+     */
     setRange : function (from, to) {
         
         // set range
@@ -61,6 +69,12 @@ var ANIMATOR = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc sets the speed of the animation
+     * @param {number} time
+     */
     setTime : function (time) {
         
         this.time = time;
@@ -76,7 +90,11 @@ var ANIMATOR = {
         
     },
     
-    // update transition duration of column chart and column ratio chart
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc sets CSS transition duration of animated elements
+     */
     setCSSTransitions : function () {
         
         var transition_time = ((1 / this.time) / 5) + 's';
@@ -102,6 +120,12 @@ var ANIMATOR = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc sets the animation data points
+     * @param {Object} obj - data object
+     */
     setData : function (obj) {
         
         // hold data object
@@ -113,6 +137,12 @@ var ANIMATOR = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc sets the columns in the 'column chart'
+     * @param {Object} obj
+     */
     setColumns : function (obj) {
         
         this.columns = obj;
@@ -120,6 +150,12 @@ var ANIMATOR = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc sets the animated parts in the 'ratio chart'
+     * @param {Object} obj
+     */
     setRatioParts : function (obj) {
         
         this.ratio_parts = obj;
@@ -127,11 +163,22 @@ var ANIMATOR = {
         
     },
     
-    // set key which data needs to be animated for the individual chart
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc sets keys, which are shown in the 'individual chart'
+     * @param {Array} keys - array containing key names
+     */
     setInvidualChartKeys : function (keys) {
         this.individual_chart_keys = keys;
     },
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc adds a key to be shown in the 'individual chart'
+     * @param {string} key - key name
+     */
     addIndividualKey : function (key) {
         
         if (!this.hasIndividualKey()) {
@@ -141,6 +188,12 @@ var ANIMATOR = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc removes a key from being shown in the 'individual chart'
+     * @param {string} key - key name
+     */
     removeIndividualKey : function (key) {
             
         var keys = this.individual_chart_keys;
@@ -165,6 +218,13 @@ var ANIMATOR = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc checks if a key is being shown in the 'individual chart'
+     * @param {string} key - key name
+     * @return {boolean} true, if the key is in the list to be shown
+     */
     hasIndividualKey : function (key) {
         var keys = this.individual_chart_keys.length;
         var len = keys.length;
@@ -180,6 +240,11 @@ var ANIMATOR = {
     
     /* CONTROLS */
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc starts the animation loop
+     */
     startLoop : function () {
         
         // milliseconds between updates
@@ -190,6 +255,11 @@ var ANIMATOR = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc stops the animation loop
+     */
     stopLoop : function () {
         
         // stop update loop
@@ -198,7 +268,11 @@ var ANIMATOR = {
         
     },
     
-    // start playing animation
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc starts the animation
+     */
     play : function () {
         
         ANIMATOR.is_running = true;
@@ -211,7 +285,11 @@ var ANIMATOR = {
         
     },
     
-    // pause currently playing animation
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc pauses the animation
+     */
     pause : function () {
         
         ANIMATOR.is_running = false;
@@ -224,12 +302,20 @@ var ANIMATOR = {
         
     },
     
-    // restarts the animation
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc restarts the animation
+     */
     restart : function () {
         ANIMATOR.current = 0;
     },
     
-    // triggers the end state, where one can not 'unpause', as it will restart, but the animation is still frozen in last frame 
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc stops animation without resetting, freezes it in last frame (no 'unpause' possible)
+     */
     end : function () {
         
         // stop animation
@@ -244,7 +330,11 @@ var ANIMATOR = {
         
     },
     
-    // stops animation and resets it to start state
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc stops animation and resets it to start state
+     */
     stop : function () {
         
         // end animation and reset current frame to start state
@@ -289,7 +379,13 @@ var ANIMATOR = {
         '*10^99' :            Math.pow(10, 99)
     },
     
-    // formats a number to its shortened word equivalent, aka 1000000 -> 1.000 Mil
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc formats a number to its shortened word equivalent, for example 1000000 to 1.0 Million
+     * @param {number} num
+     * @return {string} formatted number
+     */
     formatNumber : function (num) {
         
         var is_negative = num < 0 ? true : false;
@@ -324,7 +420,11 @@ var ANIMATOR = {
         
     },
     
-    // generate the current animation frame
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc called by loop every frame and starts the animation pipeline
+     */
     update : function () {
         
         // never run on faulty data object
@@ -344,7 +444,11 @@ var ANIMATOR = {
         
     },
     
-    // refreshes frame to display current values
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc refreshes rendered frame
+     */
     refreshFrame : function () {
         
         // set current value
@@ -370,7 +474,11 @@ var ANIMATOR = {
         
     },
     
-    // update chart containing all data
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc updates 'column chart' for current frame
+     */
     updateColumnChart : function () {
         
         var $ = ANIMATOR;
@@ -430,6 +538,11 @@ var ANIMATOR = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc updates 'ratio chart' for current frame
+     */
     updateColumnRatioChart : function () {
         
         var $ = ANIMATOR;
@@ -489,7 +602,11 @@ var ANIMATOR = {
         
     },
     
-    // update the invidual chart of every key
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc updates 'individual chart' for current frame
+     */
     updateIndividualCharts : function () {
         
         var $ = ANIMATOR;
@@ -649,7 +766,7 @@ var ANIMATOR = {
             var color = $.columns[key].color; // color from column meter
             
             // draw graph for key
-            $.drawIndividualKey(canvas, context, padding, color, min, max, $.data[key], key);
+            $.drawIndividualKey(canvas, context, padding, color, min, max, $.data[key]);
             
             // add key to legend
             var y_pos = canvas.height - padding.bottom + 66 + (18 * i);
@@ -691,7 +808,19 @@ var ANIMATOR = {
         
     },
     
-    drawIndividualKey : function (canvas, context, padding, color, min, max, data, key) {
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc draws a single key in the 'individual chart' for current frame
+     * @param {Object} canvas - HTML node to drawing canvas
+     * @param {Object} context - Context of drawing canvas
+     * @param {Object} padding - Object holds 4 numbers for the padding on each site of the canvas
+     * @param {string} color - HEX color code
+     * @param {number} min - smallest value in data set
+     * @param {number} max - biggest value in data set
+     * @param {Array} data - data set of animation points for the key
+     */
+    drawIndividualKey : function (canvas, context, padding, color, min, max, data) {
         
         // set drawing attributes
         var point_radius = 2; // in pixels
