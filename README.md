@@ -1,5 +1,5 @@
 
-[![Screenshot of the web app showing a horizontal column chart with differently colored columns.](/doc/img/screenshots/column_chart.png)](#)
+[![Logo showing three blue columns and the headline 'Time Visualizer'.](/doc/img/time-visualizer-logo.png)](#)
 
 # Time Visualizer
 
