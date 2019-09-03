@@ -10,7 +10,7 @@
 
 "use strict";
 
-// get all filesystem
+// get filesystem
 let fs = require('fs');
 let path = require('path');
 
