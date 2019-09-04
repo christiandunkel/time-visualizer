@@ -13,6 +13,5 @@ You can download the project and use it locally on your machine, or on a local s
 
 ## Links
 - [Documentation](/doc/documentation.md)
-- [Screenshots](/doc/screenshots.md)
-- [Credits](/doc/credits.md)
 - [License](LICENSE.md)
+- [Credits](/doc/credits.md)
