@@ -27,8 +27,9 @@
     * [.initialize()](#module_COMPARE.initialize)
     * [.open()](#module_COMPARE.open)
     * [.close()](#module_COMPARE.close)
-    * [.moveKey(e)](#module_COMPARE.moveKey)
-    * [.loadKeys()](#module_COMPARE.loadKeys)
+    * [.createButtons()](#module_COMPARE.createButtons)
+    * [.moveButton(e)](#module_COMPARE.moveButton)
+    * [.orderButtons()](#module_COMPARE.orderButtons)
 
 <a name="module_COMPARE.initialize"></a>
 
@@ -48,9 +49,15 @@ opens the 'compare keys' window
 closes the 'compare keys' window
 
 **Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
-<a name="module_COMPARE.moveKey"></a>
+<a name="module_COMPARE.createButtons"></a>
 
-### COMPARE.moveKey(e)
+### COMPARE.createButtons()
+creates the buttons in the 'compare keys' window
+
+**Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
+<a name="module_COMPARE.moveButton"></a>
+
+### COMPARE.moveButton(e)
 handles the click on buttons in 'compare keys' window, and selects or unselects the corresponding key for comparison in 'individual chart'
 
 **Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
@@ -59,10 +66,10 @@ handles the click on buttons in 'compare keys' window, and selects or unselects 
 | --- | --- | --- |
 | e | <code>event</code> | click event |
 
-<a name="module_COMPARE.loadKeys"></a>
+<a name="module_COMPARE.orderButtons"></a>
 
-### COMPARE.loadKeys()
-loads the buttons in the right position in the 'compare keys' window
+### COMPARE.orderButtons()
+moves the buttons into the correct position in the 'compare keys' window
 
 **Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
 <a name="module_NODE"></a>

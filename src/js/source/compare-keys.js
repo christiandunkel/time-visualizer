@@ -29,13 +29,16 @@ var COMPARE = {
      */
     open : function () {
         
+        if (typeof(COMPARE.CREATED_BUTTONS) === 'undefined') {
+            COMPARE.createButtons();
+            COMPARE.CREATED_BUTTONS = false;
+        }
+        
         // open window
         _.addClass(NODE.compare_selection.window, 'visible');
         
         // clear areas and load current keys
-        _.empty(NODE.compare_selection.unselected_keys);
-        _.empty(NODE.compare_selection.selected_keys);
-        COMPARE.loadKeys();
+        COMPARE.orderButtons();
         
         // with a little delay, set tab focus on close button
         // if set immediately, will be ignored or buggy
@@ -60,58 +63,23 @@ var COMPARE = {
         
     },
     
+    // array of button HTML nodes
+    buttons : [],
+    buttons_num : 0,
     
     /**
      * @function
      * @memberof module:COMPARE
-     * @desc handles the click on buttons in 'compare keys' window, and selects or unselects the corresponding key for comparison in 'individual chart'
-     * @param {event} e - click event
+     * @desc creates the buttons in the 'compare keys' window
      */
-    moveKey : function (e) {
-        
-        var btn = _.target(e);
-        var key = btn.getAttribute('key-id');
-        
-        // check if the button's key needs to be included to or excluded from the 'key selection' array
-        var include = false;
-        if (_.hasClass(btn.parentElement, 'unselected-keys')) {
-            include = true;
-        }
-        
-        if (include) {
-            ANIMATOR.addIndividualKey(key);
-        }
-        else {
-            ANIMATOR.removeIndividualKey(key);
-        }
-        
-        COMPARE.loadKeys();
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:COMPARE
-     * @desc loads the buttons in the right position in the 'compare keys' window
-     */
-    loadKeys : function () {
+    createButtons : function () {
         
         // empty key button containers
         _.empty(NODE.compare_selection.selected_keys);
         _.empty(NODE.compare_selection.unselected_keys);
         
-        // add key buttons
+        // add button for every key to window
         for (var key in ANIMATOR.data) {
-            
-            // check if key is included in list of keys to be rendered
-            var included = false;
-            var len = ANIMATOR.individual_chart_keys.length;
-            for (var i = 0; i < len; i++) {
-                if (ANIMATOR.individual_chart_keys[i] === key) {
-                    included = true;
-                    break;
-                }
-            }
             
             // create button
             var btn = _.create('button.comparison-key', {
@@ -123,14 +91,76 @@ var COMPARE = {
             });
             
             // add event to select / unselect key
-            _.addClick(btn, COMPARE.moveKey);
+            _.addClick(btn, COMPARE.moveButton);
             
-            // append button to right box
-            _.append(NODE.compare_selection[(included ? '' : 'un') + 'selected_keys'], btn);
+            // add to buttons array
+            this.buttons[this.buttons.length] = btn;
+            this.buttons_num++;
             
         }
         
+        this.orderButtons();
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:COMPARE
+     * @desc handles the click on buttons in 'compare keys' window, and selects or unselects the corresponding key for comparison in 'individual chart'
+     * @param {event} e - click event
+     */
+    moveButton : function (e) {
+        
+        var btn = _.target(e);
+        var key = btn.getAttribute('key-id');
+        
+        // check if the button's key needs to be included to or excluded from the 'key selection' array
+        var include = false;
+        if (_.hasClass(btn.parentElement, 'unselected-keys')) {
+            include = true;
+        }
+        
+        // move the button to the new container
+        if (include) {
+            ANIMATOR.addIndividualKey(key);
+            _.append(NODE.compare_selection['selected_keys'], btn);
+        }
+        else {
+            ANIMATOR.removeIndividualKey(key);
+            _.append(NODE.compare_selection['unselected_keys'], btn);
+        }
+        
         ANIMATOR.refreshFrame();
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:COMPARE
+     * @desc moves the buttons into the correct position in the 'compare keys' window
+     */
+    orderButtons : function () {
+        
+        for (var i = 0; i < this.buttons_num; i++) {
+            
+            var btn = this.buttons[i];
+            var key = btn.getAttribute('key-id');
+            var len = ANIMATOR.individual_chart_keys.length;
+            
+            // check if key is included in list of keys to be rendered
+            var included = false;
+            for (var j = 0; j < len; j++) {
+                if (ANIMATOR.individual_chart_keys[j] === key) {
+                    included = true;
+                    break;
+                }
+            }
+            
+            // append button to right box
+            var container_class = (included ? '' : 'un') + 'selected_keys';
+            _.append(NODE.compare_selection[container_class], btn);
+            
+        }
         
     }
     

@@ -10,8 +10,8 @@ _.addEvent(window, 'load', function () {
     NODE.initialize();
     NAV.initialize();
     DATA_LOAD.initialize();
-    COMPARE.initialize();
     ANIMATOR.initialize();
+    COMPARE.initialize();
 
     // load example data set into chart
     var request = DATA_LOAD.loadHttpDataSet('data/example-data-set.json', false);
