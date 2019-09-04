@@ -4,7 +4,8 @@
  *
  * @file generates a JSDoc .md documentation for all javascript source files
  * @requires NodeJS
- * @requires jsdoc-to-markdown (+ JSDoc)
+ * @requires JSDoc
+ * @requires jsdoc-to-markdown
  * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
