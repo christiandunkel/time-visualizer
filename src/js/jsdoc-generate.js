@@ -1,10 +1,10 @@
 /**
  * execute using this command from the project root directory:
- * node src/js/jsdoc-merge.js
+ * node src/js/jsdoc-generate.js
  *
- * @file generates a JSDoc markdown documentation for all javascript source files
+ * @file generates a JSDoc .md documentation for all javascript source files
  * @requires NodeJS
- * @requires jsdoc-to-markdown
+ * @requires jsdoc-to-markdown (+ JSDoc)
  * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
@@ -13,7 +13,7 @@
 // get filesystem
 let fs = require('fs');
 let path = require('path');
-let file_path = path.join(__dirname, '*.js') + "";
+let file_path = path.join(__dirname, 'source', '*.js') + "";
 
 // generate documentation
 const jsdoc2md = require('jsdoc-to-markdown');

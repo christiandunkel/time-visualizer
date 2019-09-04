@@ -30,7 +30,7 @@ let total_code = '';
 files_in_order.forEach(file => {
     
     // get directory path to file
-    let file_path = path.join(__dirname, file);
+    let file_path = path.join(__dirname, 'source', file);
     
     // read file and add string to total code
     total_code += fs.readFileSync(file_path, 'utf-8');
