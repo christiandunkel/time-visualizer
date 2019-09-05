@@ -55,7 +55,7 @@ var _ = {
         }
         
         if (!_.isElement(context)) {
-            console.error('The context provided is not a HTML element.');
+            console.error('The context given is not a HTML element.');
             return null;
         }
         
@@ -85,11 +85,11 @@ var _ = {
         }
         
         if (!_.isElement(context)) {
-            console.error('The context provided is not a HTML element.');
+            console.error('The context given is not a HTML element.');
             return null;
         }
         
-        return document.getElementsByTagName(selector);
+        return context.getElementsByTagName(selector);
         
     },
     
@@ -116,7 +116,7 @@ var _ = {
         }
         
         if (!_.isElement(context)) {
-            console.error('The context provided is not a HTML element.');
+            console.error('The context given is not a HTML element.');
             return null;
         }
         
@@ -255,8 +255,8 @@ var _ = {
             return console.error('First given element does not exist.');
         }
         
-        if (!_.isElement(elem2)) {
-            return console.error('Second given parameter is neither an element, text or a number.');
+        if (!_.isElement(elem2) && !_.isNumber(elem2) && !_.isString(elem2)) {
+            return console.error('Second given parameter is neither a HTML element, text or a number.');
         }
 
         // if elem2 is text or a number, convert it to a text node
@@ -281,8 +281,8 @@ var _ = {
             return console.error('First given element does not exist.');
         }
         
-        if (!_.isElement(elem2)) {
-            return console.error('Second given parameter is neither an element, text or a number.');
+        if (!_.isElement(elem2) && !_.isNumber(elem2) && !_.isString(elem2)) {
+            return console.error('Second given parameter is neither a HTML element, text or a number.');
         }
 
         // if elem2 is text or a number, convert it to a text node
@@ -307,8 +307,8 @@ var _ = {
             return console.error('First given element does not exist.');
         }
         
-        if (!_.isElement(elem2)) {
-            return console.error('Second given parameter is neither an element, text or a number.');
+        if (!_.isElement(elem2) && !_.isNumber(elem2) && !_.isString(elem2)) {
+            return console.error('Second given parameter is neither a HTML element, text or a number.');
         }
 
         // if elem2 is text or a number, convert it to a text node
@@ -333,8 +333,8 @@ var _ = {
             return console.error('First given element does not exist.');
         }
         
-        if (!_.isElement(elem2)) {
-            return console.error('Second given parameter is neither an element, text or a number.');
+        if (!_.isElement(elem2) && !_.isNumber(elem2) && !_.isString(elem2)) {
+            return console.error('Second given parameter is neither a HTML element, text or a number.');
         }
 
         // if elem2 is text or a number, convert it to a text node
@@ -734,7 +734,7 @@ var _ = {
         }
         
         if (!_.isObject(styles)) {
-            return console.error('No valid styles object was provided.');
+            return console.error('No valid styles object given.');
         }
         
         for (var style_name in styles) {
