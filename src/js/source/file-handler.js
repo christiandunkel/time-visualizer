@@ -49,6 +49,8 @@ var FILE = {
             return '"keys" value must contain at least one key.';
         }
         
+        var keys = [];
+        
         // go through all keys to validate them
         for (var prop in obj.keys) {
            
@@ -56,6 +58,9 @@ var FILE = {
             if (!obj.hasOwnProperty.call(obj.keys, prop)) {
                 continue;
             }
+            
+            // add key to array for later
+            keys[keys.length] = prop;
             
             if (typeof(obj.keys[prop].name) === 'undefined') {
                 return '"name" value in key "' + prop + '" is undefined.';
@@ -111,27 +116,26 @@ var FILE = {
             return '"data" value must contain at least one key.';
         }
         
+        var key_num = keys.length;
+        
         // go through all keys to validate them
-        for (var prop in obj.keys) {
-           
-            // skip if is prototype property
-            if (!obj.hasOwnProperty.call(obj.keys, prop)) {
-                continue;
+        for (var i = 0; i < key_num; i++) {
+            
+            var key = keys[i];
+            
+            if (_.isEmptyObject(obj.data[key])) {
+                return 'No data points are defined in "' + key + '".';
             }
             
-            if (_.isEmptyObject(obj.data[prop])) {
-                return 'No data points are defined in "' + prop + '".';
-            }
-            
-            // go through data points in key property
-            for (var point in obj.data[prop]) {
+            // go through data points in key
+            for (var point in obj.data[key]) {
                 
                 if (!point.match(/^\-?[0-9]+$/g)) {
-                    return 'Name "' + point + '" in key "' + prop + '" must be a whole number.'
+                    return 'Name "' + point + '" in key "' + key + '" must be a whole number.'
                 }
                 
-                if (!_.isNumber(obj.data[prop][point])) {
-                    return 'Value of "' + point + '" in key "' + prop + '" must be a number, but is of type ' + typeof(obj.data[prop][point]) + '.';
+                if (!_.isNumber(obj.data[key][point])) {
+                    return 'Value of "' + point + '" in key "' + key + '" must be a number, but is of type ' + typeof(obj.data[key][point]) + '.';
                 }
                 
             }
