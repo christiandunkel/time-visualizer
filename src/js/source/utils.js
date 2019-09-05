@@ -349,7 +349,7 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc removes a HTML node with all of its child HTML nodes
+     * @desc removes a HTML node from the DOM
      * @param {Object} elem - HTML node
      */
     remove : function (elem) {
@@ -1154,15 +1154,22 @@ var _ = {
      * @param {number} num - number to process
      * @param {number} min - smallest the number is allowed to be
      * @param {number} max - biggest the number is allowed to be
+     * @param {function} [callback] - called if the number had been below or above the limit
      * @returns {number} 'num' (or the closest number to it in range of min to max) 
      */
-    limitNumber : function (num, min, max) {
+    limitNumber : function (num, min, max, callback) {
         
         if (num < min) {
             num = min;
+            if (_.isFunction(callback)) {
+                callback(min);
+            }
         }
         else if (num > max) {
             num = max;
+            if (_.isFunction(callback)) {
+                callback(max);
+            }
         }
         
         return num;

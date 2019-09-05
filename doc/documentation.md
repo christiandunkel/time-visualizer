@@ -14,6 +14,9 @@
 </dd>
 <dt><a href="#module_DATA_LOAD">DATA_LOAD</a></dt>
 <dd></dd>
+<dt><a href="#module_MSG">MSG</a></dt>
+<dd><p>manages on-screen messages</p>
+</dd>
 <dt><a href="#module_NAV">NAV</a></dt>
 <dd></dd>
 <dt><a href="#module__">_</a></dt>
@@ -334,6 +337,75 @@ generates an enlarged array of data values the animation data of a key
 | from | <code>number</code> | start data-point-key in data |
 | to | <code>number</code> | end data-point-key in data |
 
+<a name="module_MSG"></a>
+
+## MSG
+manages on-screen messages
+
+
+* [MSG](#module_MSG)
+    * [.generateHTML(text, type)](#module_MSG.generateHTML) ⇒ <code>Object</code>
+    * [.show(text, close_after_ms, type)](#module_MSG.show)
+    * [.error(text, close_after_ms)](#module_MSG.error)
+    * [.warning(text, close_after_ms)](#module_MSG.warning)
+    * [.hide()](#module_MSG.hide)
+
+<a name="module_MSG.generateHTML"></a>
+
+### MSG.generateHTML(text, type) ⇒ <code>Object</code>
+generates the HTML for a message element
+
+**Kind**: static method of [<code>MSG</code>](#module_MSG)  
+**Returns**: <code>Object</code> - HTML node  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | content of the message |
+| type | <code>string</code> | type of the message, defined in MSG.type |
+
+<a name="module_MSG.show"></a>
+
+### MSG.show(text, close_after_ms, type)
+displays an overlay message
+
+**Kind**: static method of [<code>MSG</code>](#module_MSG)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | content of the message |
+| close_after_ms | <code>number</code> | milliseconds until the message gets closed |
+| type | <code>string</code> | type of the message, defined in MSG.type |
+
+<a name="module_MSG.error"></a>
+
+### MSG.error(text, close_after_ms)
+displays an overlay error message
+
+**Kind**: static method of [<code>MSG</code>](#module_MSG)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | content of the message |
+| close_after_ms | <code>number</code> | milliseconds until the message gets closed |
+
+<a name="module_MSG.warning"></a>
+
+### MSG.warning(text, close_after_ms)
+displays an overlay warning message
+
+**Kind**: static method of [<code>MSG</code>](#module_MSG)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | content of the message |
+| close_after_ms | <code>number</code> | milliseconds until the message gets closed |
+
+<a name="module_MSG.hide"></a>
+
+### MSG.hide()
+hides the current overlay message
+
+**Kind**: static method of [<code>MSG</code>](#module_MSG)  
 <a name="module_NAV"></a>
 
 ## NAV
@@ -503,7 +575,7 @@ downloads 'individual chart' canvas as .png image
     * [.getMin(arr, [start_minimum])](#module__.getMin) ⇒ <code>number</code>
     * [.getMax(arr, [start_maximum])](#module__.getMax) ⇒ <code>number</code>
     * [.removeArrayIndex(arr, index)](#module__.removeArrayIndex) ⇒ <code>Array</code>
-    * [.limitNumber(num, min, max)](#module__.limitNumber) ⇒ <code>number</code>
+    * [.limitNumber(num, min, max, [callback])](#module__.limitNumber) ⇒ <code>number</code>
 
 <a name="module__.id"></a>
 
@@ -634,7 +706,7 @@ inserts elem2 before elem1
 <a name="module__.remove"></a>
 
 ### _.remove(elem)
-removes a HTML node with all of its child HTML nodes
+removes a HTML node from the DOM
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
@@ -1115,7 +1187,7 @@ removes an index from an array
 
 <a name="module__.limitNumber"></a>
 
-### _.limitNumber(num, min, max) ⇒ <code>number</code>
+### _.limitNumber(num, min, max, [callback]) ⇒ <code>number</code>
 replaces a number if it exceeds the given upper or lower limit
 
 **Kind**: static method of [<code>\_</code>](#module__)  
@@ -1126,6 +1198,7 @@ replaces a number if it exceeds the given upper or lower limit
 | num | <code>number</code> | number to process |
 | min | <code>number</code> | smallest the number is allowed to be |
 | max | <code>number</code> | biggest the number is allowed to be |
+| [callback] | <code>function</code> | called if the number had been below or above the limit |
 
 <a name="module_ANIMATOR"></a>
 

@@ -63,6 +63,8 @@ var NAV = {
         // toggle darkmode class according to value
         _[(NAV.darkmode ? 'add' : 'remove') + 'Class'](NODE.html, 'darkMode');
         
+        MSG.show('Toggled dark mode.', 1300);
+        
         // update rendered chart
         ANIMATOR.refreshFrame();
         
@@ -195,6 +197,8 @@ var NAV = {
                 
         }
         
+        MSG.show('Set speed to ' + speed + '.', 900);
+        
         // send value to animator object
         ANIMATOR.setTime(speed);
         
@@ -238,7 +242,9 @@ var NAV = {
         }
         
         // time has to be 0.1 <= time <= 4  
-        time = _.limitNumber(time, 0.1, 4);
+        time = _.limitNumber(time, 0.1, 4, function (e) {
+            MSG.error('Speed must be between 0.1 and 4.');
+        });
         
         // add class so CSS knows the input value is correct
         _.addClass(input, 'correct-speed');
@@ -336,6 +342,8 @@ var NAV = {
         _.append(NODE.body, link);
         link.click();
         _.remove(link);
+        
+        MSG.show('Downloaded image.', 1300);
 
     }
     

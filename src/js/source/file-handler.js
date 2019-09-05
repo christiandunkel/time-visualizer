@@ -120,18 +120,18 @@ var FILE = {
             }
             
             if (_.isEmptyObject(obj.data[prop])) {
-                return 'No data points are defined in data key value "' + prop + '".';
+                return 'No data points are defined in "' + prop + '".';
             }
             
             // go through data points in key property
             for (var point in obj.data[prop]) {
                 
-                if (!point.match(/^[0-9]+$/g)) {
-                    return 'Data point name "' + point + '" in key "' + prop + '" must be a number (integer) inside a string.'
+                if (!point.match(/^\-?[0-9]+$/g)) {
+                    return 'Name "' + point + '" in key "' + prop + '" must be a whole number.'
                 }
                 
                 if (!_.isNumber(obj.data[prop][point])) {
-                    return 'Value for data point "' + point + '" in key "' + prop + '" must be a number, but is of type "' + typeof(obj.data[prop][point]) + '".';
+                    return 'Value of "' + point + '" in key "' + prop + '" must be a number, but is of type ' + typeof(obj.data[prop][point]) + '.';
                 }
                 
             }
@@ -419,7 +419,7 @@ var DATA_LOAD = {
         var is_valid = FILE.isValidData(obj);
         if (_.isString(is_valid)) {
             
-            alert(is_valid);
+            MSG.error(is_valid, 7000);
             return false;
             
         }

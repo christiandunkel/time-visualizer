@@ -283,6 +283,8 @@ var ANIMATOR = {
         
         ANIMATOR.startLoop();
         
+        MSG.show('Started animation.', 1000);
+        
     },
     
     /**
@@ -299,6 +301,8 @@ var ANIMATOR = {
         _.addClass(NODE.html, 'animation-paused');
         
         ANIMATOR.stopLoop();
+        
+        MSG.show('Paused animation.', 1000);
         
     },
     
@@ -340,6 +344,8 @@ var ANIMATOR = {
         // end animation and reset current frame to start state
         ANIMATOR.end();
         ANIMATOR.update();
+        
+        MSG.show('Stopped animation.', 1000);
         
     },
     

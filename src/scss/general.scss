@@ -330,3 +330,47 @@ footer {
     }
     
 }
+
+#overlay-message {
+    display: table; position: fixed; top: 50px; left: 50%; z-index: 9999;
+    max-width: 96%; width: auto; max-height: 96%; height: auto; padding: 15px 20px;
+    text-align: center; font-size: 15px; line-height: 17px; font-weight: 700;
+    @include border-radius(5px);
+    @include opacity(.95);
+    @include box-shadow(2px 2px 14px rgba(0,0,0,.5));
+    @include transform(translate(-50%, -50%));
+    @include animation(appear-message .3s);
+    
+    &.hide {
+        @include animation(disappear-message .3s);
+    }
+
+    &.normal {
+        background: #191919;
+        color: #e2e2e2;
+        
+        .darkMode & {
+            background: black;
+        }
+    }
+
+    &.error {
+        background: #bc0505;
+        color: #fff1f1;
+    }
+
+    &.warning {
+        background: #dbb200; text-shadow: 2px 2px 5px #a48500;
+        color: #fffaee;
+    }
+}
+
+@include keyframes(appear-message) {
+    0% {top: -50px;}
+    70% {top: 65px;}
+}
+
+@include keyframes(disappear-message) {
+    30% {top: 65px;}
+    100% {top: -50px;}
+}

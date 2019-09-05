@@ -18,6 +18,7 @@ let path = require('path');
 let files_in_order = [
     'utils.js',
     'elements.js',
+    'messages.js',
     'navigation.js',
     'file-handler.js',
     'compare-keys.js',
