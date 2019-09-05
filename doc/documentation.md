@@ -469,8 +469,12 @@ downloads 'individual chart' canvas as .png image
     * [.empty(elem)](#module__.empty)
     * [.addEvent(elem, event, fn, [useCapture])](#module__.addEvent)
     * [.removeEvent(elem, event, fn, [useCapture])](#module__.removeEvent)
-    * [.addClick(elem, fn, [useCapture])](#module__.addClick)
+    * [.onClick(elem, fn, [useCapture])](#module__.onClick)
     * [.removeClick(elem, fn, [useCapture])](#module__.removeClick)
+    * [.onInput(elem, fn, [useCapture])](#module__.onInput)
+    * [.removeInput(elem, fn, [useCapture])](#module__.removeInput)
+    * [.onLoad(elem, fn, [useCapture])](#module__.onLoad)
+    * [.removeLoad(elem, fn, [useCapture])](#module__.removeLoad)
     * [.target(e)](#module__.target) ⇒ <code>Object</code>
     * [.preventDefault(e)](#module__.preventDefault)
     * [.addClass(elem, class_)](#module__.addClass)
@@ -691,31 +695,83 @@ removes an event listener from a HTML node
 | fn | <code>function</code> |  | function that was defined to be triggered from the event |
 | [useCapture] | <code>boolean</code> | <code>false</code> | the same useCapture value defined when creating the event |
 
-<a name="module__.addClick"></a>
+<a name="module__.onClick"></a>
 
-### _.addClick(elem, fn, [useCapture])
-adds a click event listener to a HTML node
+### _.onClick(elem, fn, [useCapture])
+adds a 'click' event listener to a HTML node
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | elem | <code>Object</code> |  | HTML node |
-| fn | <code>function</code> |  | function to be called when the event is triggered |
+| fn | <code>function</code> |  | function called on trigger |
 | [useCapture] | <code>boolean</code> | <code>false</code> |  |
 
 <a name="module__.removeClick"></a>
 
 ### _.removeClick(elem, fn, [useCapture])
-removes a click event listener from a HTML node
+removes a 'click' event listener with the given parameters from a HTML node
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| elem | <code>Object</code> |  | HTML node on which the event was defined |
-| fn | <code>function</code> |  | function that was defined to be triggered from the event |
-| [useCapture] | <code>boolean</code> | <code>false</code> | the same useCapture value defined when creating the event |
+| elem | <code>Object</code> |  | HTML node |
+| fn | <code>function</code> |  | function |
+| [useCapture] | <code>boolean</code> | <code>false</code> |  |
+
+<a name="module__.onInput"></a>
+
+### _.onInput(elem, fn, [useCapture])
+adds an 'input' event listener to a HTML node
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| elem | <code>Object</code> |  | HTML node |
+| fn | <code>function</code> |  | function called on trigger |
+| [useCapture] | <code>boolean</code> | <code>false</code> |  |
+
+<a name="module__.removeInput"></a>
+
+### _.removeInput(elem, fn, [useCapture])
+removes an 'input' event listener with the given parameters from a HTML node
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| elem | <code>Object</code> |  | HTML node |
+| fn | <code>function</code> |  | function |
+| [useCapture] | <code>boolean</code> | <code>false</code> |  |
+
+<a name="module__.onLoad"></a>
+
+### _.onLoad(elem, fn, [useCapture])
+adds a 'load' event listener to a HTML node
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| elem | <code>Object</code> |  | HTML node |
+| fn | <code>function</code> |  | function called on trigger |
+| [useCapture] | <code>boolean</code> | <code>false</code> |  |
+
+<a name="module__.removeLoad"></a>
+
+### _.removeLoad(elem, fn, [useCapture])
+removes a 'load' event listener with the given parameters from a HTML node
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| elem | <code>Object</code> |  | HTML node |
+| fn | <code>function</code> |  | function |
+| [useCapture] | <code>boolean</code> | <code>false</code> |  |
 
 <a name="module__.target"></a>
 

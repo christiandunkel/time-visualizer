@@ -19,34 +19,34 @@ var NAV = {
     initialize : function () {
         
         // open 'data load' window
-        _.addClick(NODE.data_load_btn, DATA_LOAD.open);
+        _.onClick(NODE.data_load_btn, DATA_LOAD.open);
         
         // toggle 'dark mode'
-        _.addClick(NODE.darkmode_btn, this.toggleDarkMode);
+        _.onClick(NODE.darkmode_btn, this.toggleDarkMode);
         
         // start animation
-        _.addClick(NODE.play_btn, ANIMATOR.play);
+        _.onClick(NODE.play_btn, ANIMATOR.play);
         
         // pause animation
-        _.addClick(NODE.pause_btn, ANIMATOR.pause);
+        _.onClick(NODE.pause_btn, ANIMATOR.pause);
         
         // stop animation
-        _.addClick(NODE.stop_btn, ANIMATOR.stop);
+        _.onClick(NODE.stop_btn, ANIMATOR.stop);
         
         // speed setter buttons
-        _.addClick(NODE.time_btn.slow, NAV.setSpeed);
-        _.addClick(NODE.time_btn.normal, NAV.setSpeed);
-        _.addClick(NODE.time_btn.fast, NAV.setSpeed);
+        _.onClick(NODE.time_btn.slow, NAV.setSpeed);
+        _.onClick(NODE.time_btn.normal, NAV.setSpeed);
+        _.onClick(NODE.time_btn.fast, NAV.setSpeed);
         
         // elements for setting custom speed
         _.addEvent(NODE.time_selection.input, 'input', NAV.setCustomSpeed);
-        _.addClick(NODE.time_selection.custom, NAV.showCustomSpeedMenu);
-        _.addClick(NODE.time_selection.close_custom, NAV.showDefinedSpeedMenu);
+        _.onClick(NODE.time_selection.custom, NAV.showCustomSpeedMenu);
+        _.onClick(NODE.time_selection.close_custom, NAV.showDefinedSpeedMenu);
         
         // buttons in 'individual chart' menu
-        _.addClick(NODE.back_to_column_chart_btn, NAV.showColumnChart);
-        _.addClick(NODE.download_png_btn, NAV.downloadIndividualChart);
-        _.addClick(NODE.compare_btn, COMPARE.open);
+        _.onClick(NODE.back_to_column_chart_btn, NAV.showColumnChart);
+        _.onClick(NODE.download_png_btn, NAV.downloadIndividualChart);
+        _.onClick(NODE.compare_btn, COMPARE.open);
         
     },
     

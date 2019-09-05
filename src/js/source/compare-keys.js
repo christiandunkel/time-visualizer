@@ -14,11 +14,11 @@ var COMPARE = {
     initialize : function () {
         
         // add event to open 'compare selection' window
-        _.addClick(NODE.compare_btn, this.open);
+        _.onClick(NODE.compare_btn, this.open);
         
         // add 'close window' events
-        _.addClick(NODE.compare_selection.blur, this.close);
-        _.addClick(NODE.compare_selection.close_btn, this.close);
+        _.onClick(NODE.compare_selection.blur, this.close);
+        _.onClick(NODE.compare_selection.close_btn, this.close);
         
     },
     
@@ -91,7 +91,7 @@ var COMPARE = {
             });
             
             // add event to select / unselect key
-            _.addClick(btn, COMPARE.moveButton);
+            _.onClick(btn, COMPARE.moveButton);
             
             // add to buttons array
             this.buttons[this.buttons.length] = btn;

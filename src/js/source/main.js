@@ -4,7 +4,7 @@
  */
 
 // initialize the framework once all HTML content is ready
-_.addEvent(window, 'load', function () {
+_.onLoad(window, function () {
     
     // load all parts
     NODE.initialize();

@@ -483,25 +483,73 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc adds a click event listener to a HTML node
+     * @desc adds a 'click' event listener to a HTML node
      * @param {Object} elem - HTML node
-     * @param {function} fn - function to be called when the event is triggered
+     * @param {function} fn - function called on trigger
      * @param {boolean} [useCapture=false]
      */
-    addClick : function (elem, fn, useCapture) {
+    onClick : function (elem, fn, useCapture) {
         _.addEvent(elem, 'click', fn, useCapture);
     },
     
     /**
      * @function
      * @memberof module:_
-     * @desc removes a click event listener from a HTML node
-     * @param {Object} elem - HTML node on which the event was defined
-     * @param {function} fn - function that was defined to be triggered from the event
-     * @param {boolean} [useCapture=false] - the same useCapture value defined when creating the event
+     * @desc removes a 'click' event listener with the given parameters from a HTML node
+     * @param {Object} elem - HTML node
+     * @param {function} fn - function
+     * @param {boolean} [useCapture=false]
      */
     removeClick : function (elem, fn, useCapture) {
         _.removeEvent(elem, 'click', fn, useCapture);
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc adds an 'input' event listener to a HTML node
+     * @param {Object} elem - HTML node
+     * @param {function} fn - function called on trigger
+     * @param {boolean} [useCapture=false]
+     */
+    onInput : function (elem, fn, useCapture) {
+        _.addEvent(elem, 'input', fn, useCapture);
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc removes an 'input' event listener with the given parameters from a HTML node
+     * @param {Object} elem - HTML node
+     * @param {function} fn - function
+     * @param {boolean} [useCapture=false]
+     */
+    removeInput : function (elem, fn, useCapture) {
+        _.removeEvent(elem, 'input', fn, useCapture);
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc adds a 'load' event listener to a HTML node
+     * @param {Object} elem - HTML node
+     * @param {function} fn - function called on trigger
+     * @param {boolean} [useCapture=false]
+     */
+    onLoad : function (elem, fn, useCapture) {
+        _.addEvent(elem, 'load', fn, useCapture);
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc removes a 'load' event listener with the given parameters from a HTML node
+     * @param {Object} elem - HTML node
+     * @param {function} fn - function
+     * @param {boolean} [useCapture=false]
+     */
+    removeLoad : function (elem, fn, useCapture) {
+        _.removeEvent(elem, 'load', fn, useCapture);
     },
     
     /**

@@ -160,14 +160,14 @@ var DATA_LOAD = {
         var $ = NODE.data_load;
         
         // add 'close window' events
-        _.addClick($.blur, this.close);
-        _.addClick($.close_btn, this.close);
+        _.onClick($.blur, this.close);
+        _.onClick($.close_btn, this.close);
         
         // add 'load data set' functionality to buttons
         var btns = _.tag('button', $.example_sets_area);
         var btns_num = btns.length;
         for (var i = 0; i < btns_num; i++) {
-            _.addClick(btns[i], this.startDataSetLoading);
+            _.onClick(btns[i], this.startDataSetLoading);
         }
         
         // initialize the drag'n'drop area for files in the window
@@ -559,7 +559,7 @@ var DATA_LOAD = {
             };
             
             // add click event to open an individual chart
-            _.addClick(_.class('clickEvent', column)[0], this.openIndividualChart);
+            _.onClick(_.class('clickEvent', column)[0], this.openIndividualChart);
             
             
             
@@ -584,7 +584,7 @@ var DATA_LOAD = {
             };
             
             // add click event to open an individual chart
-            _.addClick(_.class('clickEvent', ratio_part)[0], this.openIndividualChart);
+            _.onClick(_.class('clickEvent', ratio_part)[0], this.openIndividualChart);
             
             
             
