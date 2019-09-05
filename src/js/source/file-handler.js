@@ -3,6 +3,150 @@
  * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
+/** 
+ * @module FILE
+ * @desc reads and validates the data from JSON data sets 
+ */
+var FILE = {
+    
+    /**
+     * @function
+     * @memberof module:FILE
+     * @desc determines if the given data set is valid
+     * @param {Object} json
+     * @returns {boolean} true, if data set is valid
+     * @returns {string} error message, if it's invalid
+     */
+    isValidData : function (obj) {
+        
+        /* general */
+        
+        if (typeof(obj.name) === 'undefined') {
+            return '"name" value is not defined.';
+        }
+        
+        if (!_.isString(obj.name)) {
+            return '"name" value must be a string.';
+        }
+        
+        if (typeof(obj.date) === 'undefined') {
+            return '"date" value must be defined.';
+        }
+        
+        if (!_.isString(obj.date)) {
+            return '"date" value must be a string.';
+        }
+        
+        
+        
+        /* keys */
+        
+        if (typeof(obj.keys) === 'undefined') {
+            return '"keys" value must be defined.';
+        }
+        
+        if (_.isEmptyObject(obj.keys)) {
+            return '"keys" value must contain at least one key.';
+        }
+        
+        // go through all keys to validate them
+        for (var prop in obj.keys) {
+           
+            // skip if is prototype property
+            if (!obj.hasOwnProperty.call(obj.keys, prop)) {
+                continue;
+            }
+            
+            if (typeof(obj.keys[prop].name) === 'undefined') {
+                return '"name" value in key "' + prop + '" is undefined.';
+            }
+            
+            if (!_.isString(obj.keys[prop].name)) {
+                return '"name" value in key "' + prop + '" must be a string, but is of type "' + typeof(obj.keys[prop].name) + '".';
+            }
+            
+            if (typeof(obj.keys[prop].icon) === 'undefined') {
+                return '"icon" value in key "' + prop + '" is undefined.';
+            }
+            
+            if (!_.isString(obj.keys[prop].icon)) {
+                return '"icon" value in key "' + prop + '" must be a string, but is of type "' + typeof(obj.keys[prop].icon) + '".';
+            }
+            
+        }
+        
+        
+        
+        /* range */
+        
+        if (typeof(obj.range) === 'undefined') {
+            return '"range" value is not defined.';
+        }
+        
+        if (typeof(obj.range.from) === 'undefined') {
+            return 'Range "from" value must be defined.';
+        }
+        
+        if (!_.isInteger(obj.range.from)) {
+            return 'Range "from" value must be a number (integer).';
+        }
+        
+        if (typeof(obj.range.to) === 'undefined') {
+            return 'Range "to" value is not defined.';
+        }
+        
+        if (!_.isInteger(obj.range.to)) {
+            return 'Range "to" value must be a number (integer).';
+        }
+        
+        
+        
+        /* data */
+        
+        if (typeof(obj.data) === 'undefined') {
+            return '"data" value must be defined.';
+        }
+        
+        if (_.isEmptyObject(obj.data)) {
+            return '"data" value must contain at least one key.';
+        }
+        
+        // go through all keys to validate them
+        for (var prop in obj.keys) {
+           
+            // skip if is prototype property
+            if (!obj.hasOwnProperty.call(obj.keys, prop)) {
+                continue;
+            }
+            
+            if (_.isEmptyObject(obj.data[prop])) {
+                return 'No data points are defined in data key value "' + prop + '".';
+            }
+            
+            // go through data points in key property
+            for (var point in obj.data[prop]) {
+                
+                if (!point.match(/^[0-9]+$/g)) {
+                    return 'Data point name "' + point + '" in key "' + prop + '" must be a number (integer) inside a string.'
+                }
+                
+                if (!_.isNumber(obj.data[prop][point])) {
+                    return 'Value for data point "' + point + '" in key "' + prop + '" must be a number, but is of type "' + typeof(obj.data[prop][point]) + '".';
+                }
+                
+            }
+            
+        }
+        
+        
+        
+        // dara set is valid
+        return true;
+        
+    }
+    
+}
+
 /** @module DATA_LOAD */
 var DATA_LOAD = {
     
@@ -263,10 +407,19 @@ var DATA_LOAD = {
         // generate an object from JSON string
         var obj = _.parseJSON(str);
 
-        // warn user, if the string could not be parsed
+        // warn user, if the string could not be parsed as JSON
         if (!obj) {
             
             alert('Could not parse the file as it is not in a valid JSON format.\nCheck your browser console for more information.');
+            return false;
+            
+        }
+        
+        // warn user, if the data set is missing required properties
+        var is_valid = FILE.isValidData(obj);
+        if (_.isString(is_valid)) {
+            
+            alert(is_valid);
             return false;
             
         }
@@ -365,8 +518,9 @@ var DATA_LOAD = {
         var counter = 0;
         for (var key in obj.data) {
            
+            // skip if is prototype property
             if (!obj.data.hasOwnProperty(key)) {
-                return;
+                continue;
             }
             
             var color = this.getColumnColor(counter);
@@ -490,7 +644,7 @@ var DATA_LOAD = {
      * @param {Object} data
      * @param {string} key_name - display name of key
      * @param {string} [icon_url]
-     * @return {Object} HTML node for specific key of the ratio chart
+     * @returns {Object} HTML node for specific key of the ratio chart
      */
     getRatioChartPart : function (key, color, data, key_name, icon_url) {
         
@@ -555,7 +709,7 @@ var DATA_LOAD = {
      * @param {string} color - HEX code with the color of this specific data key
      * @param {string} key_name - display name of key
      * @param {string} [icon_url]
-     * @return {Object} HTML node for specific key of the column chart
+     * @returns {Object} HTML node for specific key of the column chart
      */
     getColumn : function (key, color, key_name, icon_url) {
         
@@ -604,7 +758,7 @@ var DATA_LOAD = {
      * @memberof module:DATA_LOAD
      * @desc returns a HEX color code a selection of colors depending on the given index
      * @param {number} index - must be integer
-     * @return {string} HEX color code
+     * @returns {string} HEX color code
      */
     getColumnColor : function (index) {
       
@@ -643,7 +797,7 @@ var DATA_LOAD = {
      * @param {Object} data - JSON data
      * @param {number} from - start data-point-key in data
      * @param {number} to - end data-point-key in data
-     * @return {Array} animation values (50x the number of input data points)
+     * @returns {Array} animation values (50x the number of input data points)
      */
     generateDataPointArray : function (data, from, to) {
         

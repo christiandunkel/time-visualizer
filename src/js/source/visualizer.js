@@ -223,7 +223,7 @@ var ANIMATOR = {
      * @memberof module:ANIMATOR
      * @desc checks if a key is being shown in the 'individual chart'
      * @param {string} key - key name
-     * @return {boolean} true, if the key is in the list to be shown
+     * @returns {boolean} true, if the key is in the list to be shown
      */
     hasIndividualKey : function (key) {
         var keys = this.individual_chart_keys.length;
@@ -384,7 +384,7 @@ var ANIMATOR = {
      * @memberof module:ANIMATOR
      * @desc formats a number to its shortened word equivalent, for example 1000000 to 1.0 Million
      * @param {number} num
-     * @return {string} formatted number
+     * @returns {string} formatted number
      */
     formatNumber : function (num) {
         

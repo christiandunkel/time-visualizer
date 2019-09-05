@@ -9,6 +9,9 @@
 <dd></dd>
 <dt><a href="#module_NODE">NODE</a></dt>
 <dd></dd>
+<dt><a href="#module_FILE">FILE</a></dt>
+<dd><p>reads and validates the data from JSON data sets</p>
+</dd>
 <dt><a href="#module_DATA_LOAD">DATA_LOAD</a></dt>
 <dd></dd>
 <dt><a href="#module_NAV">NAV</a></dt>
@@ -28,8 +31,8 @@
     * [.open()](#module_COMPARE.open)
     * [.close()](#module_COMPARE.close)
     * [.createButtons()](#module_COMPARE.createButtons)
-    * [.moveButton(e)](#module_COMPARE.moveButton)
     * [.orderButtons()](#module_COMPARE.orderButtons)
+    * [.moveButton(e)](#module_COMPARE.moveButton)
 
 <a name="module_COMPARE.initialize"></a>
 
@@ -55,6 +58,12 @@ closes the 'compare keys' window
 creates the buttons in the 'compare keys' window
 
 **Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
+<a name="module_COMPARE.orderButtons"></a>
+
+### COMPARE.orderButtons()
+moves the buttons into the correct position in the 'compare keys' window
+
+**Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
 <a name="module_COMPARE.moveButton"></a>
 
 ### COMPARE.moveButton(e)
@@ -66,12 +75,6 @@ handles the click on buttons in 'compare keys' window, and selects or unselects 
 | --- | --- | --- |
 | e | <code>event</code> | click event |
 
-<a name="module_COMPARE.orderButtons"></a>
-
-### COMPARE.orderButtons()
-moves the buttons into the correct position in the 'compare keys' window
-
-**Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
 <a name="module_NODE"></a>
 
 ## NODE
@@ -106,6 +109,23 @@ adds missing references to HTML nodes for 'column chart'
 adds missing references to HTML nodes
 
 **Kind**: static method of [<code>NODE</code>](#module_NODE)  
+<a name="module_FILE"></a>
+
+## FILE
+reads and validates the data from JSON data sets
+
+<a name="module_FILE.isValidData"></a>
+
+### FILE.isValidData(json) ⇒ <code>boolean</code> \| <code>string</code>
+determines if the given data set is valid
+
+**Kind**: static method of [<code>FILE</code>](#module_FILE)  
+**Returns**: <code>boolean</code> - true, if data set is valid<code>string</code> - error message, if it's invalid  
+
+| Param | Type |
+| --- | --- |
+| json | <code>Object</code> | 
+
 <a name="module_DATA_LOAD"></a>
 
 ## DATA\_LOAD
@@ -475,6 +495,7 @@ downloads 'individual chart' canvas as .png image
     * [.decodeHTML(str)](#module__.decodeHTML) ⇒ <code>string</code>
     * [.parseJSON(str)](#module__.parseJSON) ⇒ <code>Object</code>
     * [.sortArrayObjects(arr, property, [descending])](#module__.sortArrayObjects) ⇒ <code>Array</code>
+    * [.isEmptyObject(obj)](#module__.isEmptyObject) ⇒ <code>boolean</code>
     * [.getAverage(arr)](#module__.getAverage) ⇒ <code>number</code>
     * [.getMin(arr, [start_minimum])](#module__.getMin) ⇒ <code>number</code>
     * [.getMax(arr, [start_maximum])](#module__.getMax) ⇒ <code>number</code>
@@ -985,6 +1006,18 @@ sort array containing objects with the same key structure by the values of a giv
 | arr | <code>Array</code> |  | array containing objects with the same key structure |
 | property | <code>string</code> |  | property name (key) by which values to sort |
 | [descending] | <code>Array</code> | <code>false</code> | final order of sorted values |
+
+<a name="module__.isEmptyObject"></a>
+
+### _.isEmptyObject(obj) ⇒ <code>boolean</code>
+check if an object is empty
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+**Returns**: <code>boolean</code> - true, if the object is empty  
+
+| Param | Type |
+| --- | --- |
+| obj | <code>Object</code> | 
 
 <a name="module__.getAverage"></a>
 

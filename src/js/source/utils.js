@@ -995,6 +995,26 @@ var _ = {
     /**
      * @function
      * @memberof module:_
+     * @desc check if an object is empty
+     * @param {Object} obj
+     * @returns {boolean} true, if the object is empty
+     */
+    isEmptyObject : function (obj) {
+    
+        // check if there is a none-prototype property in the object
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
+                return false;
+            }
+        }
+
+        return JSON.stringify(obj) === JSON.stringify({});
+
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
      * @desc returns the average of an array of number
      * @param {Array} arr - array of numbers
      * @returns {number} average of numbers

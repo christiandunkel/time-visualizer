@@ -106,6 +106,36 @@ var COMPARE = {
     /**
      * @function
      * @memberof module:COMPARE
+     * @desc moves the buttons into the correct position in the 'compare keys' window
+     */
+    orderButtons : function () {
+        
+        for (var i = 0; i < this.buttons_num; i++) {
+            
+            var btn = this.buttons[i];
+            var key = btn.getAttribute('key-id');
+            var len = ANIMATOR.individual_chart_keys.length;
+            
+            // check if key is included in list of keys to be rendered
+            var included = false;
+            for (var j = 0; j < len; j++) {
+                if (ANIMATOR.individual_chart_keys[j] === key) {
+                    included = true;
+                    break;
+                }
+            }
+            
+            // append button to right box
+            var container_class = (included ? '' : 'un') + 'selected_keys';
+            _.append(NODE.compare_selection[container_class], btn);
+            
+        }
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:COMPARE
      * @desc handles the click on buttons in 'compare keys' window, and selects or unselects the corresponding key for comparison in 'individual chart'
      * @param {event} e - click event
      */
@@ -131,36 +161,6 @@ var COMPARE = {
         }
         
         ANIMATOR.refreshFrame();
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:COMPARE
-     * @desc moves the buttons into the correct position in the 'compare keys' window
-     */
-    orderButtons : function () {
-        
-        for (var i = 0; i < this.buttons_num; i++) {
-            
-            var btn = this.buttons[i];
-            var key = btn.getAttribute('key-id');
-            var len = ANIMATOR.individual_chart_keys.length;
-            
-            // check if key is included in list of keys to be rendered
-            var included = false;
-            for (var j = 0; j < len; j++) {
-                if (ANIMATOR.individual_chart_keys[j] === key) {
-                    included = true;
-                    break;
-                }
-            }
-            
-            // append button to right box
-            var container_class = (included ? '' : 'un') + 'selected_keys';
-            _.append(NODE.compare_selection[container_class], btn);
-            
-        }
         
     }
     
