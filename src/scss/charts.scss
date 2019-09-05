@@ -264,6 +264,7 @@
     .part-container {
         position: relative;
         background: #575757; border: solid white; border-width: 0 1px;
+        overflow: hidden;
         
         .darkMode & {
             border-color: black;
@@ -275,7 +276,7 @@
         
         .percentage {
             display: inline-block; position: absolute; top: 50%; left: 0; z-index: 1;
-            width: 100%; padding: 0 10px;
+            width: 100%; padding: 0 3px;
             text-shadow: 1px 1px 3px rgba(0,0,0,.5);
             color: white; text-align: center; font-size: 15px; line-height: 1em; font-weight: 700;
             white-space: nowrap; overflow: hidden;
