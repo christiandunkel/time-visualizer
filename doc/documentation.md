@@ -459,7 +459,6 @@ downloads 'individual chart' canvas as .png image
     * [.tag(selector, [context])](#module__.tag) ⇒ <code>HTMLCollection</code> \| <code>null</code>
     * [.select(selector, [context], [callback])](#module__.select) ⇒ <code>HTMLCollection</code> \| <code>null</code>
     * [.contains(parent, child)](#module__.contains) ⇒ <code>boolean</code>
-    * [.exists(elem, lookInDOM)](#module__.exists) ⇒ <code>boolean</code>
     * [.create(str, [settings])](#module__.create) ⇒ <code>Object</code>
     * [.append(elem1, elem2)](#module__.append)
     * [.prepend(elem1, elem2)](#module__.prepend)
@@ -485,6 +484,8 @@ downloads 'individual chart' canvas as .png image
     * [.setStyles(elem, styles)](#module__.setStyles)
     * [.getHeight(elem)](#module__.getHeight) ⇒ <code>number</code>
     * [.getWidth(elem)](#module__.getWidth) ⇒ <code>number</code>
+    * [.exists(val)](#module__.exists) ⇒ <code>boolean</code>
+    * [.isElement(elem, [hasToBeInDOM])](#module__.isElement) ⇒ <code>boolean</code>
     * [.isFunction(n)](#module__.isFunction) ⇒ <code>boolean</code>
     * [.isObject(n)](#module__.isObject) ⇒ <code>boolean</code>
     * [.isArray(n)](#module__.isArray) ⇒ <code>boolean</code>
@@ -492,8 +493,6 @@ downloads 'individual chart' canvas as .png image
     * [.isNumber(n)](#module__.isNumber) ⇒ <code>boolean</code>
     * [.isInteger(n)](#module__.isInteger) ⇒ <code>boolean</code>
     * [.isFloat(n)](#module__.isFloat) ⇒ <code>boolean</code>
-    * [.isDefined(n)](#module__.isDefined) ⇒ <code>boolean</code>
-    * [.isUndefined(n)](#module__.isUndefined) ⇒ <code>boolean</code>
     * [.escapeRegex(str)](#module__.escapeRegex) ⇒ <code>string</code>
     * [.encodeHTML(str)](#module__.encodeHTML) ⇒ <code>string</code>
     * [.decodeHTML(str)](#module__.decodeHTML) ⇒ <code>string</code>
@@ -571,26 +570,13 @@ check if the first HTML node contains the second
 | parent | <code>Object</code> | supposed parent HTML node |
 | child | <code>Object</code> | supposed child HTML node |
 
-<a name="module__.exists"></a>
-
-### _.exists(elem, lookInDOM) ⇒ <code>boolean</code>
-check if a HTML node (or value) exists and optionally find it in HTML DOM
-
-**Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>boolean</code> - returns true if the element exists, but will return false if the element doesn't (will return false if 'lookInDom' is set to true and element exists, but isn't in HTML DOM)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| elem | <code>Object</code> | preferably a HTML node, but can be any value |
-| lookInDOM | <code>boolean</code> | if set to true, will search the HTML DOM for the HTML node |
-
 <a name="module__.create"></a>
 
 ### _.create(str, [settings]) ⇒ <code>Object</code>
 creates a new HTML node
 
 **Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>Object</code> - the created HTML node  
+**Returns**: <code>Object</code> - created HTML node  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -654,7 +640,7 @@ removes a HTML node with all of its child HTML nodes
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node to remove |
+| elem | <code>Object</code> | HTML node |
 
 <a name="module__.empty"></a>
 
@@ -665,7 +651,7 @@ removes all child HTML nodes of a HTML node
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node to empty |
+| elem | <code>Object</code> | HTML node |
 
 <a name="module__.addEvent"></a>
 
@@ -893,6 +879,31 @@ returns browser-rendered width of HTML node
 | --- | --- | --- |
 | elem | <code>Object</code> | HTML node |
 
+<a name="module__.exists"></a>
+
+### _.exists(val) ⇒ <code>boolean</code>
+check if a value is defined and not null
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+**Returns**: <code>boolean</code> - returns true if the element exists  
+
+| Param | Type |
+| --- | --- |
+| val | <code>\*</code> | 
+
+<a name="module__.isElement"></a>
+
+### _.isElement(elem, [hasToBeInDOM]) ⇒ <code>boolean</code>
+check if a value is a HTML element and optionally find it in HTML DOM
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+**Returns**: <code>boolean</code> - returns true if the value is a HMTL element (and optionally, exists in DOM)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| elem | <code>Object</code> |  | HTML node |
+| [hasToBeInDOM] | <code>boolean</code> | <code>false</code> | will also search the HTML DOM for the element |
+
 <a name="module__.isFunction"></a>
 
 ### _.isFunction(n) ⇒ <code>boolean</code>
@@ -972,30 +983,6 @@ tests if variable is a float (floating point number)
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 **Returns**: <code>boolean</code> - true, if variable is a float  
-
-| Param | Type |
-| --- | --- |
-| n | <code>\*</code> | 
-
-<a name="module__.isDefined"></a>
-
-### _.isDefined(n) ⇒ <code>boolean</code>
-tests if variable is defined
-
-**Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>boolean</code> - true, if variable is defined  
-
-| Param | Type |
-| --- | --- |
-| n | <code>\*</code> | 
-
-<a name="module__.isUndefined"></a>
-
-### _.isUndefined(n) ⇒ <code>boolean</code>
-tests if variable is undefined
-
-**Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>boolean</code> - true, if variable is undefined  
 
 | Param | Type |
 | --- | --- |

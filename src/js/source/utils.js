@@ -49,12 +49,17 @@ var _ = {
             return null;
         }
         
-        if (_.isDefined(context) && context == null) {
-            console.error('No valid element provided as context (parent of some order). This parameter is optional and may remain empty.');
+        // set DOM as context, if it's not defined
+        if (typeof(context) === 'undefined') {
+            context = document;
+        }
+        
+        if (!_.isElement(context)) {
+            console.error('The context provided is not a HTML element.');
             return null;
         }
         
-        return (context || document).getElementsByClassName(selector);
+        return context.getElementsByClassName(selector);
         
     },
     
@@ -74,12 +79,17 @@ var _ = {
             return null;
         }
         
-        if (_.isDefined(context) && context == null) {
-            console.error('No valid element provided as context (parent of some order). This parameter is optional and may remain empty.');
+        // set DOM as context, if it's not defined
+        if (typeof(context) === 'undefined') {
+            context = document;
+        }
+        
+        if (!_.isElement(context)) {
+            console.error('The context provided is not a HTML element.');
             return null;
         }
         
-        return (context || document).getElementsByTagName(selector);
+        return document.getElementsByTagName(selector);
         
     },
     
@@ -100,14 +110,14 @@ var _ = {
             return null;
         }
         
-        if (_.isDefined(context) && context == null) {
-            console.error('No valid element provided as context (parent of some order). This parameter is optional and may remain empty.');
-            return null;
-        }
-        
-        // select DOM as context, if context is not properly defined
+        // set DOM as context, if it's not defined
         if (typeof(context) === 'undefined') {
             context = document;
+        }
+        
+        if (!_.isElement(context)) {
+            console.error('The context provided is not a HTML element.');
+            return null;
         }
         
         // look up simple classes, ids or tags directly in DOM
@@ -143,40 +153,17 @@ var _ = {
      */
     contains : function (parent, child) {
         
-        if (!_.exists(parent)) {
-            console.error('No valid parent element given.');
+        if (!_.isElement(parent)) {
+            console.error('No valid parent HTML element given.');
             return null;
         }
         
-        if (!_.exists(child)) {
-            console.error('No valid child element given.');
+        if (!_.isElement(child)) {
+            console.error('No valid child HTML element given.');
             return null;
         }
         
         return (parent == child ? false : parent.contains(child));
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:_
-     * @desc check if a HTML node (or value) exists and optionally find it in HTML DOM
-     * @param {Object} elem - preferably a HTML node, but can be any value
-     * @param {boolean} lookInDOM - if set to true, will search the HTML DOM for the HTML node
-     * @returns {boolean} returns true if the element exists, but will return false if the element doesn't (will return false if 'lookInDom' is set to true and element exists, but isn't in HTML DOM)
-     */
-    exists : function (elem, lookInDOM) {
-        
-        // only allow boolean value for variable
-        if (lookInDOM !== true) {
-            lookInDOM = false;
-        }
-        
-        if (_.isUndefined(elem) || elem === null) {
-            return false;
-        }
-        
-        return lookInDOM === true ? document.body.contains(elem) : true;
         
     },
     
@@ -196,7 +183,7 @@ var _ = {
      * @desc creates a new HTML node
      * @param {string} str - selector in the form of tag#id.class1.class2
      * @param {Object} [settings] - object holding the HTML and style properties
-     * @returns {Object} the created HTML node
+     * @returns {Object} created HTML node
      */
     create : function (str, settings) {
         
@@ -204,8 +191,13 @@ var _ = {
             return console.error('No string given.');
         }
         
-        if (_.isDefined(settings) && !_.isObject(settings)) {
-            return console.error('No valid settings object was provided.');
+        if (typeof(settings) !== 'undefined') {
+            if (!_.isObject(settings)) {
+                return console.error('The settings given as a parameter have to be an object.');
+            }
+        }
+        else {
+            settings = {};
         }
         
         var id = str.match(/#[^\.#\s]+/g);
@@ -221,39 +213,27 @@ var _ = {
         if (classes) {
             elem.className = classes.join(' ').replace(/\./g, '');
         }
-        
-        
-        if (_.isDefined(settings)) {
 
-            if (!_.isObject(settings)) {
-                console.error('Given settings object is not valid.');
-            }
-            else {
+        for (var key in settings) {
 
-                for (var key in settings) {
+            // skip iteration if the current property belongs to the prototype
+            if (settings.hasOwnProperty(key)) {
+                switch (key) {
 
-                    // skip iteration if the current property belongs to the prototype
-                    if (settings.hasOwnProperty(key)) {
-                        switch (key) {
+                    case 'innerHTML':    
+                        elem.innerHTML = settings[key];
+                        break;
 
-                            case 'innerHTML':    
-                                elem.innerHTML = settings[key];
-                                break;
-
-                            case 'style':
-                                for (var prop in settings[key]) {
-                                    elem.style.setProperty(prop, settings[key][prop]);
-                                }
-                                break;
-
-                            default:
-                                elem.setAttribute(key, settings[key]);
-
+                    case 'style':
+                        for (var prop in settings[key]) {
+                            elem.style.setProperty(prop, settings[key][prop]);
                         }
-                    }
+                        break;
+
+                    default:
+                        elem.setAttribute(key, settings[key]);
 
                 }
-
             }
 
         }
@@ -271,11 +251,11 @@ var _ = {
      */
     append : function (elem1, elem2) {
         
-        if (!_.exists(elem1)) {
+        if (!_.isElement(elem1)) {
             return console.error('First given element does not exist.');
         }
         
-        if (_.isUndefined(elem2)) {
+        if (!_.isElement(elem2)) {
             return console.error('Second given parameter is neither an element, text or a number.');
         }
 
@@ -297,11 +277,11 @@ var _ = {
      */
     prepend : function (elem1, elem2) {
         
-        if (!_.exists(elem1)) {
+        if (!_.isElement(elem1)) {
             return console.error('First given element does not exist.');
         }
         
-        if (_.isUndefined(elem2)) {
+        if (!_.isElement(elem2)) {
             return console.error('Second given parameter is neither an element, text or a number.');
         }
 
@@ -323,11 +303,11 @@ var _ = {
      */
     after : function (elem1, elem2) {
         
-        if (!_.exists(elem1)) {
+        if (!_.isElement(elem1)) {
             return console.error('First given element does not exist.');
         }
         
-        if (_.isUndefined(elem2)) {
+        if (!_.isElement(elem2)) {
             return console.error('Second given parameter is neither an element, text or a number.');
         }
 
@@ -349,11 +329,11 @@ var _ = {
      */
     before : function (elem1, elem2) {
         
-        if (!_.exists(elem1)) {
+        if (!_.isElement(elem1)) {
             return console.error('First given element does not exist.');
         }
         
-        if (_.isUndefined(elem2)) {
+        if (!_.isElement(elem2)) {
             return console.error('Second given parameter is neither an element, text or a number.');
         }
 
@@ -370,11 +350,11 @@ var _ = {
      * @function
      * @memberof module:_
      * @desc removes a HTML node with all of its child HTML nodes
-     * @param {Object} elem - HTML node to remove
+     * @param {Object} elem - HTML node
      */
     remove : function (elem) {
         
-        if (!_.exists(elem)) {
+        if (_.isElement(elem)) {
             elem.parentNode.removeChild(elem);
         }
         
@@ -384,11 +364,11 @@ var _ = {
      * @function
      * @memberof module:_
      * @desc removes all child HTML nodes of a HTML node
-     * @param {Object} elem - HTML node to empty
+     * @param {Object} elem - HTML node
      */
     empty : function (elem) {
         
-        if (!_.exists(elem)) {
+        if (!_.isElement(elem)) {
             return console.error('Element does not exist.');
         }
         
@@ -417,7 +397,8 @@ var _ = {
      */
     addEvent : function (elem, event, fn, useCapture) {
         
-        if (!_.exists(elem)) {
+        // given element must either be a HTML element or the window object
+        if (!_.isElement(elem) && !(elem instanceof Window)) {
             return console.error('Element does not exist.');
         }
         
@@ -454,7 +435,7 @@ var _ = {
      */
     removeEvent : function (elem, event, fn, useCapture) {
         
-        if (!_.exists(elem)) {
+        if (!_.isElement(elem)) {
             return console.error('Element does not exist.');
         }
         
@@ -562,7 +543,7 @@ var _ = {
     target : function (e) {
         
         if (!_.exists(e)) {
-            return console.error('Event does not exist.');
+            return console.error('No valid event given.');
         }
         
         return e.target || e.srcElement;
@@ -599,7 +580,7 @@ var _ = {
      */
     addClass : function (elem, class_) {
         
-        if (!_.exists(elem)) {
+        if (!_.isElement(elem)) {
             return console.error('Element does not exist.');
         }
         
@@ -626,7 +607,7 @@ var _ = {
      */
     removeClass : function (elem, class_) {
         
-        if (!_.exists(elem)) {
+        if (!_.isElement(elem)) {
             return console.error('Element does not exist.');
         }
         
@@ -656,7 +637,7 @@ var _ = {
      */
     toggleClass : function (elem, class_) {
         
-        if (!_.exists(elem)) {
+        if (!_.isElement(elem)) {
             return console.error('Element does not exist.');
         }
         
@@ -682,7 +663,7 @@ var _ = {
      */
     hasClass : function (elem, class_) {
         
-        if (!_.exists(elem)) {
+        if (!_.isElement(elem)) {
             return console.error('Element does not exist.');
         }
         
@@ -722,7 +703,7 @@ var _ = {
      */
     getStyle : function (elem, style) {
         
-        if (!_.exists(elem)) {
+        if (!_.isElement(elem)) {
             return console.error('Element is not defined.');
         }
         
@@ -748,11 +729,11 @@ var _ = {
      */
     setStyles : function (elem, styles) {
         
-        if (!_.exists(elem)) {
+        if (!_.isElement(elem)) {
             return console.error('Element is not defined.');
         }
         
-        if (_.isDefined(styles) && !_.isObject(styles)) {
+        if (!_.isObject(styles)) {
             return console.error('No valid styles object was provided.');
         }
         
@@ -771,7 +752,7 @@ var _ = {
      */
     getHeight : function (elem) {
         
-        if (!_.exists(elem)) {
+        if (!_.isElement(elem)) {
             return console.error('Element is not defined.');
         }
         
@@ -789,7 +770,7 @@ var _ = {
      */
     getWidth : function (elem) {
         
-        if (!_.exists(elem)) {
+        if (!_.isElement(elem)) {
             return console.error('Element is not defined.');
         }
         
@@ -811,12 +792,48 @@ var _ = {
     /**
      * @function
      * @memberof module:_
+     * @desc check if a value is defined and not null
+     * @param {*} val
+     * @returns {boolean} returns true if the element exists
+     */
+    exists : function (val) {
+        return typeof(val) !== 'undefined' && val !== null;
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc check if a value is a HTML element and optionally find it in HTML DOM
+     * @param {Object} elem - HTML node
+     * @param {boolean} [hasToBeInDOM=false] - will also search the HTML DOM for the element
+     * @returns {boolean} returns true if the value is a HMTL element (and optionally, exists in DOM)
+     */
+    isElement : function (elem, hasToBeInDOM) {
+        
+        // only allow boolean value for variable
+        hasToBeInDOM = hasToBeInDOM === true;
+        
+        var isElement = elem instanceof Element || elem instanceof HTMLDocument;
+        
+        // check if the element is also inside DOM
+        if (hasToBeInDOM) {
+            return isElement ? document.documentElement.contains(elem) : false;
+        }
+        else {
+            return isElement;
+        }
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
      * @desc tests if variable is a function
      * @param {*} n
      * @returns {boolean} true, if variable is a function
      */
     isFunction : function (n) {
-        return typeof(n) == 'function';
+        return typeof(n) === 'function';
     },
     
     /**
@@ -827,7 +844,7 @@ var _ = {
      * @returns {boolean} true, if variable is an object (excluding null)
      */
     isObject : function (n) {
-        return typeof(n) == 'object' && n !== null;
+        return typeof(n) === 'object' && n !== null;
     },
 
     /**
@@ -838,7 +855,7 @@ var _ = {
      * @returns {boolean} true, if variable is an array
      */
     isArray : function (n) {
-        return _.isDefined(n) && n !== null && n.constructor === Array;
+        return typeof(n) !== 'undefined' && n !== null && n.constructor === Array;
     },
 
     /**
@@ -849,7 +866,7 @@ var _ = {
      * @returns {boolean} true, if variable is a string
      */
     isString : function (n) {
-        return typeof(n) == 'string';
+        return typeof(n) === 'string';
     },
 
     /**
@@ -860,7 +877,7 @@ var _ = {
      * @returns {boolean} true, if variable is a number
      */
     isNumber : function (n) {
-        return typeof(n) == 'number';
+        return typeof(n) === 'number';
     },
 
     /**
@@ -871,7 +888,7 @@ var _ = {
      * @returns {boolean} true, if variable is an integer
      */
     isInteger : function (n) {
-        return typeof(n) == 'number' && n % 1 === 0;
+        return typeof(n) === 'number' && n % 1 === 0;
     },
 
     /**
@@ -882,29 +899,7 @@ var _ = {
      * @returns {boolean} true, if variable is a float
      */
     isFloat : function (n) {
-        return typeof(n) == 'number' && n % 1 !== 0;
-    },
-
-    /**
-     * @function
-     * @memberof module:_
-     * @desc tests if variable is defined
-     * @param {*} n
-     * @returns {boolean} true, if variable is defined
-     */
-    isDefined : function (n) {
-        return typeof(n) != 'undefined';
-    },
-
-    /**
-     * @function
-     * @memberof module:_
-     * @desc tests if variable is undefined
-     * @param {*} n
-     * @returns {boolean} true, if variable is undefined
-     */
-    isUndefined : function (n) {
-        return typeof(n) == 'undefined';
+        return typeof(n) === 'number' && n % 1 !== 0;
     },
     
     

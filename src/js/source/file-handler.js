@@ -229,9 +229,9 @@ var DATA_LOAD = {
         var $ = NODE.data_load;
         
         // warn user if FileReader API is not supported
-        if (typeof(window.FileReader) !== 'function') {
+        if (!_.isFunction(window.FileReader)) {
             
-            // make it visible
+            // make warning visible
             _.addClass($.notice, 'show');
             
         }
@@ -352,7 +352,7 @@ var DATA_LOAD = {
     processFile : function (file) {
         
         // warn user if FileReader API is not supported
-        if (typeof(window.FileReader) !== 'function') {
+        if (!_.isFunction(window.FileReader)) {
             alert('The FileReader API is not supported by your browser. Please update your browser or switch to a different one!');
             return;
         }
@@ -801,31 +801,16 @@ var DATA_LOAD = {
      */
     generateDataPointArray : function (data, from, to) {
         
-        function checkForValidValue(val) {
-                
-            // check if the value is a number
-            if (!_.isNumber(val)) {
-                throw 'Error: Value "' + value + '" for key "' + i + '" in JSON must be a number, but is a "' + typeof(value) + '".';
-            }
-            
-        }
-        
         var data_points = [];
         
         // go through range and generate a value for each iteration
         for (var i = from; i <= to; i++) {
             
             // check for a value for the iteration in the data
-            if (_.exists(data[i + ""]) && _.isNumber(data[i + ""])) {
+            if (_.isNumber(data[i + ""])) {
                 
                 // get the value from the data
                 var value = data[i + ""];
-                checkForValidValue(value);
-                
-                // check if the number is really a value
-                if (!_.isNumber(value)) {
-                    throw 'Error: Value "' + value + '" for key "' + i + '" in JSON must be a number, but is a "' + typeof(value) + '".';
-                }
                 
                 data_points[data_points.length] = value;
                 continue;
@@ -847,7 +832,6 @@ var DATA_LOAD = {
                 steps++;
                 if (_.exists(data[j + ""])) {
                     next = data[j + ""];
-                    checkForValidValue(next);
                     break;
                 }
             }
