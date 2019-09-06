@@ -580,9 +580,10 @@ var DATA_LOAD = {
             _.append(NODE.ratio_chart, ratio_part);
             
             // add ratio part to object
+            var percentage =_.class('percentage', ratio_part)[0];
             ratio_parts[key] = {
                 'container' : ratio_part,
-                'percentage' : _.class('percentage', ratio_part)[0],
+                'percentage' : _.tag('div', percentage)[0],
                 'tooltip' : _.class('tooltip', ratio_part)[0],
                 'tooltip_percentage' : _.class('tooltip-percentage', ratio_part)[0]
             };
@@ -691,6 +692,7 @@ var DATA_LOAD = {
         // percentage values
         var tooltip_percentage = _.create('div.tooltip-percentage');
         var percentage = _.create('div.percentage');
+        var div_in_percentage = _.create('div');
         
         // append elements to container
         _.append(tooltip, icon);
@@ -698,6 +700,7 @@ var DATA_LOAD = {
         _.append(tooltip, tooltip_name);
         _.append(tooltip, tooltip_description);
         _.append(container, tooltip);
+        _.append(percentage, div_in_percentage);
         _.append(container, percentage);
         _.append(container, clickEvent);
         

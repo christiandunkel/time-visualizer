@@ -264,7 +264,6 @@
     .part-container {
         position: relative;
         background: #575757; border: solid white; border-width: 0 1px;
-        overflow: hidden;
         
         .darkMode & {
             border-color: black;
@@ -275,12 +274,16 @@
         }
         
         .percentage {
-            display: inline-block; position: absolute; top: 50%; left: 0; z-index: 1;
-            width: 100%; padding: 0 3px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,.5);
-            color: white; text-align: center; font-size: 15px; line-height: 1em; font-weight: 700;
-            white-space: nowrap; overflow: hidden;
-            @include transform(translate(0, -50%));
+            position: absolute; top: 0; left: 0; z-index: 1;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            
+            div {
+                position: absolute; top: 0; left: 0; z-index: 1;
+                width: 100%; height: 100%; padding: 0 3px;
+                text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+                color: white; text-align: center; font-size: 15px; line-height: 80px; font-weight: 700;
+            }
         }
         
         .clickEvent {
@@ -318,10 +321,10 @@
             }
             
             .tooltip-percentage {
-                @extend .percentage;
                 display: inline; position: relative; top: -8px;
                 width: auto; padding: 0 0 0 10px;
-                line-height: 30px;
+                text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+                color: white; text-align: center; font-size: 15px; line-height: 30px; font-weight: 700;
             }
             
             .name {
