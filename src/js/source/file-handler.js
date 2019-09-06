@@ -413,20 +413,19 @@ var DATA_LOAD = {
 
         // warn user, if the string could not be parsed as JSON
         if (!obj) {
-            
-            alert('Could not parse the file as it is not in a valid JSON format.\nCheck your browser console for more information.');
+            MSG.error('Could not parse the file as it\'s not valid JSON.');
             return false;
-            
         }
         
         // warn user, if the data set is missing required properties
         var is_valid = FILE.isValidData(obj);
         if (_.isString(is_valid)) {
-            
             MSG.error(is_valid, 7000);
             return false;
-            
         }
+        
+        // switch back to bar chart
+        NAV.showColumnChart();
 
         // visualize the object
         DATA_LOAD.visualizeObject(obj, true);
