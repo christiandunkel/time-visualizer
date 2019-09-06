@@ -341,11 +341,13 @@ var ANIMATOR = {
      */
     stop : function () {
         
+        if (ANIMATOR.current > 1) {
+            MSG.show('Stopped animation.', 1000);
+        }
+        
         // end animation and reset current frame to start state
         ANIMATOR.end();
         ANIMATOR.update();
-        
-        MSG.show('Stopped animation.', 1000);
         
     },
     
