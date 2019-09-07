@@ -1,6 +1,6 @@
 /**
  * execute using this command from the project root directory:
- * node src/js/uglify-merge.js
+ * > node src/js/uglify-merge.js
  *
  * @file combines and minifies javascript source files into a single minified file
  * @requires NodeJS (nodejs.org)

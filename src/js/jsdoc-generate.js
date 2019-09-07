@@ -1,6 +1,6 @@
 /**
  * execute using this command from the project root directory:
- * node src/js/jsdoc-generate.js
+ * > node src/js/jsdoc-generate.js
  *
  * @file generates a JSDoc .md documentation for all javascript source files
  * @requires NodeJS (nodejs.org)
