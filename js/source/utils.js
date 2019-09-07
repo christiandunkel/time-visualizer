@@ -1,5 +1,5 @@
 /**
- * @file defines utility functions used in different parts of the code base
+ * @file defines utility functions
  * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
@@ -20,7 +20,6 @@ var _ = {
      * @desc selects HTML node by id
      * @param {string} selector - string containing a HTML id
      * @returns {Object} if an element was found, returns HTML node
-     * @returns {null} if a wrong selector was given or no element was found
      */
     id : function (selector) {
         
@@ -40,7 +39,6 @@ var _ = {
      * @param {string} selector - string containing one or multiple space-seperated HTML classes
      * @param {string} [context=document] - container element in which to search for class
      * @returns {HTMLCollection} if the selector and context (if given) were valid
-     * @returns {null} if non-valid selector or context was given
      */
     class : function (selector, context) {
         
@@ -70,7 +68,6 @@ var _ = {
      * @param {string} selector - string containing a HTML tag
      * @param {string} [context=document] - container element in which to search for tag
      * @returns {HTMLCollection} if the selector and context (if given) were valid
-     * @returns {null} if non-valid selector or context was given
      */
     tag : function (selector, context) {
         
@@ -98,10 +95,9 @@ var _ = {
      * @memberof module:_
      * @desc selects HTML node(s) using a CSS selector
      * @param {string} selector - string containing a valid CSS selector
-     * @param {string} [context=document] - container element in which to search for tag
+     * @param {string} [context=document] - container element in which to search
      * @param {function} [callback] - called when querySelector is not supported by browser
      * @returns {HTMLCollection} if the selector and context (if given) were valid
-     * @returns {null} if non-valid selector or context was given
      */
     select : function (selector, context, callback) {
         
@@ -121,15 +117,14 @@ var _ = {
         }
         
         // look up simple classes, ids or tags directly in DOM
-        if (/^(#?[\w\-]+|\.[\w\-\.]+)$/.test(selector)) {
+        if (/^(#|\.)?[\w\-]+$/.test(selector)) {
             switch (selector.charAt(0)) {
                 case '#':
                     return [context.getElementById(selector.substr(1))];
                 case '.':
                     return context.getElementsByClassName(selector.substr(1).replace(/\./g, ' '));
-                default:
-                    return context.getElementsByTagName(selector);
             }
+            return context.getElementsByTagName(selector);
         }
         
         // use query selector API
