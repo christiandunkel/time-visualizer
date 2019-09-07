@@ -1,6 +1,6 @@
 /**
  * execute using this command from the project root directory:
- * > node src/js/uglify-merge.js
+ * > node js/uglify-merge.js
  *
  * @file combines and minifies javascript source files into a single minified file
  * @requires NodeJS (nodejs.org)
@@ -56,6 +56,6 @@ if (typeof(minified.code) === 'undefined') {
 }
 else {
     // create a single minified javascript file
-    let output_path = path.join(__dirname, '..', 'minified.js');
+    let output_path = path.join(__dirname, 'minified.js');
     fs.writeFileSync(output_path, minified.code, 'utf8'); 
 }

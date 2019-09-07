@@ -1,6 +1,6 @@
 /**
  * execute using this command from the project root directory:
- * > node src/js/jsdoc-generate.js
+ * > node js/jsdoc-generate.js
  *
  * @file generates a JSDoc .md documentation for all javascript source files
  * @requires NodeJS (nodejs.org)
@@ -29,5 +29,5 @@ let documentation = `
 documentation += markdown;
 
 // create documentation markdown file
-let output_path = path.join(__dirname, '..', '..', 'doc', 'documentation.md');
+let output_path = path.join(__dirname, '..', 'doc', 'documentation.md');
 fs.writeFileSync(output_path, documentation, 'utf8'); 

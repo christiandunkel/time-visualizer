@@ -1,7 +1,7 @@
 // general scss files
-@import 'framework/variables';
-@import 'framework/prefixes';
-@import 'framework/functions';
+@import '../framework/variables';
+@import '../framework/prefixes';
+@import '../framework/functions';
 
 // custom scss files
 @import 'reset';
