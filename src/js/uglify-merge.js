@@ -3,8 +3,8 @@
  * node src/js/uglify-merge.js
  *
  * @file combines and minifies javascript source files into a single minified file
- * @requires NodeJS
- * @requires UglifyJS
+ * @requires NodeJS (nodejs.org)
+ * @requires UglifyJS (npmjs.com/package/uglify-js)
  * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 

@@ -3,9 +3,9 @@
  * node src/js/jsdoc-generate.js
  *
  * @file generates a JSDoc .md documentation for all javascript source files
- * @requires NodeJS
- * @requires JSDoc
- * @requires jsdoc-to-markdown
+ * @requires NodeJS (nodejs.org)
+ * @requires JSDoc (npmjs.com/package/jsdoc)
+ * @requires jsdoc-to-markdown (npmjs.com/package/jsdoc-to-markdown)
  * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
