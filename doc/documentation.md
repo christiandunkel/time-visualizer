@@ -557,7 +557,8 @@ downloads 'individual chart' canvas as .png image
     * [.getHeight(elem)](#module__.getHeight) ⇒ <code>number</code>
     * [.getWidth(elem)](#module__.getWidth) ⇒ <code>number</code>
     * [.exists(val)](#module__.exists) ⇒ <code>boolean</code>
-    * [.isElement(elem, [hasToBeInDOM])](#module__.isElement) ⇒ <code>boolean</code>
+    * [.isElement(val)](#module__.isElement) ⇒ <code>boolean</code>
+    * [.isElementInDOM(val)](#module__.isElementInDOM) ⇒ <code>boolean</code>
     * [.isFunction(n)](#module__.isFunction) ⇒ <code>boolean</code>
     * [.isObject(n)](#module__.isObject) ⇒ <code>boolean</code>
     * [.isArray(n)](#module__.isArray) ⇒ <code>boolean</code>
@@ -965,16 +966,25 @@ check if a value is defined and not null
 
 <a name="module__.isElement"></a>
 
-### _.isElement(elem, [hasToBeInDOM]) ⇒ <code>boolean</code>
-check if a value is a HTML element and optionally find it in HTML DOM
+### _.isElement(val) ⇒ <code>boolean</code>
+check if a value is a HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>boolean</code> - returns true if the value is a HMTL element (and optionally, exists in DOM)  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| elem | <code>Object</code> |  | HTML node |
-| [hasToBeInDOM] | <code>boolean</code> | <code>false</code> | will also search the HTML DOM for the element |
+| Param | Type |
+| --- | --- |
+| val | <code>\*</code> | 
+
+<a name="module__.isElementInDOM"></a>
+
+### _.isElementInDOM(val) ⇒ <code>boolean</code>
+check if a value is a HTML element in the DOM
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+
+| Param | Type |
+| --- | --- |
+| val | <code>\*</code> | 
 
 <a name="module__.isFunction"></a>
 

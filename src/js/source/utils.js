@@ -803,26 +803,23 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc check if a value is a HTML element and optionally find it in HTML DOM
-     * @param {Object} elem - HTML node
-     * @param {boolean} [hasToBeInDOM=false] - will also search the HTML DOM for the element
-     * @returns {boolean} returns true if the value is a HMTL element (and optionally, exists in DOM)
+     * @desc check if a value is a HTML element
+     * @param {*} val
+     * @returns {boolean}
      */
-    isElement : function (elem, hasToBeInDOM) {
-        
-        // only allow boolean value for variable
-        hasToBeInDOM = hasToBeInDOM === true;
-        
-        var isElement = elem instanceof Element || elem instanceof HTMLDocument;
-        
-        // check if the element is also inside DOM
-        if (hasToBeInDOM) {
-            return isElement ? document.documentElement.contains(elem) : false;
-        }
-        else {
-            return isElement;
-        }
-        
+    isElement : function (val) {
+        return val instanceof Element || val instanceof HTMLDocument;
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc check if a value is a HTML element in the DOM
+     * @param {*} val
+     * @returns {boolean}
+     */
+    isElementInDOM : function (val) {
+        return _.isElement(val) ? document.documentElement.contains(val) : false;
     },
     
     /**
