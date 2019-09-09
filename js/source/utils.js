@@ -820,6 +820,28 @@ var _ = {
     /**
      * @function
      * @memberof module:_
+     * @desc check if a value is a HTML Nodelist
+     * @param {*} val
+     * @returns {boolean}
+     */
+    isNodelist : function (val) {
+        return NodeList.prototype.isPrototypeOf(val);
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc check if a value is a HTMLCollection
+     * @param {*} val
+     * @returns {boolean}
+     */
+    isHTMLCollection : function (val) {
+        return HTMLCollection.prototype.isPrototypeOf(val);
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
      * @desc tests if variable is a function
      * @param {*} n
      * @returns {boolean} true, if variable is a function

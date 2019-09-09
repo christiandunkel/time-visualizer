@@ -526,10 +526,10 @@ downloads 'individual chart' canvas as .png image
 ## \_
 
 * [_](#module__)
-    * [.id(selector)](#module__.id) ⇒ <code>Object</code> \| <code>null</code>
-    * [.class(selector, [context])](#module__.class) ⇒ <code>HTMLCollection</code> \| <code>null</code>
-    * [.tag(selector, [context])](#module__.tag) ⇒ <code>HTMLCollection</code> \| <code>null</code>
-    * [.select(selector, [context], [callback])](#module__.select) ⇒ <code>HTMLCollection</code> \| <code>null</code>
+    * [.id(selector)](#module__.id) ⇒ <code>Object</code>
+    * [.class(selector, [context])](#module__.class) ⇒ <code>HTMLCollection</code>
+    * [.tag(selector, [context])](#module__.tag) ⇒ <code>HTMLCollection</code>
+    * [.select(selector, [context], [callback])](#module__.select) ⇒ <code>HTMLCollection</code>
     * [.contains(parent, child)](#module__.contains) ⇒ <code>boolean</code>
     * [.create(str, [settings])](#module__.create) ⇒ <code>Object</code>
     * [.append(elem1, elem2)](#module__.append)
@@ -559,6 +559,8 @@ downloads 'individual chart' canvas as .png image
     * [.exists(val)](#module__.exists) ⇒ <code>boolean</code>
     * [.isElement(val)](#module__.isElement) ⇒ <code>boolean</code>
     * [.isElementInDOM(val)](#module__.isElementInDOM) ⇒ <code>boolean</code>
+    * [.isNodelist(val)](#module__.isNodelist) ⇒ <code>boolean</code>
+    * [.isHTMLCollection(val)](#module__.isHTMLCollection) ⇒ <code>boolean</code>
     * [.isFunction(n)](#module__.isFunction) ⇒ <code>boolean</code>
     * [.isObject(n)](#module__.isObject) ⇒ <code>boolean</code>
     * [.isArray(n)](#module__.isArray) ⇒ <code>boolean</code>
@@ -580,11 +582,11 @@ downloads 'individual chart' canvas as .png image
 
 <a name="module__.id"></a>
 
-### _.id(selector) ⇒ <code>Object</code> \| <code>null</code>
+### _.id(selector) ⇒ <code>Object</code>
 selects HTML node by id
 
 **Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>Object</code> - if an element was found, returns HTML node<code>null</code> - if a wrong selector was given or no element was found  
+**Returns**: <code>Object</code> - if an element was found, returns HTML node  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -592,11 +594,11 @@ selects HTML node by id
 
 <a name="module__.class"></a>
 
-### _.class(selector, [context]) ⇒ <code>HTMLCollection</code> \| <code>null</code>
+### _.class(selector, [context]) ⇒ <code>HTMLCollection</code>
 selects HTML node(s) by class
 
 **Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>HTMLCollection</code> - if the selector and context (if given) were valid<code>null</code> - if non-valid selector or context was given  
+**Returns**: <code>HTMLCollection</code> - if the selector and context (if given) were valid  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -605,11 +607,11 @@ selects HTML node(s) by class
 
 <a name="module__.tag"></a>
 
-### _.tag(selector, [context]) ⇒ <code>HTMLCollection</code> \| <code>null</code>
+### _.tag(selector, [context]) ⇒ <code>HTMLCollection</code>
 selects HTML node(s) by tag
 
 **Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>HTMLCollection</code> - if the selector and context (if given) were valid<code>null</code> - if non-valid selector or context was given  
+**Returns**: <code>HTMLCollection</code> - if the selector and context (if given) were valid  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -618,16 +620,16 @@ selects HTML node(s) by tag
 
 <a name="module__.select"></a>
 
-### _.select(selector, [context], [callback]) ⇒ <code>HTMLCollection</code> \| <code>null</code>
+### _.select(selector, [context], [callback]) ⇒ <code>HTMLCollection</code>
 selects HTML node(s) using a CSS selector
 
 **Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>HTMLCollection</code> - if the selector and context (if given) were valid<code>null</code> - if non-valid selector or context was given  
+**Returns**: <code>HTMLCollection</code> - if the selector and context (if given) were valid  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | selector | <code>string</code> |  | string containing a valid CSS selector |
-| [context] | <code>string</code> | <code>&quot;document&quot;</code> | container element in which to search for tag |
+| [context] | <code>string</code> | <code>&quot;document&quot;</code> | container element in which to search |
 | [callback] | <code>function</code> |  | called when querySelector is not supported by browser |
 
 <a name="module__.contains"></a>
@@ -979,6 +981,28 @@ check if a value is a HTML element
 
 ### _.isElementInDOM(val) ⇒ <code>boolean</code>
 check if a value is a HTML element in the DOM
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+
+| Param | Type |
+| --- | --- |
+| val | <code>\*</code> | 
+
+<a name="module__.isNodelist"></a>
+
+### _.isNodelist(val) ⇒ <code>boolean</code>
+check if a value is a HTML Nodelist
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+
+| Param | Type |
+| --- | --- |
+| val | <code>\*</code> | 
+
+<a name="module__.isHTMLCollection"></a>
+
+### _.isHTMLCollection(val) ⇒ <code>boolean</code>
+check if a value is a HTMLCollection
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
