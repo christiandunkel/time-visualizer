@@ -20,6 +20,7 @@ let files_in_order = [
     'elements.js',
     'messages.js',
     'navigation.js',
+    'data.js',
     'file-handler.js',
     'compare-keys.js',
     'visualizer.js',

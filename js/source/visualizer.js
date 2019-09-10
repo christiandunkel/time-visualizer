@@ -54,24 +54,6 @@ var ANIMATOR = {
     /**
      * @function
      * @memberof module:ANIMATOR
-     * @desc sets the range for the animation
-     * @param {number} from - start data-point-key
-     * @param {number} to - end data-point-key
-     */
-    setRange : function (from, to) {
-        
-        // set range
-        this.from = from;
-        this.to = to;
-        
-        // reset 'current' value
-        this.current = 0;
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:ANIMATOR
      * @desc sets the speed of the animation
      * @param {number} time
      */
@@ -461,8 +443,7 @@ var ANIMATOR = {
         
         // set current value
         if (ANIMATOR.current % 50 == 0) {
-            var curr_val = parseInt(ANIMATOR.from) + (ANIMATOR.current == 0 ? 
-                                                    0 : ANIMATOR.current / 50);
+            var curr_val = parseInt(DATA.from) + (ANIMATOR.current == 0 ? 0 : ANIMATOR.current / 50);
             NODE.current_value.value.innerHTML = curr_val;
             NODE.current_value.indicator.innerHTML = curr_val;
         }
@@ -698,15 +679,15 @@ var ANIMATOR = {
         var number_of_keys = (($.data_point_num - 1) / 50) + 1;
         
         // draw the raster
-        for (var i = $.from; i <= $.to; i++) {
+        for (var i = DATA.from; i <= DATA.to; i++) {
             
             /* RASTER LINES */
             
             // set drawing color
             context.strokeStyle = NAV.darkmode ? '#242424' : '#ededed';
             
-            var x_pos = i == $.from ? 
-                padding.left : padding.left + (width_minus_padding * ((i - $.from) / (number_of_keys - 1)));
+            var x_pos = i == DATA.from ? 
+                padding.left : padding.left + (width_minus_padding * ((i - DATA.from) / (number_of_keys - 1)));
             
             // draw line
             context.moveTo(x_pos, padding.top);
@@ -739,7 +720,7 @@ var ANIMATOR = {
             
             // if labels are limited to only right and left-most limits,
             // but current raster line is located in center -> return
-            if (limited_labels && $.from != i && $.to != i) {
+            if (limited_labels && DATA.from != i && DATA.to != i) {
                 continue;
             }
                 
@@ -749,10 +730,10 @@ var ANIMATOR = {
             context.textBaseline = 'bottom';
             
             if (limited_labels) {
-                context.textAlign = (i == $.from ? 'left' : 'right');
+                context.textAlign = (i == DATA.from ? 'left' : 'right');
             }
             else {
-                context.textAlign = (i == $.from ? 'left' : 'center');
+                context.textAlign = (i == DATA.from ? 'left' : 'center');
             }
             
             context.fillText(text, x_pos, canvas.height - padding.bottom + 20);

@@ -7,6 +7,9 @@
 <dl>
 <dt><a href="#module_COMPARE">COMPARE</a></dt>
 <dd></dd>
+<dt><a href="#module_DATA">DATA</a></dt>
+<dd><p>holds all read and processed data</p>
+</dd>
 <dt><a href="#module_NODE">NODE</a></dt>
 <dd></dd>
 <dt><a href="#module_FILE">FILE</a></dt>
@@ -77,6 +80,23 @@ handles the click on buttons in 'compare keys' window, and selects or unselects 
 | Param | Type | Description |
 | --- | --- | --- |
 | e | <code>event</code> | click event |
+
+<a name="module_DATA"></a>
+
+## DATA
+holds all read and processed data
+
+<a name="module_DATA.setRange"></a>
+
+### DATA.setRange(from, to)
+sets the range for the animation
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| from | <code>number</code> | start data-point-key |
+| to | <code>number</code> | end data-point-key |
 
 <a name="module_NODE"></a>
 
@@ -1240,7 +1260,6 @@ replaces a number if it exceeds the given upper or lower limit
 
 * [ANIMATOR](#module_ANIMATOR)
     * [.initialize()](#module_ANIMATOR.initialize)
-    * [.setRange(from, to)](#module_ANIMATOR.setRange)
     * [.setTime(time)](#module_ANIMATOR.setTime)
     * [.setCSSTransitions()](#module_ANIMATOR.setCSSTransitions)
     * [.setData(obj)](#module_ANIMATOR.setData)
@@ -1271,18 +1290,6 @@ replaces a number if it exceeds the given upper or lower limit
 initializes the animator
 
 **Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.setRange"></a>
-
-### ANIMATOR.setRange(from, to)
-sets the range for the animation
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| from | <code>number</code> | start data-point-key |
-| to | <code>number</code> | end data-point-key |
-
 <a name="module_ANIMATOR.setTime"></a>
 
 ### ANIMATOR.setTime(time)

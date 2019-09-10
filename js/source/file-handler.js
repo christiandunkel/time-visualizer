@@ -597,7 +597,7 @@ var DATA_LOAD = {
         }
             
         // set new animation values
-        ANIMATOR.setRange(obj.range.from, obj.range.to);
+        DATA.setRange(obj.range.from, obj.range.to);
         ANIMATOR.setData(ani);
         
         // set elements that will be animated
