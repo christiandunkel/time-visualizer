@@ -268,7 +268,7 @@ var DATA_LOAD = {
      * @desc adds the 'highlight' effect to the file drop area
      */
     highlightDropArea : function () {
-        _.addClass($.drop_area, 'dragged-over');
+        _.addClass(NODE.data_load.drop_area, 'dragged-over');
     },
     
     /**
@@ -277,7 +277,7 @@ var DATA_LOAD = {
      * @desc removes the 'highlight' effect from the file drop area
      */
     unhighlightDropArea : function () {
-        _.removeClass($.drop_area, 'dragged-over');
+        _.removeClass(NODE.data_load.drop_area, 'dragged-over');
     },
     
     
@@ -301,17 +301,16 @@ var DATA_LOAD = {
             var items = e.dataTransfer.items;
 
             if (items.length > 1) {
-                alert('Dropping multiple files is forbidden.');
+                MSG.error('Dropping multiple files is forbidden.');
                 return;
             }
 
-            if (items[0].kind === 'file') {
-                file = items[0].getAsFile();
-            }
-            else {
-                alert('Please drop a file.');
+            // check for file
+            if (items[0].kind !== 'file') {
                 return;
             }
+            
+            file = items[0].getAsFile();
 
         }
         else {
@@ -319,7 +318,7 @@ var DATA_LOAD = {
             var items = e.dataTransfer.files;
 
             if (items.length > 1) {
-                alert('Dropping multiple files is forbidden.');
+                MSG.error('Dropping multiple files is forbidden.');
                 return;
             }
 
@@ -359,20 +358,20 @@ var DATA_LOAD = {
      */
     processFile : function (file) {
         
-        // warn user if FileReader API is not supported
-        if (!_.isFunction(window.FileReader)) {
-            alert('The FileReader API is not supported by your browser. Please update your browser or switch to a different one!');
-            return;
-        }
-        
         if (!file) {
             console.error('File is not defined.');
             return;
         }
         
+        // warn user if FileReader API is not supported
+        if (!_.isFunction(window.FileReader)) {
+            MSG.error('The FileReader API is not supported by your browser. Please update your browser or switch to a different one!');
+            return;
+        }
+        
         // filter out all files besides .json and .txt
         if (!/\.(json|txt)$/.test(file.name)) {
-            alert('Only .json and .txt files are allowed.');
+            MSG.error('Only .json and .txt files are allowed.');
             return;
         }
 
@@ -391,7 +390,7 @@ var DATA_LOAD = {
 
         // on error, warn user
         reader.onerror = function (e) {
-            alert('File could not be read.');
+            MSG.error('File could not be read.');
         }
 
         // otherwise, proceed on converting file content to object
