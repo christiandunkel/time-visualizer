@@ -167,11 +167,16 @@ var DATA_LOAD = {
         _.onClick($.blur, this.close);
         _.onClick($.close_btn, this.close);
         
-        // add 'load data set' functionality to buttons
+        // initialize 'example data' buttons
         var btns = _.tag('button', $.example_sets_area);
         var btns_num = btns.length;
         for (var i = 0; i < btns_num; i++) {
-            _.onClick(btns[i], this.startDataSetLoading);
+            // buttons load data set from URL on click 
+            _.onClick(btns[i], function (e) {
+                var btn = _.target(e);
+                var link = btn.getAttribute('load-data');
+                DATA_LOAD.loadHttpDataSet('data/' + link + '.json', true);
+            });
         }
         
         // initialize the drag'n'drop area for files in the window
@@ -434,22 +439,7 @@ var DATA_LOAD = {
     
     
     
-    /* ONLINE DATA SET PER HTTP REQUEST */
-    
-    /**
-     * @function
-     * @memberof module:DATA_LOAD
-     * @desc called from a button to load a specific data set (name is in button's 'load-data' HTML property 
-     * @param {event} e - click event
-     */
-    startDataSetLoading : function (e) {
-        
-        var btn = _.target(e);
-        var url = 'data/' + btn.getAttribute('load-data') + '.json';
-        
-        DATA_LOAD.loadHttpDataSet(url, true);
-        
-    },
+    /* LOAD DATA VIA HTTP REQUEST */
     
     /**
      * @function

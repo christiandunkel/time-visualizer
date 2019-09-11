@@ -164,7 +164,6 @@ determines if the given data set is valid
     * [.handleSelectedFile(e)](#module_DATA_LOAD.handleSelectedFile)
     * [.processFile(file)](#module_DATA_LOAD.processFile)
     * [.parseJSON(str)](#module_DATA_LOAD.parseJSON)
-    * [.startDataSetLoading(e)](#module_DATA_LOAD.startDataSetLoading)
     * [.loadHttpDataSet(url, [showConfirmation])](#module_DATA_LOAD.loadHttpDataSet) ⇒ <code>Object</code>
     * [.visualizeObject(obj, [showConfirmation])](#module_DATA_LOAD.visualizeObject)
     * [.openIndividualChart(e)](#module_DATA_LOAD.openIndividualChart)
@@ -252,17 +251,6 @@ parses a string into a JSON object and sends it to visualizeObject()
 | Param | Type | Description |
 | --- | --- | --- |
 | str | <code>string</code> | JSON data |
-
-<a name="module_DATA_LOAD.startDataSetLoading"></a>
-
-### DATA_LOAD.startDataSetLoading(e)
-called from a button to load a specific data set (name is in button's 'load-data' HTML property
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| e | <code>event</code> | click event |
 
 <a name="module_DATA_LOAD.loadHttpDataSet"></a>
 
