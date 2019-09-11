@@ -1,9 +1,7 @@
 /**
- * @file saves references to HTML nodes for later use
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
+ * @module NODE 
+ * @desc saves references to all HTML elements needed by the app
  */
-
-/** @module NODE */
 var NODE = {
         
     /* default HTML nodes */

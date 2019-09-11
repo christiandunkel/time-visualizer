@@ -1,9 +1,7 @@
-/**
- * @file manages the functionality of the elements in the navigation
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
+/** 
+ * @module NAV 
+ * @desc manages the events of elements in navigation
  */
-
-/** @module NAV */
 var NAV = {
     
     darkmode                : false,

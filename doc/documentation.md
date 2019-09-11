@@ -6,31 +6,38 @@
 
 <dl>
 <dt><a href="#module_COMPARE">COMPARE</a></dt>
-<dd></dd>
+<dd><p>manages the &#39;compare keys&#39; window</p>
+</dd>
 <dt><a href="#module_DATA">DATA</a></dt>
-<dd><p>holds all read and processed data</p>
+<dd><p>hold and processes data</p>
 </dd>
 <dt><a href="#module_NODE">NODE</a></dt>
-<dd></dd>
+<dd><p>saves references to all HTML elements needed by the app</p>
+</dd>
 <dt><a href="#module_FILE">FILE</a></dt>
 <dd><p>reads and validates the data from JSON data sets</p>
 </dd>
 <dt><a href="#module_DATA_LOAD">DATA_LOAD</a></dt>
 <dd></dd>
 <dt><a href="#module_MSG">MSG</a></dt>
-<dd><p>manages on-screen messages</p>
+<dd><p>manages overlay messages</p>
 </dd>
 <dt><a href="#module_NAV">NAV</a></dt>
-<dd></dd>
+<dd><p>manages the events of elements in navigation</p>
+</dd>
 <dt><a href="#module__">_</a></dt>
-<dd></dd>
+<dd><p>contains utility functions</p>
+</dd>
 <dt><a href="#module_ANIMATOR">ANIMATOR</a></dt>
-<dd></dd>
+<dd><p>animates the charts in respect to the elapsed time</p>
+</dd>
 </dl>
 
 <a name="module_COMPARE"></a>
 
 ## COMPARE
+manages the 'compare keys' window
+
 
 * [COMPARE](#module_COMPARE)
     * [.initialize()](#module_COMPARE.initialize)
@@ -84,7 +91,7 @@ handles the click on buttons in 'compare keys' window, and selects or unselects 
 <a name="module_DATA"></a>
 
 ## DATA
-holds all read and processed data
+hold and processes data
 
 <a name="module_DATA.setRange"></a>
 
@@ -101,6 +108,8 @@ sets the range for the animation
 <a name="module_NODE"></a>
 
 ## NODE
+saves references to all HTML elements needed by the app
+
 
 * [NODE](#module_NODE)
     * [.initializeDataLoadWindow()](#module_NODE.initializeDataLoadWindow)
@@ -348,7 +357,7 @@ generates an enlarged array of data values the animation data of a key
 <a name="module_MSG"></a>
 
 ## MSG
-manages on-screen messages
+manages overlay messages
 
 
 * [MSG](#module_MSG)
@@ -417,6 +426,8 @@ hides the current overlay message
 <a name="module_NAV"></a>
 
 ## NAV
+manages the events of elements in navigation
+
 
 * [NAV](#module_NAV)
     * [.initialize()](#module_NAV.initialize)
@@ -532,6 +543,8 @@ downloads 'individual chart' canvas as .png image
 <a name="module__"></a>
 
 ## \_
+contains utility functions
+
 
 * [_](#module__)
     * [.id(selector)](#module__.id) ⇒ <code>Object</code>
@@ -1245,6 +1258,8 @@ replaces a number if it exceeds the given upper or lower limit
 <a name="module_ANIMATOR"></a>
 
 ## ANIMATOR
+animates the charts in respect to the elapsed time
+
 
 * [ANIMATOR](#module_ANIMATOR)
     * [.initialize()](#module_ANIMATOR.initialize)

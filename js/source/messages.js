@@ -1,6 +1,6 @@
 /** 
  * @module MSG
- * @desc manages on-screen messages 
+ * @desc manages overlay messages 
  */
 var MSG = {
     

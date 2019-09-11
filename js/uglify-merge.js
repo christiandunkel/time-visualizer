@@ -2,10 +2,9 @@
  * execute using this command from the project root directory:
  * > node js/uglify-merge.js
  *
- * @file combines and minifies javascript source files into a single minified file
+ * @file combines and minifies javascript source files into one file
  * @requires NodeJS (nodejs.org)
  * @requires UglifyJS (npmjs.com/package/uglify-js)
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
 "use strict";
@@ -14,7 +13,7 @@
 let fs = require('fs');
 let path = require('path');
 
-// combine file content
+// files to combine in order
 let files_in_order = [
     'utils.js',
     'elements.js',
@@ -27,36 +26,33 @@ let files_in_order = [
     'main.js'
 ];
 
-// read all files in order and combine code
+// read files in order and combine their content into a string
 let total_code = '';
 files_in_order.forEach(file => {
-    
-    // get directory path to file
+    // add file content to total code
     let file_path = path.join(__dirname, 'source', file);
-    
-    // read file and add string to total code
     total_code += fs.readFileSync(file_path, 'utf-8');
-    
 });
 
-// minify using uglify component
+// minify total code using Uglify component
 let minified = require('uglify-js').minify(total_code, {
-    
     compress : {},
     mangle : {},
     output : {
         ast : false,
         code : true
     }
-    
 });
 
-// check if the minification failed
+// exit, if Uglify failed
 if (typeof(minified.code) === 'undefined') {
-    console.error('ERROR: Minified code equals "undefined". Uglify.js probably failed. Are there any ES6 components or errors in the source code?');
+    console.error('ERROR: Minified code equals "undefined". Uglify.js probably failed.\nAre there any ES6 components or errors in the source code?');
+    return;
 }
-else {
-    // create a single minified javascript file
-    let output_path = path.join(__dirname, 'minified.js');
-    fs.writeFileSync(output_path, minified.code, 'utf8'); 
-}
+
+// set file content and location
+let output_path = path.join(__dirname, 'minified.js');
+let final_code = '"use strict";' + minified.code;
+
+// create file
+fs.writeFileSync(output_path, final_code, 'utf8');

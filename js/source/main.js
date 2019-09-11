@@ -1,8 +1,3 @@
-/**
- * @file manages start up of the web app
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
- */
-
 // initialize the framework once all HTML content is ready
 _.onLoad(window, function () {
     

@@ -1,11 +1,7 @@
-/**
- * @file defines utility functions
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
+/** 
+ * @module _
+ * @desc contains utility functions
  */
-
-"use strict";
-
-/** @module _ */
 var _ = {
     
     /*

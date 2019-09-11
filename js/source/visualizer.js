@@ -1,9 +1,7 @@
 /**
- * @file manages the animation of the charts
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
+ * @module ANIMATOR
+ * @desc animates the charts in respect to the elapsed time
  */
-
-/** @module ANIMATOR */
 var ANIMATOR = {
     
     is_running : false,

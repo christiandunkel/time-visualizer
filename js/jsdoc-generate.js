@@ -2,11 +2,10 @@
  * execute using this command from the project root directory:
  * > node js/jsdoc-generate.js
  *
- * @file generates a JSDoc .md documentation for all javascript source files
+ * @file generates documentation file for javascript source files
  * @requires NodeJS (nodejs.org)
  * @requires JSDoc (npmjs.com/package/jsdoc)
  * @requires jsdoc-to-markdown (npmjs.com/package/jsdoc-to-markdown)
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
  */
 
 "use strict";
@@ -16,18 +15,17 @@ let fs = require('fs');
 let path = require('path');
 let file_path = path.join(__dirname, 'source', '*.js') + "";
 
-// generate documentation
+// generate documentation markdown
 const jsdoc2md = require('jsdoc-to-markdown');
-let markdown = jsdoc2md.renderSync({ files : file_path });
-
-// add file headline
-let documentation = `
+let markdown = `
 # Documentation
 [Back to main page](../README.md)
 
-`;
-documentation += markdown;
+` + 
+jsdoc2md.renderSync({
+    files : file_path
+});
 
-// create documentation markdown file
+// create markdown file
 let output_path = path.join(__dirname, '..', 'doc', 'documentation.md');
-fs.writeFileSync(output_path, documentation, 'utf8'); 
+fs.writeFileSync(output_path, markdown, 'utf8'); 

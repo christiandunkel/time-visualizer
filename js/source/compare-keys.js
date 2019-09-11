@@ -1,9 +1,7 @@
-/**
- * @file manages the window, that allows selecting keys that are to be compared in the individual chart
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
+/** 
+ * @module COMPARE 
+ * @desc manages the 'compare keys' window
  */
-
-/** @module COMPARE */
 var COMPARE = {
     
     /**

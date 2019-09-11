@@ -1,6 +1,6 @@
 /** 
  * @module DATA
- * @desc holds all read and processed data
+ * @desc hold and processes data
  */
 var DATA = {
     

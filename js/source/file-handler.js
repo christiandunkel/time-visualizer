@@ -1,8 +1,3 @@
-/**
- * @file manages loading JSON data online or via files using the 'data load window'
- * @license https://github.com/christiandunkel/time-visualizer/blob/master/LICENSE.md
- */
-
 /** 
  * @module FILE
  * @desc reads and validates the data from JSON data sets 
@@ -352,6 +347,10 @@ var DATA_LOAD = {
         
     },
     
+    
+    
+    /* FILE PROCESSING */
+    
     /**
      * @function
      * @memberof module:DATA_LOAD
@@ -439,7 +438,7 @@ var DATA_LOAD = {
     
     
     
-    /* LOAD DATA VIA HTTP REQUEST */
+    /* VIA HTTP REQUEST */
     
     /**
      * @function
