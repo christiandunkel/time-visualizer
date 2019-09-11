@@ -5,8 +5,14 @@
 ## Modules
 
 <dl>
-<dt><a href="#module_COMPARE">COMPARE</a></dt>
+<dt><a href="#module_ANIMATOR">ANIMATOR</a></dt>
+<dd><p>animates the charts in respect to the elapsed time</p>
+</dd>
+<dt><a href="#module_COMPARE_KEYS">COMPARE_KEYS</a></dt>
 <dd><p>manages the &#39;compare keys&#39; window</p>
+</dd>
+<dt><a href="#module_DATA_LOAD">DATA_LOAD</a></dt>
+<dd><p>manages the &#39;data load&#39; window</p>
 </dd>
 <dt><a href="#module_DATA">DATA</a></dt>
 <dd><p>hold and processes data</p>
@@ -17,8 +23,6 @@
 <dt><a href="#module_FILE">FILE</a></dt>
 <dd><p>reads and validates the data from JSON data sets</p>
 </dd>
-<dt><a href="#module_DATA_LOAD">DATA_LOAD</a></dt>
-<dd></dd>
 <dt><a href="#module_MSG">MSG</a></dt>
 <dd><p>manages overlay messages</p>
 </dd>
@@ -28,65 +32,355 @@
 <dt><a href="#module__">_</a></dt>
 <dd><p>contains utility functions</p>
 </dd>
-<dt><a href="#module_ANIMATOR">ANIMATOR</a></dt>
-<dd><p>animates the charts in respect to the elapsed time</p>
+<dt><a href="#module_VISUALIZER">VISUALIZER</a></dt>
+<dd><p>generates HTML elements for charts</p>
 </dd>
 </dl>
 
-<a name="module_COMPARE"></a>
+<a name="module_ANIMATOR"></a>
 
-## COMPARE
+## ANIMATOR
+animates the charts in respect to the elapsed time
+
+
+* [ANIMATOR](#module_ANIMATOR)
+    * [.initialize()](#module_ANIMATOR.initialize)
+    * [.setTime(time)](#module_ANIMATOR.setTime)
+    * [.setCSSTransitions()](#module_ANIMATOR.setCSSTransitions)
+    * [.setData(obj)](#module_ANIMATOR.setData)
+    * [.setColumns(obj)](#module_ANIMATOR.setColumns)
+    * [.setRatioParts(obj)](#module_ANIMATOR.setRatioParts)
+    * [.setInvidualChartKeys(keys)](#module_ANIMATOR.setInvidualChartKeys)
+    * [.addIndividualKey(key)](#module_ANIMATOR.addIndividualKey)
+    * [.removeIndividualKey(key)](#module_ANIMATOR.removeIndividualKey)
+    * [.hasIndividualKey(key)](#module_ANIMATOR.hasIndividualKey) ⇒ <code>boolean</code>
+    * [.startLoop()](#module_ANIMATOR.startLoop)
+    * [.stopLoop()](#module_ANIMATOR.stopLoop)
+    * [.play()](#module_ANIMATOR.play)
+    * [.pause()](#module_ANIMATOR.pause)
+    * [.restart()](#module_ANIMATOR.restart)
+    * [.end()](#module_ANIMATOR.end)
+    * [.stop()](#module_ANIMATOR.stop)
+    * [.formatNumber(num)](#module_ANIMATOR.formatNumber) ⇒ <code>string</code>
+    * [.update()](#module_ANIMATOR.update)
+    * [.refreshFrame()](#module_ANIMATOR.refreshFrame)
+    * [.updateColumnChart()](#module_ANIMATOR.updateColumnChart)
+    * [.updateColumnRatioChart()](#module_ANIMATOR.updateColumnRatioChart)
+    * [.updateIndividualCharts()](#module_ANIMATOR.updateIndividualCharts)
+    * [.drawIndividualKey(canvas, context, padding, color, min, max, data)](#module_ANIMATOR.drawIndividualKey)
+
+<a name="module_ANIMATOR.initialize"></a>
+
+### ANIMATOR.initialize()
+initializes the animator
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.setTime"></a>
+
+### ANIMATOR.setTime(time)
+sets the speed of the animation
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+
+| Param | Type |
+| --- | --- |
+| time | <code>number</code> | 
+
+<a name="module_ANIMATOR.setCSSTransitions"></a>
+
+### ANIMATOR.setCSSTransitions()
+sets CSS transition duration of animated elements
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.setData"></a>
+
+### ANIMATOR.setData(obj)
+sets the animation data points
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | data object |
+
+<a name="module_ANIMATOR.setColumns"></a>
+
+### ANIMATOR.setColumns(obj)
+sets the columns in the 'column chart'
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+
+| Param | Type |
+| --- | --- |
+| obj | <code>Object</code> | 
+
+<a name="module_ANIMATOR.setRatioParts"></a>
+
+### ANIMATOR.setRatioParts(obj)
+sets the animated parts in the 'ratio chart'
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+
+| Param | Type |
+| --- | --- |
+| obj | <code>Object</code> | 
+
+<a name="module_ANIMATOR.setInvidualChartKeys"></a>
+
+### ANIMATOR.setInvidualChartKeys(keys)
+sets keys, which are shown in the 'individual chart'
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| keys | <code>Array</code> | array containing key names |
+
+<a name="module_ANIMATOR.addIndividualKey"></a>
+
+### ANIMATOR.addIndividualKey(key)
+adds a key to be shown in the 'individual chart'
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | key name |
+
+<a name="module_ANIMATOR.removeIndividualKey"></a>
+
+### ANIMATOR.removeIndividualKey(key)
+removes a key from being shown in the 'individual chart'
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | key name |
+
+<a name="module_ANIMATOR.hasIndividualKey"></a>
+
+### ANIMATOR.hasIndividualKey(key) ⇒ <code>boolean</code>
+checks if a key is being shown in the 'individual chart'
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+**Returns**: <code>boolean</code> - true, if the key is in the list to be shown  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | key name |
+
+<a name="module_ANIMATOR.startLoop"></a>
+
+### ANIMATOR.startLoop()
+starts the animation loop
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.stopLoop"></a>
+
+### ANIMATOR.stopLoop()
+stops the animation loop
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.play"></a>
+
+### ANIMATOR.play()
+starts the animation
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.pause"></a>
+
+### ANIMATOR.pause()
+pauses the animation
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.restart"></a>
+
+### ANIMATOR.restart()
+restarts the animation
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.end"></a>
+
+### ANIMATOR.end()
+stops animation without resetting, freezes it in last frame (no 'unpause' possible)
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.stop"></a>
+
+### ANIMATOR.stop()
+stops animation and resets it to start state
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.formatNumber"></a>
+
+### ANIMATOR.formatNumber(num) ⇒ <code>string</code>
+formats a number to its shortened word equivalent, for example 1000000 to 1.0 Million
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+**Returns**: <code>string</code> - formatted number  
+
+| Param | Type |
+| --- | --- |
+| num | <code>number</code> | 
+
+<a name="module_ANIMATOR.update"></a>
+
+### ANIMATOR.update()
+called by loop every frame and starts the animation pipeline
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.refreshFrame"></a>
+
+### ANIMATOR.refreshFrame()
+refreshes rendered frame
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.updateColumnChart"></a>
+
+### ANIMATOR.updateColumnChart()
+updates 'column chart' for current frame
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.updateColumnRatioChart"></a>
+
+### ANIMATOR.updateColumnRatioChart()
+updates 'ratio chart' for current frame
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.updateIndividualCharts"></a>
+
+### ANIMATOR.updateIndividualCharts()
+updates 'individual chart' for current frame
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.drawIndividualKey"></a>
+
+### ANIMATOR.drawIndividualKey(canvas, context, padding, color, min, max, data)
+draws a single key in the 'individual chart' for current frame
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| canvas | <code>Object</code> | HTML node to drawing canvas |
+| context | <code>Object</code> | Context of drawing canvas |
+| padding | <code>Object</code> | Object holds 4 numbers for the padding on each site of the canvas |
+| color | <code>string</code> | HEX color code |
+| min | <code>number</code> | smallest value in data set |
+| max | <code>number</code> | biggest value in data set |
+| data | <code>Array</code> | data set of animation points for the key |
+
+<a name="module_COMPARE_KEYS"></a>
+
+## COMPARE\_KEYS
 manages the 'compare keys' window
 
 
-* [COMPARE](#module_COMPARE)
-    * [.initialize()](#module_COMPARE.initialize)
-    * [.open()](#module_COMPARE.open)
-    * [.close()](#module_COMPARE.close)
-    * [.createButtons()](#module_COMPARE.createButtons)
-    * [.orderButtons()](#module_COMPARE.orderButtons)
-    * [.moveButton(e)](#module_COMPARE.moveButton)
+* [COMPARE_KEYS](#module_COMPARE_KEYS)
+    * [.initialize()](#module_COMPARE_KEYS.initialize)
+    * [.openWindow()](#module_COMPARE_KEYS.openWindow)
+    * [.closeWindow()](#module_COMPARE_KEYS.closeWindow)
+    * [.createButtons()](#module_COMPARE_KEYS.createButtons)
+    * [.orderButtons()](#module_COMPARE_KEYS.orderButtons)
+    * [.moveButton(e)](#module_COMPARE_KEYS.moveButton)
 
-<a name="module_COMPARE.initialize"></a>
+<a name="module_COMPARE_KEYS.initialize"></a>
 
-### COMPARE.initialize()
+### COMPARE_KEYS.initialize()
 initializes the 'compare keys' window
 
-**Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
-<a name="module_COMPARE.open"></a>
+**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
+<a name="module_COMPARE_KEYS.openWindow"></a>
 
-### COMPARE.open()
+### COMPARE_KEYS.openWindow()
 opens the 'compare keys' window
 
-**Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
-<a name="module_COMPARE.close"></a>
+**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
+<a name="module_COMPARE_KEYS.closeWindow"></a>
 
-### COMPARE.close()
+### COMPARE_KEYS.closeWindow()
 closes the 'compare keys' window
 
-**Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
-<a name="module_COMPARE.createButtons"></a>
+**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
+<a name="module_COMPARE_KEYS.createButtons"></a>
 
-### COMPARE.createButtons()
+### COMPARE_KEYS.createButtons()
 creates the buttons in the 'compare keys' window
 
-**Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
-<a name="module_COMPARE.orderButtons"></a>
+**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
+<a name="module_COMPARE_KEYS.orderButtons"></a>
 
-### COMPARE.orderButtons()
+### COMPARE_KEYS.orderButtons()
 moves the buttons into the correct position in the 'compare keys' window
 
-**Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
-<a name="module_COMPARE.moveButton"></a>
+**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
+<a name="module_COMPARE_KEYS.moveButton"></a>
 
-### COMPARE.moveButton(e)
+### COMPARE_KEYS.moveButton(e)
 handles the click on buttons in 'compare keys' window, and selects or unselects the corresponding key for comparison in 'individual chart'
 
-**Kind**: static method of [<code>COMPARE</code>](#module_COMPARE)  
+**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | e | <code>event</code> | click event |
+
+<a name="module_DATA_LOAD"></a>
+
+## DATA\_LOAD
+manages the 'data load' window
+
+
+* [DATA_LOAD](#module_DATA_LOAD)
+    * [.initialize()](#module_DATA_LOAD.initialize)
+    * [.openWindow()](#module_DATA_LOAD.openWindow)
+    * [.closeWindow()](#module_DATA_LOAD.closeWindow)
+    * [.getDroppedFile(e)](#module_DATA_LOAD.getDroppedFile) ⇒ <code>Object</code>
+    * [.loadURL(url, [showConfirmation])](#module_DATA_LOAD.loadURL) ⇒ <code>Object</code>
+
+<a name="module_DATA_LOAD.initialize"></a>
+
+### DATA_LOAD.initialize()
+initializes the 'data load' window
+
+**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
+<a name="module_DATA_LOAD.openWindow"></a>
+
+### DATA_LOAD.openWindow()
+opens the 'data load' window
+
+**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
+<a name="module_DATA_LOAD.closeWindow"></a>
+
+### DATA_LOAD.closeWindow()
+closes the 'data load' window
+
+**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
+<a name="module_DATA_LOAD.getDroppedFile"></a>
+
+### DATA_LOAD.getDroppedFile(e) ⇒ <code>Object</code>
+gets dropped file from a drop event
+
+**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
+**Returns**: <code>Object</code> - file  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| e | <code>event</code> | drop event |
+
+<a name="module_DATA_LOAD.loadURL"></a>
+
+### DATA_LOAD.loadURL(url, [showConfirmation]) ⇒ <code>Object</code>
+loads a data set from an url (same origin)
+
+**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
+**Returns**: <code>Object</code> - request - XMLHttpRequest  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| url | <code>string</code> |  | link to JSON data set |
+| [showConfirmation] | <code>boolean</code> | <code>false</code> | set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window |
 
 <a name="module_DATA"></a>
 
@@ -146,6 +440,26 @@ adds missing references to HTML nodes
 ## FILE
 reads and validates the data from JSON data sets
 
+
+* [FILE](#module_FILE)
+    * [.highlightDropArea()](#module_FILE.highlightDropArea)
+    * [.unhighlightDropArea()](#module_FILE.unhighlightDropArea)
+    * [.isValidData(json)](#module_FILE.isValidData) ⇒ <code>boolean</code> \| <code>string</code>
+    * [.process(file)](#module_FILE.process)
+    * [.parseJSON(str)](#module_FILE.parseJSON) ⇒ <code>Object</code>
+
+<a name="module_FILE.highlightDropArea"></a>
+
+### FILE.highlightDropArea()
+adds the 'highlight' effect to the file drop area
+
+**Kind**: static method of [<code>FILE</code>](#module_FILE)  
+<a name="module_FILE.unhighlightDropArea"></a>
+
+### FILE.unhighlightDropArea()
+removes the 'highlight' effect from the file drop area
+
+**Kind**: static method of [<code>FILE</code>](#module_FILE)  
 <a name="module_FILE.isValidData"></a>
 
 ### FILE.isValidData(json) ⇒ <code>boolean</code> \| <code>string</code>
@@ -158,201 +472,27 @@ determines if the given data set is valid
 | --- | --- |
 | json | <code>Object</code> | 
 
-<a name="module_DATA_LOAD"></a>
+<a name="module_FILE.process"></a>
 
-## DATA\_LOAD
-
-* [DATA_LOAD](#module_DATA_LOAD)
-    * [.initialize()](#module_DATA_LOAD.initialize)
-    * [.open()](#module_DATA_LOAD.open)
-    * [.close()](#module_DATA_LOAD.close)
-    * [.initializeDropArea()](#module_DATA_LOAD.initializeDropArea)
-    * [.highlightDropArea()](#module_DATA_LOAD.highlightDropArea)
-    * [.unhighlightDropArea()](#module_DATA_LOAD.unhighlightDropArea)
-    * [.handleDroppedFile(e)](#module_DATA_LOAD.handleDroppedFile)
-    * [.handleSelectedFile(e)](#module_DATA_LOAD.handleSelectedFile)
-    * [.processFile(file)](#module_DATA_LOAD.processFile)
-    * [.parseJSON(str)](#module_DATA_LOAD.parseJSON)
-    * [.loadHttpDataSet(url, [showConfirmation])](#module_DATA_LOAD.loadHttpDataSet) ⇒ <code>Object</code>
-    * [.visualizeObject(obj, [showConfirmation])](#module_DATA_LOAD.visualizeObject)
-    * [.openIndividualChart(e)](#module_DATA_LOAD.openIndividualChart)
-    * [.getRatioChartPart(key, color, data, key_name, [icon_url])](#module_DATA_LOAD.getRatioChartPart) ⇒ <code>Object</code>
-    * [.getColumn(key, color, key_name, [icon_url])](#module_DATA_LOAD.getColumn) ⇒ <code>Object</code>
-    * [.getColumnColor(index)](#module_DATA_LOAD.getColumnColor) ⇒ <code>string</code>
-    * [.generateDataPointArray(data, from, to)](#module_DATA_LOAD.generateDataPointArray) ⇒ <code>Array</code>
-
-<a name="module_DATA_LOAD.initialize"></a>
-
-### DATA_LOAD.initialize()
-initializes the 'data load' window
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-<a name="module_DATA_LOAD.open"></a>
-
-### DATA_LOAD.open()
-opens the 'data load' window
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-<a name="module_DATA_LOAD.close"></a>
-
-### DATA_LOAD.close()
-closes the 'data load' window
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-<a name="module_DATA_LOAD.initializeDropArea"></a>
-
-### DATA_LOAD.initializeDropArea()
-initializes the file drop area in the 'data load' window
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-<a name="module_DATA_LOAD.highlightDropArea"></a>
-
-### DATA_LOAD.highlightDropArea()
-adds the 'highlight' effect to the file drop area
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-<a name="module_DATA_LOAD.unhighlightDropArea"></a>
-
-### DATA_LOAD.unhighlightDropArea()
-removes the 'highlight' effect from the file drop area
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-<a name="module_DATA_LOAD.handleDroppedFile"></a>
-
-### DATA_LOAD.handleDroppedFile(e)
-handles dropped file in drop area and sends it to processFile()
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| e | <code>event</code> | drop event |
-
-<a name="module_DATA_LOAD.handleSelectedFile"></a>
-
-### DATA_LOAD.handleSelectedFile(e)
-handles file from 'select button' in drop area and sends it to processFile()
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| e | <code>event</code> | event triggered as a file is selected |
-
-<a name="module_DATA_LOAD.processFile"></a>
-
-### DATA_LOAD.processFile(file)
+### FILE.process(file)
 reads a given file and sends the string to parseJSON()
 
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
+**Kind**: static method of [<code>FILE</code>](#module_FILE)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | file | <code>Object</code> | file reference |
 
-<a name="module_DATA_LOAD.parseJSON"></a>
+<a name="module_FILE.parseJSON"></a>
 
-### DATA_LOAD.parseJSON(str)
-parses a string into a JSON object and sends it to visualizeObject()
+### FILE.parseJSON(str) ⇒ <code>Object</code>
+parses a string into a JSON object
 
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
+**Kind**: static method of [<code>FILE</code>](#module_FILE)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | str | <code>string</code> | JSON data |
-
-<a name="module_DATA_LOAD.loadHttpDataSet"></a>
-
-### DATA_LOAD.loadHttpDataSet(url, [showConfirmation]) ⇒ <code>Object</code>
-request a data set from an url (must be same origin server!)
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-**Returns**: <code>Object</code> - request - XMLHttpRequest  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| url | <code>string</code> |  | link to JSON data set |
-| [showConfirmation] | <code>boolean</code> | <code>false</code> | set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window |
-
-<a name="module_DATA_LOAD.visualizeObject"></a>
-
-### DATA_LOAD.visualizeObject(obj, [showConfirmation])
-takes a 'data set' object and creates the HTML nodes need for the charts and sends the ANIMATOR object the right animation values
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| obj | <code>Object</code> |  | JSON data set as object |
-| [showConfirmation] | <code>boolean</code> | <code>false</code> | set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window |
-
-<a name="module_DATA_LOAD.openIndividualChart"></a>
-
-### DATA_LOAD.openIndividualChart(e)
-click event to open the individual chart for a column
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| e | <code>event</code> | click event |
-
-<a name="module_DATA_LOAD.getRatioChartPart"></a>
-
-### DATA_LOAD.getRatioChartPart(key, color, data, key_name, [icon_url]) ⇒ <code>Object</code>
-generates HTML node for data key of ratio chart
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-**Returns**: <code>Object</code> - HTML node for specific key of the ratio chart  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | key in data set |
-| color | <code>string</code> | HEX code with the color of this specific data key |
-| data | <code>Object</code> |  |
-| key_name | <code>string</code> | display name of key |
-| [icon_url] | <code>string</code> |  |
-
-<a name="module_DATA_LOAD.getColumn"></a>
-
-### DATA_LOAD.getColumn(key, color, key_name, [icon_url]) ⇒ <code>Object</code>
-generates HTML node for a key of column chart
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-**Returns**: <code>Object</code> - HTML node for specific key of the column chart  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | key in data set |
-| color | <code>string</code> | HEX code with the color of this specific data key |
-| key_name | <code>string</code> | display name of key |
-| [icon_url] | <code>string</code> |  |
-
-<a name="module_DATA_LOAD.getColumnColor"></a>
-
-### DATA_LOAD.getColumnColor(index) ⇒ <code>string</code>
-returns a HEX color code a selection of colors depending on the given index
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-**Returns**: <code>string</code> - HEX color code  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| index | <code>number</code> | must be integer |
-
-<a name="module_DATA_LOAD.generateDataPointArray"></a>
-
-### DATA_LOAD.generateDataPointArray(data, from, to) ⇒ <code>Array</code>
-generates an enlarged array of data values the animation data of a key
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-**Returns**: <code>Array</code> - animation values (50x the number of input data points)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>Object</code> | JSON data |
-| from | <code>number</code> | start data-point-key in data |
-| to | <code>number</code> | end data-point-key in data |
 
 <a name="module_MSG"></a>
 
@@ -1255,237 +1395,97 @@ replaces a number if it exceeds the given upper or lower limit
 | max | <code>number</code> | biggest the number is allowed to be |
 | [callback] | <code>function</code> | called if the number had been below or above the limit |
 
-<a name="module_ANIMATOR"></a>
+<a name="module_VISUALIZER"></a>
 
-## ANIMATOR
-animates the charts in respect to the elapsed time
+## VISUALIZER
+generates HTML elements for charts
 
 
-* [ANIMATOR](#module_ANIMATOR)
-    * [.initialize()](#module_ANIMATOR.initialize)
-    * [.setTime(time)](#module_ANIMATOR.setTime)
-    * [.setCSSTransitions()](#module_ANIMATOR.setCSSTransitions)
-    * [.setData(obj)](#module_ANIMATOR.setData)
-    * [.setColumns(obj)](#module_ANIMATOR.setColumns)
-    * [.setRatioParts(obj)](#module_ANIMATOR.setRatioParts)
-    * [.setInvidualChartKeys(keys)](#module_ANIMATOR.setInvidualChartKeys)
-    * [.addIndividualKey(key)](#module_ANIMATOR.addIndividualKey)
-    * [.removeIndividualKey(key)](#module_ANIMATOR.removeIndividualKey)
-    * [.hasIndividualKey(key)](#module_ANIMATOR.hasIndividualKey) ⇒ <code>boolean</code>
-    * [.startLoop()](#module_ANIMATOR.startLoop)
-    * [.stopLoop()](#module_ANIMATOR.stopLoop)
-    * [.play()](#module_ANIMATOR.play)
-    * [.pause()](#module_ANIMATOR.pause)
-    * [.restart()](#module_ANIMATOR.restart)
-    * [.end()](#module_ANIMATOR.end)
-    * [.stop()](#module_ANIMATOR.stop)
-    * [.formatNumber(num)](#module_ANIMATOR.formatNumber) ⇒ <code>string</code>
-    * [.update()](#module_ANIMATOR.update)
-    * [.refreshFrame()](#module_ANIMATOR.refreshFrame)
-    * [.updateColumnChart()](#module_ANIMATOR.updateColumnChart)
-    * [.updateColumnRatioChart()](#module_ANIMATOR.updateColumnRatioChart)
-    * [.updateIndividualCharts()](#module_ANIMATOR.updateIndividualCharts)
-    * [.drawIndividualKey(canvas, context, padding, color, min, max, data)](#module_ANIMATOR.drawIndividualKey)
+* [VISUALIZER](#module_VISUALIZER)
+    * [.createCharts(obj, [showConfirmation])](#module_VISUALIZER.createCharts)
+    * [.openIndividualChart(e)](#module_VISUALIZER.openIndividualChart)
+    * [.getRatioChartPart(key, color, data, key_name, [icon_url])](#module_VISUALIZER.getRatioChartPart) ⇒ <code>Object</code>
+    * [.getColumn(key, color, key_name, [icon_url])](#module_VISUALIZER.getColumn) ⇒ <code>Object</code>
+    * [.getColumnColor(index)](#module_VISUALIZER.getColumnColor) ⇒ <code>string</code>
+    * [.generateDataPointArray(data, from, to)](#module_VISUALIZER.generateDataPointArray) ⇒ <code>Array</code>
 
-<a name="module_ANIMATOR.initialize"></a>
+<a name="module_VISUALIZER.createCharts"></a>
 
-### ANIMATOR.initialize()
-initializes the animator
+### VISUALIZER.createCharts(obj, [showConfirmation])
+takes a 'data set' object and creates the HTML nodes need for the charts and sends the ANIMATOR object the right animation values
 
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.setTime"></a>
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
 
-### ANIMATOR.setTime(time)
-sets the speed of the animation
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| obj | <code>Object</code> |  | JSON data set as object |
+| [showConfirmation] | <code>boolean</code> | <code>false</code> | set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window |
 
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_VISUALIZER.openIndividualChart"></a>
 
-| Param | Type |
-| --- | --- |
-| time | <code>number</code> | 
+### VISUALIZER.openIndividualChart(e)
+click event to open the individual chart for a column
 
-<a name="module_ANIMATOR.setCSSTransitions"></a>
-
-### ANIMATOR.setCSSTransitions()
-sets CSS transition duration of animated elements
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.setData"></a>
-
-### ANIMATOR.setData(obj)
-sets the animation data points
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| obj | <code>Object</code> | data object |
+| e | <code>event</code> | click event |
 
-<a name="module_ANIMATOR.setColumns"></a>
+<a name="module_VISUALIZER.getRatioChartPart"></a>
 
-### ANIMATOR.setColumns(obj)
-sets the columns in the 'column chart'
+### VISUALIZER.getRatioChartPart(key, color, data, key_name, [icon_url]) ⇒ <code>Object</code>
+generates HTML node for data key of ratio chart
 
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-
-| Param | Type |
-| --- | --- |
-| obj | <code>Object</code> | 
-
-<a name="module_ANIMATOR.setRatioParts"></a>
-
-### ANIMATOR.setRatioParts(obj)
-sets the animated parts in the 'ratio chart'
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-
-| Param | Type |
-| --- | --- |
-| obj | <code>Object</code> | 
-
-<a name="module_ANIMATOR.setInvidualChartKeys"></a>
-
-### ANIMATOR.setInvidualChartKeys(keys)
-sets keys, which are shown in the 'individual chart'
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
+**Returns**: <code>Object</code> - HTML node for specific key of the ratio chart  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| keys | <code>Array</code> | array containing key names |
+| key | <code>string</code> | key in data set |
+| color | <code>string</code> | HEX code with the color of this specific data key |
+| data | <code>Object</code> |  |
+| key_name | <code>string</code> | display name of key |
+| [icon_url] | <code>string</code> |  |
 
-<a name="module_ANIMATOR.addIndividualKey"></a>
+<a name="module_VISUALIZER.getColumn"></a>
 
-### ANIMATOR.addIndividualKey(key)
-adds a key to be shown in the 'individual chart'
+### VISUALIZER.getColumn(key, color, key_name, [icon_url]) ⇒ <code>Object</code>
+generates HTML node for a key of column chart
 
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | key name |
-
-<a name="module_ANIMATOR.removeIndividualKey"></a>
-
-### ANIMATOR.removeIndividualKey(key)
-removes a key from being shown in the 'individual chart'
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
+**Returns**: <code>Object</code> - HTML node for specific key of the column chart  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| key | <code>string</code> | key name |
+| key | <code>string</code> | key in data set |
+| color | <code>string</code> | HEX code with the color of this specific data key |
+| key_name | <code>string</code> | display name of key |
+| [icon_url] | <code>string</code> |  |
 
-<a name="module_ANIMATOR.hasIndividualKey"></a>
+<a name="module_VISUALIZER.getColumnColor"></a>
 
-### ANIMATOR.hasIndividualKey(key) ⇒ <code>boolean</code>
-checks if a key is being shown in the 'individual chart'
+### VISUALIZER.getColumnColor(index) ⇒ <code>string</code>
+returns a HEX color code a selection of colors depending on the given index
 
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-**Returns**: <code>boolean</code> - true, if the key is in the list to be shown  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | key name |
-
-<a name="module_ANIMATOR.startLoop"></a>
-
-### ANIMATOR.startLoop()
-starts the animation loop
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.stopLoop"></a>
-
-### ANIMATOR.stopLoop()
-stops the animation loop
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.play"></a>
-
-### ANIMATOR.play()
-starts the animation
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.pause"></a>
-
-### ANIMATOR.pause()
-pauses the animation
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.restart"></a>
-
-### ANIMATOR.restart()
-restarts the animation
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.end"></a>
-
-### ANIMATOR.end()
-stops animation without resetting, freezes it in last frame (no 'unpause' possible)
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.stop"></a>
-
-### ANIMATOR.stop()
-stops animation and resets it to start state
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.formatNumber"></a>
-
-### ANIMATOR.formatNumber(num) ⇒ <code>string</code>
-formats a number to its shortened word equivalent, for example 1000000 to 1.0 Million
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-**Returns**: <code>string</code> - formatted number  
-
-| Param | Type |
-| --- | --- |
-| num | <code>number</code> | 
-
-<a name="module_ANIMATOR.update"></a>
-
-### ANIMATOR.update()
-called by loop every frame and starts the animation pipeline
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.refreshFrame"></a>
-
-### ANIMATOR.refreshFrame()
-refreshes rendered frame
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.updateColumnChart"></a>
-
-### ANIMATOR.updateColumnChart()
-updates 'column chart' for current frame
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.updateColumnRatioChart"></a>
-
-### ANIMATOR.updateColumnRatioChart()
-updates 'ratio chart' for current frame
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.updateIndividualCharts"></a>
-
-### ANIMATOR.updateIndividualCharts()
-updates 'individual chart' for current frame
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.drawIndividualKey"></a>
-
-### ANIMATOR.drawIndividualKey(canvas, context, padding, color, min, max, data)
-draws a single key in the 'individual chart' for current frame
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
+**Returns**: <code>string</code> - HEX color code  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| canvas | <code>Object</code> | HTML node to drawing canvas |
-| context | <code>Object</code> | Context of drawing canvas |
-| padding | <code>Object</code> | Object holds 4 numbers for the padding on each site of the canvas |
-| color | <code>string</code> | HEX color code |
-| min | <code>number</code> | smallest value in data set |
-| max | <code>number</code> | biggest value in data set |
-| data | <code>Array</code> | data set of animation points for the key |
+| index | <code>number</code> | must be integer |
+
+<a name="module_VISUALIZER.generateDataPointArray"></a>
+
+### VISUALIZER.generateDataPointArray(data, from, to) ⇒ <code>Array</code>
+generates an enlarged array of data values the animation data of a key
+
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
+**Returns**: <code>Array</code> - animation values (50x the number of input data points)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | JSON data |
+| from | <code>number</code> | start data-point-key in data |
+| to | <code>number</code> | end data-point-key in data |
 

@@ -1,42 +1,40 @@
 /** 
- * @module COMPARE 
+ * @module COMPARE_KEYS 
  * @desc manages the 'compare keys' window
  */
-var COMPARE = {
+var COMPARE_KEYS = {
     
     /**
      * @function
-     * @memberof module:COMPARE
+     * @memberof module:COMPARE_KEYS
      * @desc initializes the 'compare keys' window
      */
     initialize : function () {
         
-        // add event to open 'compare selection' window
-        _.onClick(NODE.compare_btn, this.open);
-        
-        // add 'close window' events
-        _.onClick(NODE.compare_selection.blur, this.close);
-        _.onClick(NODE.compare_selection.close_btn, this.close);
+        // events to open and close 'compare keys' window
+        _.onClick(NODE.compare_btn, this.openWindow);
+        _.onClick(NODE.compare_selection.blur, this.closeWindow);
+        _.onClick(NODE.compare_selection.close_btn, this.closeWindow);
         
     },
     
     /**
      * @function
-     * @memberof module:COMPARE
+     * @memberof module:COMPARE_KEYS
      * @desc opens the 'compare keys' window
      */
-    open : function () {
+    openWindow : function () {
         
-        if (typeof(COMPARE.CREATED_BUTTONS) === 'undefined') {
-            COMPARE.createButtons();
-            COMPARE.CREATED_BUTTONS = false;
+        if (typeof(COMPARE_KEYS.HAVE_CREATED_BUTTONS) === 'undefined') {
+            COMPARE_KEYS.createButtons();
+            COMPARE_KEYS.HAVE_CREATED_BUTTONS = true;
         }
         
         // open window
         _.addClass(NODE.compare_selection.window, 'visible');
         
         // clear areas and load current keys
-        COMPARE.orderButtons();
+        COMPARE_KEYS.orderButtons();
         
         // with a little delay, set tab focus on close button
         // if set immediately, will be ignored or buggy
@@ -48,10 +46,10 @@ var COMPARE = {
     
     /**
      * @function
-     * @memberof module:COMPARE
+     * @memberof module:COMPARE_KEYS
      * @desc closes the 'compare keys' window
      */
-    close : function () {
+    closeWindow : function () {
         
         // close window
         _.removeClass(NODE.compare_selection.window, 'visible');
@@ -67,7 +65,7 @@ var COMPARE = {
     
     /**
      * @function
-     * @memberof module:COMPARE
+     * @memberof module:COMPARE_KEYS
      * @desc creates the buttons in the 'compare keys' window
      */
     createButtons : function () {
@@ -89,7 +87,7 @@ var COMPARE = {
             });
             
             // add event to select / unselect key
-            _.onClick(btn, COMPARE.moveButton);
+            _.onClick(btn, COMPARE_KEYS.moveButton);
             
             // add to buttons array
             this.buttons[this.buttons.length] = btn;
@@ -103,7 +101,7 @@ var COMPARE = {
     
     /**
      * @function
-     * @memberof module:COMPARE
+     * @memberof module:COMPARE_KEYS
      * @desc moves the buttons into the correct position in the 'compare keys' window
      */
     orderButtons : function () {
@@ -133,7 +131,7 @@ var COMPARE = {
     
     /**
      * @function
-     * @memberof module:COMPARE
+     * @memberof module:COMPARE_KEYS
      * @desc handles the click on buttons in 'compare keys' window, and selects or unselects the corresponding key for comparison in 'individual chart'
      * @param {event} e - click event
      */

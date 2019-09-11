@@ -17,7 +17,7 @@ var NAV = {
     initialize : function () {
         
         // open 'data load' window
-        _.onClick(NODE.data_load_btn, DATA_LOAD.open);
+        _.onClick(NODE.data_load_btn, DATA_LOAD.openWindow);
         
         // toggle 'dark mode'
         _.onClick(NODE.darkmode_btn, this.toggleDarkMode);
@@ -44,7 +44,7 @@ var NAV = {
         // buttons in 'individual chart' menu
         _.onClick(NODE.back_to_column_chart_btn, NAV.showColumnChart);
         _.onClick(NODE.download_png_btn, NAV.downloadIndividualChart);
-        _.onClick(NODE.compare_btn, COMPARE.open);
+        _.onClick(NODE.compare_btn, COMPARE_KEYS.openWindow);
         
     },
     

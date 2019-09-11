@@ -15,21 +15,32 @@ let path = require('path');
 
 // files to combine in order
 let files_in_order = [
+    
+    // GENERAL
     'utils.js',
     'elements.js',
+    
+    // UI
     'messages.js',
     'navigation.js',
+    'data-load.js',
+    'compare-keys.js',
+    
+    // DATA & CHARTS
     'data.js',
     'file-handler.js',
-    'compare-keys.js',
     'visualizer.js',
+    'animator.js',
+    
+    // INITIALIZATION
     'main.js'
+    
 ];
 
 // read files in order and combine their content into a string
 let total_code = '';
 files_in_order.forEach(file => {
-    // add file content to total code
+    // read file and add content to total code
     let file_path = path.join(__dirname, 'source', file);
     total_code += fs.readFileSync(file_path, 'utf-8');
 });

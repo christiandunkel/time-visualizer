@@ -1,0 +1,199 @@
+/** 
+ * @module DATA_LOAD
+ * @desc manages the 'data load' window
+ */
+var DATA_LOAD = {
+    
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc initializes the 'data load' window
+     */
+    initialize : function () {
+        
+        var $ = NODE.data_load;
+        
+        // add 'close window' events
+        _.onClick($.blur, this.closeWindow);
+        _.onClick($.close_btn, this.closeWindow);
+        
+        // initialize 'example data' buttons
+        var btns = _.tag('button', $.example_sets_area);
+        var btns_num = btns.length;
+        for (var i = 0; i < btns_num; i++) {
+            // buttons load data set from URL on click 
+            _.onClick(btns[i], function (e) {
+                var btn = _.target(e);
+                var link = btn.getAttribute('load-data');
+                DATA_LOAD.loadURL('data/' + link + '.json', true);
+            });
+        }
+        
+        // initialize the drag'n'drop area for files in the window
+        
+        // warn user if FileReader API is not supported
+        if (!_.isFunction(window.FileReader)) {
+            // make warning visible
+            _.addClass($.notice, 'show');
+        }
+        
+        // prevent default browser actions on drag'n'drop
+        _.addEvent($.drop_area, 'dragenter', _.preventDefault);
+        _.addEvent($.drop_area, 'dragover', _.preventDefault);
+        _.addEvent($.drop_area, 'dragleave', _.preventDefault);
+        _.addEvent($.drop_area, 'drop', _.preventDefault);
+
+        // add highlight events, if user dragged file on top of area
+        _.addEvent($.drop_area, 'dragenter', this.highlightDropArea);
+        _.addEvent($.drop_area, 'dragover', this.highlightDropArea);
+
+        // unhighlight area if user's cursor with file left or dropped
+        _.addEvent($.drop_area, 'dragleave', this.unhighlightDropArea);
+        _.addEvent($.drop_area, 'drop', this.unhighlightDropArea);
+
+        // send dropped file to FILE for processing
+        _.addEvent($.drop_area, 'drop', function (e) {
+            var file = DATA_LOAD.getDroppedFile(e);
+            FILE.process(file);
+        });
+        
+        // send selected file to FILE for processing
+        _.addEvent($.select_file_input, 'change', function () {
+            var file = this.files[0];
+            FILE.process(file);
+        });
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc opens the 'data load' window
+     */
+    openWindow : function () {
+        
+        // open window
+        _.addClass(NODE.data_load.window, 'visible');
+        
+        // with a little delay, set tab focus on close button
+        // if set immediately, will be ignored or buggy
+        setTimeout(function () {
+            NODE.data_load.close_btn.focus();
+        }, 100);
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc closes the 'data load' window
+     */
+    closeWindow : function () {
+        
+        // close window
+        _.removeClass(NODE.data_load.window, 'visible');
+        
+        // close 'file selected' message inside window
+        _.removeClass(NODE.data_load.window, 'file-selected');
+        
+        // reset tab focus back to 'data load' button in navigation
+        NODE.data_load_btn.focus();
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:FILE
+     * @desc adds the 'highlight' effect to the file drop area
+     */
+    highlightDropArea : function () {
+        _.addClass(NODE.data_load.drop_area, 'dragged-over');
+    },
+    
+    /**
+     * @function
+     * @memberof module:FILE
+     * @desc removes the 'highlight' effect from the file drop area
+     */
+    unhighlightDropArea : function () {
+        _.removeClass(NODE.data_load.drop_area, 'dragged-over');
+    },
+    
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc gets dropped file from a drop event
+     * @param {event} e - drop event
+     * @return {Object} file
+     */
+    getDroppedFile : function (e) {
+        
+        _.preventDefault(e);
+
+        var hasItemsAPI = e.dataTransfer.items ? true : false;
+        var items = e.dataTransfer[hasItemsAPI ? 'items' : 'files']; 
+        var file = null;
+
+        if (items.length > 1) {
+            MSG.error('Do not drop multiple files!');
+            return;
+        }
+
+        if (hasItemsAPI) {
+
+            // exit, if it's not a file
+            if (items[0].kind !== 'file') {
+                MSG.error('Do only drop files!');
+                return;
+            }
+            
+            file = items[0].getAsFile();
+        }
+        else {
+            file = items[0];
+        }
+        
+        return file;
+        
+    },
+    
+    
+    
+    /* HTTP FILE LOADING */
+    
+    /**
+     * @function
+     * @memberof module:DATA_LOAD
+     * @desc loads a data set from an url (same origin)
+     * @param {string} url - link to JSON data set
+     * @param {boolean} [showConfirmation=false] - set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window
+     * @returns {Object} request - XMLHttpRequest
+     */
+    loadURL : function (url, showConfirmation) {
+        
+        // load example data set (only works on localhost or web server)
+        var request = new XMLHttpRequest();
+        request.open('GET', url);
+        request.send();
+
+        // when received, transform the JSON into a chart
+        request.onreadystatechange = function (e) {
+            
+            if (request.readyState === 4 && request.status === 200) {
+                
+                var json_text = request.responseText;
+
+                if (json_text != null && json_text != '') {
+                    var json_obj = _.parseJSON(json_text);
+                    VISUALIZER.createCharts(json_obj, showConfirmation);
+                }
+
+            }
+            
+        }
+        
+        return request;
+        
+    }
+    
+}

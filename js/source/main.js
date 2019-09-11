@@ -5,11 +5,11 @@ _.onLoad(window, function () {
     NODE.initialize();
     NAV.initialize();
     DATA_LOAD.initialize();
+    COMPARE_KEYS.initialize();
     ANIMATOR.initialize();
-    COMPARE.initialize();
 
     // load example data set into chart
-    var request = DATA_LOAD.loadHttpDataSet('data/example-data-set.json', false);
+    var request = DATA_LOAD.loadURL('data/example-data-set.json', false);
 
     // on failed http request, load error messages
     request.onerror = function () {
