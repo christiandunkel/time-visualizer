@@ -2514,6 +2514,8 @@ var DATA = {
      */
     setItems : function (obj) {
         
+        // reset items object
+        DATA.items = {};
         DATA.item_num = 0;
         
         for (var item in obj) {
@@ -2654,6 +2656,10 @@ var DATA = {
      */
     calculateFixedData : function () {
         
+        // reset fixed data object
+        DATA.fixed      = {};
+        DATA.fixed_num  = 0;
+        
         var obj = DATA.original;
         
         var data_points = {};
@@ -2720,8 +2726,8 @@ var DATA = {
             
         }
         
-        DATA.fixed = data_points;
-        DATA.fixed_num = Math.abs(DATA.to - DATA.from) + 1;
+        DATA.fixed      = data_points;
+        DATA.fixed_num  = Math.abs(DATA.to - DATA.from) + 1;
         
     },
     
@@ -2732,9 +2738,14 @@ var DATA = {
      */
     calculateUpscaledData : function () {
         
-        var toggle = 0;
-        var data_points = {};
-        var formatted = {}; // data point values as formatted strings
+        // reset data objects
+        DATA.upscaled       = {};
+        DATA.formatted      = {};
+        DATA.upscaled_num   = 0;
+        
+        var toggle          = 0;
+        var data_points     = {};
+        var formatted       = {}; // data point values as formatted strings
         
         for (var item in DATA.fixed) {
            
@@ -2789,8 +2800,8 @@ var DATA = {
             
         }
         
-        DATA.upscaled = data_points;
-        DATA.formatted = formatted;
+        DATA.upscaled   = data_points;
+        DATA.formatted  = formatted;
         
     },
     
@@ -2801,7 +2812,7 @@ var DATA = {
      */
     calculateStatistics : function () {
         
-        // empty current values
+        // reset current statistical values
         DATA.max    = {};
         DATA.min    = {};
         DATA.mean   = {};
