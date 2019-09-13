@@ -274,7 +274,7 @@
 
 
 
-// window to select keys for comparison
+// window to select items for comparison in line chart
 
 #compare-items-window {
     
@@ -312,7 +312,7 @@
             border-color: #222222;
         }
         
-        .comparison-key {
+        .comparison-item {
             padding-right: 28px;
             
             &:after {

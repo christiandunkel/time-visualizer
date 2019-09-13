@@ -528,7 +528,7 @@ adds missing references to HTML nodes for 'data load' window
 <a name="module_NODE.initializeCompareItemsWindow"></a>
 
 ### NODE.initializeCompareItemsWindow()
-adds missing references to HTML nodes for 'compare keys' window
+adds missing references to HTML nodes for 'compare items' window
 
 **Kind**: static method of [<code>NODE</code>](#module_NODE)  
 <a name="module_NODE.initializeBarChart"></a>

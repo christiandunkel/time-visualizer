@@ -93,7 +93,7 @@ var NODE = {
     /**
      * @function
      * @memberof module:NODE
-     * @desc adds missing references to HTML nodes for 'compare keys' window
+     * @desc adds missing references to HTML nodes for 'compare items' window
      */
     initializeCompareItemsWindow : function () {
         
@@ -104,7 +104,7 @@ var NODE = {
         // dark, transparent background overlay
         $.blur = _.class('blur', $.window)[0];
         
-        // areas holding keys
+        // areas holding item buttons
         $.unselected_area = _.class('unselected-area', $.window)[0];
         $.selected_area = _.class('selected-area', $.window)[0];
         
