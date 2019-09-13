@@ -1309,7 +1309,7 @@ var NODE = {
     
     
     
-    /* COLUMN CHART */
+    /* BAR CHART */
     
     chart_container_1           : _.id('chart-container-1'),
     
@@ -1359,12 +1359,12 @@ var NODE = {
     
     
     
-    /* INDIVIDUAL CHART */
+    /* LINE CHART */
     
     chart_container_2           : _.id('chart-container-2'),
     line_chart                  : _.id('line-chart'),
     
-    // custom navigation for individual chart
+    // custom navigation for line chart
     line_chart_menu             : _.id('line-chart-menu'),
     close_line_chart_btn       : _.id('close-line-chart'),
     download_png_btn            : _.id('download-line-chart'),
@@ -1559,9 +1559,9 @@ var NAV = {
         _.onClick(NODE.speed_selection.custom, NAV.showCustomSpeedMenu);
         _.onClick(NODE.speed_selection.close_custom, NAV.showDefinedSpeedMenu);
         
-        // buttons in 'individual chart' menu
+        // buttons in 'line chart' menu
         _.onClick(NODE.close_line_chart_btn, NAV.showBarChart);
-        _.onClick(NODE.download_png_btn, NAV.downloadIndividualChart);
+        _.onClick(NODE.download_png_btn, NAV.downloadLineChart);
         _.onClick(NODE.compare_btn, COMPARE_ITEMS.openWindow);
         
     },
@@ -1826,9 +1826,9 @@ var NAV = {
     /**
      * @function
      * @memberof module:NAV
-     * @desc downloads 'individual chart' canvas as .png image
+     * @desc downloads 'line chart' canvas as .png image
      */
-    downloadIndividualChart : function () {
+    downloadLineChart : function () {
         
         // get canvas as image data URI
         var image_URI = NODE.line_chart.toDataURL('image/png');
@@ -3855,7 +3855,7 @@ var ANIMATOR = {
     /**
      * @function
      * @memberof module:ANIMATOR
-     * @desc updates 'individual chart' for current frame
+     * @desc updates 'line chart' for current frame
      */
     updateLineChart : function () {
         

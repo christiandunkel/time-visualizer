@@ -163,7 +163,7 @@ updates 'ratio chart' values for current tick
 <a name="module_ANIMATOR.updateLineChart"></a>
 
 ### ANIMATOR.updateLineChart()
-updates 'individual chart' for current frame
+updates 'line chart' for current frame
 
 **Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
 <a name="module_ANIMATOR.drawLineGraph"></a>
@@ -738,7 +738,7 @@ manages the UI of the navigation area
     * [.setCustomSpeed(e)](#module_NAV.setCustomSpeed)
     * [.showCustomSpeedMenu()](#module_NAV.showCustomSpeedMenu)
     * [.showDefinedSpeedMenu()](#module_NAV.showDefinedSpeedMenu)
-    * [.downloadIndividualChart()](#module_NAV.downloadIndividualChart)
+    * [.downloadLineChart()](#module_NAV.downloadLineChart)
 
 <a name="module_NAV.initialize"></a>
 
@@ -831,10 +831,10 @@ shows 'custom speed' menu and hides 'defined speed' menu
 shows 'defined speed' menu and hides 'custom speed' menu
 
 **Kind**: static method of [<code>NAV</code>](#module_NAV)  
-<a name="module_NAV.downloadIndividualChart"></a>
+<a name="module_NAV.downloadLineChart"></a>
 
-### NAV.downloadIndividualChart()
-downloads 'individual chart' canvas as .png image
+### NAV.downloadLineChart()
+downloads 'line chart' canvas as .png image
 
 **Kind**: static method of [<code>NAV</code>](#module_NAV)  
 <a name="module__"></a>

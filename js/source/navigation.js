@@ -41,9 +41,9 @@ var NAV = {
         _.onClick(NODE.speed_selection.custom, NAV.showCustomSpeedMenu);
         _.onClick(NODE.speed_selection.close_custom, NAV.showDefinedSpeedMenu);
         
-        // buttons in 'individual chart' menu
+        // buttons in 'line chart' menu
         _.onClick(NODE.close_line_chart_btn, NAV.showBarChart);
-        _.onClick(NODE.download_png_btn, NAV.downloadIndividualChart);
+        _.onClick(NODE.download_png_btn, NAV.downloadLineChart);
         _.onClick(NODE.compare_btn, COMPARE_ITEMS.openWindow);
         
     },
@@ -308,9 +308,9 @@ var NAV = {
     /**
      * @function
      * @memberof module:NAV
-     * @desc downloads 'individual chart' canvas as .png image
+     * @desc downloads 'line chart' canvas as .png image
      */
-    downloadIndividualChart : function () {
+    downloadLineChart : function () {
         
         // get canvas as image data URI
         var image_URI = NODE.line_chart.toDataURL('image/png');

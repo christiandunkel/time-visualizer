@@ -398,7 +398,7 @@ var ANIMATOR = {
     /**
      * @function
      * @memberof module:ANIMATOR
-     * @desc updates 'individual chart' for current frame
+     * @desc updates 'line chart' for current frame
      */
     updateLineChart : function () {
         
