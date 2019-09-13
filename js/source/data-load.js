@@ -25,7 +25,7 @@ var DATA_LOAD = {
             _.onClick(btns[i], function (e) {
                 var btn = _.target(e);
                 var link = btn.getAttribute('load-data');
-                DATA_LOAD.loadURL('data/' + link + '.json', true);
+                FILE.loadURL('data/' + link + '.json', true);
             });
         }
         
@@ -154,45 +154,6 @@ var DATA_LOAD = {
         }
         
         return file;
-        
-    },
-    
-    
-    
-    /* HTTP FILE LOADING */
-    
-    /**
-     * @function
-     * @memberof module:DATA_LOAD
-     * @desc loads a data set from an url (same origin)
-     * @param {string} url - link to JSON data set
-     * @param {boolean} [showConfirmation=false] - set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window
-     * @returns {Object} request - XMLHttpRequest
-     */
-    loadURL : function (url, showConfirmation) {
-        
-        // load example data set (only works on localhost or web server)
-        var request = new XMLHttpRequest();
-        request.open('GET', url);
-        request.send();
-
-        // when received, transform the JSON into a chart
-        request.onreadystatechange = function (e) {
-            
-            if (request.readyState === 4 && request.status === 200) {
-                
-                var json_text = request.responseText;
-
-                if (json_text != null && json_text != '') {
-                    var json_obj = _.parseJSON(json_text);
-                    VISUALIZER.createCharts(json_obj, showConfirmation);
-                }
-
-            }
-            
-        }
-        
-        return request;
         
     }
     

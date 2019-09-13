@@ -24,7 +24,7 @@ let files_in_order = [
     'messages.js',
     'navigation.js',
     'data-load.js',
-    'compare-keys.js',
+    'compare-items.js',
     
     // DATA & CHARTS
     'data.js',
@@ -38,11 +38,11 @@ let files_in_order = [
 ];
 
 // read files in order and combine their content into a string
-let total_code = '';
+let total_code = '"use strict";';
 files_in_order.forEach(file => {
     // read file and add content to total code
     let file_path = path.join(__dirname, 'source', file);
-    total_code += fs.readFileSync(file_path, 'utf-8');
+    total_code += "\n\n\n\n\n\n" + fs.readFileSync(file_path, 'utf-8');
 });
 
 // minify total code using Uglify component
@@ -55,15 +55,16 @@ let minified = require('uglify-js').minify(total_code, {
     }
 });
 
-// exit, if Uglify failed
+// if Uglify failed, don't create a minified file
 if (typeof(minified.code) === 'undefined') {
     console.error('ERROR: Minified code equals "undefined". Uglify.js probably failed.\nAre there any ES6 components or errors in the source code?');
-    return;
+}
+else {
+    // create minified file
+    let filepath = path.join(__dirname, 'app.min.js');
+    fs.writeFileSync(filepath, minified.code, 'utf8');
 }
 
-// set file content and location
-let output_path = path.join(__dirname, 'minified.js');
-let final_code = '"use strict";' + minified.code;
-
-// create file
-fs.writeFileSync(output_path, final_code, 'utf8');
+// also create non-minified file
+let filepath = path.join(__dirname, 'app.js');
+fs.writeFileSync(filepath, total_code, 'utf8');

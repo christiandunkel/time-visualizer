@@ -22,7 +22,7 @@
         
         // tell CSS that Javascript is on
         (function () {
-            let html = document.getElementsByTagName('html')[0];
+            var html = document.getElementsByTagName('html')[0];
             html.className = html.className.replace(/javascriptOff/, 'javascriptOn');
         })();
         
@@ -53,7 +53,7 @@
         
         <header>
 
-            <img id="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAHlBMVEUAAAAwpP0wpP0wpP0wpP0wpP0wpP0wpP0wpP0wpP1zW2hpAAAACXRSTlMAOMj6hvPwciUnC3hiAAAAVElEQVRIx2MYEkAJNygAK5iJG8wgpGDiqIJBo8AArEAQN2AYNACXF6Y6EFAw04CQggmjCuilwIBwbA4hgOn+aQ6EEq0BIQUTRhXQS4EBodgcdKkRAOhgh/RWPu7QAAAAAElFTkSuQmCC" alt="Logo, that depicts three, differently sized, horizontal, blue columns." />
+            <img id="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAHlBMVEUAAAAwpP0wpP0wpP0wpP0wpP0wpP0wpP0wpP0wpP1zW2hpAAAACXRSTlMAOMj6hvPwciUnC3hiAAAAVElEQVRIx2MYEkAJNygAK5iJG8wgpGDiqIJBo8AArEAQN2AYNACXF6Y6EFAw04CQggmjCuilwIBwbA4hgOn+aQ6EEq0BIQUTRhXQS4EBodgcdKkRAOhgh/RWPu7QAAAAAElFTkSuQmCC" alt="Logo, that depicts three, differently sized, horizontal, blue bars." />
 
             <h1 id="title">
                 <span>Time</span>
@@ -181,7 +181,7 @@
     
     </div>
     
-    <div id="compare-selection-window" class="hidden-window">
+    <div id="compare-items-window" class="hidden-window">
     
         <div class="blur"></div>
         <div class="content">
@@ -192,11 +192,11 @@
             
             <div class="heading">Hidden keys:</div>
             
-            <div class="unselected-keys"></div>
+            <div class="unselected-area"></div>
             
             <div class="heading">Currently selected keys:</div>
             
-            <div class="selected-keys"></div>
+            <div class="selected-area"></div>
 
         </div>
         
@@ -227,7 +227,7 @@
             
             <div id="chart-container-1" class="active">
         
-                <!-- column chart -->
+                <!-- bar chart -->
                 
                 <div id="data-set-current-value" class="hidden">
                     <div class="container">
@@ -236,9 +236,9 @@
                     </div>
                 </div>
 
-                <div id="column-chart"></div>
+                <div id="bar-chart"></div>
                 
-                <!-- percentage ratio bar -->
+                <!-- ratio chart -->
                 
                 <div id="ratio-total" class="hidden"></div>
 
@@ -250,21 +250,21 @@
 
 
 
-            <!-- individual data chart -->
+            <!-- line chart -->
             
             <div id="chart-container-2">
             
-                <div id="individual-chart-menu">
+                <div id="line-chart-menu">
 
-                    <button id="close-individual-chart" title="Back to column chart">Back</button>
+                    <button id="close-line-chart" title="Back to bar chart">Back</button>
 
                     <button id="compare-btn" class="right" title="Compare key with other keys">Compare</button>
                     
-                    <button id="download-chart-as-image" class="right" title="Download chart as an image">Image</button>
+                    <button id="download-line-chart" class="right" title="Download chart as an image">Image</button>
 
                 </div>
 
-                <canvas id="individual-chart" width="1" height="500"></canvas>
+                <canvas id="line-chart" width="1" height="500"></canvas>
                 
             </div>
             
@@ -284,7 +284,7 @@
         
         <div id="chart-number-note">* Number names have been assigned using the <a href="https://en.wikipedia.org/wiki/Names_of_large_numbers">short scale</a> used in American -/ British English.</div>
         
-        <img id="bottom-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgBAMAAAAQtmoLAAAAIVBMVEWbm5sAAACbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5sRayXBAAAAC3RSTlOzAIwJakoUloI8VLlVwGoAAABnSURBVFjD7dAhDoAwEETRDao4IKQhKBQeyUE4ADdAcX5U21VkkMD/bsQzY+3DAIA7sG6pXQLxsFQtgdFyYVFAX0D1V+BePiXQuSmBxkoAwLdBnPKaJTCUFSTgJwAAAAAAAAAA8BJwAVcQosjI5lTSAAAAAElFTkSuQmCC" alt="Depicts three, differently sized, vertical, grey columns." />
+        <img id="bottom-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgBAMAAAAQtmoLAAAAIVBMVEWbm5sAAACbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5sRayXBAAAAC3RSTlOzAIwJakoUloI8VLlVwGoAAABnSURBVFjD7dAhDoAwEETRDao4IKQhKBQeyUE4ADdAcX5U21VkkMD/bsQzY+3DAIA7sG6pXQLxsFQtgdFyYVFAX0D1V+BePiXQuSmBxkoAwLdBnPKaJTCUFSTgJwAAAAAAAAAA8BJwAVcQosjI5lTSAAAAAElFTkSuQmCC" alt="Depicts three, differently sized, vertical, grey bar." />
         
         <div id="bottom-links">
             
@@ -302,7 +302,7 @@
     
     <!-- scripts -->
     
-    <script src="js/minified.js"></script>
+    <script src="js/app.min.js"></script>
     
 </body>
 

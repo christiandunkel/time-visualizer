@@ -8,14 +8,14 @@
 <dt><a href="#module_ANIMATOR">ANIMATOR</a></dt>
 <dd><p>animates the charts in respect to the elapsed time</p>
 </dd>
-<dt><a href="#module_COMPARE_KEYS">COMPARE_KEYS</a></dt>
-<dd><p>manages the &#39;compare keys&#39; window</p>
+<dt><a href="#module_COMPARE_ITEMS">COMPARE_ITEMS</a></dt>
+<dd><p>manages the &#39;compare items&#39; window</p>
 </dd>
 <dt><a href="#module_DATA_LOAD">DATA_LOAD</a></dt>
 <dd><p>manages the &#39;data load&#39; window</p>
 </dd>
 <dt><a href="#module_DATA">DATA</a></dt>
-<dd><p>hold and processes data</p>
+<dd><p>processes and saves data</p>
 </dd>
 <dt><a href="#module_NODE">NODE</a></dt>
 <dd><p>saves references to all HTML elements needed by the app</p>
@@ -23,11 +23,14 @@
 <dt><a href="#module_FILE">FILE</a></dt>
 <dd><p>reads and validates the data from JSON data sets</p>
 </dd>
+<dt><a href="#module_MAIN">MAIN</a></dt>
+<dd><p>contains main methods to initialize the web app</p>
+</dd>
 <dt><a href="#module_MSG">MSG</a></dt>
 <dd><p>manages overlay messages</p>
 </dd>
 <dt><a href="#module_NAV">NAV</a></dt>
-<dd><p>manages the events of elements in navigation</p>
+<dd><p>manages the UI of the navigation area</p>
 </dd>
 <dt><a href="#module__">_</a></dt>
 <dd><p>contains utility functions</p>
@@ -45,15 +48,8 @@ animates the charts in respect to the elapsed time
 
 * [ANIMATOR](#module_ANIMATOR)
     * [.initialize()](#module_ANIMATOR.initialize)
-    * [.setTime(time)](#module_ANIMATOR.setTime)
+    * [.setSpeed(speed)](#module_ANIMATOR.setSpeed)
     * [.setCSSTransitions()](#module_ANIMATOR.setCSSTransitions)
-    * [.setData(obj)](#module_ANIMATOR.setData)
-    * [.setColumns(obj)](#module_ANIMATOR.setColumns)
-    * [.setRatioParts(obj)](#module_ANIMATOR.setRatioParts)
-    * [.setInvidualChartKeys(keys)](#module_ANIMATOR.setInvidualChartKeys)
-    * [.addIndividualKey(key)](#module_ANIMATOR.addIndividualKey)
-    * [.removeIndividualKey(key)](#module_ANIMATOR.removeIndividualKey)
-    * [.hasIndividualKey(key)](#module_ANIMATOR.hasIndividualKey) ⇒ <code>boolean</code>
     * [.startLoop()](#module_ANIMATOR.startLoop)
     * [.stopLoop()](#module_ANIMATOR.stopLoop)
     * [.play()](#module_ANIMATOR.play)
@@ -61,13 +57,13 @@ animates the charts in respect to the elapsed time
     * [.restart()](#module_ANIMATOR.restart)
     * [.end()](#module_ANIMATOR.end)
     * [.stop()](#module_ANIMATOR.stop)
-    * [.formatNumber(num)](#module_ANIMATOR.formatNumber) ⇒ <code>string</code>
     * [.update()](#module_ANIMATOR.update)
     * [.refreshFrame()](#module_ANIMATOR.refreshFrame)
-    * [.updateColumnChart()](#module_ANIMATOR.updateColumnChart)
-    * [.updateColumnRatioChart()](#module_ANIMATOR.updateColumnRatioChart)
-    * [.updateIndividualCharts()](#module_ANIMATOR.updateIndividualCharts)
-    * [.drawIndividualKey(canvas, context, padding, color, min, max, data)](#module_ANIMATOR.drawIndividualKey)
+    * [.sortItems()](#module_ANIMATOR.sortItems)
+    * [.updateBarChart()](#module_ANIMATOR.updateBarChart)
+    * [.updateRatioChart()](#module_ANIMATOR.updateRatioChart)
+    * [.updateLineChart()](#module_ANIMATOR.updateLineChart)
+    * [.drawLineGraph(canvas, context, padding, item_id, min, max)](#module_ANIMATOR.drawLineGraph)
 
 <a name="module_ANIMATOR.initialize"></a>
 
@@ -75,101 +71,23 @@ animates the charts in respect to the elapsed time
 initializes the animator
 
 **Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.setTime"></a>
+<a name="module_ANIMATOR.setSpeed"></a>
 
-### ANIMATOR.setTime(time)
+### ANIMATOR.setSpeed(speed)
 sets the speed of the animation
 
 **Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
 
 | Param | Type |
 | --- | --- |
-| time | <code>number</code> | 
+| speed | <code>number</code> | 
 
 <a name="module_ANIMATOR.setCSSTransitions"></a>
 
 ### ANIMATOR.setCSSTransitions()
-sets CSS transition duration of animated elements
+sets CSS transition duration of animated HTML elements
 
 **Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.setData"></a>
-
-### ANIMATOR.setData(obj)
-sets the animation data points
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| obj | <code>Object</code> | data object |
-
-<a name="module_ANIMATOR.setColumns"></a>
-
-### ANIMATOR.setColumns(obj)
-sets the columns in the 'column chart'
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-
-| Param | Type |
-| --- | --- |
-| obj | <code>Object</code> | 
-
-<a name="module_ANIMATOR.setRatioParts"></a>
-
-### ANIMATOR.setRatioParts(obj)
-sets the animated parts in the 'ratio chart'
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-
-| Param | Type |
-| --- | --- |
-| obj | <code>Object</code> | 
-
-<a name="module_ANIMATOR.setInvidualChartKeys"></a>
-
-### ANIMATOR.setInvidualChartKeys(keys)
-sets keys, which are shown in the 'individual chart'
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| keys | <code>Array</code> | array containing key names |
-
-<a name="module_ANIMATOR.addIndividualKey"></a>
-
-### ANIMATOR.addIndividualKey(key)
-adds a key to be shown in the 'individual chart'
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | key name |
-
-<a name="module_ANIMATOR.removeIndividualKey"></a>
-
-### ANIMATOR.removeIndividualKey(key)
-removes a key from being shown in the 'individual chart'
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | key name |
-
-<a name="module_ANIMATOR.hasIndividualKey"></a>
-
-### ANIMATOR.hasIndividualKey(key) ⇒ <code>boolean</code>
-checks if a key is being shown in the 'individual chart'
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-**Returns**: <code>boolean</code> - true, if the key is in the list to be shown  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | key name |
-
 <a name="module_ANIMATOR.startLoop"></a>
 
 ### ANIMATOR.startLoop()
@@ -212,18 +130,6 @@ stops animation without resetting, freezes it in last frame (no 'unpause' possib
 stops animation and resets it to start state
 
 **Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.formatNumber"></a>
-
-### ANIMATOR.formatNumber(num) ⇒ <code>string</code>
-formats a number to its shortened word equivalent, for example 1000000 to 1.0 Million
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-**Returns**: <code>string</code> - formatted number  
-
-| Param | Type |
-| --- | --- |
-| num | <code>number</code> | 
-
 <a name="module_ANIMATOR.update"></a>
 
 ### ANIMATOR.update()
@@ -236,28 +142,34 @@ called by loop every frame and starts the animation pipeline
 refreshes rendered frame
 
 **Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.updateColumnChart"></a>
+<a name="module_ANIMATOR.sortItems"></a>
 
-### ANIMATOR.updateColumnChart()
-updates 'column chart' for current frame
-
-**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.updateColumnRatioChart"></a>
-
-### ANIMATOR.updateColumnRatioChart()
-updates 'ratio chart' for current frame
+### ANIMATOR.sortItems()
+sorts items by their current value in tick
 
 **Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.updateIndividualCharts"></a>
+<a name="module_ANIMATOR.updateBarChart"></a>
 
-### ANIMATOR.updateIndividualCharts()
+### ANIMATOR.updateBarChart()
+updates 'bar chart' values for current frame
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.updateRatioChart"></a>
+
+### ANIMATOR.updateRatioChart()
+updates 'ratio chart' values for current tick
+
+**Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
+<a name="module_ANIMATOR.updateLineChart"></a>
+
+### ANIMATOR.updateLineChart()
 updates 'individual chart' for current frame
 
 **Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
-<a name="module_ANIMATOR.drawIndividualKey"></a>
+<a name="module_ANIMATOR.drawLineGraph"></a>
 
-### ANIMATOR.drawIndividualKey(canvas, context, padding, color, min, max, data)
-draws a single key in the 'individual chart' for current frame
+### ANIMATOR.drawLineGraph(canvas, context, padding, item_id, min, max)
+draws a line graph for an item on the line chart
 
 **Kind**: static method of [<code>ANIMATOR</code>](#module_ANIMATOR)  
 
@@ -266,61 +178,109 @@ draws a single key in the 'individual chart' for current frame
 | canvas | <code>Object</code> | HTML node to drawing canvas |
 | context | <code>Object</code> | Context of drawing canvas |
 | padding | <code>Object</code> | Object holds 4 numbers for the padding on each site of the canvas |
-| color | <code>string</code> | HEX color code |
-| min | <code>number</code> | smallest value in data set |
-| max | <code>number</code> | biggest value in data set |
-| data | <code>Array</code> | data set of animation points for the key |
+| item_id | <code>string</code> |  |
+| min | <code>number</code> | smallest value of all items displayed in line chart |
+| max | <code>number</code> | biggest value of all items displayed in line chart |
 
-<a name="module_COMPARE_KEYS"></a>
+<a name="module_COMPARE_ITEMS"></a>
 
-## COMPARE\_KEYS
-manages the 'compare keys' window
+## COMPARE\_ITEMS
+manages the 'compare items' window
 
 
-* [COMPARE_KEYS](#module_COMPARE_KEYS)
-    * [.initialize()](#module_COMPARE_KEYS.initialize)
-    * [.openWindow()](#module_COMPARE_KEYS.openWindow)
-    * [.closeWindow()](#module_COMPARE_KEYS.closeWindow)
-    * [.createButtons()](#module_COMPARE_KEYS.createButtons)
-    * [.orderButtons()](#module_COMPARE_KEYS.orderButtons)
-    * [.moveButton(e)](#module_COMPARE_KEYS.moveButton)
+* [COMPARE_ITEMS](#module_COMPARE_ITEMS)
+    * [.setItemIds(ids)](#module_COMPARE_ITEMS.setItemIds)
+    * [.addItemId(id)](#module_COMPARE_ITEMS.addItemId)
+    * [.removeItemId(id)](#module_COMPARE_ITEMS.removeItemId)
+    * [.hasItemId(id)](#module_COMPARE_ITEMS.hasItemId) ⇒ <code>boolean</code>
+    * [.initialize()](#module_COMPARE_ITEMS.initialize)
+    * [.openWindow()](#module_COMPARE_ITEMS.openWindow)
+    * [.closeWindow()](#module_COMPARE_ITEMS.closeWindow)
+    * [.createButtons()](#module_COMPARE_ITEMS.createButtons)
+    * [.orderButtons()](#module_COMPARE_ITEMS.orderButtons)
+    * [.moveButton(e)](#module_COMPARE_ITEMS.moveButton)
 
-<a name="module_COMPARE_KEYS.initialize"></a>
+<a name="module_COMPARE_ITEMS.setItemIds"></a>
 
-### COMPARE_KEYS.initialize()
-initializes the 'compare keys' window
+### COMPARE_ITEMS.setItemIds(ids)
+sets items ids to compare in line chart
 
-**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
-<a name="module_COMPARE_KEYS.openWindow"></a>
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
 
-### COMPARE_KEYS.openWindow()
-opens the 'compare keys' window
+| Param | Type | Description |
+| --- | --- | --- |
+| ids | <code>Array</code> | array of item ids (strings) |
 
-**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
-<a name="module_COMPARE_KEYS.closeWindow"></a>
+<a name="module_COMPARE_ITEMS.addItemId"></a>
 
-### COMPARE_KEYS.closeWindow()
-closes the 'compare keys' window
+### COMPARE_ITEMS.addItemId(id)
+adds an items id to compare in line chart
 
-**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
-<a name="module_COMPARE_KEYS.createButtons"></a>
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
 
-### COMPARE_KEYS.createButtons()
-creates the buttons in the 'compare keys' window
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | item id |
 
-**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
-<a name="module_COMPARE_KEYS.orderButtons"></a>
+<a name="module_COMPARE_ITEMS.removeItemId"></a>
 
-### COMPARE_KEYS.orderButtons()
-moves the buttons into the correct position in the 'compare keys' window
+### COMPARE_ITEMS.removeItemId(id)
+removes an items id, not to compare in line chart
 
-**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
-<a name="module_COMPARE_KEYS.moveButton"></a>
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
 
-### COMPARE_KEYS.moveButton(e)
-handles the click on buttons in 'compare keys' window, and selects or unselects the corresponding key for comparison in 'individual chart'
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | item id |
 
-**Kind**: static method of [<code>COMPARE\_KEYS</code>](#module_COMPARE_KEYS)  
+<a name="module_COMPARE_ITEMS.hasItemId"></a>
+
+### COMPARE_ITEMS.hasItemId(id) ⇒ <code>boolean</code>
+check if an item is set to be compared in line chart
+
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
+**Returns**: <code>boolean</code> - true, if the item id is selected for comparison  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | item id |
+
+<a name="module_COMPARE_ITEMS.initialize"></a>
+
+### COMPARE_ITEMS.initialize()
+initializes the 'compare items' window
+
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
+<a name="module_COMPARE_ITEMS.openWindow"></a>
+
+### COMPARE_ITEMS.openWindow()
+opens the 'compare items' window
+
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
+<a name="module_COMPARE_ITEMS.closeWindow"></a>
+
+### COMPARE_ITEMS.closeWindow()
+closes the 'compare items' window
+
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
+<a name="module_COMPARE_ITEMS.createButtons"></a>
+
+### COMPARE_ITEMS.createButtons()
+creates the buttons in the 'compare items' window
+
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
+<a name="module_COMPARE_ITEMS.orderButtons"></a>
+
+### COMPARE_ITEMS.orderButtons()
+moves the buttons into the correct position in the window
+
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
+<a name="module_COMPARE_ITEMS.moveButton"></a>
+
+### COMPARE_ITEMS.moveButton(e)
+handles the click on buttons in window for (un-)selecting items for line chart
+
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -337,7 +297,6 @@ manages the 'data load' window
     * [.openWindow()](#module_DATA_LOAD.openWindow)
     * [.closeWindow()](#module_DATA_LOAD.closeWindow)
     * [.getDroppedFile(e)](#module_DATA_LOAD.getDroppedFile) ⇒ <code>Object</code>
-    * [.loadURL(url, [showConfirmation])](#module_DATA_LOAD.loadURL) ⇒ <code>Object</code>
 
 <a name="module_DATA_LOAD.initialize"></a>
 
@@ -369,23 +328,50 @@ gets dropped file from a drop event
 | --- | --- | --- |
 | e | <code>event</code> | drop event |
 
-<a name="module_DATA_LOAD.loadURL"></a>
-
-### DATA_LOAD.loadURL(url, [showConfirmation]) ⇒ <code>Object</code>
-loads a data set from an url (same origin)
-
-**Kind**: static method of [<code>DATA\_LOAD</code>](#module_DATA_LOAD)  
-**Returns**: <code>Object</code> - request - XMLHttpRequest  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| url | <code>string</code> |  | link to JSON data set |
-| [showConfirmation] | <code>boolean</code> | <code>false</code> | set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window |
-
 <a name="module_DATA"></a>
 
 ## DATA
-hold and processes data
+processes and saves data
+
+
+* [DATA](#module_DATA)
+    * [.set(obj)](#module_DATA.set)
+    * [.setItems(obj)](#module_DATA.setItems)
+    * [.setRange(from, to)](#module_DATA.setRange)
+    * [.setDataPoints(data)](#module_DATA.setDataPoints)
+    * [.getMax(item)](#module_DATA.getMax) ⇒ <code>Object</code>
+    * [.getMin(item)](#module_DATA.getMin) ⇒ <code>Object</code>
+    * [.getMean(item)](#module_DATA.getMean) ⇒ <code>Object</code>
+    * [.getTotalMax(index)](#module_DATA.getTotalMax) ⇒ <code>number</code>
+    * [.getTotalMin(index)](#module_DATA.getTotalMin) ⇒ <code>number</code>
+    * [.getTotalMean(index)](#module_DATA.getTotalMean) ⇒ <code>number</code>
+    * [.calculateFixedData()](#module_DATA.calculateFixedData)
+    * [.calculateUpscaledData()](#module_DATA.calculateUpscaledData)
+    * [.calculateStatistics()](#module_DATA.calculateStatistics)
+    * [.getItemColor(index)](#module_DATA.getItemColor) ⇒ <code>string</code>
+    * [.formatNumber(num)](#module_DATA.formatNumber) ⇒ <code>string</code>
+
+<a name="module_DATA.set"></a>
+
+### DATA.set(obj)
+sets all values for the data set
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | JSON data object |
+
+<a name="module_DATA.setItems"></a>
+
+### DATA.setItems(obj)
+sets all meta information of the items
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | object holding meta information about the items in the data set |
 
 <a name="module_DATA.setRange"></a>
 
@@ -396,8 +382,130 @@ sets the range for the animation
 
 | Param | Type | Description |
 | --- | --- | --- |
-| from | <code>number</code> | start data-point-key |
-| to | <code>number</code> | end data-point-key |
+| from | <code>number</code> | start time |
+| to | <code>number</code> | end time |
+
+<a name="module_DATA.setDataPoints"></a>
+
+### DATA.setDataPoints(data)
+sets the data points (original, fixed, upscaled)
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+
+| Param | Type |
+| --- | --- |
+| data | <code>Object</code> | 
+
+<a name="module_DATA.getMax"></a>
+
+### DATA.getMax(item) ⇒ <code>Object</code>
+returns the highest value of item's data points
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+**Returns**: <code>Object</code> - holding the maximum as 'value' and 'formatted'  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| item | <code>string</code> | item id |
+
+<a name="module_DATA.getMin"></a>
+
+### DATA.getMin(item) ⇒ <code>Object</code>
+returns the smallest value of item's data points
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+**Returns**: <code>Object</code> - holding the minimum as 'value' and 'formatted'  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| item | <code>string</code> | item id |
+
+<a name="module_DATA.getMean"></a>
+
+### DATA.getMean(item) ⇒ <code>Object</code>
+returns the mean average value of item's data points
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+**Returns**: <code>Object</code> - holding the mean average as 'value' and 'formatted'  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| item | <code>string</code> | item id |
+
+<a name="module_DATA.getTotalMax"></a>
+
+### DATA.getTotalMax(index) ⇒ <code>number</code>
+returns the highest value of all item at the index
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| index | <code>number</code> | tick |
+
+<a name="module_DATA.getTotalMin"></a>
+
+### DATA.getTotalMin(index) ⇒ <code>number</code>
+returns the smallest value of all item at the index
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| index | <code>number</code> | tick |
+
+<a name="module_DATA.getTotalMean"></a>
+
+### DATA.getTotalMean(index) ⇒ <code>number</code>
+returns the mean average value of all item at the index
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| index | <code>number</code> | tick |
+
+<a name="module_DATA.calculateFixedData"></a>
+
+### DATA.calculateFixedData()
+calculates an object with missing data values being filled in
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+<a name="module_DATA.calculateUpscaledData"></a>
+
+### DATA.calculateUpscaledData()
+calculates an object with data points increased to (item_num-1)*50+1
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+<a name="module_DATA.calculateStatistics"></a>
+
+### DATA.calculateStatistics()
+calculates the min, max and mean of all data point values for every item
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+<a name="module_DATA.getItemColor"></a>
+
+### DATA.getItemColor(index) ⇒ <code>string</code>
+returns a HEX color code from a limited selection; depends on given index
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+**Returns**: <code>string</code> - HEX color code  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| index | <code>number</code> | integer |
+
+<a name="module_DATA.formatNumber"></a>
+
+### DATA.formatNumber(num) ⇒ <code>string</code>
+formats a number to its shortened word equivalent, e.g. 1300000 -> "1.3 Million"
+
+**Kind**: static method of [<code>DATA</code>](#module_DATA)  
+**Returns**: <code>string</code> - formatted number  
+
+| Param | Type |
+| --- | --- |
+| num | <code>number</code> | 
 
 <a name="module_NODE"></a>
 
@@ -407,8 +515,8 @@ saves references to all HTML elements needed by the app
 
 * [NODE](#module_NODE)
     * [.initializeDataLoadWindow()](#module_NODE.initializeDataLoadWindow)
-    * [.initializeCompareSelectionWindow()](#module_NODE.initializeCompareSelectionWindow)
-    * [.initializeColumnChart()](#module_NODE.initializeColumnChart)
+    * [.initializeCompareItemsWindow()](#module_NODE.initializeCompareItemsWindow)
+    * [.initializeBarChart()](#module_NODE.initializeBarChart)
     * [.initialize()](#module_NODE.initialize)
 
 <a name="module_NODE.initializeDataLoadWindow"></a>
@@ -417,16 +525,16 @@ saves references to all HTML elements needed by the app
 adds missing references to HTML nodes for 'data load' window
 
 **Kind**: static method of [<code>NODE</code>](#module_NODE)  
-<a name="module_NODE.initializeCompareSelectionWindow"></a>
+<a name="module_NODE.initializeCompareItemsWindow"></a>
 
-### NODE.initializeCompareSelectionWindow()
+### NODE.initializeCompareItemsWindow()
 adds missing references to HTML nodes for 'compare keys' window
 
 **Kind**: static method of [<code>NODE</code>](#module_NODE)  
-<a name="module_NODE.initializeColumnChart"></a>
+<a name="module_NODE.initializeBarChart"></a>
 
-### NODE.initializeColumnChart()
-adds missing references to HTML nodes for 'column chart'
+### NODE.initializeBarChart()
+adds missing references to HTML nodes for 'bar chart'
 
 **Kind**: static method of [<code>NODE</code>](#module_NODE)  
 <a name="module_NODE.initialize"></a>
@@ -444,9 +552,10 @@ reads and validates the data from JSON data sets
 * [FILE](#module_FILE)
     * [.highlightDropArea()](#module_FILE.highlightDropArea)
     * [.unhighlightDropArea()](#module_FILE.unhighlightDropArea)
-    * [.isValidData(json)](#module_FILE.isValidData) ⇒ <code>boolean</code> \| <code>string</code>
+    * [.loadURL(url, [showConfirmation])](#module_FILE.loadURL) ⇒ <code>Object</code>
     * [.process(file)](#module_FILE.process)
-    * [.parseJSON(str)](#module_FILE.parseJSON) ⇒ <code>Object</code>
+    * [.getObjectFromJSON(str)](#module_FILE.getObjectFromJSON) ⇒ <code>Object</code>
+    * [.isValidData(json)](#module_FILE.isValidData) ⇒ <code>boolean</code> \| <code>string</code>
 
 <a name="module_FILE.highlightDropArea"></a>
 
@@ -460,22 +569,23 @@ adds the 'highlight' effect to the file drop area
 removes the 'highlight' effect from the file drop area
 
 **Kind**: static method of [<code>FILE</code>](#module_FILE)  
-<a name="module_FILE.isValidData"></a>
+<a name="module_FILE.loadURL"></a>
 
-### FILE.isValidData(json) ⇒ <code>boolean</code> \| <code>string</code>
-determines if the given data set is valid
+### FILE.loadURL(url, [showConfirmation]) ⇒ <code>Object</code>
+loads a data set from a URL (same origin)
 
 **Kind**: static method of [<code>FILE</code>](#module_FILE)  
-**Returns**: <code>boolean</code> - true, if data set is valid<code>string</code> - error message, if it's invalid  
+**Returns**: <code>Object</code> - request - XMLHttpRequest  
 
-| Param | Type |
-| --- | --- |
-| json | <code>Object</code> | 
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| url | <code>string</code> |  | link to JSON data set |
+| [showConfirmation] | <code>boolean</code> | <code>false</code> | set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window |
 
 <a name="module_FILE.process"></a>
 
 ### FILE.process(file)
-reads a given file and sends the string to parseJSON()
+reads a JSON file and sends the generated object to MAIN
 
 **Kind**: static method of [<code>FILE</code>](#module_FILE)  
 
@@ -483,9 +593,9 @@ reads a given file and sends the string to parseJSON()
 | --- | --- | --- |
 | file | <code>Object</code> | file reference |
 
-<a name="module_FILE.parseJSON"></a>
+<a name="module_FILE.getObjectFromJSON"></a>
 
-### FILE.parseJSON(str) ⇒ <code>Object</code>
+### FILE.getObjectFromJSON(str) ⇒ <code>Object</code>
 parses a string into a JSON object
 
 **Kind**: static method of [<code>FILE</code>](#module_FILE)  
@@ -494,6 +604,46 @@ parses a string into a JSON object
 | --- | --- | --- |
 | str | <code>string</code> | JSON data |
 
+<a name="module_FILE.isValidData"></a>
+
+### FILE.isValidData(json) ⇒ <code>boolean</code> \| <code>string</code>
+determines if the given data set is valid
+
+**Kind**: static method of [<code>FILE</code>](#module_FILE)  
+**Returns**: <code>boolean</code> - true, if data set is valid<code>string</code> - error message, if it's an invalid object  
+
+| Param | Type |
+| --- | --- |
+| json | <code>Object</code> | 
+
+<a name="module_MAIN"></a>
+
+## MAIN
+contains main methods to initialize the web app
+
+
+* [MAIN](#module_MAIN)
+    * [.initializeDataSet(str, [showConfirmation])](#module_MAIN.initializeDataSet)
+    * [.initialize()](#module_MAIN.initialize)
+
+<a name="module_MAIN.initializeDataSet"></a>
+
+### MAIN.initializeDataSet(str, [showConfirmation])
+takes a data set as a string, and initializes the web app with the values
+
+**Kind**: static method of [<code>MAIN</code>](#module_MAIN)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| str | <code>string</code> |  | JSON data as string |
+| [showConfirmation] | <code>boolean</code> | <code>false</code> | on true, shows a message that a 'data set' was loaded in 'data load' window |
+
+<a name="module_MAIN.initialize"></a>
+
+### MAIN.initialize()
+initializes all components of the web app and loads example data set
+
+**Kind**: static method of [<code>MAIN</code>](#module_MAIN)  
 <a name="module_MSG"></a>
 
 ## MSG
@@ -566,7 +716,7 @@ hides the current overlay message
 <a name="module_NAV"></a>
 
 ## NAV
-manages the events of elements in navigation
+manages the UI of the navigation area
 
 
 * [NAV](#module_NAV)
@@ -575,8 +725,8 @@ manages the events of elements in navigation
     * [.enableButton(btn)](#module_NAV.enableButton)
     * [.disableButton(btn)](#module_NAV.disableButton)
     * [.onlyEnableButton(btn)](#module_NAV.onlyEnableButton)
-    * [.showColumnChart()](#module_NAV.showColumnChart)
-    * [.showIndividualChart()](#module_NAV.showIndividualChart)
+    * [.showBarChart()](#module_NAV.showBarChart)
+    * [.showLineChart()](#module_NAV.showLineChart)
     * [.setSpeed(e)](#module_NAV.setSpeed)
     * [.setCustomSpeed(e)](#module_NAV.setCustomSpeed)
     * [.showCustomSpeedMenu()](#module_NAV.showCustomSpeedMenu)
@@ -628,16 +778,16 @@ sets a specific 'speed setter' button active and disables all others
 | --- | --- | --- |
 | btn | <code>Object</code> | HTML node |
 
-<a name="module_NAV.showColumnChart"></a>
+<a name="module_NAV.showBarChart"></a>
 
-### NAV.showColumnChart()
-shows the 'column chart' and hides the 'individual chart'
+### NAV.showBarChart()
+shows the 'bar chart' and hides the 'line chart'
 
 **Kind**: static method of [<code>NAV</code>](#module_NAV)  
-<a name="module_NAV.showIndividualChart"></a>
+<a name="module_NAV.showLineChart"></a>
 
-### NAV.showIndividualChart()
-shows the 'individual chart' and hides the 'column chart'
+### NAV.showLineChart()
+shows the 'line chart' and hides the 'bar chart'
 
 **Kind**: static method of [<code>NAV</code>](#module_NAV)  
 <a name="module_NAV.setSpeed"></a>
@@ -732,14 +882,17 @@ contains utility functions
     * [.escapeRegex(str)](#module__.escapeRegex) ⇒ <code>string</code>
     * [.encodeHTML(str)](#module__.encodeHTML) ⇒ <code>string</code>
     * [.decodeHTML(str)](#module__.decodeHTML) ⇒ <code>string</code>
+    * [.escapeDoubleQuotes(str)](#module__.escapeDoubleQuotes) ⇒ <code>string</code>
     * [.parseJSON(str)](#module__.parseJSON) ⇒ <code>Object</code>
-    * [.sortArrayObjects(arr, property, [descending])](#module__.sortArrayObjects) ⇒ <code>Array</code>
-    * [.isEmptyObject(obj)](#module__.isEmptyObject) ⇒ <code>boolean</code>
-    * [.getAverage(arr)](#module__.getAverage) ⇒ <code>number</code>
+    * [.getMean(arr)](#module__.getMean) ⇒ <code>number</code>
     * [.getMin(arr, [start_minimum])](#module__.getMin) ⇒ <code>number</code>
     * [.getMax(arr, [start_maximum])](#module__.getMax) ⇒ <code>number</code>
-    * [.removeArrayIndex(arr, index)](#module__.removeArrayIndex) ⇒ <code>Array</code>
     * [.limitNumber(num, min, max, [callback])](#module__.limitNumber) ⇒ <code>number</code>
+    * [.truncate(num)](#module__.truncate) ⇒ <code>number</code>
+    * [.sortArrayObjects(arr, property, [descending])](#module__.sortArrayObjects) ⇒ <code>Array</code>
+    * [.isEmptyObject(obj)](#module__.isEmptyObject) ⇒ <code>boolean</code>
+    * [.removeArrayIndex(arr, index)](#module__.removeArrayIndex) ⇒ <code>Array</code>
+    * [.getObjectSize(obj)](#module__.getObjectSize) ⇒ <code>number</code>
 
 <a name="module__.id"></a>
 
@@ -1291,6 +1444,17 @@ decodes HTML reserved characters in a string
 | --- | --- |
 | str | <code>string</code> | 
 
+<a name="module__.escapeDoubleQuotes"></a>
+
+### _.escapeDoubleQuotes(str) ⇒ <code>string</code>
+escapes the double quotes in a string
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+
+| Param | Type |
+| --- | --- |
+| str | <code>string</code> | 
+
 <a name="module__.parseJSON"></a>
 
 ### _.parseJSON(str) ⇒ <code>Object</code>
@@ -1303,36 +1467,10 @@ parses a string containing JSON data and returns it as an object
 | --- | --- | --- |
 | str | <code>string</code> | JSON string |
 
-<a name="module__.sortArrayObjects"></a>
+<a name="module__.getMean"></a>
 
-### _.sortArrayObjects(arr, property, [descending]) ⇒ <code>Array</code>
-sort array containing objects with the same key structure by the values of a given property
-
-**Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>Array</code> - sorted array  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| arr | <code>Array</code> |  | array containing objects with the same key structure |
-| property | <code>string</code> |  | property name (key) by which values to sort |
-| [descending] | <code>Array</code> | <code>false</code> | final order of sorted values |
-
-<a name="module__.isEmptyObject"></a>
-
-### _.isEmptyObject(obj) ⇒ <code>boolean</code>
-check if an object is empty
-
-**Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>boolean</code> - true, if the object is empty  
-
-| Param | Type |
-| --- | --- |
-| obj | <code>Object</code> | 
-
-<a name="module__.getAverage"></a>
-
-### _.getAverage(arr) ⇒ <code>number</code>
-returns the average of an array of number
+### _.getMean(arr) ⇒ <code>number</code>
+returns the mean average of an array of number
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 **Returns**: <code>number</code> - average of numbers  
@@ -1367,19 +1505,6 @@ returns the biggest number of an array of number
 | arr | <code>Array</code> |  | array of numbers |
 | [start_maximum] | <code>number</code> | <code>Number.MIN_VALUE</code> | returned number needs to be at least this big |
 
-<a name="module__.removeArrayIndex"></a>
-
-### _.removeArrayIndex(arr, index) ⇒ <code>Array</code>
-removes an index from an array
-
-**Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>Array</code> - array without this index  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| arr | <code>Array</code> |  |
-| index | <code>number</code> | index position to remove |
-
 <a name="module__.limitNumber"></a>
 
 ### _.limitNumber(num, min, max, [callback]) ⇒ <code>number</code>
@@ -1395,6 +1520,68 @@ replaces a number if it exceeds the given upper or lower limit
 | max | <code>number</code> | biggest the number is allowed to be |
 | [callback] | <code>function</code> | called if the number had been below or above the limit |
 
+<a name="module__.truncate"></a>
+
+### _.truncate(num) ⇒ <code>number</code>
+strips digits after comma from a number
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+**Returns**: <code>number</code> - truncated number  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| num | <code>number</code> | number to truncate |
+
+<a name="module__.sortArrayObjects"></a>
+
+### _.sortArrayObjects(arr, property, [descending]) ⇒ <code>Array</code>
+sort array containing objects with the same key structure by the values of a given property
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+**Returns**: <code>Array</code> - sorted array  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| arr | <code>Array</code> |  | array containing objects with the same key structure |
+| property | <code>string</code> |  | property name (key) by which values to sort |
+| [descending] | <code>Array</code> | <code>false</code> | final order of sorted values |
+
+<a name="module__.isEmptyObject"></a>
+
+### _.isEmptyObject(obj) ⇒ <code>boolean</code>
+check if an object is empty
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+**Returns**: <code>boolean</code> - true, if the object is empty  
+
+| Param | Type |
+| --- | --- |
+| obj | <code>Object</code> | 
+
+<a name="module__.removeArrayIndex"></a>
+
+### _.removeArrayIndex(arr, index) ⇒ <code>Array</code>
+removes an index from an array
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+**Returns**: <code>Array</code> - array without this index  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| arr | <code>Array</code> |  |
+| index | <code>number</code> | index position to remove |
+
+<a name="module__.getObjectSize"></a>
+
+### _.getObjectSize(obj) ⇒ <code>number</code>
+returns the amount of keys in an object
+
+**Kind**: static method of [<code>\_</code>](#module__)  
+
+| Param | Type |
+| --- | --- |
+| obj | <code>Object</code> | 
+
 <a name="module_VISUALIZER"></a>
 
 ## VISUALIZER
@@ -1402,90 +1589,49 @@ generates HTML elements for charts
 
 
 * [VISUALIZER](#module_VISUALIZER)
-    * [.createCharts(obj, [showConfirmation])](#module_VISUALIZER.createCharts)
-    * [.openIndividualChart(e)](#module_VISUALIZER.openIndividualChart)
-    * [.getRatioChartPart(key, color, data, key_name, [icon_url])](#module_VISUALIZER.getRatioChartPart) ⇒ <code>Object</code>
-    * [.getColumn(key, color, key_name, [icon_url])](#module_VISUALIZER.getColumn) ⇒ <code>Object</code>
-    * [.getColumnColor(index)](#module_VISUALIZER.getColumnColor) ⇒ <code>string</code>
-    * [.generateDataPointArray(data, from, to)](#module_VISUALIZER.generateDataPointArray) ⇒ <code>Array</code>
+    * [.createCharts()](#module_VISUALIZER.createCharts)
+    * [.getBar(item_id)](#module_VISUALIZER.getBar) ⇒ <code>Object</code>
+    * [.getRatioPart(item_id)](#module_VISUALIZER.getRatioPart) ⇒ <code>Object</code>
+    * [.openLineChartOnClick(event)](#module_VISUALIZER.openLineChartOnClick)
 
 <a name="module_VISUALIZER.createCharts"></a>
 
-### VISUALIZER.createCharts(obj, [showConfirmation])
-takes a 'data set' object and creates the HTML nodes need for the charts and sends the ANIMATOR object the right animation values
+### VISUALIZER.createCharts()
+creates the HTML nodes needed for the charts using current DATA
 
 **Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
+<a name="module_VISUALIZER.getBar"></a>
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| obj | <code>Object</code> |  | JSON data set as object |
-| [showConfirmation] | <code>boolean</code> | <code>false</code> | set to true, if a confirmation message that a 'data set' was loaded, should be shown in 'data load' window |
+### VISUALIZER.getBar(item_id) ⇒ <code>Object</code>
+generates HTML element for a item in the bar chart
 
-<a name="module_VISUALIZER.openIndividualChart"></a>
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
+**Returns**: <code>Object</code> - multiple HTML elements in object  
 
-### VISUALIZER.openIndividualChart(e)
-click event to open the individual chart for a column
+| Param | Type |
+| --- | --- |
+| item_id | <code>string</code> | 
+
+<a name="module_VISUALIZER.getRatioPart"></a>
+
+### VISUALIZER.getRatioPart(item_id) ⇒ <code>Object</code>
+generates HTML element for item in ratio chart
+
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
+**Returns**: <code>Object</code> - multiple HTML elements in object  
+
+| Param | Type |
+| --- | --- |
+| item_id | <code>string</code> | 
+
+<a name="module_VISUALIZER.openLineChartOnClick"></a>
+
+### VISUALIZER.openLineChartOnClick(event)
+called by a click event to open a specific line chart
 
 **Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| e | <code>event</code> | click event |
-
-<a name="module_VISUALIZER.getRatioChartPart"></a>
-
-### VISUALIZER.getRatioChartPart(key, color, data, key_name, [icon_url]) ⇒ <code>Object</code>
-generates HTML node for data key of ratio chart
-
-**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
-**Returns**: <code>Object</code> - HTML node for specific key of the ratio chart  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | key in data set |
-| color | <code>string</code> | HEX code with the color of this specific data key |
-| data | <code>Object</code> |  |
-| key_name | <code>string</code> | display name of key |
-| [icon_url] | <code>string</code> |  |
-
-<a name="module_VISUALIZER.getColumn"></a>
-
-### VISUALIZER.getColumn(key, color, key_name, [icon_url]) ⇒ <code>Object</code>
-generates HTML node for a key of column chart
-
-**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
-**Returns**: <code>Object</code> - HTML node for specific key of the column chart  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | key in data set |
-| color | <code>string</code> | HEX code with the color of this specific data key |
-| key_name | <code>string</code> | display name of key |
-| [icon_url] | <code>string</code> |  |
-
-<a name="module_VISUALIZER.getColumnColor"></a>
-
-### VISUALIZER.getColumnColor(index) ⇒ <code>string</code>
-returns a HEX color code a selection of colors depending on the given index
-
-**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
-**Returns**: <code>string</code> - HEX color code  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| index | <code>number</code> | must be integer |
-
-<a name="module_VISUALIZER.generateDataPointArray"></a>
-
-### VISUALIZER.generateDataPointArray(data, from, to) ⇒ <code>Array</code>
-generates an enlarged array of data values the animation data of a key
-
-**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
-**Returns**: <code>Array</code> - animation values (50x the number of input data points)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>Object</code> | JSON data |
-| from | <code>number</code> | start data-point-key in data |
-| to | <code>number</code> | end data-point-key in data |
+| event | <code>e</code> | click event |
 

@@ -5,29 +5,13 @@
 var ANIMATOR = {
     
     is_running : false,
-    time : 1.0,
+    speed : 1.0,
     
-    from : 0,
-    to : 0,
-    
-    current : 0,
+    // current update tick (frame)
+    tick : 0,
     
     // holds update loop interval
     loop : null,
-    
-    // object holding the animation data
-    data : {},
-    
-    // object holding references to column HTML nodes
-    columns : {},
-    column_num : 0,
-    pixels_between_columns : 52,
-    
-    // object holding references to the parts of the column ratio chart
-    ratio_parts : {},
-    ratio_parts_num : 0,
-    
-    individual_chart_keys : [],
     
     /**
      * @function
@@ -38,7 +22,7 @@ var ANIMATOR = {
         
         // canvas needs to be updated on size changes
         _.addEvent(window, 'resize', function () {
-            if (NAV.individual_chart_opened) {
+            if (NAV.line_chart_opened) {
                 ANIMATOR.refreshFrame();
             }
         });
@@ -53,19 +37,19 @@ var ANIMATOR = {
      * @function
      * @memberof module:ANIMATOR
      * @desc sets the speed of the animation
-     * @param {number} time
+     * @param {number} speed
      */
-    setTime : function (time) {
+    setSpeed : function (speed) {
         
-        this.time = time;
+        this.speed = speed;
         
-        // set loop to new time interval if it's currently running
+        // update loop to new speed if it's currently running
         if (this.is_running) {
             this.stopLoop();
             this.startLoop();
         }
         
-        // set new duration for transition effects on column meters
+        // updated length of transition effects on animated HTML elements
         this.setCSSTransitions();
         
     },
@@ -73,147 +57,34 @@ var ANIMATOR = {
     /**
      * @function
      * @memberof module:ANIMATOR
-     * @desc sets CSS transition duration of animated elements
+     * @desc sets CSS transition duration of animated HTML elements
      */
     setCSSTransitions : function () {
         
-        var transition_time = ((1 / this.time) / 5) + 's';
+        var duration = ((1 / this.speed) / 5) + 's';
         
-        // set CSS transition effects for animated column length
-        for (var column in this.columns) {
-            _.setStyles(this.columns[column].meter, {
-                'transition': transition_time
+        // go through all items
+        for (var item_id in DATA.html) {
+            
+            var item = DATA.html[item_id];
+            
+            // bar chart
+            _.setStyles(item.bar_chart.meter, {
+                'transition': duration
             });
+            
+            // ratio chart
+            _.setStyles(item.ratio_chart.container, {
+                'transition': duration
+            });
+            
         }
         
-        // set CSS transition effects for column ratio chart
-        for (var part in this.ratio_parts) {
-            _.setStyles(this.ratio_parts[part].container, {
-                'transition': transition_time
-            });
-        }
-        
-        // set CSS transition effects for time indicator
+        // transition of time indicator
         _.setStyles(NODE.current_value.indicator, {
-            'transition': transition_time
+            'transition': duration
         });
         
-    },
-    
-    /**
-     * @function
-     * @memberof module:ANIMATOR
-     * @desc sets the animation data points
-     * @param {Object} obj - data object
-     */
-    setData : function (obj) {
-        
-        // hold data object
-        this.data = obj;
-        
-        // get data point amount (same for every column)
-        var first_key = Object.keys(obj)[0];
-        this.data_point_num = obj[first_key].length;
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:ANIMATOR
-     * @desc sets the columns in the 'column chart'
-     * @param {Object} obj
-     */
-    setColumns : function (obj) {
-        
-        this.columns = obj;
-        this.column_num = Object.keys(obj).length;
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:ANIMATOR
-     * @desc sets the animated parts in the 'ratio chart'
-     * @param {Object} obj
-     */
-    setRatioParts : function (obj) {
-        
-        this.ratio_parts = obj;
-        this.ratio_parts_num = Object.keys(obj).length;
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:ANIMATOR
-     * @desc sets keys, which are shown in the 'individual chart'
-     * @param {Array} keys - array containing key names
-     */
-    setInvidualChartKeys : function (keys) {
-        this.individual_chart_keys = keys;
-    },
-    
-    /**
-     * @function
-     * @memberof module:ANIMATOR
-     * @desc adds a key to be shown in the 'individual chart'
-     * @param {string} key - key name
-     */
-    addIndividualKey : function (key) {
-        
-        if (!this.hasIndividualKey()) {
-            var len = this.individual_chart_keys.length;
-            this.individual_chart_keys[len] = key;
-        }
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:ANIMATOR
-     * @desc removes a key from being shown in the 'individual chart'
-     * @param {string} key - key name
-     */
-    removeIndividualKey : function (key) {
-            
-        var keys = this.individual_chart_keys;
-        var len = keys.length;
-
-        // go through all keys and find indexes of the desired key
-        // (should only be 1 index, but you can't be careful enough)
-        var indexes = [];
-        for (var i = 0; i < len; i++) {
-            if (keys[i] === key) {
-                indexes[indexes.length] = i;
-            }
-        }
-        
-        // remove the indexes from the array
-        var indexes_num = indexes.length;
-        for (var i = 0; i < indexes_num; i++) {
-            keys = _.removeArrayIndex(keys, indexes[i]);
-        }
-        
-        this.setInvidualChartKeys(keys);
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:ANIMATOR
-     * @desc checks if a key is being shown in the 'individual chart'
-     * @param {string} key - key name
-     * @returns {boolean} true, if the key is in the list to be shown
-     */
-    hasIndividualKey : function (key) {
-        var keys = this.individual_chart_keys.length;
-        var len = keys.length;
-        for (var i = 0; i < len; i++) {
-            if (keys[i] === key) {
-                return true;
-            }
-        }
-        return false;
     },
     
     
@@ -228,7 +99,7 @@ var ANIMATOR = {
     startLoop : function () {
         
         // milliseconds between updates
-        var interval = 80 / ANIMATOR.time;
+        var interval = 80 / ANIMATOR.speed;
         
         // start update loop
         ANIMATOR.loop = setInterval(ANIMATOR.update, interval);
@@ -292,7 +163,7 @@ var ANIMATOR = {
      * @desc restarts the animation
      */
     restart : function () {
-        ANIMATOR.current = 0;
+        ANIMATOR.tick = 0;
     },
     
     /**
@@ -304,7 +175,7 @@ var ANIMATOR = {
         
         // stop animation
         ANIMATOR.is_running = false;
-        ANIMATOR.current = 0;
+        ANIMATOR.tick = 0;
         
         // set classes for use in CSS styles
         _.removeClass(NODE.html, 'animation-playing');
@@ -321,90 +192,13 @@ var ANIMATOR = {
      */
     stop : function () {
         
-        if (ANIMATOR.current > 1) {
+        if (ANIMATOR.tick > 1) {
             MSG.show('Stopped animation.', 1000);
         }
         
         // end animation and reset current frame to start state
         ANIMATOR.end();
         ANIMATOR.update();
-        
-    },
-    
-    number_names : {
-        'Thousand' :          Math.pow(10, 3),
-        'Million' :           Math.pow(10, 6),
-        'Billion' :           Math.pow(10, 9),
-        'Trillion' :          Math.pow(10, 12),
-        'Quadrillion' :       Math.pow(10, 15),
-        'Quintillion' :       Math.pow(10, 18),
-        'Sextillion' :        Math.pow(10, 21),
-        'Septillion' :        Math.pow(10, 24),
-        'Octillion' :         Math.pow(10, 27),
-        'Nonillion' :         Math.pow(10, 30),
-        'Decillion' :         Math.pow(10, 33),
-        'Undecillion' :       Math.pow(10, 36),
-        'Duodecillion' :      Math.pow(10, 39),
-        'Tredecillion' :      Math.pow(10, 42),
-        'Quattuordecillion' : Math.pow(10, 45),
-        'Quindecillion' :     Math.pow(10, 48),
-        'Sexdecillion' :      Math.pow(10, 51),
-        'Septendecillion' :   Math.pow(10, 54),
-        'Octodecillion' :     Math.pow(10, 57),
-        'Novemdecillion' :    Math.pow(10, 60),
-        'Vigintillion' :      Math.pow(10, 63),
-        '*10^66' :            Math.pow(10, 66),
-        '*10^69' :            Math.pow(10, 69),
-        '*10^72' :            Math.pow(10, 72),
-        '*10^75' :            Math.pow(10, 75),
-        '*10^78' :            Math.pow(10, 78),
-        '*10^81' :            Math.pow(10, 81),
-        '*10^84' :            Math.pow(10, 84),
-        '*10^87' :            Math.pow(10, 87),
-        '*10^90' :            Math.pow(10, 90),
-        '*10^93' :            Math.pow(10, 93),
-        '*10^96' :            Math.pow(10, 96),
-        '*10^99' :            Math.pow(10, 99)
-    },
-    
-    /**
-     * @function
-     * @memberof module:ANIMATOR
-     * @desc formats a number to its shortened word equivalent, for example 1000000 to 1.0 Million
-     * @param {number} num
-     * @returns {string} formatted number
-     */
-    formatNumber : function (num) {
-        
-        var is_negative = num < 0 ? true : false;
-        var sign = is_negative ? '-' : '';
-        var word = '';
-        var short = 0;
-        
-        // make number positive for conversion (re-add minus symbol later)
-        if (is_negative) {
-            num *= -1;
-        }
-        
-        // if number is less than 1 thousand, don't change it
-        if (num < 1000) {
-            return sign + num;
-        }
-        
-        // go through number types and assign the most fitting one
-        for (var name in ANIMATOR.number_names) {
-            
-            var value = ANIMATOR.number_names[name];
-            
-            if (num >= value && num < value * 1000) {
-                // round to 1 digit after the comma and append describing name
-                return sign + Number(num / value).toFixed(1) + ' ' + name;
-            }
-            
-        }
-        
-        // if no fitting number name has been found, number is too large to display
-        return sign + '&infin;';
         
     },
     
@@ -415,20 +209,20 @@ var ANIMATOR = {
      */
     update : function () {
         
-        // never run on faulty data object
-        if (ANIMATOR.data == null) {
+        // never run on empty data object
+        if (_.isEmptyObject(DATA.upscaled)) {
             return;
         }
         
         // reset after one full round
-        if (ANIMATOR.current >= ANIMATOR.data_point_num) {
+        if (ANIMATOR.tick >= DATA.upscaled_num) {
             ANIMATOR.end();
             return;
         }
         
         ANIMATOR.refreshFrame();
         
-        ANIMATOR.current++;
+        ANIMATOR.tick++;
         
     },
     
@@ -440,69 +234,92 @@ var ANIMATOR = {
     refreshFrame : function () {
         
         // set current value
-        if (ANIMATOR.current % 50 == 0) {
-            var curr_val = parseInt(DATA.from) + (ANIMATOR.current == 0 ? 0 : ANIMATOR.current / 50);
+        if (ANIMATOR.tick % 50 == 0) {
+            var curr_val = parseInt(DATA.from) + (ANIMATOR.tick == 0 ? 0 : ANIMATOR.tick / 50);
             NODE.current_value.value.innerHTML = curr_val;
             NODE.current_value.indicator.innerHTML = curr_val;
         }
         // set current indicator's width
         _.setStyles(NODE.current_value.indicator, {
-            'width': (ANIMATOR.current % 50 * 2) + '%'
+            'width': (ANIMATOR.tick % 50 * 2) + '%'
         });
         
         // check what chart to update
-        if (NAV.individual_chart_opened) {
-            ANIMATOR.updateIndividualCharts();
+        if (NAV.line_chart_opened) {
+            ANIMATOR.updateLineChart();
         }
         else {
-            ANIMATOR.updateColumnChart();
-            ANIMATOR.updateColumnRatioChart();
+            ANIMATOR.sortItems();
+            ANIMATOR.updateBarChart();
+            ANIMATOR.updateRatioChart();
         }
+        
+    },
+    
+    // array with items sorted by their current value in tick
+    items_sorted : [],
+    
+    /**
+     * @function
+     * @memberof module:ANIMATOR
+     * @desc sorts items by their current value in tick
+     */
+    sortItems : function () {
+        
+        ANIMATOR.items_sorted = [];
+        
+        var unsorted = [];
+        var index = -1;
+        
+        for (var item_id in DATA.items) {
+            
+            index++;
+            
+            // get item id-value pairs
+            unsorted[index] = {
+                'id'    : item_id,
+                'value' : DATA.upscaled[item_id][ANIMATOR.tick]
+            };
+            
+        }
+        
+        ANIMATOR.items_sorted = _.sortArrayObjects(unsorted, 'value', true);
         
     },
     
     /**
      * @function
      * @memberof module:ANIMATOR
-     * @desc updates 'column chart' for current frame
+     * @desc updates 'bar chart' values for current frame
      */
-    updateColumnChart : function () {
+    updateBarChart : function () {
         
-        var $ = ANIMATOR;
+        // current frame
+        var tick = ANIMATOR.tick;
         
-        
-        /* COLUMN LENGTH AND VALUE */
-        
-        // get min and max value of current frame
-        var min = 0; // min must be 0 at least
-        var max = Number.MIN_VALUE;
-        // and get an array of all key value pairs (for later sorting)
-        var all_values = []
-        for (var key in $.data) {
-            var val = $.data[key][$.current];
-            if (val < min) min = val;
-            if (val > max) max = val;
-            
-            all_values[all_values.length] = {
-                'key' : key, 
-                'value' : val
-            };
+        // get total min and max for tick
+        var max = DATA.getTotalMax(tick);
+        var min = DATA.getTotalMin(tick);
+        // min must be 0 at least
+        if (min < 0) {
+            min = 0;
         }
-        
-        // increase diff between min and max
         var diff = max - min;
         
-        // go through all columns
-        for (var key in $.data) {
+        // for all items
+        for (var item_id in DATA.items) {
             
-            // set value to column
-            var curr = $.data[key][$.current];
-            $.columns[key].value.innerHTML = $.formatNumber(curr);
+            // get current value
+            var curr = DATA.upscaled[item_id][tick];
+            var formatted = DATA.formatted[item_id][tick];
             
-            // set column length
-            _.setStyles($.columns[key].meter, {
-                // (max - min) * x + min = curr
-                // --> x = width
+            // update HTML elements
+            var bar_chart = DATA.html[item_id].bar_chart;
+            bar_chart.value.innerHTML = formatted;
+            
+            // set bar length
+            _.setStyles(bar_chart.meter, {
+                // (max - min) * width + min = curr
                 'width' : (((curr - min) / (max - min)) * 100) + "%" 
             });
             
@@ -510,17 +327,23 @@ var ANIMATOR = {
         
         
         
-        /* COLUMN ORDER */
+        // order bars
+        for (var i = 0; i < DATA.item_num; i++) {
+
+            var item_id = ANIMATOR.items_sorted[i].id;
+            var container = DATA.html[item_id].bar_chart.container;
+            
+            // position order of HTML element
+            var position = DATA.items[item_id].position;
+            
+            // distance from one bar to another in bar chart
+            var pixel_dist = 52;
         
-        var sorted_values = _.sortArrayObjects(all_values, 'value', true);
-        
-        // move columns up and down to their new positions
-        for (var i = 0; i < $.column_num; i++) {
-            var column = $.columns[sorted_values[i].key];
-            var transform_by = (i - column.start_order) * $.pixels_between_columns;
-            _.setStyles(column.container, {
-                'transform': 'translate(0px, ' + transform_by + 'px)'
+            // move bar to its new position    
+            _.setStyles(container, {
+                'transform': 'translate(0, ' + ((i - position) * pixel_dist) + 'px)'
             });
+            
         }
         
     },
@@ -528,62 +351,45 @@ var ANIMATOR = {
     /**
      * @function
      * @memberof module:ANIMATOR
-     * @desc updates 'ratio chart' for current frame
+     * @desc updates 'ratio chart' values for current tick
      */
-    updateColumnRatioChart : function () {
+    updateRatioChart : function () {
         
-        var $ = ANIMATOR;
+        // get total of all data point values at current tick (index)
+        var total = DATA.total[ANIMATOR.tick];
+        // write value above ratio chart
+        NODE.ratio_chart_total.innerHTML = DATA.formatNumber(total);
         
-        // get total for current time
-        var total = 0;
-        for (var key in $.data) {
-            total += $.data[key][$.current];
-        }
-        
-        // set column total in line on top of ratio bar 
-        NODE.column_chart_total.innerHTML = ANIMATOR.formatNumber(total);
-        
-        // get ratio percentages
-        var order = [];
-        for (var key in $.data) {
+        // go through items in ratio chart (reversed order)
+        for (var i = DATA.item_num - 1; i >= 0; i--) {
             
-            var percentage = 100 / (total / $.data[key][$.current]);
+            // get item id by order
+            var item_id = ANIMATOR.items_sorted[i].id;
+            var item_data_point = DATA.upscaled[item_id][ANIMATOR.tick];
+            var percentage = 100 / (total / item_data_point);
+            var ratio_chart = DATA.html[item_id].ratio_chart;
             
-            order[order.length] = {
-                'key' : key, 
-                'value' : percentage
-            }
-            
-        }
-        var sorted_parts = _.sortArrayObjects(order, 'value');
-        
-        for (var i = 0; i < $.ratio_parts_num; i++) {
-            
-            var key = sorted_parts[i].key;
-            var percentage = sorted_parts[i].value;
-            var ratio_part = $.ratio_parts[key];
-            
-            // filter out parts smaller than 0.2%
+            // filter out percentages smaller than 0.2%
             if (percentage < 0.2) {
-                _.addClass(ratio_part.container, 'hidden');
+                _.addClass(ratio_chart.container, 'hidden');
                 continue;
             }
             else {
-                _.removeClass(ratio_part.container, 'hidden');
+                _.removeClass(ratio_chart.container, 'hidden');
             }
             
-            // set order of ratio parts
-            _.append(NODE.ratio_chart, ratio_part.container);
+            // place item in ratio chart in new position
+            _.append(NODE.ratio_chart, ratio_chart.container);
             
-            // make ratio part as wide as calculated percentage
-            _.setStyles(ratio_part.container, {
+            // make item as wide as percentage
+            _.setStyles(ratio_chart.container, {
                 'width' : percentage + '%'
             });
             
-            // set displayed percentage values on chart
-            var rounded_percentage = percentage.toFixed(1);
-            ratio_part.percentage.innerHTML = rounded_percentage + '%';
-            ratio_part.tooltip_percentage.innerHTML = rounded_percentage + '%';
+            // display percentage value on item
+            var rounded = percentage.toFixed(1) + '%';
+            ratio_chart.percentage.innerHTML            = rounded;
+            ratio_chart.tooltip_percentage.innerHTML    = rounded;
             
         }
         
@@ -594,121 +400,123 @@ var ANIMATOR = {
      * @memberof module:ANIMATOR
      * @desc updates 'individual chart' for current frame
      */
-    updateIndividualCharts : function () {
+    updateLineChart : function () {
         
-        var $ = ANIMATOR;
+        // get components
+        var canvas      = NODE.line_chart;
+        var context     = canvas.getContext('2d');
         
-        // get standard components and values
-        var canvas = NODE.individual_chart;
-        var context = canvas.getContext('2d');
-        var keys = $.individual_chart_keys;
+        // get items to display
+        var item_ids    = COMPARE_ITEMS.ids;
+        var item_num    = COMPARE_ITEMS.id_num;
         
-        // return if no keys are selected
-        if (keys == null) {
+        // return if no items are selected
+        if (item_num == 0) {
             canvas.width = 0;
             return;
         }
         
-        var key_num = $.individual_chart_keys.length;;
-        
         // reset canvas content, width and height
-        canvas.width = _.getWidth(NODE.individual_chart_menu);
-        canvas.height = 500 + (18 * (key_num - 1));
+        canvas.width    = _.getWidth(NODE.line_chart_menu);
+        canvas.height   = 500 + (18 * (item_num - 1));
         context.clearRect(0, 0, canvas.width, canvas.height);
         
-        // get total min and max values of the given columns (for y positions)
+        // get total min and max values of selected items
         var min = 0; // can't be higher than 0
         var max = Number.MIN_VALUE;
-        // go through all keys
-        for (var i = 0; i < key_num; i++) {
-            // go through all data points
-            for (var j = 0; j < $.data_point_num; j++) {
-                var key = keys[i];
-                var val = $.data[key][j];
-                if (val < min) min = val;
-                if (val > max) max = val;
-            }
+        for (var i = 0; i < item_num; i++) {
+            var id = item_ids[i];
+            var id_min = DATA.getMin(id).value;
+            if (id_min < min) {min = id_min;}
+            var id_max = DATA.getMax(id).value;
+            if (id_max > max) {max = id_max;}
         }
         
-        // define padding in canvas per side
+        // define padding on canvas
         var padding = {
-            top : 5,
-            left : 5,
-            bottom : 80,
-            right : 5
+            top     : 5,
+            left    : 5,
+            // extra space for every item in legend at bottom
+            bottom  : 80 + (18 * item_num), 
+            right   : null
         };
+        
+        
+        
+        /* LABELS RIGHT */
             
         // determine right-side labels with their respective lengths
-        var label_font = '12px Arial sans-serif';
-        var label_top = ANIMATOR.formatNumber(max) + '';
-        var label_bottom = ANIMATOR.formatNumber(min) + '';
-        context.font = label_font;
-        var label_top_width = context.measureText(label_top).width;
-        var label_bottom_width = context.measureText(label_bottom).width;
+        var label_font          = '12px Arial sans-serif';
+        var label_top           = DATA.formatNumber(max) + '';
+        var label_bottom        = DATA.formatNumber(min) + '';
+        context.font            = label_font;
+        var label_top_width     = context.measureText(label_top).width;
+        var label_bottom_width  = context.measureText(label_bottom).width;
         
         // adjust right-side padding according to the longer text of the two
-        var max_width = label_top_width;
-        if (max_width < label_bottom_width) max_width = label_bottom_width;
-        padding.right = padding.right + max_width + 15;
+        padding.right = label_top_width;
+        if (padding.right < label_bottom_width) {
+            padding.right = label_bottom_width;
+        }
+        padding.right += 15;
+        console.log(padding.right);
         
-        // reserve more space at bottom for additional keys in the legend 
-        padding.bottom = padding.bottom + 18 * key_num;
-        
-        // draw labels on right side
+        // draw right-side labels
+        var label_xpos = canvas.width - padding.right + 5;
         for (var i = 0; i < 2; i++) {
             
+            var label_text = i == 0 ? label_top : label_bottom;
+            var label_ypos = i == 0 ? padding.top : canvas.height - padding.bottom;
+            
             // prepare label text
-            context.font = label_font;
-            context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
-            context.textBaseline = i == 0 ? 'top' : 'bottom';
-            context.textAlign = 'left';
-            context.fillText(
-                i == 0 ? label_top : label_bottom, 
-                canvas.width - padding.right + 5, 
-                i == 0 ? padding.top : canvas.height - padding.bottom
-            );
+            context.font            = label_font;
+            context.fillStyle       = NAV.darkmode ? '#767676' : '#b5b5b5';
+            context.textBaseline    = i == 0 ? 'top' : 'bottom';
+            context.textAlign       = 'left';
+            context.fillText(label_text, label_xpos, label_ypos);
 
-            // draw on the canvas
+            // draw labels on canvas
             context.stroke();
+            
         }
         
         
+        
+        /* RASTER & LABELS BOTTOM */
+        
         var width_minus_padding = canvas.width - padding.left - padding.right;
-        var number_of_keys = (($.data_point_num - 1) / 50) + 1;
+        var label_y_pos         = canvas.height - padding.bottom + 20;
         
         // draw the raster
         for (var i = DATA.from; i <= DATA.to; i++) {
             
-            /* RASTER LINES */
-            
-            // set drawing color
-            context.strokeStyle = NAV.darkmode ? '#242424' : '#ededed';
-            
-            var x_pos = i == DATA.from ? 
-                padding.left : padding.left + (width_minus_padding * ((i - DATA.from) / (number_of_keys - 1)));
-            
-            // draw line
-            context.moveTo(x_pos, padding.top);
-            context.lineTo(x_pos, canvas.height - padding.bottom);
-        
-            // draw on the canvas
+            // draw raster line
+            var raster_color    = NAV.darkmode ? '#242424' : '#ededed';
+            var raster_x_pos    = i == DATA.from ? padding.left : 
+            padding.left + (width_minus_padding * ((i - DATA.from) / (DATA.fixed_num - 1)));
+            var raster_y1_pos   = padding.top;
+            var raster_y2_pos   = canvas.height - padding.bottom;
+            context.strokeStyle = raster_color;
+            context.moveTo(raster_x_pos, raster_y1_pos);
+            context.lineTo(raster_x_pos, raster_y2_pos);
             context.stroke();
             
             
             
-            /* LABELS BOTTOM */
-            
-            var limited_labels = false; // labels limited to right and left-most limits (lines)
-            
-            // get text and width (in pixels)
+            // get text and text width (in pixels)
             var text = i + '';
             var text_width = context.measureText(text).width;
             
-            // check if label text is small enough
+            // check if labels should be limited to right and left-most lines
+            var limited_labels = false;
+            
+            // cancel, if label text is too big too display
             if (text_width > 100) {
-                return;
+                continue;
             }
-            else if (text_width > 35) {
+            
+            // check if text is too big, so it will only be displayed at limits
+            if (text_width > 35) {
                 limited_labels = true;
             }
             // if text is well-sized, check window size (in pixels)
@@ -717,83 +525,86 @@ var ANIMATOR = {
             }
             
             // if labels are limited to only right and left-most limits,
-            // but current raster line is located in center -> return
-            if (limited_labels && DATA.from != i && DATA.to != i) {
+            // but current label is located somewhere in between -> cancel
+            if (limited_labels && 
+                DATA.from != i && 
+                DATA.to != i) {
                 continue;
             }
                 
-            // draw bottom labels
-            context.font = label_font;
-            context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
-            context.textBaseline = 'bottom';
-            
-            if (limited_labels) {
-                context.textAlign = (i == DATA.from ? 'left' : 'right');
-            }
-            else {
-                context.textAlign = (i == DATA.from ? 'left' : 'center');
-            }
-            
-            context.fillText(text, x_pos, canvas.height - padding.bottom + 20);
-
-            // draw on the canvas
+            // draw label at bottom of raster
+            context.font            = label_font;
+            context.fillStyle       = NAV.darkmode ? '#767676' : '#b5b5b5';
+            context.textBaseline    = 'bottom';
+            context.textAlign       = (i == DATA.from ? 'left' : 
+                                      (i == DATA.to ? 'right' : 'center'));
+            context.fillText(text, raster_x_pos, label_y_pos);
             context.stroke();
             
         }
+        
+        
+        
+        /* GRAPH & LEGEND */
         
         // draw legend headline
-        context.font = '14px Arial sans-serif';
-        context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
-        context.textBaseline = 'middle';
-        context.textAlign = 'left';
-        context.fillText('Legend', padding.left, canvas.height - padding.bottom + 50);
-
-        // draw on the canvas
+        var legend_font         = 'Arial sans-serif';
+        var legend_text_color   = NAV.darkmode ? '#767676' : '#b5b5b5';
+        var legend_x_pos        = padding.left;
+        var legend_y_pos        = canvas.height - padding.bottom + 50;
+        context.font            = '14px ' + legend_font;
+        context.fillStyle       = legend_text_color;
+        context.textBaseline    = 'middle';
+        context.textAlign       = 'left';
+        context.fillText('Legend', legend_x_pos, legend_y_pos);
         context.stroke();
         
-        // go through all keys and draw statistic
-        for (var i = 0; i < key_num; i++) {
+        // go through all items
+        for (var i = 0; i < item_num; i++) {
             
-            var key = keys[i];
-            var color = $.columns[key].color; // color from column meter
+            var item_id = COMPARE_ITEMS.ids[i];
             
-            // draw graph for key
-            $.drawIndividualKey(canvas, context, padding, color, min, max, $.data[key]);
+            // draw graph for item
+            ANIMATOR.drawLineGraph(canvas, context, padding, item_id, min, max);
             
-            // add key to legend
-            var y_pos = canvas.height - padding.bottom + 66 + (18 * i);
-            context.font = '12px Arial sans-serif';
-            context.fillStyle = NAV.darkmode ? '#767676' : '#b5b5b5';
-            context.textBaseline = 'top';
-            context.textAlign = 'left';
-            context.fillText($.columns[key].name, padding.left + 20, y_pos);
-
-            // draw on the canvas
+            // draw item in legend
+            var item_name           = DATA.items[item_id].name_escaped;
+            var item_x_pos          = padding.left + 20;
+            var item_y_pos          = canvas.height - padding.bottom + 66 + (18 * i);
+            context.font            = '12px ' + legend_font;
+            context.fillStyle       = legend_text_color;
+            context.textBaseline    = 'top';
+            context.textAlign       = 'left';
+            context.fillText(item_name, item_x_pos, item_y_pos);
             context.stroke();
             
-            // add colored rectangle in front of key in legend
-            context.rect(padding.left + 4, y_pos, 10, 10);
-            context.fillStyle = color;
-            context.fill();
-
-            // draw on the canvas
+            // add colored rectangle in front of the item in legend
+            var rect_color          = DATA.items[item_id].color;
+            var rect_x_pos          = padding.left + 4;
+            context.fillStyle       = rect_color;
+            context.fillRect(rect_x_pos, item_y_pos, 10, 10);
             context.stroke();
             
         }
         
-        // draw time indicator line
-        if ($.current != 0 && $.current != $.data_point_num - 1) {
-
-            // set drawing color
-            context.strokeStyle = '#e26565';
-            
-            var width_ratio = ($.current + 1) / $.data_point_num; // how far to the right is the current point
-            var x_pos = padding.left + width_minus_padding * width_ratio;
-            
-            context.moveTo(x_pos, padding.top);
-            context.lineTo(x_pos, canvas.height - padding.bottom);
         
-            // draw on the canvas
+        
+        /* TIME INDICATOR LINE */
+        
+        // if animated is not at start or end
+        if (ANIMATOR.tick != 0 && 
+            ANIMATOR.tick != DATA.upscaled_num - 1) {
+            
+            // how far to the right must the line be proportinal to the tick
+            var width_ratio = (ANIMATOR.tick + 1) / DATA.upscaled_num;
+            var line_x_pos  = padding.left + width_minus_padding * width_ratio;
+            var line_y1_pos = padding.top;
+            var line_y2_pos = canvas.height - padding.bottom;
+            
+            // draw line on the canvas
+            context.strokeStyle = '#ac6161';
+            context.moveTo(line_x_pos, line_y1_pos);
+            context.lineTo(line_x_pos, line_y2_pos);
             context.stroke();
             
         }
@@ -803,36 +614,33 @@ var ANIMATOR = {
     /**
      * @function
      * @memberof module:ANIMATOR
-     * @desc draws a single key in the 'individual chart' for current frame
+     * @desc draws a line graph for an item on the line chart
      * @param {Object} canvas - HTML node to drawing canvas
      * @param {Object} context - Context of drawing canvas
      * @param {Object} padding - Object holds 4 numbers for the padding on each site of the canvas
-     * @param {string} color - HEX color code
-     * @param {number} min - smallest value in data set
-     * @param {number} max - biggest value in data set
-     * @param {Array} data - data set of animation points for the key
+     * @param {string} item_id
+     * @param {number} min - smallest value of all items displayed in line chart
+     * @param {number} max - biggest value of all items displayed in line chart
      */
-    drawIndividualKey : function (canvas, context, padding, color, min, max, data) {
+    drawLineGraph : function (canvas, context, padding, item_id, min, max) {
         
-        // set drawing attributes
-        var point_radius = 2; // in pixels
-        var width_minus_padding = canvas.width - padding.left - padding.right;
-        var height_minus_padding = canvas.height - padding.top - padding.bottom;
+        // get attributes
+        var color                   = DATA.items[item_id].color;
+        var circle_angle            = 2 * Math.PI;
+        var circle_radius           = 2; // in pixels
+        var width_minus_padding     = canvas.width - padding.left - padding.right;
+        var height_minus_padding    = canvas.height - padding.top - padding.bottom;
         
-        // get all key data points (excludes the 49 points generated between them by the program)
+        // get points intersecting the raster lines (using fixed data)
         var points = [];
-        for (var i = 0; i <= ANIMATOR.data_point_num; i += 50) {
+        for (var i = 0; i < DATA.fixed_num; i++) {
                 
             // get x position of point
-            var width_ratio = 0;
-            if (i > 0) {
-                // how far to the right is the current point
-                width_ratio = i / (ANIMATOR.data_point_num - 1);
-            }
+            var width_ratio = i == 0 ? 0 : i / (DATA.fixed_num - 1);
             var x_pos = padding.left + width_minus_padding * width_ratio;
             
             // get y position of point
-            var percentage_to_top = (((data[i] - min) / (max - min)) * 100);
+            var percentage_to_top = (((DATA.fixed[item_id][i] - min) / (max - min)) * 100);
             var y_pos = canvas.height - padding.bottom;
             y_pos -= height_minus_padding / (100 / percentage_to_top);
             
@@ -843,39 +651,33 @@ var ANIMATOR = {
             };
                 
         }
-        
-        // get circle angles
-        var start_angle = 0;
-        var end_angle = 2 * Math.PI;
             
         // set drawing color
         context.strokeStyle = color;
         
-        // draw all elements
+        // draw all points for graph
         for (var i = 0; i < points.length; i++) {
             
-            // get coordinates of current point
-            var x = points[i].x;
-            var y = points[i].y;
+            // current point
+            var x_pos = points[i].x;
+            var y_pos = points[i].y;
 
-            // draw point
+            // draw a circle at point (is always intersection with raster)
             context.beginPath();
-            context.arc(x, y, point_radius, start_angle, end_angle);
-
-            // draw on the canvas
+            context.arc(x_pos, y_pos, circle_radius, 0, circle_angle);
             context.stroke();
             
-            // draw line between point and next point (except if already reached last point)
+            // draw line between point and next point,
+            // except if already reached last point
             if (i != points.length - 1) {
                 
                 // get coordinates of next point
                 var x_next = points[i + 1].x;
                 var y_next = points[i + 1].y;
                 
-                context.moveTo(x, y);
+                // draw line inbetween
+                context.moveTo(x_pos, y_pos);
                 context.lineTo(x_next, y_next);
-        
-                // draw on the canvas
                 context.stroke();
                 
             }

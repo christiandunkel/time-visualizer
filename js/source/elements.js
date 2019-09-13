@@ -22,7 +22,7 @@ var NODE = {
     stop_btn                    : _.id('stop-button'),
     
     // animation speed menu for custom speed input
-    time_selection : {
+    speed_selection : {
         container_1             : _.id('pre-defined-speed'),
         container_2             : _.id('custom-speed'),
         input                   : _.id('custom-speed-input'),
@@ -31,7 +31,7 @@ var NODE = {
     },
     
     // animation speed menu with pre-defined buttons
-    time_btn : {
+    speed_btn : {
         slow                    : _.id('half-speed'),
         normal                  : _.id('normal-speed'),
         fast                    : _.id('double-speed')
@@ -79,14 +79,14 @@ var NODE = {
     
     /* 'compare selection' window */
     
-    compare_selection : {
+    compare_items : {
         
-        window                  : _.id('compare-selection-window'),
+        window                  : _.id('compare-items-window'),
         close_btn               : null,
         blur                    : null,
         
-        unselected_keys         : null,
-        selected_keys           : null
+        unselected_area         : null,
+        selected_area           : null
         
     },
     
@@ -95,9 +95,9 @@ var NODE = {
      * @memberof module:NODE
      * @desc adds missing references to HTML nodes for 'compare keys' window
      */
-    initializeCompareSelectionWindow : function () {
+    initializeCompareItemsWindow : function () {
         
-        var $ = this.compare_selection;
+        var $ = this.compare_items;
         
         $.close_btn = _.class('close', $.window)[0];
         
@@ -105,11 +105,11 @@ var NODE = {
         $.blur = _.class('blur', $.window)[0];
         
         // areas holding keys
-        $.unselected_keys = _.class('unselected-keys', $.window)[0];
-        $.selected_keys = _.class('selected-keys', $.window)[0];
+        $.unselected_area = _.class('unselected-area', $.window)[0];
+        $.selected_area = _.class('selected-area', $.window)[0];
         
         // remove function from memory
-        delete this.initializeCompareSelectionWindow;
+        delete this.initializeCompareItemsWindow;
         
     },
     
@@ -131,19 +131,19 @@ var NODE = {
         title                   : null,
         date                    : null
     },
-    column_chart                : _.id('column-chart'),
+    bar_chart                   : _.id('bar-chart'),
     
-    // column ratio chart below column chart
-    column_chart_total          : _.id('ratio-total'),
+    // ratio chart below bar chart
+    ratio_chart_total           : _.id('ratio-total'),
     ratio_chart_container       : _.id('ratio-chart'),
     ratio_chart                 : null,
     
     /**
      * @function
      * @memberof module:NODE
-     * @desc adds missing references to HTML nodes for 'column chart'
+     * @desc adds missing references to HTML nodes for 'bar chart'
      */
-    initializeColumnChart : function () {
+    initializeBarChart : function () {
         
         // get elements of data set info header
         var context = _.id('data-set-info');
@@ -159,7 +159,7 @@ var NODE = {
         this.ratio_chart = _.tag('tr', this.ratio_chart_container)[0];
         
         // remove function from memory
-        delete this.initializeColumnChart;
+        delete this.initializeBarChart;
         
     },
     
@@ -168,12 +168,12 @@ var NODE = {
     /* INDIVIDUAL CHART */
     
     chart_container_2           : _.id('chart-container-2'),
-    individual_chart            : _.id('individual-chart'),
+    line_chart                  : _.id('line-chart'),
     
     // custom navigation for individual chart
-    individual_chart_menu       : _.id('individual-chart-menu'),
-    back_to_column_chart_btn    : _.id('close-individual-chart'),
-    download_png_btn            : _.id('download-chart-as-image'),
+    line_chart_menu             : _.id('line-chart-menu'),
+    close_line_chart_btn       : _.id('close-line-chart'),
+    download_png_btn            : _.id('download-line-chart'),
     compare_btn                 : _.id('compare-btn'),
     
     
@@ -188,8 +188,8 @@ var NODE = {
     initialize : function () {
         
         this.initializeDataLoadWindow();
-        this.initializeColumnChart();
-        this.initializeCompareSelectionWindow();
+        this.initializeBarChart();
+        this.initializeCompareItemsWindow();
         
         // remove function from memory
         delete this.initialize;

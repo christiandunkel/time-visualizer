@@ -62,7 +62,7 @@
 
 
 
-// chart listing all keys as animated columns
+// bar chart and components
 
 #data-set-current-value {
     padding: 15px 0 8px 50px;
@@ -116,10 +116,10 @@
     
 }
 
-#column-chart {
+#bar-chart {
     width: 100%;
     
-    .column-container {
+    .bar-container {
         position: relative;
         width: 100%; margin: 2px 0; padding: 2px 122px 2px 50px;
         text-align: left;
@@ -228,7 +228,7 @@
 
 
 
-// single bar below column chart display percentage ratio between keys
+// ratio chart below bar chart
 
 #ratio-total {
     width: 100%; margin: 45px 0 8px 0;
@@ -350,7 +350,7 @@
 
 // menu bar on top of individual chart
 
-#individual-chart-menu {
+#line-chart-menu {
     width: 100%; margin: 0 0 20px 0;
     
     button {
@@ -378,7 +378,7 @@
             margin: 0 0 0 5px;
         }
         
-        &#close-individual-chart {
+        &#close-line-chart {
             background: #ffdddd; border-color: #ffa6a6;
             color: #c92f2f;
             
@@ -406,7 +406,7 @@
             @include opacity(.4);
         }
         
-        &#download-chart-as-image:after {
+        &#download-line-chart:after {
             background-image: $download-icon;
             @include opacity(.4);
         }

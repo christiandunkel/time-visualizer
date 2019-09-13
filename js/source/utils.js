@@ -208,7 +208,7 @@ var _ = {
         for (var key in settings) {
 
             // skip iteration if the current property belongs to the prototype
-            if (settings.hasOwnProperty(key)) {
+            if (settings.hasOwnProperty.call(settings, key)) {
                 switch (key) {
 
                     case 'innerHTML':    
@@ -980,6 +980,17 @@ var _ = {
                          .replace(/\&#039\;/g, '\'');
         
     },
+
+    /**
+     * @function
+     * @memberof module:_
+     * @desc escapes the double quotes in a string
+     * @param {string} str
+     * @returns {string}
+     */
+    escapeDoubleQuotes : function (str) {
+        return str.replace(/\\([\s\S])|(")/g,"\\$1$2");
+    },
     
     /**
      * @function
@@ -1020,59 +1031,11 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc sort array containing objects with the same key structure by the values of a given property
-     * @param {Array} arr - array containing objects with the same key structure
-     * @param {string} property - property name (key) by which values to sort
-     * @param {Array} [descending=false] - final order of sorted values 
-     * @returns {Array} sorted array
-     */
-    sortArrayObjects : function (arr, property, descending) {
-        
-        if (descending) {
-            
-            return arr.sort(function (a, b) {
-                return a[property] < b[property] ? 1 : -1;
-            });
-            
-        }
-        else {
-            
-            return arr.sort(function (a, b) {
-                return a[property] > b[property] ? 1 : -1;
-            });
-            
-        }
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:_
-     * @desc check if an object is empty
-     * @param {Object} obj
-     * @returns {boolean} true, if the object is empty
-     */
-    isEmptyObject : function (obj) {
-    
-        // check if there is a none-prototype property in the object
-        for (var prop in obj) {
-            if (obj.hasOwnProperty(prop)) {
-                return false;
-            }
-        }
-
-        return JSON.stringify(obj) === JSON.stringify({});
-
-    },
-    
-    /**
-     * @function
-     * @memberof module:_
-     * @desc returns the average of an array of number
+     * @desc returns the mean average of an array of number
      * @param {Array} arr - array of numbers
      * @returns {number} average of numbers
      */
-    getAverage : function (arr) {
+    getMean : function (arr) {
         
         var total = 0;
         var len = arr.length;
@@ -1136,30 +1099,6 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc removes an index from an array
-     * @param {Array} arr
-     * @param {number} index - index position to remove
-     * @returns {Array} array without this index
-     */
-    removeArrayIndex : function (arr, index) {
-        
-        var len = arr.length;
-        
-        // remove index
-        for (var i = index; i < len - 1; i++) {
-            arr[i] = arr[i+1];
-        }
-        
-        // remove last value
-        arr.pop();
-        
-        return arr;
-        
-    },
-    
-    /**
-     * @function
-     * @memberof module:_
      * @desc replaces a number if it exceeds the given upper or lower limit
      * @param {number} num - number to process
      * @param {number} min - smallest the number is allowed to be
@@ -1184,6 +1123,117 @@ var _ = {
         
         return num;
         
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc strips digits after comma from a number
+     * @param {number} num - number to truncate
+     * @returns {number} truncated number
+     */
+    truncate : function (num) {
+        
+        if (!_.isNumber(num)){
+            console.error('No number given.');
+            return num;
+        }
+        
+        return num < 0 ? Math.ceil(num) : Math.floor(num);
+        
+    },
+    
+    
+    
+    
+    
+    /*
+     * ==================
+     * === CONTAINERS ===
+     * ==================
+     */
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc sort array containing objects with the same key structure by the values of a given property
+     * @param {Array} arr - array containing objects with the same key structure
+     * @param {string} property - property name (key) by which values to sort
+     * @param {Array} [descending=false] - final order of sorted values 
+     * @returns {Array} sorted array
+     */
+    sortArrayObjects : function (arr, property, descending) {
+        
+        if (descending) {
+            
+            return arr.sort(function (a, b) {
+                return a[property] < b[property] ? 1 : -1;
+            });
+            
+        }
+        else {
+            
+            return arr.sort(function (a, b) {
+                return a[property] > b[property] ? 1 : -1;
+            });
+            
+        }
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc check if an object is empty
+     * @param {Object} obj
+     * @returns {boolean} true, if the object is empty
+     */
+    isEmptyObject : function (obj) {
+    
+        // check if there is a none-prototype property in the object
+        for (var prop in obj) {
+            if (obj.hasOwnProperty.call(obj, prop)) {
+                return false;
+            }
+        }
+
+        return JSON.stringify(obj) === JSON.stringify({});
+
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc removes an index from an array
+     * @param {Array} arr
+     * @param {number} index - index position to remove
+     * @returns {Array} array without this index
+     */
+    removeArrayIndex : function (arr, index) {
+        
+        var len = arr.length;
+        
+        // remove index
+        for (var i = index; i < len - 1; i++) {
+            arr[i] = arr[i+1];
+        }
+        
+        // remove last value
+        arr.pop();
+        
+        return arr;
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:_
+     * @desc returns the amount of keys in an object
+     * @param {Object} obj
+     * @returns {number}
+     */
+    getObjectSize : function (obj) {
+        return Object.keys(obj).length;
     }
     
 };

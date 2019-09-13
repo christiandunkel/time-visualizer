@@ -1,5 +1,5 @@
 
-[![Logo showing three blue columns and the headline 'Time Visualizer'.](/doc/img/time-visualizer-logo.png)](#)
+[![Logo showing three blue vertical bars and the headline 'Time Visualizer'.](/doc/img/time-visualizer-logo.png)](#)
 
 # Time Visualizer
 

@@ -1,7 +1,7 @@
 {
     "name": "Population from 1992 to 2018",
     "date": "2019-08-31",
-    "keys": {
+    "items": {
         "country_1": {
             "name": "Germany",
             "icon": "img/raster/country-flags/germany.png"

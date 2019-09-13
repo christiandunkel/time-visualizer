@@ -1,11 +1,11 @@
 /** 
  * @module NAV 
- * @desc manages the events of elements in navigation
+ * @desc manages the UI of the navigation area
  */
 var NAV = {
     
     darkmode                : false,
-    individual_chart_opened : false,
+    line_chart_opened : false,
     
     
     
@@ -32,19 +32,19 @@ var NAV = {
         _.onClick(NODE.stop_btn, ANIMATOR.stop);
         
         // speed setter buttons
-        _.onClick(NODE.time_btn.slow, NAV.setSpeed);
-        _.onClick(NODE.time_btn.normal, NAV.setSpeed);
-        _.onClick(NODE.time_btn.fast, NAV.setSpeed);
+        _.onClick(NODE.speed_btn.slow, NAV.setSpeed);
+        _.onClick(NODE.speed_btn.normal, NAV.setSpeed);
+        _.onClick(NODE.speed_btn.fast, NAV.setSpeed);
         
         // elements for setting custom speed
-        _.addEvent(NODE.time_selection.input, 'input', NAV.setCustomSpeed);
-        _.onClick(NODE.time_selection.custom, NAV.showCustomSpeedMenu);
-        _.onClick(NODE.time_selection.close_custom, NAV.showDefinedSpeedMenu);
+        _.addEvent(NODE.speed_selection.input, 'input', NAV.setCustomSpeed);
+        _.onClick(NODE.speed_selection.custom, NAV.showCustomSpeedMenu);
+        _.onClick(NODE.speed_selection.close_custom, NAV.showDefinedSpeedMenu);
         
         // buttons in 'individual chart' menu
-        _.onClick(NODE.back_to_column_chart_btn, NAV.showColumnChart);
+        _.onClick(NODE.close_line_chart_btn, NAV.showBarChart);
         _.onClick(NODE.download_png_btn, NAV.downloadIndividualChart);
-        _.onClick(NODE.compare_btn, COMPARE_KEYS.openWindow);
+        _.onClick(NODE.compare_btn, COMPARE_ITEMS.openWindow);
         
     },
     
@@ -114,7 +114,7 @@ var NAV = {
      */
     onlyEnableButton : function (btn) {
         
-        var btns = NODE.time_btn;
+        var btns = NODE.speed_btn;
         
         for (var key in btns) {
             if (btns[key] === btn) {
@@ -130,13 +130,13 @@ var NAV = {
     /**
      * @function
      * @memberof module:NAV
-     * @desc shows the 'column chart' and hides the 'individual chart'
+     * @desc shows the 'bar chart' and hides the 'line chart'
      */
-    showColumnChart : function () {
+    showBarChart : function () {
         
-        NAV.individual_chart_opened = false;
+        NAV.line_chart_opened = false;
         
-        // hide individual chart and show column chart
+        // switch chart containers
         _.addClass(NODE.chart_container_1, 'active');
         _.removeClass(NODE.chart_container_2, 'active');
         
@@ -148,13 +148,13 @@ var NAV = {
     /**
      * @function
      * @memberof module:NAV
-     * @desc shows the 'individual chart' and hides the 'column chart'
+     * @desc shows the 'line chart' and hides the 'bar chart'
      */
-    showIndividualChart : function () {
+    showLineChart : function () {
         
-        NAV.individual_chart_opened = true;
+        NAV.line_chart_opened = true;
         
-        // show individual chart and hide column chart
+        // switch chart containers
         _.removeClass(NODE.chart_container_1, 'active');
         _.addClass(NODE.chart_container_2, 'active');
         
@@ -198,7 +198,7 @@ var NAV = {
         MSG.show('Set speed to ' + speed + '.', 900);
         
         // send value to animator object
-        ANIMATOR.setTime(speed);
+        ANIMATOR.setSpeed(speed);
         
     },
     
@@ -211,36 +211,36 @@ var NAV = {
     setCustomSpeed : function (e) {
         
         var input = _.target(e);
-        var time = input.value;
+        var speed = input.value;
         
         // replace commas with points
-        if (time.match(/[,]+/)) {
-            time = time.replace(/[,]+/, '.');
-            input.value = time;
+        if (speed.match(/[,]+/)) {
+            speed = speed.replace(/[,]+/, '.');
+            input.value = speed;
         }
         
         // remove non-number and non-point characters
-        if (time.match(/[^0-9\.]+/)) {
-            time = time.replace(/[^0-9\.]+/, '');
-            input.value = time;
+        if (speed.match(/[^0-9\.]+/)) {
+            speed = speed.replace(/[^0-9\.]+/, '');
+            input.value = speed;
         }
         
-        // return if time isn't in right format
-        if (!time.match(/^([0-9]+|[0-9]+\.[0-9]+)$/)) {
+        // return if speed isn't in right format
+        if (!speed.match(/^([0-9]+|[0-9]+\.[0-9]+)$/)) {
             _.removeClass(input, 'correct-speed');
             return;
         }
         
-        // parse time string to float
-        time = parseFloat(time);
+        // parse speed string to float
+        speed = parseFloat(speed);
         
         // round number to 1 number after comma
-        if (time % 1 != 0) {
-            time = time.toFixed(1);
+        if (speed % 1 != 0) {
+            speed = speed.toFixed(1);
         }
         
-        // time has to be 0.1 <= time <= 4  
-        time = _.limitNumber(time, 0.1, 4, function (e) {
+        // speed has to be >=0.1 and <=4  
+        speed = _.limitNumber(speed, 0.1, 4, function (e) {
             MSG.error('Speed must be between 0.1 and 4.');
         });
         
@@ -248,12 +248,12 @@ var NAV = {
         _.addClass(input, 'correct-speed');
         
         // send value to animator object
-        ANIMATOR.setTime(time);
+        ANIMATOR.setSpeed(speed);
         
-        // if time value was corrected by regex, replace input value with it
-        time += "";
-        if (time != input.value) {
-            input.value = time;
+        // if speed value was corrected by regex, replace input value with it
+        speed += "";
+        if (speed != input.value) {
+            input.value = speed;
         }
         
     },
@@ -266,12 +266,12 @@ var NAV = {
     showCustomSpeedMenu : function () {
         
         // switch 'active' class between the two menus
-        _.removeClass(NODE.time_selection.container_1, 'active');
-        _.addClass(NODE.time_selection.container_2, 'active');
+        _.removeClass(NODE.speed_selection.container_1, 'active');
+        _.addClass(NODE.speed_selection.container_2, 'active');
         
         // put currently-defined speed value into input element 
-        var input = NODE.time_selection.input;
-        input.value = ANIMATOR.time + '';
+        var input = NODE.speed_selection.input;
+        input.value = ANIMATOR.speed + '';
         
         // tell CSS using a class that the current speed value is correct
         _.addClass(input, 'correct-speed');
@@ -286,22 +286,22 @@ var NAV = {
     showDefinedSpeedMenu : function () {
         
         // switch 'active' class between the two menus
-        _.addClass(NODE.time_selection.container_1, 'active');
-        _.removeClass(NODE.time_selection.container_2, 'active');
+        _.addClass(NODE.speed_selection.container_1, 'active');
+        _.removeClass(NODE.speed_selection.container_2, 'active');
         
-        // put value of selected 'defined time' button as current time 
-        var defined_time = 0;
-        if (_.hasClass(NODE.time_btn.slow, 'active')) {
-            defined_time = 0.5;
+        // put value of selected 'defined speed' button as current speed 
+        var speed = 0;
+        if (_.hasClass(NODE.speed_btn.slow, 'active')) {
+            speed = 0.5;
         }
-        else if (_.hasClass(NODE.time_btn.normal, 'active')) {
-            defined_time = 1;
+        else if (_.hasClass(NODE.speed_btn.normal, 'active')) {
+            speed = 1;
         }
         else {
-            defined_time = 2;
+            speed = 2;
         }
         
-        ANIMATOR.setTime(defined_time);
+        ANIMATOR.setSpeed(speed);
         
     },
     
@@ -313,7 +313,7 @@ var NAV = {
     downloadIndividualChart : function () {
         
         // get canvas as image data URI
-        var image_URI = NODE.individual_chart.toDataURL('image/png');
+        var image_URI = NODE.line_chart.toDataURL('image/png');
         
         // get current time and date, convert it to string
         var date = new Date();
@@ -327,7 +327,7 @@ var NAV = {
                        date.getSeconds();
         
         // generate a file name
-        var file_name = 'chart ' + ANIMATOR.individual_chart_keys[0].replace(/[^a-z0-9\-\_]/g, '') + 
+        var file_name = 'chart ' + COMPARE_ITEMS.ids[0].replace(/[^a-z0-9\-\_]/g, '') + 
                         ' ' + date_str + '.png';
         
         // create a link HTML node to the image data uri

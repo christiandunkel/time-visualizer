@@ -1,7 +1,7 @@
 {
     "name": "Company Revenue from 1990 to 1995",
     "date": "2019-08-11",
-    "keys": {
+    "items": {
         "company_1": {
             "name": "Bob's Burger",
             "icon": "img/raster/example-icons/burger.png"
