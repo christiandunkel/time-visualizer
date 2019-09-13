@@ -2117,6 +2117,16 @@ var COMPARE_ITEMS = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:COMPARE_ITEMS
+     * @desc resets item IDs selected for comparison in line chart
+     */
+    resetItemIds : function () {
+        COMPARE_ITEMS.ids = [];
+        COMPARE_ITEMS.id_num = 0;
+    },
+    
     
     
     /* WINDOW */
@@ -4160,7 +4170,8 @@ var MAIN = {
         // generate an object from JSON string
         var obj = FILE.getObjectFromJSON(str);
 
-        // send data to DATA object
+        // reset old data and set new one
+        COMPARE_ITEMS.resetItemIds();
         DATA.set(obj);
 
         // send it to VISUALIZER to create the charts

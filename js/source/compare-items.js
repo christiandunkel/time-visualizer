@@ -81,6 +81,16 @@ var COMPARE_ITEMS = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:COMPARE_ITEMS
+     * @desc resets item IDs selected for comparison in line chart
+     */
+    resetItemIds : function () {
+        COMPARE_ITEMS.ids = [];
+        COMPARE_ITEMS.id_num = 0;
+    },
+    
     
     
     /* WINDOW */

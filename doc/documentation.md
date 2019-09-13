@@ -193,6 +193,7 @@ manages the 'compare items' window
     * [.addItemId(id)](#module_COMPARE_ITEMS.addItemId)
     * [.removeItemId(id)](#module_COMPARE_ITEMS.removeItemId)
     * [.hasItemId(id)](#module_COMPARE_ITEMS.hasItemId) ⇒ <code>boolean</code>
+    * [.resetItemIds()](#module_COMPARE_ITEMS.resetItemIds)
     * [.initialize()](#module_COMPARE_ITEMS.initialize)
     * [.openWindow()](#module_COMPARE_ITEMS.openWindow)
     * [.closeWindow()](#module_COMPARE_ITEMS.closeWindow)
@@ -245,6 +246,12 @@ check if an item is set to be compared in line chart
 | --- | --- | --- |
 | id | <code>string</code> | item id |
 
+<a name="module_COMPARE_ITEMS.resetItemIds"></a>
+
+### COMPARE_ITEMS.resetItemIds()
+resets item IDs selected for comparison in line chart
+
+**Kind**: static method of [<code>COMPARE\_ITEMS</code>](#module_COMPARE_ITEMS)  
 <a name="module_COMPARE_ITEMS.initialize"></a>
 
 ### COMPARE_ITEMS.initialize()

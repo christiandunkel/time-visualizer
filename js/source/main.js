@@ -19,7 +19,8 @@ var MAIN = {
         // generate an object from JSON string
         var obj = FILE.getObjectFromJSON(str);
 
-        // send data to DATA object
+        // reset old data and set new one
+        COMPARE_ITEMS.resetItemIds();
         DATA.set(obj);
 
         // send it to VISUALIZER to create the charts
