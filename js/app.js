@@ -3758,7 +3758,7 @@ var ANIMATOR = {
         var max = DATA.getTotalMax(tick);
         var min = DATA.getTotalMin(tick);
         // min must be 0 at least
-        if (min < 0) {
+        if (min > 0) {
             min = 0;
         }
         var diff = max - min;
