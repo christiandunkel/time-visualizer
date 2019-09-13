@@ -13,7 +13,6 @@
 // get filesystem
 let fs = require('fs');
 let path = require('path');
-let file_path = path.join(__dirname, 'source', '*.js') + "";
 
 // generate documentation markdown
 const jsdoc2md = require('jsdoc-to-markdown');
@@ -23,7 +22,7 @@ let markdown = `
 
 ` + 
 jsdoc2md.renderSync({
-    files : file_path
+    files : path.join(__dirname, 'source', '*.js')
 });
 
 // create markdown file

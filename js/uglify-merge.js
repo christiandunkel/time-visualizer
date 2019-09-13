@@ -38,11 +38,20 @@ let files_in_order = [
 ];
 
 // read files in order and combine their content into a string
-let total_code = '"use strict";';
+let counter = 0;
+let total_code = '"use strict";\n\n';
 files_in_order.forEach(file => {
+    
+    // add space between files
+    if (counter !== 0) {
+        total_code += "\n\n\n\n\n\n";
+    }
+    
     // read file and add content to total code
     let file_path = path.join(__dirname, 'source', file);
-    total_code += "\n\n\n\n\n\n" + fs.readFileSync(file_path, 'utf-8');
+    total_code += fs.readFileSync(file_path, 'utf-8');
+    
+    counter++;
 });
 
 // minify total code using Uglify component
