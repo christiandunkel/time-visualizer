@@ -5,6 +5,62 @@
     animation: $animations;
 }
 
+@mixin animation-delay($delay...) {
+    -o-animation-delay: $delay;
+    -moz-animation-delay: $delay;
+    -webkit-animation-delay: $delay;
+    animation-delay: $delay;
+}
+
+@mixin animation-direction($direction...) {
+    -o-animation-direction: $direction;
+    -moz-animation-direction: $direction;
+    -webkit-animation-direction: $direction;
+    animation-direction: $direction;
+}
+
+@mixin animation-duration($duration...) {
+    -o-animation-duration: $duration;
+    -moz-animation-duration: $duration;
+    -webkit-animation-duration: $duration;
+    animation-duration: $duration;
+}
+
+@mixin animation-fill-mode($fillmode...) {
+    -o-animation-fill-mode: $fillmode;
+    -moz-animation-fill-mode: $fillmode;
+    -webkit-animation-fill-mode: $fillmode;
+    animation-fill-mode: $fillmode;
+}
+
+@mixin animation-iteration-count($iterations...) {
+    -o-animation-iteration-count: $iterations;
+    -moz-animation-iteration-count: $iterations;
+    -webkit-animation-iteration-count: $iterations;
+    animation-iteration-count: $iterations;
+}
+
+@mixin animation-name($name...) {
+    -o-animation-name: $name;
+    -moz-animation-name: $name;
+    -webkit-animation-name: $name;
+    animation-name: $name;
+}
+
+@mixin animation-play-state($state...) {
+    -o-animation-play-state: $state;
+    -moz-animation-play-state: $state;
+    -webkit-animation-play-state: $state;
+    animation-play-state: $state;
+}
+
+@mixin animation-timing-function($timing...) {
+    -o-animation-timing-function: $timing;
+    -moz-animation-timing-function: $timing;
+    -webkit-animation-timing-function: $timing;
+    animation-timing-function: $timing;
+}
+
 @mixin appearance($value) {
     -moz-appearance: $value;
     -webkit-appearance: $value;
@@ -22,6 +78,30 @@
     -moz-border-radius: $value;
     -webkit-border-radius: $value;
     border-radius: $value;
+}
+
+@mixin border-bottom-right-radius($value) {
+    -moz-border-bottom-right-radius: $value;
+    -webkit-border-bottom-right-radius: $value;
+    border-bottom-right-radius: $value;
+}
+
+@mixin border-bottom-left-radius($value) {
+    -moz-border-bottom-left-radius: $value;
+    -webkit-border-bottom-left-radius: $value;
+    border-bottom-left-radius: $value;
+}
+
+@mixin border-top-right-radius($value) {
+    -moz-border-top-right-radius: $value;
+    -webkit-border-top-right-radius: $value;
+    border-top-right-radius: $value;
+}
+
+@mixin border-top-left-radius($value) {
+    -moz-border-top-left-radius: $value;
+    -webkit-border-top-left-radius: $value;
+    border-top-left-radius: $value;
 }
 
 @mixin box-shadow($shadows...) {
@@ -74,11 +154,55 @@
     transform: $value;
 }
 
+@mixin transform-origin($value) {
+    -o-transform-origin: $value;
+    -ms-transform-origin: $value;
+    -moz-transform-origin: $value;
+    -webkit-transform-origin: $value;
+    transform-origin: $value;
+}
+
+@mixin transform-style($value) {
+    -o-transform-style: $value;
+    -ms-transform-style: $value;
+    -moz-transform-style: $value;
+    -webkit-transform-style: $value;
+    transform-style: $value;
+}
+
 @mixin transition($transitions...) {
     -o-transition: $transitions;
     -moz-transition: $transitions;
     -webkit-transition: $transitions;
     transition: $transitions;
+}
+
+@mixin transition-delay($delay...) {
+    -o-transition-delay: $delay;
+    -moz-transition-delay: $delay;
+    -webkit-transition-delay: $delay;
+    transition-delay: $delay;
+}
+
+@mixin transition-duration($duration...) {
+    -o-transition-duration: $duration;
+    -moz-transition-duration: $duration;
+    -webkit-transition-duration: $duration;
+    transition-duration: $duration;
+}
+
+@mixin transition-property($property...) {
+    -o-transition-property: $property;
+    -moz-transition-property: $name;
+    -webkit-transition-property: $property;
+    transition-property: $property;
+}
+
+@mixin transition-timing-function($timing...) {
+    -o-transition-timing-function: $timing;
+    -moz-transition-timing-function: $timing;
+    -webkit-transition-timing-function: $timing;
+    transition-timing-function: $timing;
 }
 
 @mixin user-select($value) {
