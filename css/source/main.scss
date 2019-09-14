@@ -1,11 +1,13 @@
-// general scss files
-@import '../framework/variables';
-@import '../framework/prefixes';
-@import '../framework/functions';
-
-// custom scss files
-@import 'reset';
+// framework
+@import 'variables';
+@import 'prefixes';
+@import 'functions';
 @import 'icons';
+
+// reset browser custom styles
+@import 'reset';
+
+// custom styles
 @import 'general';
 @import 'navigation';
 @import 'windows';
