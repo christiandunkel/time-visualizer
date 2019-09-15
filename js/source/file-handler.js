@@ -14,6 +14,12 @@ var FILE = {
      */
     loadURL : function (url, showConfirmation) {
         
+        // XMLHttpRequest won't work, if index.html is loaded locally as a file in browser
+        if (window.location.protocol === 'file:') {
+            console.error('The protocol for this HTML page is "file". The same-origin browser policy prevents loading files from web URLs.');
+            return;
+        }
+        
         // load example data set (only works on localhost or web server)
         var request = new XMLHttpRequest();
         request.open('GET', url);

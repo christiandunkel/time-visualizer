@@ -1906,9 +1906,23 @@ var DATA_LOAD = {
         for (var i = 0; i < btns_num; i++) {
             // buttons load data set from URL on click 
             _.onClick(btns[i], function (e) {
+                
+                // get button and file name
                 var btn = _.target(e);
                 var link = btn.getAttribute('load-data');
-                FILE.loadURL('data/' + link + '.json', true);
+                var file_url = 'data/' + link + '.json';
+                
+                // try using the FileReaderAPI, as loadURL() uses a XMLHttpRequest, 
+                // which won't work if index.html is loaded locally as a file in browser
+                if (window.location.protocol === 'file:') {
+                    MSG.error("Error. Use the 'file drop are' below.");
+                    return;
+                }
+                
+                // otherwise, if app is run on a server, use loadURL()
+                FILE.loadURL(file_url, true);
+                
+                
             });
         }
         
@@ -2990,6 +3004,12 @@ var FILE = {
      * @returns {Object} request - XMLHttpRequest
      */
     loadURL : function (url, showConfirmation) {
+        
+        // XMLHttpRequest won't work, if index.html is loaded locally as a file in browser
+        if (window.location.protocol === 'file:') {
+            console.error('The protocol for this HTML page is "file". The same-origin browser policy prevents loading files from web URLs.');
+            return;
+        }
         
         // load example data set (only works on localhost or web server)
         var request = new XMLHttpRequest();
@@ -4214,28 +4234,28 @@ var MAIN = {
         DATA_LOAD.initialize();
         COMPARE_ITEMS.initialize();
         ANIMATOR.initialize();
+        
+        // if index.html is run as a file on a local system
+        if (window.location.protocol === 'file:') {
+            
+            // add error message to main page
+            _.append(NODE.bar_chart, _.create('div.notice.red', {
+                'innerHTML': 'You are running this project as a file. Click the <b>Load data</b> button to select a data set file.'
+            }));
+            
+            return;
+        }
 
-        // load example data set
+        // otherwise, load example data set
         var request = FILE.loadURL('data/example-data-set.json', false);
 
         // on failed http request, load error messages
         request.onerror = function () {
 
-            // error message on main page
-            var error_msg = _.create('div.notice.red', {
-                'innerHTML': '<b>Loading the example data set failed.</b><br />Are you running this project locally on your system? Try using the <i>Load data</i> button.'
-            });
-            _.append(NODE.bar_chart, error_msg);
-
-            // warning message in 'data load' window
-            var warning = _.create('div.notice.blue', {
-                'innerHTML': 'You may currently run this project locally on your computer. This restricts you to only load local data set files. You can\'t load online examples.',
-                'style': {
-                    'margin-bottom': '20px'
-                }
-            });
-            _.empty(NODE.data_load.example_sets_area);
-            _.append(NODE.data_load.example_sets_area, warning);
+            // add error message to main page
+            _.append(NODE.bar_chart, _.create('div.notice.red', {
+                'innerHTML': 'Loading the example data set failed. This might be, because of a weak internet connection.'
+            }));
 
         };
 

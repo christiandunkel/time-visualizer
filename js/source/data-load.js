@@ -23,9 +23,23 @@ var DATA_LOAD = {
         for (var i = 0; i < btns_num; i++) {
             // buttons load data set from URL on click 
             _.onClick(btns[i], function (e) {
+                
+                // get button and file name
                 var btn = _.target(e);
                 var link = btn.getAttribute('load-data');
-                FILE.loadURL('data/' + link + '.json', true);
+                var file_url = 'data/' + link + '.json';
+                
+                // try using the FileReaderAPI, as loadURL() uses a XMLHttpRequest, 
+                // which won't work if index.html is loaded locally as a file in browser
+                if (window.location.protocol === 'file:') {
+                    MSG.error("Error. Use the 'file drop are' below.");
+                    return;
+                }
+                
+                // otherwise, if app is run on a server, use loadURL()
+                FILE.loadURL(file_url, true);
+                
+                
             });
         }
         

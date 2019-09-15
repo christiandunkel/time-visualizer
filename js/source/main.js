@@ -51,28 +51,28 @@ var MAIN = {
         DATA_LOAD.initialize();
         COMPARE_ITEMS.initialize();
         ANIMATOR.initialize();
+        
+        // if index.html is run as a file on a local system
+        if (window.location.protocol === 'file:') {
+            
+            // add error message to main page
+            _.append(NODE.bar_chart, _.create('div.notice.red', {
+                'innerHTML': 'You are running this project as a file. Click the <b>Load data</b> button to select a data set file.'
+            }));
+            
+            return;
+        }
 
-        // load example data set
+        // otherwise, load example data set
         var request = FILE.loadURL('data/example-data-set.json', false);
 
         // on failed http request, load error messages
         request.onerror = function () {
 
-            // error message on main page
-            var error_msg = _.create('div.notice.red', {
-                'innerHTML': '<b>Loading the example data set failed.</b><br />Are you running this project locally on your system? Try using the <i>Load data</i> button.'
-            });
-            _.append(NODE.bar_chart, error_msg);
-
-            // warning message in 'data load' window
-            var warning = _.create('div.notice.blue', {
-                'innerHTML': 'You may currently run this project locally on your computer. This restricts you to only load local data set files. You can\'t load online examples.',
-                'style': {
-                    'margin-bottom': '20px'
-                }
-            });
-            _.empty(NODE.data_load.example_sets_area);
-            _.append(NODE.data_load.example_sets_area, warning);
+            // add error message to main page
+            _.append(NODE.bar_chart, _.create('div.notice.red', {
+                'innerHTML': 'Loading the example data set failed. This might be, because of a weak internet connection.'
+            }));
 
         };
 
