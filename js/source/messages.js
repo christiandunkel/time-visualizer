@@ -89,7 +89,7 @@ var MSG = {
      * @param {string} text - content of the message
      * @param {number} close_after_ms - milliseconds until the message gets closed
      */
-    warning : function (text, close_after_ms) {
+    warn : function (text, close_after_ms) {
         MSG.show(text, close_after_ms, MSG.type.WARNING);
     },
     

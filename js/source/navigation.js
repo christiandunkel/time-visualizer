@@ -227,6 +227,7 @@ var NAV = {
         
         // return if speed isn't in right format
         if (!speed.match(/^([0-9]+|[0-9]+\.[0-9]+)$/)) {
+            // tell CSS the input value is incorrect
             _.removeClass(input, 'correct-speed');
             return;
         }
@@ -239,13 +240,24 @@ var NAV = {
             speed = speed.toFixed(1);
         }
         
-        // speed has to be >=0.1 and <=4  
-        speed = _.limitNumber(speed, 0.1, 4, function (e) {
+        // speed has to be >=0.1 and <=4
+        if (speed < 0.1 || speed > 4) {
             MSG.error('Speed must be between 0.1 and 4.');
-        });
+            // tell CSS the input value is incorrect
+            _.removeClass(input, 'correct-speed');
+            return;
+        }
         
-        // add class so CSS knows the input value is correct
+        
+        
+        
+        // tell CSS that the input value is correct
         _.addClass(input, 'correct-speed');
+        
+        // give lag warning
+        if (speed > 2) {
+            MSG.warn('High speed values may produce lag.');
+        }
         
         // send value to animator object
         ANIMATOR.setSpeed(speed);
