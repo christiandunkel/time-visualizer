@@ -72,7 +72,7 @@ var NAV = {
      * @function
      * @memberof module:NAV
      * @desc enables a button
-     * @param {Object} btn - HTML node
+     * @param {Object} btn - HTML element
      */
     enableButton : function (btn) {
         
@@ -88,7 +88,7 @@ var NAV = {
      * @function
      * @memberof module:NAV
      * @desc disables a button
-     * @param {Object} btn - HTML node
+     * @param {Object} btn - HTML element
      */
     disableButton : function (btn) {
         
@@ -110,7 +110,7 @@ var NAV = {
      * @function
      * @memberof module:NAV
      * @desc sets a specific 'speed setter' button active and disables all others
-     * @param {Object} btn - HTML node
+     * @param {Object} btn - HTML element
      */
     onlyEnableButton : function (btn) {
         
@@ -342,7 +342,7 @@ var NAV = {
         var file_name = 'chart ' + COMPARE_ITEMS.ids[0].replace(/[^a-z0-9\-\_]/g, '') + 
                         ' ' + date_str + '.png';
         
-        // create a link HTML node to the image data uri
+        // create a link HTML element to the image data uri
         var link = _.create('a', {
             'download' : file_name,
             'href' : image_URI

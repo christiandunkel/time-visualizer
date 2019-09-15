@@ -175,7 +175,7 @@ draws a line graph for an item on the line chart
 
 | Param | Type | Description |
 | --- | --- | --- |
-| canvas | <code>Object</code> | HTML node to drawing canvas |
+| canvas | <code>Object</code> | HTML canvas |
 | context | <code>Object</code> | Context of drawing canvas |
 | padding | <code>Object</code> | Object holds 4 numbers for the padding on each site of the canvas |
 | item_id | <code>string</code> |  |
@@ -529,25 +529,25 @@ saves references to all HTML elements needed by the app
 <a name="module_NODE.initializeDataLoadWindow"></a>
 
 ### NODE.initializeDataLoadWindow()
-adds missing references to HTML nodes for 'data load' window
+adds missing references to HTML elements for 'data load' window
 
 **Kind**: static method of [<code>NODE</code>](#module_NODE)  
 <a name="module_NODE.initializeCompareItemsWindow"></a>
 
 ### NODE.initializeCompareItemsWindow()
-adds missing references to HTML nodes for 'compare items' window
+adds missing references to HTML elements for 'compare items' window
 
 **Kind**: static method of [<code>NODE</code>](#module_NODE)  
 <a name="module_NODE.initializeBarChart"></a>
 
 ### NODE.initializeBarChart()
-adds missing references to HTML nodes for 'bar chart'
+adds missing references to HTML elements for 'bar chart'
 
 **Kind**: static method of [<code>NODE</code>](#module_NODE)  
 <a name="module_NODE.initialize"></a>
 
 ### NODE.initialize()
-adds missing references to HTML nodes
+adds missing references to HTML elements
 
 **Kind**: static method of [<code>NODE</code>](#module_NODE)  
 <a name="module_FILE"></a>
@@ -661,7 +661,7 @@ manages overlay messages
     * [.generateHTML(text, type)](#module_MSG.generateHTML) ⇒ <code>Object</code>
     * [.show(text, close_after_ms, type)](#module_MSG.show)
     * [.error(text, close_after_ms)](#module_MSG.error)
-    * [.warning(text, close_after_ms)](#module_MSG.warning)
+    * [.warn(text, close_after_ms)](#module_MSG.warn)
     * [.hide()](#module_MSG.hide)
 
 <a name="module_MSG.generateHTML"></a>
@@ -670,7 +670,7 @@ manages overlay messages
 generates the HTML for a message element
 
 **Kind**: static method of [<code>MSG</code>](#module_MSG)  
-**Returns**: <code>Object</code> - HTML node  
+**Returns**: <code>Object</code> - HTML element  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -702,9 +702,9 @@ displays an overlay error message
 | text | <code>string</code> | content of the message |
 | close_after_ms | <code>number</code> | milliseconds until the message gets closed |
 
-<a name="module_MSG.warning"></a>
+<a name="module_MSG.warn"></a>
 
-### MSG.warning(text, close_after_ms)
+### MSG.warn(text, close_after_ms)
 displays an overlay warning message
 
 **Kind**: static method of [<code>MSG</code>](#module_MSG)  
@@ -761,7 +761,7 @@ enables a button
 
 | Param | Type | Description |
 | --- | --- | --- |
-| btn | <code>Object</code> | HTML node |
+| btn | <code>Object</code> | HTML element |
 
 <a name="module_NAV.disableButton"></a>
 
@@ -772,7 +772,7 @@ disables a button
 
 | Param | Type | Description |
 | --- | --- | --- |
-| btn | <code>Object</code> | HTML node |
+| btn | <code>Object</code> | HTML element |
 
 <a name="module_NAV.onlyEnableButton"></a>
 
@@ -783,7 +783,7 @@ sets a specific 'speed setter' button active and disables all others
 
 | Param | Type | Description |
 | --- | --- | --- |
-| btn | <code>Object</code> | HTML node |
+| btn | <code>Object</code> | HTML element |
 
 <a name="module_NAV.showBarChart"></a>
 
@@ -904,10 +904,10 @@ contains utility functions
 <a name="module__.id"></a>
 
 ### _.id(selector) ⇒ <code>Object</code>
-selects HTML node by id
+selects HTML element by id
 
 **Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>Object</code> - if an element was found, returns HTML node  
+**Returns**: <code>Object</code> - if an element was found, returns HTML element  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -916,7 +916,7 @@ selects HTML node by id
 <a name="module__.class"></a>
 
 ### _.class(selector, [context]) ⇒ <code>HTMLCollection</code>
-selects HTML node(s) by class
+selects HTML element(s) by class
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 **Returns**: <code>HTMLCollection</code> - if the selector and context (if given) were valid  
@@ -929,7 +929,7 @@ selects HTML node(s) by class
 <a name="module__.tag"></a>
 
 ### _.tag(selector, [context]) ⇒ <code>HTMLCollection</code>
-selects HTML node(s) by tag
+selects HTML element(s) by tag
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 **Returns**: <code>HTMLCollection</code> - if the selector and context (if given) were valid  
@@ -942,7 +942,7 @@ selects HTML node(s) by tag
 <a name="module__.select"></a>
 
 ### _.select(selector, [context], [callback]) ⇒ <code>HTMLCollection</code>
-selects HTML node(s) using a CSS selector
+selects HTML element(s) using a CSS selector
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 **Returns**: <code>HTMLCollection</code> - if the selector and context (if given) were valid  
@@ -956,23 +956,23 @@ selects HTML node(s) using a CSS selector
 <a name="module__.contains"></a>
 
 ### _.contains(parent, child) ⇒ <code>boolean</code>
-check if the first HTML node contains the second
+check if the first HTML element contains the second
 
 **Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>boolean</code> - returns true if the first HTML node contains the second  
+**Returns**: <code>boolean</code> - returns true if the first HTML element contains the second  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| parent | <code>Object</code> | supposed parent HTML node |
-| child | <code>Object</code> | supposed child HTML node |
+| parent | <code>Object</code> | supposed parent HTML element |
+| child | <code>Object</code> | supposed child HTML element |
 
 <a name="module__.create"></a>
 
 ### _.create(str, [settings]) ⇒ <code>Object</code>
-creates a new HTML node
+creates a new HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>Object</code> - created HTML node  
+**Returns**: <code>Object</code> - created HTML element  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -988,8 +988,8 @@ appends elem2 in elem1
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem1 | <code>Object</code> | HTML node |
-| elem2 | <code>Object</code> | HTML node to append |
+| elem1 | <code>Object</code> | HTML element |
+| elem2 | <code>Object</code> | HTML element to append |
 
 <a name="module__.prepend"></a>
 
@@ -1000,8 +1000,8 @@ prepends elem2 in elem1
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem1 | <code>Object</code> | HTML node |
-| elem2 | <code>Object</code> | HTML node to prepend |
+| elem1 | <code>Object</code> | HTML element |
+| elem2 | <code>Object</code> | HTML element to prepend |
 
 <a name="module__.after"></a>
 
@@ -1012,8 +1012,8 @@ inserts elem2 after elem1
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem1 | <code>Object</code> | HTML node |
-| elem2 | <code>Object</code> | HTML node to insert |
+| elem1 | <code>Object</code> | HTML element |
+| elem2 | <code>Object</code> | HTML element to insert |
 
 <a name="module__.before"></a>
 
@@ -1024,41 +1024,41 @@ inserts elem2 before elem1
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem1 | <code>Object</code> | HTML node |
-| elem2 | <code>Object</code> | HTML node to insert |
+| elem1 | <code>Object</code> | HTML element |
+| elem2 | <code>Object</code> | HTML element to insert |
 
 <a name="module__.remove"></a>
 
 ### _.remove(elem)
-removes a HTML node from the DOM
+removes a HTML element from the DOM
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node |
+| elem | <code>Object</code> | HTML element |
 
 <a name="module__.empty"></a>
 
 ### _.empty(elem)
-removes all child HTML nodes of a HTML node
+removes all child HTML elements of a HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node |
+| elem | <code>Object</code> | HTML element |
 
 <a name="module__.addEvent"></a>
 
 ### _.addEvent(elem, event, fn, [useCapture])
-adds an event listener to a HTML node
+adds an event listener to a HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| elem | <code>Object</code> |  | HTML node |
+| elem | <code>Object</code> |  | HTML element |
 | event | <code>string</code> |  | event type |
 | fn | <code>function</code> |  | function to be called when the event is triggered |
 | [useCapture] | <code>boolean</code> | <code>false</code> |  |
@@ -1066,13 +1066,13 @@ adds an event listener to a HTML node
 <a name="module__.removeEvent"></a>
 
 ### _.removeEvent(elem, event, fn, [useCapture])
-removes an event listener from a HTML node
+removes an event listener from a HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| elem | <code>Object</code> |  | HTML node on which the event was defined |
+| elem | <code>Object</code> |  | HTML element on which the event was defined |
 | event | <code>string</code> |  | event type |
 | fn | <code>function</code> |  | function that was defined to be triggered from the event |
 | [useCapture] | <code>boolean</code> | <code>false</code> | the same useCapture value defined when creating the event |
@@ -1080,78 +1080,78 @@ removes an event listener from a HTML node
 <a name="module__.onClick"></a>
 
 ### _.onClick(elem, fn, [useCapture])
-adds a 'click' event listener to a HTML node
+adds a 'click' event listener to a HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| elem | <code>Object</code> |  | HTML node |
+| elem | <code>Object</code> |  | HTML element |
 | fn | <code>function</code> |  | function called on trigger |
 | [useCapture] | <code>boolean</code> | <code>false</code> |  |
 
 <a name="module__.removeClick"></a>
 
 ### _.removeClick(elem, fn, [useCapture])
-removes a 'click' event listener with the given parameters from a HTML node
+removes a 'click' event listener with the given parameters from a HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| elem | <code>Object</code> |  | HTML node |
+| elem | <code>Object</code> |  | HTML element |
 | fn | <code>function</code> |  | function |
 | [useCapture] | <code>boolean</code> | <code>false</code> |  |
 
 <a name="module__.onInput"></a>
 
 ### _.onInput(elem, fn, [useCapture])
-adds an 'input' event listener to a HTML node
+adds an 'input' event listener to a HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| elem | <code>Object</code> |  | HTML node |
+| elem | <code>Object</code> |  | HTML element |
 | fn | <code>function</code> |  | function called on trigger |
 | [useCapture] | <code>boolean</code> | <code>false</code> |  |
 
 <a name="module__.removeInput"></a>
 
 ### _.removeInput(elem, fn, [useCapture])
-removes an 'input' event listener with the given parameters from a HTML node
+removes an 'input' event listener with the given parameters from a HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| elem | <code>Object</code> |  | HTML node |
+| elem | <code>Object</code> |  | HTML element |
 | fn | <code>function</code> |  | function |
 | [useCapture] | <code>boolean</code> | <code>false</code> |  |
 
 <a name="module__.onLoad"></a>
 
 ### _.onLoad(elem, fn, [useCapture])
-adds a 'load' event listener to a HTML node
+adds a 'load' event listener to a HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| elem | <code>Object</code> |  | HTML node |
+| elem | <code>Object</code> |  | HTML element |
 | fn | <code>function</code> |  | function called on trigger |
 | [useCapture] | <code>boolean</code> | <code>false</code> |  |
 
 <a name="module__.removeLoad"></a>
 
 ### _.removeLoad(elem, fn, [useCapture])
-removes a 'load' event listener with the given parameters from a HTML node
+removes a 'load' event listener with the given parameters from a HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| elem | <code>Object</code> |  | HTML node |
+| elem | <code>Object</code> |  | HTML element |
 | fn | <code>function</code> |  | function |
 | [useCapture] | <code>boolean</code> | <code>false</code> |  |
 
@@ -1161,11 +1161,11 @@ removes a 'load' event listener with the given parameters from a HTML node
 returns the target element of an event object
 
 **Kind**: static method of [<code>\_</code>](#module__)  
-**Returns**: <code>Object</code> - target HTML node  
+**Returns**: <code>Object</code> - target HTML element  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| e | <code>event</code> | HTML node on which the event was defined |
+| e | <code>event</code> | HTML element on which the event was defined |
 
 <a name="module__.preventDefault"></a>
 
@@ -1181,49 +1181,49 @@ prevents default event actions happening for this specific event
 <a name="module__.addClass"></a>
 
 ### _.addClass(elem, class_)
-adds class to HTML node
+adds class to HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node |
+| elem | <code>Object</code> | HTML element |
 | class_ | <code>string</code> | class name (using multiple class names may not work in older browsers) |
 
 <a name="module__.removeClass"></a>
 
 ### _.removeClass(elem, class_)
-removes class from HTML node
+removes class from HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node |
+| elem | <code>Object</code> | HTML element |
 | class_ | <code>string</code> | class name (using multiple class names may not work in older browsers) |
 
 <a name="module__.toggleClass"></a>
 
 ### _.toggleClass(elem, class_)
-toggles class on and off on HTML node
+toggles class on and off on HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node |
+| elem | <code>Object</code> | HTML element |
 | class_ | <code>string</code> | class name (using multiple class names may not work in older browsers) |
 
 <a name="module__.hasClass"></a>
 
 ### _.hasClass(elem, class_)
-checks if the HTML node has the given class
+checks if the HTML element has the given class
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node |
+| elem | <code>Object</code> | HTML element |
 | class_ | <code>string</code> | single class name |
 
 <a name="module__.getStyle"></a>
@@ -1236,44 +1236,44 @@ returns value of given css property
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node |
+| elem | <code>Object</code> | HTML element |
 | style | <code>string</code> | CSS property name |
 
 <a name="module__.setStyles"></a>
 
 ### _.setStyles(elem, styles)
-sets the given CSS property values to the HTML node
+sets the given CSS property values to the HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node |
+| elem | <code>Object</code> | HTML element |
 | styles | <code>Object</code> | Object holding key (CSS property name) and value (CSS property value) pairs |
 
 <a name="module__.getHeight"></a>
 
 ### _.getHeight(elem) ⇒ <code>number</code>
-returns browser-rendered height of HTML node
+returns browser-rendered height of HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 **Returns**: <code>number</code> - height in pixels  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node |
+| elem | <code>Object</code> | HTML element |
 
 <a name="module__.getWidth"></a>
 
 ### _.getWidth(elem) ⇒ <code>number</code>
-returns browser-rendered width of HTML node
+returns browser-rendered width of HTML element
 
 **Kind**: static method of [<code>\_</code>](#module__)  
 **Returns**: <code>number</code> - width in pixels  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| elem | <code>Object</code> | HTML node |
+| elem | <code>Object</code> | HTML element |
 
 <a name="module__.exists"></a>
 
@@ -1604,7 +1604,7 @@ generates HTML elements for charts
 <a name="module_VISUALIZER.createCharts"></a>
 
 ### VISUALIZER.createCharts()
-creates the HTML nodes needed for the charts using current DATA
+creates the HTML elements needed for the charts using current DATA
 
 **Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
 <a name="module_VISUALIZER.getBar"></a>

@@ -4,7 +4,7 @@
  */
 var NODE = {
         
-    /* default HTML nodes */
+    /* default HTML elements */
     
     html                        : _.tag('html')[0],
     head                        : _.tag('head')[0],
@@ -59,7 +59,7 @@ var NODE = {
     /**
      * @function
      * @memberof module:NODE
-     * @desc adds missing references to HTML nodes for 'data load' window
+     * @desc adds missing references to HTML elements for 'data load' window
      */
     initializeDataLoadWindow : function () {
         
@@ -93,7 +93,7 @@ var NODE = {
     /**
      * @function
      * @memberof module:NODE
-     * @desc adds missing references to HTML nodes for 'compare items' window
+     * @desc adds missing references to HTML elements for 'compare items' window
      */
     initializeCompareItemsWindow : function () {
         
@@ -141,7 +141,7 @@ var NODE = {
     /**
      * @function
      * @memberof module:NODE
-     * @desc adds missing references to HTML nodes for 'bar chart'
+     * @desc adds missing references to HTML elements for 'bar chart'
      */
     initializeBarChart : function () {
         
@@ -150,7 +150,7 @@ var NODE = {
         this.data_set_info.title = _.class('title', context)[0];
         this.data_set_info.date = _.class('date', context)[0];
         
-        // get HTML node holding 'current' data value
+        // get HTML element holding 'current' data value
         var curr = this.current_value;
         curr.value = _.class('value', curr.container)[0];
         curr.indicator = _.class('indicator', curr.container)[0];
@@ -183,7 +183,7 @@ var NODE = {
     /**
      * @function
      * @memberof module:NODE
-     * @desc adds missing references to HTML nodes
+     * @desc adds missing references to HTML elements
      */
     initialize : function () {
         

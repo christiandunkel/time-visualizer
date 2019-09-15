@@ -9,9 +9,9 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc selects HTML node by id
+     * @desc selects HTML element by id
      * @param {string} selector - string containing a HTML id
-     * @returns {Object} if an element was found, returns HTML node
+     * @returns {Object} if an element was found, returns HTML element
      */
     id : function (selector) {
         
@@ -27,7 +27,7 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc selects HTML node(s) by class
+     * @desc selects HTML element(s) by class
      * @param {string} selector - string containing one or multiple space-seperated HTML classes
      * @param {string} [context=document] - container element in which to search for class
      * @returns {HTMLCollection} if the selector and context (if given) were valid
@@ -56,7 +56,7 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc selects HTML node(s) by tag
+     * @desc selects HTML element(s) by tag
      * @param {string} selector - string containing a HTML tag
      * @param {string} [context=document] - container element in which to search for tag
      * @returns {HTMLCollection} if the selector and context (if given) were valid
@@ -85,7 +85,7 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc selects HTML node(s) using a CSS selector
+     * @desc selects HTML element(s) using a CSS selector
      * @param {string} selector - string containing a valid CSS selector
      * @param {string} [context=document] - container element in which to search
      * @param {function} [callback] - called when querySelector is not supported by browser
@@ -133,10 +133,10 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc check if the first HTML node contains the second
-     * @param {Object} parent - supposed parent HTML node
-     * @param {Object} child - supposed child HTML node
-     * @returns {boolean} returns true if the first HTML node contains the second
+     * @desc check if the first HTML element contains the second
+     * @param {Object} parent - supposed parent HTML element
+     * @param {Object} child - supposed child HTML element
+     * @returns {boolean} returns true if the first HTML element contains the second
      */
     contains : function (parent, child) {
         
@@ -161,10 +161,10 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc creates a new HTML node
+     * @desc creates a new HTML element
      * @param {string} str - selector in the form of tag#id.class1.class2
      * @param {Object} [settings] - object holding the HTML and style properties
-     * @returns {Object} created HTML node
+     * @returns {Object} created HTML element
      */
     create : function (str, settings) {
         
@@ -227,8 +227,8 @@ var _ = {
      * @function
      * @memberof module:_
      * @desc appends elem2 in elem1
-     * @param {Object} elem1 - HTML node
-     * @param {Object} elem2 - HTML node to append
+     * @param {Object} elem1 - HTML element
+     * @param {Object} elem2 - HTML element to append
      */
     append : function (elem1, elem2) {
         
@@ -253,8 +253,8 @@ var _ = {
      * @function
      * @memberof module:_
      * @desc prepends elem2 in elem1
-     * @param {Object} elem1 - HTML node
-     * @param {Object} elem2 - HTML node to prepend
+     * @param {Object} elem1 - HTML element
+     * @param {Object} elem2 - HTML element to prepend
      */
     prepend : function (elem1, elem2) {
         
@@ -279,8 +279,8 @@ var _ = {
      * @function
      * @memberof module:_
      * @desc inserts elem2 after elem1
-     * @param {Object} elem1 - HTML node
-     * @param {Object} elem2 - HTML node to insert
+     * @param {Object} elem1 - HTML element
+     * @param {Object} elem2 - HTML element to insert
      */
     after : function (elem1, elem2) {
         
@@ -305,8 +305,8 @@ var _ = {
      * @function
      * @memberof module:_
      * @desc inserts elem2 before elem1
-     * @param {Object} elem1 - HTML node
-     * @param {Object} elem2 - HTML node to insert
+     * @param {Object} elem1 - HTML element
+     * @param {Object} elem2 - HTML element to insert
      */
     before : function (elem1, elem2) {
         
@@ -330,8 +330,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc removes a HTML node from the DOM
-     * @param {Object} elem - HTML node
+     * @desc removes a HTML element from the DOM
+     * @param {Object} elem - HTML element
      */
     remove : function (elem) {
         
@@ -344,8 +344,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc removes all child HTML nodes of a HTML node
-     * @param {Object} elem - HTML node
+     * @desc removes all child HTML elements of a HTML element
+     * @param {Object} elem - HTML element
      */
     empty : function (elem) {
         
@@ -364,8 +364,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc adds an event listener to a HTML node
-     * @param {Object} elem - HTML node
+     * @desc adds an event listener to a HTML element
+     * @param {Object} elem - HTML element
      * @param {string} event - event type
      * @param {function} fn - function to be called when the event is triggered
      * @param {boolean} [useCapture=false]
@@ -402,8 +402,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc removes an event listener from a HTML node
-     * @param {Object} elem - HTML node on which the event was defined
+     * @desc removes an event listener from a HTML element
+     * @param {Object} elem - HTML element on which the event was defined
      * @param {string} event - event type
      * @param {function} fn - function that was defined to be triggered from the event
      * @param {boolean} [useCapture=false] - the same useCapture value defined when creating the event
@@ -439,8 +439,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc adds a 'click' event listener to a HTML node
-     * @param {Object} elem - HTML node
+     * @desc adds a 'click' event listener to a HTML element
+     * @param {Object} elem - HTML element
      * @param {function} fn - function called on trigger
      * @param {boolean} [useCapture=false]
      */
@@ -451,8 +451,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc removes a 'click' event listener with the given parameters from a HTML node
-     * @param {Object} elem - HTML node
+     * @desc removes a 'click' event listener with the given parameters from a HTML element
+     * @param {Object} elem - HTML element
      * @param {function} fn - function
      * @param {boolean} [useCapture=false]
      */
@@ -463,8 +463,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc adds an 'input' event listener to a HTML node
-     * @param {Object} elem - HTML node
+     * @desc adds an 'input' event listener to a HTML element
+     * @param {Object} elem - HTML element
      * @param {function} fn - function called on trigger
      * @param {boolean} [useCapture=false]
      */
@@ -475,8 +475,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc removes an 'input' event listener with the given parameters from a HTML node
-     * @param {Object} elem - HTML node
+     * @desc removes an 'input' event listener with the given parameters from a HTML element
+     * @param {Object} elem - HTML element
      * @param {function} fn - function
      * @param {boolean} [useCapture=false]
      */
@@ -487,8 +487,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc adds a 'load' event listener to a HTML node
-     * @param {Object} elem - HTML node
+     * @desc adds a 'load' event listener to a HTML element
+     * @param {Object} elem - HTML element
      * @param {function} fn - function called on trigger
      * @param {boolean} [useCapture=false]
      */
@@ -499,8 +499,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc removes a 'load' event listener with the given parameters from a HTML node
-     * @param {Object} elem - HTML node
+     * @desc removes a 'load' event listener with the given parameters from a HTML element
+     * @param {Object} elem - HTML element
      * @param {function} fn - function
      * @param {boolean} [useCapture=false]
      */
@@ -512,8 +512,8 @@ var _ = {
      * @function
      * @memberof module:_
      * @desc returns the target element of an event object
-     * @param {event} e - HTML node on which the event was defined
-     * @returns {Object} target HTML node
+     * @param {event} e - HTML element on which the event was defined
+     * @returns {Object} target HTML element
      */
     target : function (e) {
         
@@ -543,8 +543,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc adds class to HTML node
-     * @param {Object} elem - HTML node
+     * @desc adds class to HTML element
+     * @param {Object} elem - HTML element
      * @param {string} class_ - class name (using multiple class names may not work in older browsers)
      */
     addClass : function (elem, class_) {
@@ -570,8 +570,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc removes class from HTML node
-     * @param {Object} elem - HTML node
+     * @desc removes class from HTML element
+     * @param {Object} elem - HTML element
      * @param {string} class_ - class name (using multiple class names may not work in older browsers)
      */
     removeClass : function (elem, class_) {
@@ -600,8 +600,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc toggles class on and off on HTML node
-     * @param {Object} elem - HTML node
+     * @desc toggles class on and off on HTML element
+     * @param {Object} elem - HTML element
      * @param {string} class_ - class name (using multiple class names may not work in older browsers)
      */
     toggleClass : function (elem, class_) {
@@ -626,8 +626,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc checks if the HTML node has the given class
-     * @param {Object} elem - HTML node
+     * @desc checks if the HTML element has the given class
+     * @param {Object} elem - HTML element
      * @param {string} class_ - single class name
      */
     hasClass : function (elem, class_) {
@@ -660,7 +660,7 @@ var _ = {
      * @function
      * @memberof module:_
      * @desc returns value of given css property
-     * @param {Object} elem - HTML node
+     * @param {Object} elem - HTML element
      * @param {string} style - CSS property name
      * @returns {string} CSS property value
      */
@@ -686,8 +686,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc sets the given CSS property values to the HTML node
-     * @param {Object} elem - HTML node
+     * @desc sets the given CSS property values to the HTML element
+     * @param {Object} elem - HTML element
      * @param {Object} styles - Object holding key (CSS property name) and value (CSS property value) pairs
      */
     setStyles : function (elem, styles) {
@@ -709,8 +709,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc returns browser-rendered height of HTML node
-     * @param {Object} elem - HTML node
+     * @desc returns browser-rendered height of HTML element
+     * @param {Object} elem - HTML element
      * @returns {number} height in pixels
      */
     getHeight : function (elem) {
@@ -727,8 +727,8 @@ var _ = {
     /**
      * @function
      * @memberof module:_
-     * @desc returns browser-rendered width of HTML node
-     * @param {Object} elem - HTML node
+     * @desc returns browser-rendered width of HTML element
+     * @param {Object} elem - HTML element
      * @returns {number} width in pixels
      */
     getWidth : function (elem) {

@@ -615,7 +615,7 @@ var ANIMATOR = {
      * @function
      * @memberof module:ANIMATOR
      * @desc draws a line graph for an item on the line chart
-     * @param {Object} canvas - HTML node to drawing canvas
+     * @param {Object} canvas - HTML canvas
      * @param {Object} context - Context of drawing canvas
      * @param {Object} padding - Object holds 4 numbers for the padding on each site of the canvas
      * @param {string} item_id

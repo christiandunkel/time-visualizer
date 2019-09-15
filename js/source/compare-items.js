@@ -154,7 +154,7 @@ var COMPARE_ITEMS = {
     
     /* BUTTON MANAGEMENT */
     
-    // array of button HTML nodes
+    // array of button HTML elements
     buttons : [],
     buttons_num : 0,
     

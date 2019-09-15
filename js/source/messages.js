@@ -20,7 +20,7 @@ var MSG = {
      * @desc generates the HTML for a message element
      * @param {string} text - content of the message
      * @param {string} type - type of the message, defined in MSG.type
-     * @return {Object} HTML node
+     * @return {Object} HTML element
      */
     generateHTML : function (text, type) {
         

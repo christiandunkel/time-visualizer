@@ -7,7 +7,7 @@ var VISUALIZER = {
     /**
      * @function
      * @memberof module:VISUALIZER
-     * @desc creates the HTML nodes needed for the charts using current DATA
+     * @desc creates the HTML elements needed for the charts using current DATA
      */
     createCharts : function () {
         
@@ -51,7 +51,7 @@ var VISUALIZER = {
             
         }
         
-        // un-hide the 'data-set-current-value' HTML node
+        // un-hide the 'data-set-current-value' HTML element
         _.removeClass(NODE.current_value.container, 'hidden');
         
     },
