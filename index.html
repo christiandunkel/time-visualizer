@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="javascriptOff animation-paused" lang="en">
+<html class="animation-paused" lang="en">
 
 <head>
     
@@ -22,8 +22,7 @@
         
         // tell CSS that Javascript is on
         (function () {
-            var html = document.getElementsByTagName('html')[0];
-            html.className = html.className.replace(/javascriptOff/, 'javascriptOn');
+            document.getElementsByTagName('html')[0].className += ' jsOn';
         })();
         
     </script>

@@ -243,7 +243,7 @@ footer {
         opacity: .4;
         text-align: center; font-size: 13px; line-height: 16px;
         
-        .javascriptOn & {
+        .jsOn & {
             display: block;
         }
     }
@@ -325,7 +325,7 @@ footer {
     }
     
     &.hidden:not(.show),
-    .javascriptOn &.javascript {
+    .jsOn &.javascript {
         display: none;
     }
     
