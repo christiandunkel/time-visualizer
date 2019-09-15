@@ -26,8 +26,8 @@ var DATA_LOAD = {
                 
                 // get button and file name
                 var btn = _.target(e);
-                var link = btn.getAttribute('load-data');
-                var file_url = 'data/' + link + '.json';
+                var file_name = btn.getAttribute('load-data');
+                var file_url = 'data/' + file_name + '.json';
                 
                 // try using the FileReaderAPI, as loadURL() uses a XMLHttpRequest, 
                 // which won't work if index.html is loaded locally as a file in browser

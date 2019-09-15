@@ -1909,8 +1909,8 @@ var DATA_LOAD = {
                 
                 // get button and file name
                 var btn = _.target(e);
-                var link = btn.getAttribute('load-data');
-                var file_url = 'data/' + link + '.json';
+                var file_name = btn.getAttribute('load-data');
+                var file_url = 'data/' + file_name + '.json';
                 
                 // try using the FileReaderAPI, as loadURL() uses a XMLHttpRequest, 
                 // which won't work if index.html is loaded locally as a file in browser
@@ -4240,7 +4240,7 @@ var MAIN = {
             
             // add error message to main page
             _.append(NODE.bar_chart, _.create('div.notice.red', {
-                'innerHTML': 'You are running this project as a file. Click the <b>Load data</b> button to select a data set file.'
+                'innerHTML': 'You are running this HTML page locally as a file, which makes HTTP requests to the web or files impossible. Click the <b>Load data</b> button to select a data set file instead.'
             }));
             
             return;
