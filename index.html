@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="animation-paused" lang="en" dir="ltr">
+<html class=animation-paused lang=en dir=ltr>
 
 <head>
     
@@ -38,23 +38,22 @@
     
     <!-- fixed on top right corner -->
         
-    <a id="github-link" href="https://github.com/christiandunkel/time-visualizer" title="Look at the code on Github" tabIndex="999">
-        <div class="curl"></div>
-        <div class="icon"></div>
-        <div class="background"></div>
+    <a id=github-link tabIndex=999 href="https://github.com/christiandunkel/time-visualizer" title="Look at the code on Github">
+        <i class=curl></i>
+        <i class=icon></i>
+        <i class=background></i>
+        Github Repository
     </a>
     
+    <!-- at top, includes navigation -->
     
-    
-    <!-- header at top -->
-    
-    <div id="top-area">
+    <div id=top-area>
         
         <header>
 
-            <img id="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAHlBMVEUAAAAwpP0wpP0wpP0wpP0wpP0wpP0wpP0wpP0wpP1zW2hpAAAACXRSTlMAOMj6hvPwciUnC3hiAAAAVElEQVRIx2MYEkAJNygAK5iJG8wgpGDiqIJBo8AArEAQN2AYNACXF6Y6EFAw04CQggmjCuilwIBwbA4hgOn+aQ6EEq0BIQUTRhXQS4EBodgcdKkRAOhgh/RWPu7QAAAAAElFTkSuQmCC" alt="Logo, that depicts three, differently sized, horizontal, blue bars." />
+            <img id=logo src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAHlBMVEUAAAAwpP0wpP0wpP0wpP0wpP0wpP0wpP0wpP0wpP1zW2hpAAAACXRSTlMAOMj6hvPwciUnC3hiAAAAVElEQVRIx2MYEkAJNygAK5iJG8wgpGDiqIJBo8AArEAQN2AYNACXF6Y6EFAw04CQggmjCuilwIBwbA4hgOn+aQ6EEq0BIQUTRhXQS4EBodgcdKkRAOhgh/RWPu7QAAAAAElFTkSuQmCC" alt="Logo, that depicts three, differently sized, horizontal, blue bars." />
 
-            <h1 id="title">
+            <h1 id=title>
                 <span>Time</span>
                 <span>Visualizer</span>
             </h1>
@@ -65,51 +64,51 @@
 
         <nav>
 
-            <div id="top-menu">
+            <div id=top-menu>
 
-                <button id="toggle-darkmode" class="has-icon right" title="Toggle dark mode" tabIndex="2"></button>
+                <button id=toggle-darkmode has-icon float-right title="Toggle dark mode" tabIndex="2"></button>
 
-                <button id="load-data" class="has-icon" tabIndex="1">Load data</button>
+                <button id=load-data has-icon tabIndex=1>Load data</button>
 
             </div>
 
-            <div id="animation-controls">
+            <div id=animation-controls>
 
-                <div class="right-side">
+                <div class=right-side>
 
-                    <div class="descriptor">Animation Speed</div>
+                    <div class=descriptor>Animation Speed</div>
                     
-                    <div id="pre-defined-speed" class="active">
+                    <div id=pre-defined-speed class=active>
 
-                        <button id="half-speed" class="secondary" title="Set animation speed to 0.5" tabIndex="6">.5</button>
+                        <button tabIndex=6 id=half-speed secondary title="Set animation speed to 0.5">.5</button>
 
-                        <button id="normal-speed" class="secondary active" title="Set animation speed to 1 (default)" aria-disabled="true" tabIndex="-1" originalTabIndex="7">1</button>
+                        <button tabIndex="-1" originalTabIndex=7 id=normal-speed secondary active title="Set animation speed to 1 (default)" aria-disabled="true">1</button>
 
-                        <button id="double-speed" class="secondary" title="Set animation speed to 2" tabIndex="8">2</button>
+                        <button tabIndex=8 id=double-speed secondary title="Set animation speed to 2">2</button>
 
-                        <button id="open-custom-speed-menu" class="secondary has-icon" title="Set custom animation speed" tabIndex="9">?</button>
+                        <button tabIndex=9 id=open-custom-speed-menu secondary has-icon title="Set custom animation speed">?</button>
                         
                     </div>
                     
-                    <div id="custom-speed">
+                    <div id=custom-speed>
                     
-                        <input id="custom-speed-input" type="text" tabIndex="8" />
+                        <input tabIndex=8 id=custom-speed-input type=text />
                         
-                        <button id="close-custom-speed-menu" class="secondary has-icon" title="Close 'custom animation speed' area" tabIndex="9">x</button>
+                        <button tabIndex=9 id=close-custom-speed-menu secondary has-icon title="Close 'custom animation speed' area">x</button>
                     
                     </div>
 
                 </div>
 
-                <div class="left-side">
+                <div class=left-side>
 
                     <div class="descriptor hidden">Animation Controls</div>
 
-                    <button id="play-button" class="secondary has-icon" title="Play animation" tabIndex="3"></button>
+                    <button tabIndex=3 id=play-button secondary has-icon title="Play animation"></button>
 
-                    <button id="pause-button" class="secondary has-icon" title="Pause animation" tabIndex="4"></button>
+                    <button tabIndex=4 id=pause-button secondary has-icon title="Pause animation"></button>
 
-                    <button id="stop-button" class="secondary has-icon" title="Stop animation" tabIndex="5"></button>
+                    <button tabIndex=5 id=stop-button secondary has-icon title="Stop animation"></button>
 
                 </div>
 
@@ -119,58 +118,56 @@
     
     </div>
     
-    
-    
     <!-- open-/closable windows -->
     
-    <div id="data-load-window" class="hidden-window">
+    <div id=data-load-window class=hidden-window>
     
-        <div class="blur"></div>
-        <div class="content">
+        <div class=blur></div>
+        <div class=content>
         
-            <button class="close">
-                <div class="cross"></div>
+            <button class=close>
+                <div class=cross></div>
             </button>
             
-            <div class="file-selected">
+            <div class=file-selected>
             
-                <div class="circle">
+                <div class=circle>
                 
-                    <div class="tick"></div>
+                    <div class=tick></div>
                 
-                    <div class="text">Data set loaded.</div>
+                    <div class=text>Data set loaded.</div>
                 
                 </div>
             
             </div>
             
-            <div class="no-file-selected">
+            <div class=no-file-selected>
                 
-                <div id="example-set-area">
+                <div id=example-set-area>
 
-                    <div class="heading">Select a data set...</div>
+                    <div class=heading>Select a data set...</div>
 
-                    <button class="data-set-btn example-data-set" load-data="example-data-set">Example</button>
+                    <button class="data-set-btn example-data-set" load-data=example-data-set>Example</button>
                     
-                    <button class="data-set-btn" load-data="countries-gdp">GDP</button>
+                    <button class=data-set-btn load-data=countries-gdp>GDP</button>
                     
-                    <button class="data-set-btn" load-data="countries-co2-emissions">CO2 Emissions</button>
+                    <button class=data-set-btn load-data=countries-co2-emissions>CO2 Emissions</button>
                     
-                    <button class="data-set-btn" load-data="countries-population">Population</button>
+                    <button class=data-set-btn load-data=countries-population>Population</button>
 
-                    <div class="or">or</div>
+                    <div class=or>or</div>
                     
                 </div>
 
-                <div id="file-reader-notice" class="notice red hidden">FileReader API is not supported by your browser! Update or switch browsers!</div>
+                <div id=file-reader-notice class="notice red hidden">FileReader API is not supported by your browser! Update or switch browsers!</div>
 
-                <div id="drop-area">
+                <div id=drop-area>
 
-                    <div class="text">Drop a file here.</div>
+                    <div class=text>Drop a file here.</div>
 
-                    <input type="file" id="selected-file" accept=".json, .txt" title="Select a file." />
+                    <input type=file id=selected-file accept=".json, .txt" title="Select a file." />
 
-                    <label for="selected-file">Select a file</label>
+                    <label for=selected-file>Select a file</label>
 
                 </div>
                 
@@ -180,28 +177,26 @@
     
     </div>
     
-    <div id="compare-items-window" class="hidden-window">
+    <div id=compare-items-window class=hidden-window>
     
-        <div class="blur"></div>
-        <div class="content">
+        <div class=blur></div>
+        <div class=content>
         
-            <button class="close">
-                <div class="cross"></div>
+            <button class=close>
+                <div class=cross></div>
             </button>
             
-            <div class="heading">Hidden:</div>
+            <div class=heading>Hidden:</div>
             
-            <div class="unselected-area"></div>
+            <div class=unselected-area></div>
             
-            <div class="heading">Shown:</div>
+            <div class=heading>Shown:</div>
             
-            <div class="selected-area"></div>
+            <div class=selected-area></div>
 
         </div>
         
     </div>
-    
-    
     
     <!-- contains all charts -->
     
@@ -209,83 +204,69 @@
         
         <!-- chart header -->
         
-        <div id="data-set-info">
-            <span class="title">No data set loaded</span>
-            <span class="date"></span>
+        <div id=data-set-info>
+            <span class=title>No data set loaded</span>
+            <span class=date></span>
         </div>
-        
-        
         
         <!-- chart content -->
         
-        <div class="content">
+        <div class=content>
 
-
-
-            <!-- all data chart -->
+            <!-- bar chart -->
             
-            <div id="chart-container-1" class="active">
-        
-                <!-- bar chart -->
+            <div id=chart-container-1 class=active>
                 
-                <div id="data-set-current-value" class="hidden">
-                    <div class="container">
-                        <div class="value"></div>
-                        <div class="indicator"></div>
+                <div id=data-set-current-value class=hidden>
+                    <div class=container>
+                        <div class=value></div>
+                        <div class=indicator></div>
                     </div>
                 </div>
 
-                <div id="bar-chart"></div>
+                <div id=bar-chart></div>
                 
                 <!-- ratio chart -->
                 
-                <div id="ratio-total" class="hidden"></div>
+                <div id=ratio-total class=hidden></div>
 
-                <table id="ratio-chart" class="hidden">
+                <table id=ratio-chart class=hidden>
                     <tr></tr>
                 </table>
                 
             </div>
 
-
-
             <!-- line chart -->
             
-            <div id="chart-container-2">
+            <div id=chart-container-2>
             
-                <div id="line-chart-menu">
+                <div id=line-chart-menu>
 
-                    <button id="close-line-chart" title="Back to bar chart">Back</button>
+                    <button id=close-line-chart title="Back to bar chart">Back</button>
 
-                    <button id="compare-btn" class="right" title="Compare items with one another">Compare</button>
+                    <button id=compare-btn float-right title="Compare items with one another">Compare</button>
                     
-                    <button id="download-line-chart" class="right" title="Download chart as an image">Image</button>
+                    <button id=download-line-chart float-right title="Download chart as an image">Image</button>
 
                 </div>
 
-                <canvas id="line-chart" width="1" height="500"></canvas>
+                <canvas id=line-chart width=1 height=500></canvas>
                 
             </div>
-            
-            
             
         </div>
     
     </main>
     
-    
-    
-    <!-- bottom content -->
+    <!-- bottom navigation -->
     
     <footer>
         
-        <!-- bottom of charts --> 
+        <div id=chart-number-note>* Number names have been assigned using the <a href="https://en.wikipedia.org/wiki/Names_of_large_numbers">short scale</a> used in American -/ British English.</div>
         
-        <div id="chart-number-note">* Number names have been assigned using the <a href="https://en.wikipedia.org/wiki/Names_of_large_numbers">short scale</a> used in American -/ British English.</div>
+        <img id=bottom-logo src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgBAMAAAAQtmoLAAAAIVBMVEWbm5sAAACbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5sRayXBAAAAC3RSTlOzAIwJakoUloI8VLlVwGoAAABnSURBVFjD7dAhDoAwEETRDao4IKQhKBQeyUE4ADdAcX5U21VkkMD/bsQzY+3DAIA7sG6pXQLxsFQtgdFyYVFAX0D1V+BePiXQuSmBxkoAwLdBnPKaJTCUFSTgJwAAAAAAAAAA8BJwAVcQosjI5lTSAAAAAElFTkSuQmCC" alt="Depicts three, differently sized, vertical, grey bar." />
         
-        <img id="bottom-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgBAMAAAAQtmoLAAAAIVBMVEWbm5sAAACbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5sRayXBAAAAC3RSTlOzAIwJakoUloI8VLlVwGoAAABnSURBVFjD7dAhDoAwEETRDao4IKQhKBQeyUE4ADdAcX5U21VkkMD/bsQzY+3DAIA7sG6pXQLxsFQtgdFyYVFAX0D1V+BePiXQuSmBxkoAwLdBnPKaJTCUFSTgJwAAAAAAAAAA8BJwAVcQosjI5lTSAAAAAElFTkSuQmCC" alt="Depicts three, differently sized, vertical, grey bar." />
-        
-        <div id="bottom-links">
+        <div id=bottom-links>
             
             <a href="https://github.com/christiandunkel/time-visualizer">Github</a>
             
@@ -296,8 +277,6 @@
         </div>
         
     </footer>
-    
-    
     
     <!-- scripts -->
     

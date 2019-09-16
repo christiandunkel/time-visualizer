@@ -173,6 +173,7 @@ header {
 #github-link {
     display: block; position: absolute; top: 0; right: 0;
     width: 70px; height: 70px;
+    font-size: 0; line-height: 0; color: transparent;
     @include transition(.9s);
     
     &:hover {
@@ -197,9 +198,7 @@ header {
     
     .curl {
         z-index: 3;
-        background: -moz-linear-gradient(45deg, rgba(157,157,157,1) 0%, rgba(193,193,193,1) 14%, rgba(255,255,255,1) 35%, rgba(203,203,203,1) 49%, rgba(141,141,141,1) 51%, rgba(0,0,0,0) 52%);
-        background: -webkit-linear-gradient(45deg, rgba(157,157,157,1) 0%,rgba(193,193,193,1) 14%,rgba(255,255,255,1) 35%,rgba(203,203,203,1) 49%,rgba(141,141,141,1) 51%,rgba(0,0,0,0) 52%);
-        background: linear-gradient(45deg, rgba(157,157,157,1) 0%,rgba(193,193,193,1) 14%,rgba(255,255,255,1) 35%,rgba(203,203,203,1) 49%,rgba(141,141,141,1) 51%,rgba(0,0,0,0) 52%);
+        @include linear-gradient(45deg, rgba(157,157,157,1) 0%, rgba(193,193,193,1) 14%, rgba(255,255,255,1) 35%, rgba(203,203,203,1) 49%, rgba(141,141,141,1) 51%, rgba(0,0,0,0) 52%);
         @include box-shadow(0 0 6px rgba(0,0,0,.5));
         @include transition(.9s);
     }
@@ -217,14 +216,10 @@ header {
     
     .background {
         z-index: 1;
-        background: -moz-linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(54,54,54,1) 51%, rgba(124,124,124,1) 100%);
-        background: -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(54,54,54,1) 51%,rgba(124,124,124,1) 100%);
-        background: linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(54,54,54,1) 51%,rgba(124,124,124,1) 100%);
+        @include linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(54,54,54,1) 51%, rgba(124,124,124,1) 100%);
         
         .darkMode & {
-            background: -moz-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
-            background: -webkit-linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
-            background: linear-gradient(45deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
+            @include linear-gradient(5deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
         }
     }
     

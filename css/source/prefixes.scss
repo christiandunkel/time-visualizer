@@ -67,6 +67,12 @@
     appearance: $value;
 }
 
+@mixin linear-gradient($values...) {
+    background: -moz-linear-gradient($values);
+    background: -webkit-linear-gradient($values);
+    background: linear-gradient($values);
+}
+
 @mixin background-size($value) {
     -o-background-size: $value;
     -moz-background-size: $value;

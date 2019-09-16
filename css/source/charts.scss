@@ -373,7 +373,7 @@
             }
         }
         
-        &.right {
+        &[float-right] {
             float: right;
             margin: 0 0 0 5px;
         }
@@ -412,8 +412,7 @@
         }
         
         @include on-mobile {
-            &, 
-            &.right {
+            &, &[float-right] {
                 display: block; float: none;
                 width: 100%; margin: 0 0 5px 0; padding: 12px;
             }
