@@ -128,7 +128,7 @@ nav {
             margin: 0 0 0 8px;
         }
         
-        @include on-phone {
+        @include on-mobile {
             
             &#load-data {
                 float: left;
