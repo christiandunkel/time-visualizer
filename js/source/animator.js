@@ -233,11 +233,11 @@ var ANIMATOR = {
      */
     refreshFrame : function () {
         
-        // set current value
+        // set current time value
         if (ANIMATOR.tick % 50 == 0) {
-            var curr_val = parseInt(DATA.from) + (ANIMATOR.tick == 0 ? 0 : ANIMATOR.tick / 50);
-            NODE.current_value.value.innerHTML = curr_val;
-            NODE.current_value.indicator.innerHTML = curr_val;
+            var time = parseInt(DATA.from) + (ANIMATOR.tick == 0 ? 0 : ANIMATOR.tick / 50);
+            NODE.current_value.value.innerHTML = time;
+            NODE.current_value.indicator.innerHTML = time;
         }
         // set current indicator's width
         _.setStyles(NODE.current_value.indicator, {
@@ -313,14 +313,19 @@ var ANIMATOR = {
             var curr = DATA.upscaled[item_id][tick];
             var formatted = DATA.formatted[item_id][tick];
             
-            // update HTML elements
+            // update value on bar HTML element (if it changed)
             var bar_chart = DATA.html[item_id].bar_chart;
-            bar_chart.value.innerHTML = formatted;
+            if (formatted != bar_chart.value.innerHTML) {
+                bar_chart.value.innerHTML = formatted;
+            }
+            
+            // calculate width of bar
+            // (max - min) * width + min = curr
+            var width = (curr - min) / (max - min);
             
             // set bar length
             _.setStyles(bar_chart.meter, {
-                // (max - min) * width + min = curr
-                'width' : (((curr - min) / (max - min)) * 100) + "%" 
+                'width' : (width * 100) + "%" 
             });
             
         }
@@ -331,16 +336,15 @@ var ANIMATOR = {
         for (var i = 0; i < DATA.item_num; i++) {
 
             var item_id = ANIMATOR.items_sorted[i].id;
-            var container = DATA.html[item_id].bar_chart.container;
             
-            // position order of HTML element
+            // position (order) of bar HTML element
             var position = DATA.items[item_id].position;
             
-            // distance from one bar to another in bar chart
+            // distance from one bar to another bar in bar chart
             var pixel_dist = 52;
         
-            // move bar to its new position    
-            _.setStyles(container, {
+            // move bar to its new position
+            _.setStyles(DATA.html[item_id].bar_chart.container, {
                 'transform': 'translate(0, ' + ((i - position) * pixel_dist) + 'px)'
             });
             
@@ -364,10 +368,10 @@ var ANIMATOR = {
         for (var i = DATA.item_num - 1; i >= 0; i--) {
             
             // get item id by order
-            var item_id = ANIMATOR.items_sorted[i].id;
+            var item_id         = ANIMATOR.items_sorted[i].id;
             var item_data_point = DATA.upscaled[item_id][ANIMATOR.tick];
-            var percentage = 100 / (total / item_data_point);
-            var ratio_chart = DATA.html[item_id].ratio_chart;
+            var percentage      = 100 / (total / item_data_point);
+            var ratio_chart     = DATA.html[item_id].ratio_chart;
             
             // filter out percentages smaller than 0.2%
             if (percentage < 0.2) {
@@ -630,9 +634,14 @@ var ANIMATOR = {
         var circle_radius           = 2; // in pixels
         var width_minus_padding     = canvas.width - padding.left - padding.right;
         var height_minus_padding    = canvas.height - padding.top - padding.bottom;
+            
+        // set drawing color
+        context.strokeStyle = color;
         
-        // get points intersecting the raster lines (using fixed data)
+        // get points intersecting with the raster lines (using fixed data)
         var points = [];
+        
+        // draw graph between points
         for (var i = 0; i < DATA.fixed_num; i++) {
                 
             // get x position of point
@@ -645,35 +654,22 @@ var ANIMATOR = {
             y_pos -= height_minus_padding / (100 / percentage_to_top);
             
             // add point to array
-            points[points.length] = {
+            points[i] = {
                 x : x_pos, 
                 y : y_pos
             };
-                
-        }
-            
-        // set drawing color
-        context.strokeStyle = color;
-        
-        // draw all points for graph
-        for (var i = 0; i < points.length; i++) {
-            
-            // current point
-            var x_pos = points[i].x;
-            var y_pos = points[i].y;
 
-            // draw a circle at point (is always intersection with raster)
+            // draw a circle at current point
             context.beginPath();
             context.arc(x_pos, y_pos, circle_radius, 0, circle_angle);
             context.stroke();
             
-            // draw line between point and next point,
-            // except if already reached last point
-            if (i != points.length - 1) {
+            // draw line between this and previous point
+            if (i > 0) {
                 
-                // get coordinates of next point
-                var x_next = points[i + 1].x;
-                var y_next = points[i + 1].y;
+                // get coordinates of previous point
+                var x_next = points[i - 1].x;
+                var y_next = points[i - 1].y;
                 
                 // draw line inbetween
                 context.moveTo(x_pos, y_pos);
