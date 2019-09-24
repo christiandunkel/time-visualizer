@@ -869,7 +869,7 @@ contains utility functions
     * [.addClass(elem, class_)](#module__.addClass)
     * [.removeClass(elem, class_)](#module__.removeClass)
     * [.toggleClass(elem, class_)](#module__.toggleClass)
-    * [.hasClass(elem, class_)](#module__.hasClass)
+    * [.hasClass(elem, class_)](#module__.hasClass) ⇒ <code>boolean</code>
     * [.getStyle(elem, style)](#module__.getStyle) ⇒ <code>string</code>
     * [.setStyles(elem, styles)](#module__.setStyles)
     * [.getHeight(elem)](#module__.getHeight) ⇒ <code>number</code>
@@ -1216,10 +1216,11 @@ toggles class on and off on HTML element
 
 <a name="module__.hasClass"></a>
 
-### _.hasClass(elem, class_)
+### _.hasClass(elem, class_) ⇒ <code>boolean</code>
 checks if the HTML element has the given class
 
 **Kind**: static method of [<code>\_</code>](#module__)  
+**Returns**: <code>boolean</code> - true, if HTML element has the given class  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -629,6 +629,7 @@ var _ = {
      * @desc checks if the HTML element has the given class
      * @param {Object} elem - HTML element
      * @param {string} class_ - single class name
+     * @returns {boolean} true, if HTML element has the given class
      */
     hasClass : function (elem, class_) {
         
