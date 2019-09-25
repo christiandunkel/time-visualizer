@@ -754,8 +754,8 @@ var _ = {
      * @param {*} val
      * @returns {boolean} returns true if the element exists
      */
-    exists : function (val) {
-        return typeof(val) !== 'undefined' && val !== null;
+    exists : function (n) {
+        return typeof(n) !== 'undefined' && n !== null;
     },
     
     /**
@@ -765,8 +765,8 @@ var _ = {
      * @param {*} val
      * @returns {boolean}
      */
-    isElement : function (val) {
-        return val instanceof Element || val instanceof HTMLDocument;
+    isElement : function (n) {
+        return n instanceof Element || n instanceof HTMLDocument;
     },
     
     /**
@@ -776,8 +776,8 @@ var _ = {
      * @param {*} val
      * @returns {boolean}
      */
-    isElementInDOM : function (val) {
-        return _.isElement(val) ? document.documentElement.contains(val) : false;
+    isElementInDOM : function (n) {
+        return _.isElement(n) ? document.documentElement.contains(n) : false;
     },
     
     /**
@@ -787,8 +787,8 @@ var _ = {
      * @param {*} val
      * @returns {boolean}
      */
-    isNodelist : function (val) {
-        return NodeList.prototype.isPrototypeOf(val);
+    isNodelist : function (n) {
+        return NodeList.prototype.isPrototypeOf(n);
     },
     
     /**
@@ -798,8 +798,8 @@ var _ = {
      * @param {*} val
      * @returns {boolean}
      */
-    isHTMLCollection : function (val) {
-        return HTMLCollection.prototype.isPrototypeOf(val);
+    isHTMLCollection : function (n) {
+        return HTMLCollection.prototype.isPrototypeOf(n);
     },
     
     /**

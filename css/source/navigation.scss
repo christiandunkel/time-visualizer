@@ -116,7 +116,7 @@ nav {
             margin-top: 8px; padding: 8px 8px;
             font-size: 14px; line-height: 16px; font-weight: 700; letter-spacing: .7px; text-align: center;
 
-            &[active] {
+            &.active {
                 background: #6e95ff; cursor: auto;
                 color: white;
                 @include box-shadow(2px 2px 0 #9cbdfb, 1px 1px 4px rgba(11, 46, 163, 0.3));
