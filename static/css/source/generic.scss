@@ -35,6 +35,7 @@ html {
     background: #fafafa;
     font-family: $font; color: #484848;
     @include transition(.2s);
+    @include animation(hidden-elem .2s, fade-in 1.2s .2s);
     
     &.dark-mode {
         background-color: #1d1d1d;
@@ -47,7 +48,7 @@ a {
     
     &:focus,
     &:hover {
-        background: #ebebeb;
+        background-color: #ebebeb;
     }
     
     .dark-mode & {
@@ -55,7 +56,7 @@ a {
         
         &:focus,
         &:hover {
-            background: #585858;
+            background-color: #585858;
         }
     }
 }
@@ -106,7 +107,6 @@ main {
 
 footer {
     max-width: 1100px; margin: 0 auto; padding: 0 20px;
-    @include animation(hidden-elem 1.5s, fade-in .6s 1.5s);
     
     .chart-number-note {
         display: none;
@@ -123,6 +123,20 @@ footer {
         width: 100px; height: 100px; margin: 60px auto 20px auto;
         background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgBAMAAAAQtmoLAAAAIVBMVEWbm5sAAACbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5sRayXBAAAAC3RSTlOzAIwJakoUloI8VLlVwGoAAABnSURBVFjD7dAhDoAwEETRDao4IKQhKBQeyUE4ADdAcX5U21VkkMD/bsQzY+3DAIA7sG6pXQLxsFQtgdFyYVFAX0D1V+BePiXQuSmBxkoAwLdBnPKaJTCUFSTgJwAAAAAAAAAA8BJwAVcQosjI5lTSAAAAAElFTkSuQmCC) no-repeat center;
         @include background-size(100% 100%);
+        @include border-radius(5px);
+        @include transition(.3s);
+        
+        &:hover,
+        &:focus {
+            background-color: #eaeaea;
+        }
+        
+        .dark-mode {
+            &:hover,
+            &:focus {
+                background-color: #373737;
+            }
+        }
     }
     
     .links {

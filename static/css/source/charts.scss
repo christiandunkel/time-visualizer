@@ -1,9 +1,5 @@
 // general elements
 
-.content {
-    @include animation(hidden-elem 1.2s, fade-in .6s 1.2s);
-}
-
 #chart-container-1,
 #chart-container-2 {
     display: none;
@@ -22,7 +18,6 @@
     background: #555555;
     color: white;
     @include border-radius(5px);
-    @include animation(hidden-elem .9s, fade-in .6s .9s);
     
     .dark-mode & {
         border-color: #4b4b4b;
@@ -403,13 +398,23 @@
         }
         
         &#compare-btn:after {
-            @extend %icon-compare-icon;
+            @extend %icon-compare;
             @include opacity(.4);
+            
+            .dark-mode & {
+                @extend %icon-compare-lightgrey;
+                @include opacity(1);
+            }
         }
         
         &#download-line-chart:after {
-            @extend %icon-download-icon;
+            @extend %icon-download;
             @include opacity(.4);
+            
+            .dark-mode & {
+                @extend %icon-download-lightgrey;
+                @include opacity(1);
+            }
         }
         
         @include ON_MOBILE {

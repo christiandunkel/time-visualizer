@@ -96,7 +96,6 @@ nav {
     width: 100%; height: 80px; padding: 20px 15px;
     background: #ffffff;
     @include box-shadow(0 1px 1px #f0f0f0);
-    @include animation(hidden-elem .6s, fade-in .6s .6s);
     
     .dark-mode & {
         background: #171717;
