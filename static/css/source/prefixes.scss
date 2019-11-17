@@ -1,219 +1,1259 @@
-@mixin animation($animations...) {
-    -o-animation: $animations;
-    -moz-animation: $animations;
-    -webkit-animation: $animations;
-    animation: $animations;
+// === VALUE TESTING ===
+
+// checks if a value is within a list
+@function -power-is-in-list($val, $list) {
+    @each $item in $list {
+        @if ($item == $val) {
+            @return true;
+        }
+    }
+    @return false;
 }
 
-@mixin animation-delay($delay...) {
-    -o-animation-delay: $delay;
-    -moz-animation-delay: $delay;
-    -webkit-animation-delay: $delay;
-    animation-delay: $delay;
+// check if a value is a number and in range $range: ($min, $max)
+@function -power-is-number-in-range($val, $range) {
+    @return -power-is-number($val) and $val >= nth($range, 1) and $val <= nth($range, 2);
 }
 
-@mixin animation-direction($direction...) {
-    -o-animation-direction: $direction;
-    -moz-animation-direction: $direction;
-    -webkit-animation-direction: $direction;
-    animation-direction: $direction;
+// check if a value is a unitless number in range
+@function -power-is-unitless-number-in-range($val, $range) {
+    @return -power-is-number-in-range($val, $range) and unitless($val);
 }
 
-@mixin animation-duration($duration...) {
-    -o-animation-duration: $duration;
-    -moz-animation-duration: $duration;
-    -webkit-animation-duration: $duration;
-    animation-duration: $duration;
+// ternary operator --> true ? 1 : 0
+@function -power-if-do-else($condition, $val1, $val2) {
+    @if ($condition == true) {
+        @return $val1;
+    } 
+    @else {
+        @return $val2;
+    }
 }
 
-@mixin animation-fill-mode($fillmode...) {
-    -o-animation-fill-mode: $fillmode;
-    -moz-animation-fill-mode: $fillmode;
-    -webkit-animation-fill-mode: $fillmode;
-    animation-fill-mode: $fillmode;
+
+
+// === TYPE TESTING ===
+
+@function -power-is-color($val) {
+    @return type-of($val) == 'color';
 }
 
-@mixin animation-iteration-count($iterations...) {
-    -o-animation-iteration-count: $iterations;
-    -moz-animation-iteration-count: $iterations;
-    -webkit-animation-iteration-count: $iterations;
-    animation-iteration-count: $iterations;
+@function -power-is-number($val) {
+    @return type-of($val) == 'number';
 }
 
-@mixin animation-name($name...) {
-    -o-animation-name: $name;
-    -moz-animation-name: $name;
-    -webkit-animation-name: $name;
-    animation-name: $name;
+@function -power-is-time($val) {
+    $unit: unit($val);
+    @return -power-is-number($val) and index('ms' 's', $unit) != null;
 }
 
-@mixin animation-play-state($state...) {
-    -o-animation-play-state: $state;
-    -moz-animation-play-state: $state;
-    -webkit-animation-play-state: $state;
-    animation-play-state: $state;
+@function -power-is-angle($val) {
+    $unit: unit($val);
+    @return -power-is-number($val) and index('deg' 'rad' 'grad' 'turn', $unit) != null;
 }
 
-@mixin animation-timing-function($timing...) {
-    -o-animation-timing-function: $timing;
-    -moz-animation-timing-function: $timing;
-    -webkit-animation-timing-function: $timing;
-    animation-timing-function: $timing;
+@function -power-is-integer($val) {
+    @return -power-is-number($val) and round($val) == $val;
 }
 
-@mixin appearance($value) {
-    -moz-appearance: $value;
-    -webkit-appearance: $value;
-    appearance: $value;
+@function -power-is-percent($val) {
+    $unit: unit($val);
+    @return -power-is-number($val) and $unit == '%';
 }
 
-@mixin background-size($value) {
-    -o-background-size: $value;
-    -moz-background-size: $value;
-    -webkit-background-size: $value;
-    background-size: $value;
+@function -power-is-length($val) {
+    $unit: unit($val);
+    @return -power-is-number($val) and index('em' 'ex' 'ch' 'rem' 'vw' 'vh' 'vmin' 'vmax' 'cm' 'mm' 'in' 'px' 'pt' 'pc', $unit) != null;
 }
 
-@mixin border-radius($value) {
-    -moz-border-radius: $value;
-    -webkit-border-radius: $value;
-    border-radius: $value;
+@function -power-is-width($val) {
+    @return -power-is-percent($val) or -power-is-length($val);
 }
 
-@mixin border-bottom-right-radius($value) {
-    -moz-border-bottom-right-radius: $value;
-    -webkit-border-bottom-right-radius: $value;
-    border-bottom-right-radius: $value;
+@function -power-is-position($val) {
+    @return -power-is-length($val) or -power-is-percentage($val) or index('top' 'right' 'bottom' 'left' 'center', $val) != null;
 }
 
-@mixin border-bottom-left-radius($value) {
-    -moz-border-bottom-left-radius: $value;
-    -webkit-border-bottom-left-radius: $value;
-    border-bottom-left-radius: $value;
+
+
+// === DISPLAY ===
+
+@mixin          display($val) {
+@include -power-display($val);}
+@mixin   -power-display($val) {
+    
+    @if ($val == 'flex') {
+        
+        display: -moz-flexbox;
+        display:  -ms-flexbox; // IE 10
+        display:  -webkit-box; // Safari 3.1+
+        display: -webkit-flex; // Safari 6.1+
+        display:         flex;
+        
+    }
+    @if ($val == 'inline-flex') {
+        
+        display: -moz-inline-flexbox;
+        display:  -ms-inline-flexbox; // IE 10
+        display:  -webkit-inline-box; // Safari 3.1+
+        display: -webkit-inline-flex; // Safari 6.1+
+        display:         inline-flex;
+        
+    }
+    @else {
+        
+        display: $val;
+        
+    }
+    
 }
 
-@mixin border-top-right-radius($value) {
-    -moz-border-top-right-radius: $value;
-    -webkit-border-top-right-radius: $value;
-    border-top-right-radius: $value;
+
+// === FLEX-BOX ===
+
+@mixin          align-content($val) {
+@include -power-align-content($val);}
+@mixin   -power-align-content($val) {
+    
+    @if (-power-is-in-list($val, ('center', 'stretch'))) {
+        
+        -ms-flex-line-pack: $val;
+        
+    }
+    @else if ($val == 'flex-start') {
+        
+        -ms-flex-line-pack: start;
+        
+    }
+    @else if ($val == 'flex-end') {
+        
+        -ms-flex-line-pack: end;
+        
+    }
+    @else if (-power-is-in-list($val, ('space-around', 'space-between'))) {
+        
+        -ms-flex-line-pack: justify;
+        
+    }
+    @else {
+        
+        @error "Unknown 'align-content: #{$val};'. Allowed are 'center|flex-end|flex-start|space-around|space-between|stretch'.";
+        
+    }
+    
+    // newest version
+    -webkit-align-content: $val;
+            align-content: $val;
+    
 }
 
-@mixin border-top-left-radius($value) {
-    -moz-border-top-left-radius: $value;
-    -webkit-border-top-left-radius: $value;
-    border-top-left-radius: $value;
+@mixin          align-items($val) {
+@include -power-align-items($val);}
+@mixin   -power-align-items($val) {
+    
+    $old-attr: 0;
+    
+    @if (-power-is-in-list($val, ('baseline', 'center', 'stretch'))) {
+        $old-attr: $val;
+    }
+    @else if ($val == 'flex-start') {
+        $old-attr: start;
+    }
+    @else if ($val == 'flex-end') {
+        $old-attr: end;
+    }
+    @else {
+        
+        @error "Unknown 'align-items: #{$val};'. Allowed are 'baseline|center|flex-end|flex-start|stretch'.";
+        
+    }
+    
+    // older version
+    -webkit-box-align: $old-attr;
+       -moz-box-align: $old-attr;
+      -moz-flex-align: $old-attr;
+       -ms-flex-align: $old-attr;
+    
+    // newest version
+    -webkit-align-items: $val;
+            align-items: $val;
+    
 }
 
-@mixin box-shadow($shadows...) {
-    -moz-box-shadow: $shadows;
+@mixin          align-self($val) {
+@include -power-align-self($val);}
+@mixin   -power-align-self($val) {
+    
+    @if (-power-is-in-list($val, ('auto', 'baseline', 'center', 'stretch'))) {
+        
+        -ms-flex-item-align: $val;
+        
+    }
+    @else if ($val == 'flex-start') {
+        
+        -ms-flex-item-align: start;
+        
+    }
+    @else if ($val == 'flex-end') {
+        
+        -ms-flex-item-align: end;
+        
+    }
+    @else {
+        
+        @error "Unknown 'align-self: #{$val};'. Allowed are 'auto|baseline|center|flex-end|flex-start|stretch'.";
+        
+    }
+    
+    // newest version
+    -webkit-align-self: $val;
+            align-self: $val;
+    
+}
+
+@mixin          flex($val) {
+@include -power-flex($val);}
+@mixin   -power-flex($val) {
+        
+    // element needs to have width set (for older syntax), otherwise element collapses
+    
+    // process flex using keyword
+    @if (-power-is-in-list($val, ('none', 'initial', 'auto'))) {
+        
+        // resolve keywords into their values
+        @if      ($val == 'none')    {$flex: (0, 0, auto);}
+        @else if ($val == 'initial') {$flex: (0, 1, auto);}
+        @else if ($val == 'auto')    {$flex: (1, 1, auto);}
+        
+        // set first value (index) of resolved values
+        -webkit-box-flex: nth($flex, 1); // Safari 3.1+
+           -moz-box-flex: nth($flex, 1); // Firefox 19-
+        
+        // set complete resolved values
+            -webkit-flex: $flex;
+                    flex: $flex;
+        
+        // set keywords
+        -webkit-flex: $val; // Chrome
+            -ms-flex: $val; // IE 10
+                flex: $val; // Opera 12.1, Firefox 20+
+        
+    }
+    // process flex using values
+    @else {
+        
+        $error: false;
+        
+        @if (length($val) == 3) {
+        
+            // go through parameters in list
+            
+            $v: nth($val, 1);
+            @if (-power-is-integer($v) and $v >= 0 and unitless($v)) {
+                
+                -webkit-box-flex: $v;
+                   -moz-box-flex: $v;
+                
+            }
+            @else {$error: true;}
+            
+            $v: nth($val, 2);
+            @if (not (-power-is-integer($v) and $v >= 0 and unitless($v))) {
+                $error: true;
+            }
+            
+            $v: nth($val, 3);
+            @if ($v == 'auto' or (-power-is-integer($v) and $v >= 0 and unitless($v))) {
+                
+                -webkit-flex: $val;
+                    -ms-flex: $val;
+                        flex: $val;
+                
+            }
+            @else {$error: true;}
+            
+        }
+        @else {$error: true;}
+        
+        @if ($error) {
+            
+            @error "Unknown 'flex: #{$val};'. Allowed are 'auto|initial|none' or '0|1 0|1 auto|0|1'.";
+            
+        }
+        
+    }
+    
+}
+
+@mixin          flex-direction($val) {
+@include -power-flex-direction($val);}
+@mixin   -power-flex-direction($val) {
+    
+    @if (-power-is-in-list($val, ('column', 'column-reverse'))) {
+        
+        // older version
+        -webkit-box-direction: -power-if-do-else($val == 'column', normal, reverse);
+           -webkit-box-orient: vertical;
+           -moz-box-direction: -power-if-do-else($val == 'column', normal, reverse);
+              -moz-box-orient: vertical;
+        
+        // newer version
+        -webkit-flex-direction: $val;
+            -ms-flex-direction: $val; // IE 10
+                flex-direction: $val;
+        
+    }
+    @else if ($val == 'row' or $val == 'row-reverse') {
+        
+        // older version
+        -webkit-box-direction: -power-if-do-else($val == 'row', normal, reverse);
+           -webkit-box-orient: horizontal;
+           -moz-box-direction: -power-if-do-else($val == 'row', normal, reverse);
+              -moz-box-orient: horizontal;
+        
+        // newer version
+        -webkit-flex-direction: $val;
+            -ms-flex-direction: $val; // IE 10
+                flex-direction: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'flex-direction: #{$val};'. Allowed are 'column|column-reverse|row|row-reverse'.";
+        
+    }
+    
+}
+
+@mixin          flex-flow($dir, $wrap) {
+@include -power-flex-flow($dir, $wrap);}
+@mixin   -power-flex-flow($dir, $wrap) {
+    
+    @include flex-direction($dir);
+    @include flex-wrap($wrap);
+    
+}
+
+@mixin          flex-basis($val) {
+@include -power-flex-basis($val);}
+@mixin   -power-flex-basis($val) {
+    
+    // must be positive, unitless number
+    @if (
+        -power-is-in-list($val, ('auto', 'content', 'fill', 'fit-content', 'inherit', 'initial', 'max-content', 'min-content', 'unset')) or 
+        (-power-is-width($val) and $val >= 0) or
+        $val == 0
+    ) {
+        
+        -ms-flex-preferred-size: $val; // IE 10
+             -webkit-flex-basis: $val; // Windows Chrome 21+
+                     flex-basis: $val; // Firefox 22+, IE 11, Opera 12.1+
+        
+    }
+    @else {
+        
+        @error "Unknown 'flex-basis: #{$val};'. Allowed are 'inherit|initial|unset' or a positive, unitless number.";
+        
+    }
+    
+}
+
+@mixin          flex-grow($val) {
+@include -power-flex-grow($val);}
+@mixin   -power-flex-grow($val) {
+    
+    // must be positive, unitless number
+    @if (
+        -power-is-in-list($val, ('inherit', 'initial', 'unset')) or 
+        (-power-is-number($val) and unitless($val) and $val >= 0)
+    ) {
+        
+        -ms-flex-positive: $val; // IE 10
+        -webkit-flex-grow: $val;
+                flex-grow: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'flex-grow: #{$val};'. Allowed are 'inherit|initial|unset' or a positive number.";
+        
+    }
+    
+}
+
+@mixin          flex-shrink($val) {
+@include -power-flex-shrink($val);}
+@mixin   -power-flex-shrink($val) {
+    
+    // must be positive, unitless number
+    @if (
+        -power-is-in-list($val, ('inherit', 'initial', 'unset')) or 
+        (-power-is-number($val) and unitless($val) and $val >= 0)
+    ) {
+        
+                flex-shrink:    1; // set default to 1 for IE 10
+          -ms-flex-negative: $val; // IE 10
+        -webkit-flex-shrink: $val;
+                flex-shrink: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'flex-shrink: #{$val};'. Allowed are 'inherit|initial|unset' or a positive number.";
+        
+    }
+    
+}
+
+@mixin          flex-wrap($val) {
+@include -power-flex-wrap($val);}
+@mixin   -power-flex-wrap($val) {
+    
+    @if (-power-is-in-list($val, ('nowrap', 'wrap', 'wrap-reverse'))) {
+        
+        $is-nowrap: ($val == 'nowrap');
+        
+        // older version
+        -webkit-box-lines: -power-if-do-else($is-nowrap, single, multiple);
+           -moz-box-lines: -power-if-do-else($is-nowrap, single, multiple);
+        
+        // newer version
+        -webkit-flex-wrap: $val;
+            -ms-flex-wrap: -power-if-do-else($is-nowrap, none, $val); // IE 10
+                flex-wrap: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'flex-wrap: #{$val};'. Allowed are 'nowrap|wrap|wrap-reverse'.";
+        
+    }
+    
+}
+
+@mixin          justify-content($val) {
+@include -power-justify-content($val);}
+@mixin   -power-justify-content($val) {
+    
+    @if ($val == 'center') {
+        
+        -webkit-box-pack: center;
+          -moz-flex-pack: center;
+           -ms-flex-pack: center;
+        
+    }
+    @else if ($val == 'flex-start') {
+        
+        -webkit-box-pack: start;
+          -moz-flex-pack: start;
+           -ms-flex-pack: start;
+        
+    }
+    @else if ($val == 'flex-end') {
+        
+        -webkit-box-pack: end;
+          -moz-flex-pack: end;
+           -ms-flex-pack: end;
+        
+    }
+    @else if (-power-is-in-list($val, ('space-around', 'space-between'))) {
+        
+        -webkit-box-pack: justify;
+          -moz-flex-pack: justify;
+           -ms-flex-pack: -power-if-do-else($val == 'space-around', distribute, justify);
+        
+    }
+    @else {
+        
+        @error "Unknown 'justify-content: #{$val};'. Allowed are 'center|flex-end|flex-start|space-around|space-between'.";
+        
+    }
+    
+    // newest version
+    -webkit-justify-content: $val;
+       -moz-justify-content: $val;
+            justify-content: $val;
+    
+}
+
+@mixin          order($val) {
+@include -power-order($val);}
+@mixin   -power-order($val) {
+    
+    // must be integer
+    @if (-power-is-integer($val)) {
+        
+        // older version starts at 1
+        -webkit-box-ordinal-group: $val + 1;
+           -moz-box-ordinal-group: $val + 1;
+        
+        // newer version starts at 0
+        -ms-flex-order: $val;
+         -webkit-order: $val;
+                 order: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'order: #{$val};'. Requires an integer.";
+        
+    }
+
+}
+
+
+
+// === GENERIC ===
+
+@mixin          animation($anis...) {
+@include -power-animation($anis...);}
+@mixin   -power-animation($anis...) {
+    
+    -webkit-animation: $anis;
+       -moz-animation: $anis;
+         -o-animation: $anis;
+            animation: $anis;
+    
+}
+
+@mixin          animation-delay($delays...) {
+@include -power-animation-delay($delays...);}
+@mixin   -power-animation-delay($delays...) {
+    
+    -webkit-animation-delay: $delays;
+       -moz-animation-delay: $delays;
+         -o-animation-delay: $delays;
+            animation-delay: $delays;
+    
+}
+
+@mixin          animation-direction($dirs...) {
+@include -power-animation-direction($dirs...);}
+@mixin   -power-animation-direction($dirs...) {
+    
+    -webkit-animation-direction: $dirs;
+       -moz-animation-direction: $dirs;
+         -o-animation-direction: $dirs;
+            animation-direction: $dirs;
+    
+}
+
+@mixin          animation-duration($durs...) {
+@include -power-animation-duration($durs...);}
+@mixin   -power-animation-duration($durs...) {
+    
+    -webkit-animation-duration: $durs;
+       -moz-animation-duration: $durs;
+         -o-animation-duration: $durs;
+            animation-duration: $durs;
+    
+}
+
+@mixin          animation-fill-mode($modes...) {
+@include -power-animation-fill-mode($modes...);}
+@mixin   -power-animation-fill-mode($modes...) {
+    
+    -webkit-animation-fill-mode: $modes;
+       -moz-animation-fill-mode: $modes;
+         -o-animation-fill-mode: $modes;
+            animation-fill-mode: $modes;
+    
+}
+
+@mixin          animation-iteration-count($its...) {
+@include -power-animation-iteration-count($its...);}
+@mixin   -power-animation-iteration-count($its...) {
+    
+    -webkit-animation-iteration-count: $its;
+       -moz-animation-iteration-count: $its;
+         -o-animation-iteration-count: $its;
+            animation-iteration-count: $its;
+    
+}
+
+@mixin          animation-name($names...) {
+@include -power-animation-name($names...);}
+@mixin   -power-animation-name($names...) {
+    
+    -webkit-animation-name: $names;
+       -moz-animation-name: $names;
+         -o-animation-name: $names;
+            animation-name: $names;
+    
+}
+
+@mixin          animation-play-state($states...) {
+@include -power-animation-play-state($states...);}
+@mixin   -power-animation-play-state($states...) {
+    
+    -webkit-animation-play-state: $states;
+       -moz-animation-play-state: $states;
+         -o-animation-play-state: $states;
+            animation-play-state: $states;
+    
+}
+
+@mixin          animation-timing-function($fns...) {
+@include -power-animation-timing-function($fns...);}
+@mixin   -power-animation-timing-function($fns...) {
+    
+    -webkit-animation-timing-function: $fns;
+       -moz-animation-timing-function: $fns;
+         -o-animation-timing-function: $fns;
+            animation-timing-function: $fns;
+    
+}
+
+@mixin          appearance($val) {
+@include -power-appearance($val);}
+@mixin   -power-appearance($val) {
+    
+    -webkit-appearance: $val;
+       -moz-appearance: $val;
+            appearance: $val;
+    
+}
+
+@mixin          background-clip($val) {
+@include -power-background-clip($val);}
+@mixin   -power-background-clip($val) {
+    
+    -webkit-background-clip: $val;
+       -moz-background-clip: $val;
+            background-clip: $val;
+    
+}
+
+@mixin          background-size($val) {
+@include -power-background-size($val);}
+@mixin   -power-background-size($val) {
+    
+    -webkit-background-size: $val;
+       -moz-background-size: $val;
+         -o-background-size: $val;
+            background-size: $val;
+    
+}
+
+@mixin          border-radius($val) {
+@include -power-border-radius($val);}
+@mixin   -power-border-radius($val) {
+    
+    -webkit-border-radius: $val;
+       -moz-border-radius: $val;
+            border-radius: $val;
+    
+}
+
+@mixin          border-bottom-right-radius($val) {
+@include -power-border-bottom-right-radius($val);}
+@mixin   -power-border-bottom-right-radius($val) {
+    
+    -webkit-border-bottom-right-radius: $val;
+       -moz-border-bottom-right-radius: $val;
+            border-bottom-right-radius: $val;
+    
+}
+
+@mixin          border-bottom-left-radius($val) {
+@include -power-border-bottom-left-radius($val);}
+@mixin   -power-border-bottom-left-radius($val) {
+    
+    -webkit-border-bottom-left-radius: $val;
+       -moz-border-bottom-left-radius: $val;
+            border-bottom-left-radius: $val;
+    
+}
+
+@mixin          border-top-right-radius($val) {
+@include -power-border-top-right-radius($val);}
+@mixin   -power-border-top-right-radius($val) {
+    
+    -webkit-border-top-right-radius: $val;
+       -moz-border-top-right-radius: $val;
+            border-top-right-radius: $val;
+    
+}
+
+@mixin          border-top-left-radius($val) {
+@include -power-border-top-left-radius($val);}
+@mixin   -power-border-top-left-radius($val) {
+    
+    -webkit-border-top-left-radius: $val;
+       -moz-border-top-left-radius: $val;
+            border-top-left-radius: $val;
+    
+}
+
+@mixin          box-shadow($shadows...) {
+@include -power-box-shadow($shadows...);}
+@mixin   -power-box-shadow($shadows...) {
+    
     -webkit-box-shadow: $shadows;
-    box-shadow: $shadows;
+       -moz-box-shadow: $shadows;
+            box-shadow: $shadows;
+    
 }
 
-@mixin box-sizing($value) {
-    -moz-box-sizing: $value;
-    -webkit-box-sizing: $value;
-    box-sizing: $value;
+@mixin          box-sizing($val) {
+@include -power-box-sizing($val);}
+@mixin   -power-box-sizing($val) {
+    
+    -webkit-box-sizing: $val;
+       -moz-box-sizing: $val;
+            box-sizing: $val;
+    
 }
 
-@mixin filter($value) {
-    -webkit-filter: $value;
-    filter: $value;
+@mixin          column-count($val) {
+@include -power-column-count($val);}
+@mixin   -power-column-count($val) {
+    
+    -webkit-column-count: $val; // Chrome, Safari, BB
+       -moz-column-count: $val; // Firefox
+            column-count: $val; // IE 10, Opera 11.1+
+    
 }
 
+@mixin          column-gap($val) {
+@include -power-column-gap($val);}
+@mixin   -power-column-gap($val) {
+    
+    -webkit-column-gap: $val;
+       -moz-column-gap: $val;
+            column-gap: $val;
+    
+}
+
+@mixin          column-rule($vals...) {
+@include -power-column-rule($vals...);}
+@mixin   -power-column-rule($vals...) {
+    
+    -webkit-column-rule: $vals;
+       -moz-column-rule: $vals;
+            column-rule: $vals;
+    
+}
+
+@mixin          filter($val) {
+@include -power-filter($val);}
+@mixin   -power-filter($val) {
+    
+    -webkit-filter: $val;
+            filter: $val;
+    
+}
+
+@mixin          hyphens($val) {
+@include -power-hyphens($val);}
+@mixin   -power-hyphens($val) {
+    
+    -webkit-hyphens: auto; // Safari 5.1+
+       -moz-hyphens: auto; // Firefox 6+
+        -ms-hyphens: auto; // IE 10+
+            hyphens: auto;
+    
+}
+
+// non-prefixed mixin must be duplicate, as content can't be given to parameter
 @mixin keyframes($name) {
+    
     @-o-keyframes #{$name} {
         @content;
     }
+    
     @-moz-keyframes #{$name} {
         @content;
     }
+    
     @-webkit-keyframes #{$name} {
         @content;
     }
+    
     @keyframes #{$name} {
         @content;
     }
+    
+}
+@mixin -power-keyframes($name) {
+    
+    @-o-keyframes #{$name} {
+        @content;
+    }
+    
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+    
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+    
+    @keyframes #{$name} {
+        @content;
+    }
+    
 }
 
-@mixin linear-gradient($values...) {
-    background: -moz-linear-gradient($values);
-    background: -webkit-linear-gradient($values);
-    background: linear-gradient($values);
+@mixin          linear-gradient($vals...) {
+@include -power-linear-gradient($vals...);}
+@mixin   -power-linear-gradient($vals...) {
+    
+    $error: false;
+    $first-color: null;
+    $last-color: null;
+    
+    @each $item in $vals {
+        
+        // index of item
+        $index: index($vals, $item);
+        
+        @if ($index == 1) {
+            // first value must be degree
+            @if (not -power-is-angle($item)) {
+                $error: true;
+            }
+        }
+        @else {
+            
+            $color: nth($item, 1);
+            $percentage: nth($item, 2);
+            
+            // next values must be color-percentage pairs
+            @if (not -power-is-color($color) or 
+                 not -power-is-percent($percentage)) {
+                $error: true;
+            }
+            // get color of first color-percentage pair
+            @else if ($index == 2) {
+                $first-color: $color;
+            }
+            // get color of last color-percentage pair
+            @else if ($index == length($vals)) {
+                $last-color: $color;
+            }
+        }
+        
+    }
+    
+    @if $error {
+        @error "Unknown 'linear-gradient(#{$vals})'. The gradient must be in the format '90deg, #ffffff 0%, #000000 100%'.";
+    }
+    
+    background: $first-color;
+    background: -webkit-linear-gradient($vals);
+    background:    -moz-linear-gradient($vals);
+    background:         linear-gradient($vals);
+    -ms-filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#{$first-color}',endColorstr='#{$last-color}',GradientType=1);
+    
 }
 
-@mixin opacity($value) {
-    opacity: $value;
-    filter: alpha(opacity=($value * 100)); //IE8
+@mixin          max-height($val) {
+@include -power-max-height($val);}
+@mixin   -power-max-height($val) {
+    
+    @if ($val == 'fit-content') {
+        
+        max-height: -webkit-fit-content;
+        max-height:    -moz-fit-content;
+        max-height:         fit-content;
+        max-height:           intrinsic; // Safari
+        
+    }
+    @else if ($val == 'max-content') {
+        
+        max-height: -webkit-max-content;
+        max-height:    -moz-max-content;
+        max-height:         max-content;
+        
+    }
+    @else if ($val == 'min-content') {
+        
+        max-height: -webkit-min-content;
+        max-height:    -moz-min-content;
+        max-height:         min-content;
+        
+    }
+    @else if (-power-is-in-list($val, ('fill-available', 'stretch'))) {
+        
+        // archaic version
+        max-height: -webkit-available;
+        max-height:    -moz-available;
+        max-height:         available;
+        
+        // newer version
+        max-height: -webkit-fill-available;
+        max-height:    -moz-fill-available;
+        max-height:         fill-available;
+        max-height:                stretch;
+        
+    }
+    @else if (
+        -power-is-in-list($val, ('inherit', 'initial', 'none', 'unset')) or 
+        -power-is-length($val) or 
+        -power-is-percent($val)
+    ) {
+        
+        max-height: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'max-height: #{$val};'. Allowed are 'fill-available|fit-content|inherit|initial|max-content|min-content|none|stretch', a percentage value or a length value.";
+        
+    }
+    
 }
 
-@mixin text-overflow($value) {
-    -o-text-overflow: $value;
-    text-overflow: $value;
+@mixin          max-width($val) {
+@include -power-max-width($val);}
+@mixin   -power-max-width($val) {
+    
+    @if ($val == 'min-content') {
+        
+        max-width: -webkit-min-content;
+        max-width:    -moz-min-content;
+        max-width:         min-content;
+        max-width:           intrinsic; // Safari
+        
+    }
+    @else if ($val == 'max-content') {
+        
+        max-width: -webkit-max-content;
+        max-width:    -moz-max-content;
+        max-width:         max-content;
+        max-width:           intrinsic; // Safari
+        
+    }
+    @else if ($val == 'fit-content') {
+        
+        max-width: -webkit-fit-content;
+        max-width:    -moz-fit-content;
+        max-width:         fit-content;
+        max-width:           intrinsic; // Safari
+        
+    }
+    @else if (-power-is-in-list($val, ('fill-available', 'stretch'))) {
+        
+        // archaic version
+        max-width: -webkit-available;
+        max-width:    -moz-available;
+        max-width:         available;
+        
+        // newer version
+        max-width: -webkit-fill-available;
+        max-width:    -moz-fill-available;
+        max-width:         fill-available;
+        max-width:                stretch;
+        
+    }
+    @else if (
+        -power-is-in-list($val, ('inherit', 'initial', 'none', 'unset')) or 
+        -power-is-length($val) or 
+        -power-is-percent($val)
+    ) {
+        
+        max-width: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'max-width: #{$val};'. Allowed are 'fill-available|fit-content|inherit|initial|max-content|min-content|none|stretch', a percentage value or a length value.";
+        
+    }
+    
 }
 
-@mixin transform($value) {
-    -o-transform: $value;
-    -ms-transform: $value;
-    -moz-transform: $value;
-    -webkit-transform: $value;
-    transform: $value;
+@mixin          min-height($val) {
+@include -power-min-height($val);}
+@mixin   -power-min-height($val) {
+    
+    @if ($val == 'min-content') {
+        
+        min-height: -webkit-min-content;
+        min-height:    -moz-min-content;
+        min-height:         min-content;
+        
+    }
+    @else if ($val == 'max-content') {
+        
+        min-height: -webkit-max-content;
+        min-height:    -moz-max-content;
+        min-height:         max-content;
+        
+    }
+    @else if ($val == 'fit-content') {
+        
+        min-height: -webkit-fit-content;
+        min-height:    -moz-fit-content;
+        min-height:         fit-content;
+        min-height:           intrinsic; // Safari
+        
+    }
+    @else if (-power-is-in-list($val, ('fill-available', 'stretch'))) {
+        
+        // archaic version
+        min-height: -webkit-available;
+        min-height:    -moz-available;
+        min-height:         available;
+        
+        // newer version
+        min-height: -webkit-fill-available;
+        min-height:    -moz-fill-available;
+        min-height:         fill-available;
+        min-height:                stretch;
+        
+    }
+    @else if (
+        -power-is-in-list($val, ('inherit', 'initial', 'none', 'unset')) or 
+        -power-is-length($val) or 
+        -power-is-percent($val)
+    ) {
+        
+        min-height: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'min-height: #{$val};'. Allowed are 'fill-available|fit-content|inherit|initial|max-content|min-content|none|stretch', a percentage value or a length value.";
+        
+    }
+    
 }
 
-@mixin transform-origin($value) {
-    -o-transform-origin: $value;
-    -ms-transform-origin: $value;
-    -moz-transform-origin: $value;
-    -webkit-transform-origin: $value;
-    transform-origin: $value;
+@mixin          min-width($val) {
+@include -power-min-width($val);}
+@mixin   -power-min-width($val) {
+    
+    @if ($val == 'min-content') {
+        
+        min-width: -webkit-min-content;
+        min-width:    -moz-min-content;
+        min-width:         min-content;
+        min-width:       min-intrinsic; // Safari
+        
+    }
+    @else if ($val == 'max-content') {
+        
+        min-width: -webkit-max-content;
+        min-width:    -moz-max-content;
+        min-width:         max-content;
+        min-width:           intrinsic; // Safari
+        
+    }
+    @else if ($val == 'fit-content') {
+        
+        min-width: -webkit-fill-available; // Samsung Internet 5+
+        min-width:    -webkit-fit-content;
+        min-width:       -moz-fit-content;
+        min-width:            fit-content;
+        
+    }
+    @else if (-power-is-in-list($val, ('fill-available', 'stretch'))) {
+        
+        // archaic version
+        min-width: -webkit-available;
+        min-width:    -moz-available;
+        min-width:         available;
+        
+        // newer version
+        min-width: -webkit-fill-available;
+        min-width:    -moz-fill-available;
+        min-width:         fill-available;
+        min-width:                stretch;
+        
+    }
+    @else if (
+        -power-is-in-list($val, ('inherit', 'initial', 'none', 'unset')) or 
+        -power-is-length($val) or 
+        -power-is-percent($val)
+    ) {
+        
+        min-width: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'min-width: #{$val};'. Allowed are 'fill-available|fit-content|inherit|initial|max-content|min-content|none|stretch', a percentage value or a length value.";
+        
+    }
+    
 }
 
-@mixin transform-style($value) {
-    -o-transform-style: $value;
-    -ms-transform-style: $value;
-    -moz-transform-style: $value;
-    -webkit-transform-style: $value;
-    transform-style: $value;
+@mixin          object-fit($val) {
+@include -power-object-fit($val);}
+@mixin   -power-object-fit($val) {
+    
+    -o-object-fit: $val;
+       object-fit: $val;
+    
 }
 
-@mixin transition($transitions...) {
-    -o-transition: $transitions;
-    -moz-transition: $transitions;
-    -webkit-transition: $transitions;
-    transition: $transitions;
+       @mixin opacity($val) {@include -power-opacity($val);}
+@mixin -power-opacity($val) {
+    
+    @if (-power-is-unitless-number-in-range($val, (0, 1))) {
+        
+         filter: alpha(opacity=($val * 100)); // for IE8
+        opacity: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'opacity: #{$val};'. Requires a number in range of 0 to 1.";
+        
+    }
+    
 }
 
-@mixin transition-delay($delay...) {
-    -o-transition-delay: $delay;
-    -moz-transition-delay: $delay;
-    -webkit-transition-delay: $delay;
-    transition-delay: $delay;
+@mixin          position($val) {
+@include -power-position($val);}
+@mixin   -power-position($val) {
+    
+    @if ($val == 'sticky') {
+        
+        position: -webkit-sticky;
+        position:         sticky;
+        
+    }
+    @else if (-power-is-in-list($val, ('absolute', 'fixed', 'relative', 'static'))) {
+        
+        position: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'position: #{$val};'. Allowed are 'absolute|fixed|relative|static|sticky'.";
+        
+    }
+    
 }
 
-@mixin transition-duration($duration...) {
-    -o-transition-duration: $duration;
-    -moz-transition-duration: $duration;
-    -webkit-transition-duration: $duration;
-    transition-duration: $duration;
+@mixin          text-overflow($val) {
+@include -power-text-overflow($val);}
+@mixin   -power-text-overflow($val) {
+    
+    -o-text-overflow: $val;
+       text-overflow: $val;
+    
 }
 
-@mixin transition-property($property...) {
-    -o-transition-property: $property;
-    -moz-transition-property: $name;
-    -webkit-transition-property: $property;
-    transition-property: $property;
+@mixin          transform($vals) {
+@include -power-transform($vals);}
+@mixin   -power-transform($vals...) {
+    
+    -webkit-transform: $vals; // Chrome 36-, Safari 5.1+
+       -moz-transform: $vals;
+        -ms-transform: $vals; // IE 9
+         -o-transform: $vals;
+            transform: $vals; // IE 10, Firefox 16+, Opera 12.1+, Chrome
+    
 }
 
-@mixin transition-timing-function($timing...) {
-    -o-transition-timing-function: $timing;
-    -moz-transition-timing-function: $timing;
-    -webkit-transition-timing-function: $timing;
-    transition-timing-function: $timing;
+@mixin          transform-origin($val) {
+@include -power-transform-origin($val);}
+@mixin   -power-transform-origin($val) {
+    
+    -webkit-transform-origin: $val;
+       -moz-transform-origin: $val;
+        -ms-transform-origin: $val;
+         -o-transform-origin: $val;
+            transform-origin: $val;
+    
 }
 
-@mixin user-select($value) {
-    -ms-user-select: $value;
-    -moz-user-select: $value;
-    -webkit-user-select: $value;
-    user-select: $value;
+@mixin          transform-style($val) {
+@include -power-transform-style($val);}
+@mixin   -power-transform-style($val) {
+    
+    -webkit-transform-style: $val;
+       -moz-transform-style: $val;
+        -ms-transform-style: $val;
+         -o-transform-style: $val;
+            transform-style: $val;
+    
+}
+
+@mixin          transition($trans...) {
+@include -power-transition($trans...);}
+@mixin   -power-transition($trans...) {
+    
+    -webkit-transition: $trans;
+       -moz-transition: $trans;
+         -o-transition: $trans;
+            transition: $trans;
+    
+}
+
+@mixin          transition-delay($delays...) {
+@include -power-transition-delay($delays...);}
+@mixin   -power-transition-delay($delays...) {
+    
+    -webkit-transition-delay: $delays;
+       -moz-transition-delay: $delays;
+         -o-transition-delay: $delays;
+            transition-delay: $delays;
+    
+}
+
+@mixin          transition-duration($durs...) {
+@include -power-transition-duration($durs...);}
+@mixin   -power-transition-duration($durs...) {
+    
+    -webkit-transition-duration: $durs;
+       -moz-transition-duration: $durs;
+         -o-transition-duration: $durs;
+            transition-duration: $durs;
+    
+}
+
+@mixin          transition-property($props...) {
+@include -power-transition-property($props...);}
+@mixin   -power-transition-property($props...) {
+    
+    -webkit-transition-property: $props;
+       -moz-transition-property: $props;
+         -o-transition-property: $props;
+            transition-property: $props;
+    
+}
+
+@mixin          transition-timing-function($fns...) {
+@include -power-transition-timing-function($fns...);}
+@mixin   -power-transition-timing-function($fns...) {
+    
+    -webkit-transition-timing-function: $fns;
+       -moz-transition-timing-function: $fns;
+         -o-transition-timing-function: $fns;
+            transition-timing-function: $fns;
+    
+}
+
+@mixin          user-select($val) {
+@include -power-user-select($val);}
+@mixin   -power-user-select($val) {
+    
+    @if (-power-is-in-list($val, ('all', 'auto', 'contain', 'none', 'text'))) {
+        
+        -webkit-user-select: $val;
+           -moz-user-select: $val;
+            -ms-user-select: $val;
+                user-select: $val;
+        
+    }
+    @else {
+        
+        @error "Unknown 'user-select: #{$val};'. Allowed are 'all|auto|contain|none|text'.";
+        
+    }
+    
+}
+
+@mixin          word-break($val) {
+@include -power-word-break($val);}
+@mixin   -power-word-break($val) {
+    
+    -ms-word-break: $val;
+        word-break: $val;
+    
 }
