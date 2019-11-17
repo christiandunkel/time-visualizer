@@ -27,7 +27,7 @@ var DATA_LOAD = {
                 // get button and file name
                 var btn = _.target(e);
                 var file_name = btn.getAttribute('load-data');
-                var file_url = 'data/' + file_name + '.json';
+                var file_url = 'static/data/' + file_name + '.json';
                 
                 // try using the FileReaderAPI, as loadURL() uses a XMLHttpRequest, 
                 // which won't work if index.html is loaded locally as a file in browser
@@ -88,6 +88,7 @@ var DATA_LOAD = {
         
         // open window
         _.addClass(NODE.data_load.window, 'visible');
+        NODE.data_load.window.setAttribute('aria-hidden', false);
         
         // with a little delay, set tab focus on close button
         // if set immediately, will be ignored or buggy
@@ -106,6 +107,7 @@ var DATA_LOAD = {
         
         // close window
         _.removeClass(NODE.data_load.window, 'visible');
+        NODE.data_load.window.setAttribute('aria-hidden', true);
         
         // close 'file selected' message inside window
         _.removeClass(NODE.data_load.window, 'file-selected');

@@ -15,11 +15,21 @@ var NODE = {
     /* navigation UI */
     
     data_load_btn               : _.id('load-data'),
-    darkmode_btn                : _.id('toggle-darkmode'),
 
     play_btn                    : _.id('play-button'),
     pause_btn                   : _.id('pause-button'),
     stop_btn                    : _.id('stop-button'),
+    
+    
+    
+    /* settings window */
+    
+    settings_btn                : _.id('settings-button'),
+    settings_window             : _.id('settings-window'),
+    settings_close_btn          : null,
+    settings_overlay            : null,
+    
+    darkmode_btn                : _.id('toggle-darkmode'),
     
     // animation speed menu for custom speed input
     speed_selection : {
@@ -69,6 +79,8 @@ var NODE = {
         
         // dark, transparent background overlay
         $.blur = _.class('blur', $.window)[0];
+        
+        
         
         // remove function from memory
         delete this.initializeDataLoadWindow;
@@ -190,6 +202,8 @@ var NODE = {
         this.initializeDataLoadWindow();
         this.initializeBarChart();
         this.initializeCompareItemsWindow();
+        
+        
         
         // remove function from memory
         delete this.initialize;

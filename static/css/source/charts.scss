@@ -24,7 +24,7 @@
     @include border-radius(5px);
     @include animation(hidden-elem .9s, fade-in .6s .9s);
     
-    .darkMode & {
+    .dark-mode & {
         border-color: #4b4b4b;
     }
     
@@ -45,7 +45,7 @@
         @include opacity(.6);
     }
     
-    @include on-mobile {
+    @include ON_MOBILE {
         padding-top: 17px;
         
         .title {
@@ -104,7 +104,7 @@
         font-size: 50px;
     }
     
-    @include on-mobile {
+    @include ON_MOBILE {
         padding: 10px 0 6px 2px;
         font-size: 35px;
     }
@@ -139,7 +139,7 @@
             @include filter(drop-shadow(2px 2px 2px rgba(0,0,0,.3)));
             @include transition(.8s);
             
-            .darkMode & {
+            .dark-mode & {
                 @include filter(drop-shadow(1px 1px 2px rgba(217, 217, 217, 0.5)));
             }
         }
@@ -166,7 +166,7 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,.8);
             font-size: 15px; letter-spacing: .2px; font-weight: 700; color: white;
             
-            @include on-desktop {
+            @include ON_DESKTOP {
                 max-width: 85%;
                 // calculate current width by (100% meter width - left:15px - 5px)
                 max-width: -webkit-calc(100% - 20px);
@@ -187,7 +187,7 @@
             @include border-radius(10px);
             @include transition(.3s);
             
-            .darkMode & {
+            .dark-mode & {
                 background: #1a1a1a;
             }
             
@@ -198,7 +198,7 @@
             }
         }
         
-        @include on-mobile {
+        @include ON_MOBILE {
             padding-right: 2px; padding-left: 2px;
             
             .icon {
@@ -264,8 +264,9 @@
     .part-container {
         position: relative;
         background: #575757; border: solid white; border-width: 0 1px;
+        @include user-select(none);
         
-        .darkMode & {
+        .dark-mode & {
             border-color: black;
         }
         
@@ -360,7 +361,7 @@
         @include border-radius(5px);
         @include transition(.3s);
         
-        .darkMode & {
+        .dark-mode & {
             background-color: #242424; border-color: #3e3e3e;
             color: #898989;
         }
@@ -368,7 +369,7 @@
         &:hover {
             @include box-shadow(1px 1px 5px rgba(0,0,0,.2));
             
-            .darkMode & {
+            .dark-mode & {
                 @include box-shadow(2px 2px 5px rgba(255,255,255,.3));
             }
         }
@@ -382,13 +383,13 @@
             background: #ffdddd; border-color: #ffa6a6;
             color: #c92f2f;
             
-            .darkMode & {
+            .dark-mode & {
                 background: #3e0d0d; border-color: #8c3d3d;
                 color: #ea6969;
             }
             
             &:after {
-                background-image: $arrow-left-red;
+                @extend %icon-arrow-left-red;
             }
         }
         
@@ -402,16 +403,16 @@
         }
         
         &#compare-btn:after {
-            background-image: $compare-icon;
+            @extend %icon-compare-icon;
             @include opacity(.4);
         }
         
         &#download-line-chart:after {
-            background-image: $download-icon;
+            @extend %icon-download-icon;
             @include opacity(.4);
         }
         
-        @include on-mobile {
+        @include ON_MOBILE {
             &, &[float-right] {
                 display: block; float: none;
                 width: 100%; margin: 0 0 5px 0; padding: 12px;

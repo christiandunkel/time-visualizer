@@ -123,6 +123,7 @@ var COMPARE_ITEMS = {
         
         // open window
         _.addClass(NODE.compare_items.window, 'visible');
+        compare_items.window.setAttribute('aria-hidden', false);
         
         // clear areas and load current items
         COMPARE_ITEMS.orderButtons();
@@ -144,6 +145,7 @@ var COMPARE_ITEMS = {
         
         // close window
         _.removeClass(NODE.compare_items.window, 'visible');
+        compare_items.window.setAttribute('aria-hidden', true);
         
         // reset tab focus back to 'data load' button in navigation
         NODE.compare_btn.focus();

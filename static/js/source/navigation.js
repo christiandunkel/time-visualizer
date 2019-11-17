@@ -4,7 +4,7 @@
  */
 var NAV = {
     
-    darkmode                : false,
+    darkmode          : false,
     line_chart_opened : false,
     
     
@@ -19,9 +19,6 @@ var NAV = {
         // open 'data load' window
         _.onClick(NODE.data_load_btn, DATA_LOAD.openWindow);
         
-        // toggle 'dark mode'
-        _.onClick(NODE.darkmode_btn, this.toggleDarkMode);
-        
         // start animation
         _.onClick(NODE.play_btn, ANIMATOR.play);
         
@@ -30,6 +27,29 @@ var NAV = {
         
         // stop animation
         _.onClick(NODE.stop_btn, ANIMATOR.stop);
+        
+        NAV.initializeSettingsWindow();
+        
+        
+        
+        // remove this function from memory
+        delete NAV.initialize
+        
+    },
+    
+    initializeSettingsWindow : function () {
+        
+        // open/close settings menu
+        _.onClick(NODE.settings_btn, NAV.openSettingsWindow);
+        
+        NODE.settings_close_btn = _.class('cross', NODE.settings_window)[0];
+        _.onClick(NODE.settings_close_btn, NAV.closeSettingsWindow);
+        
+        NODE.settings_overlay = _.class('blur', NODE.settings_window)[0];
+        _.onClick(NODE.settings_overlay, NAV.closeSettingsWindow);
+        
+        // toggle 'dark mode'
+        _.onClick(NODE.darkmode_btn, NAV.toggleDarkMode);
         
         // speed setter buttons
         _.onClick(NODE.speed_btn.slow, NAV.setSpeed);
@@ -46,6 +66,25 @@ var NAV = {
         _.onClick(NODE.download_png_btn, NAV.downloadLineChart);
         _.onClick(NODE.compare_btn, COMPARE_ITEMS.openWindow);
         
+        
+        
+        // remove this function from memory
+        delete NAV.initializeSettingsWindow;
+        
+    },
+    
+    openSettingsWindow : function () {
+        
+        _.addClass(NODE.settings_window, 'visible');
+        NODE.settings_window.setAttribute('aria-hidden', 'false');
+        
+    },
+    
+    closeSettingsWindow : function () {
+        
+        _.removeClass(NODE.settings_window, 'visible');
+        NODE.settings_window.setAttribute('aria-hidden', 'true');
+        
     },
     
     /**
@@ -59,7 +98,7 @@ var NAV = {
         NAV.darkmode = !NAV.darkmode;
         
         // toggle darkmode class according to value
-        _[(NAV.darkmode ? 'add' : 'remove') + 'Class'](NODE.html, 'darkMode');
+        _[(NAV.darkmode ? 'add' : 'remove') + 'Class'](NODE.html, 'dark-mode');
         
         MSG.show('Toggled dark mode.', 1300);
         
@@ -256,7 +295,7 @@ var NAV = {
         
         // give lag warning
         if (speed > 2) {
-            MSG.warn('High speed values may produce lag.');
+            MSG.warn('Speed values above 2 may produce lag.');
         }
         
         // send value to animator object

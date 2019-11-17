@@ -36,98 +36,75 @@
     
 <body>
     
-    <!-- fixed on top right corner -->
-        
-    <a id=github-link tabIndex=999 href="https://github.com/christiandunkel/time-visualizer" title="Look at the code on Github">
-        <i class=curl></i>
-        <i class=icon></i>
-        <i class=background></i>
-        Github Repository
-    </a>
-    
     <!-- at top, includes navigation -->
-    
-    <div id=top-area>
+
+    <nav role=navigation>
         
-        <header>
+        <div class=inner>
 
-            <img id=logo src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAHlBMVEUAAAAwpP0wpP0wpP0wpP0wpP0wpP0wpP0wpP0wpP1zW2hpAAAACXRSTlMAOMj6hvPwciUnC3hiAAAAVElEQVRIx2MYEkAJNygAK5iJG8wgpGDiqIJBo8AArEAQN2AYNACXF6Y6EFAw04CQggmjCuilwIBwbA4hgOn+aQ6EEq0BIQUTRhXQS4EBodgcdKkRAOhgh/RWPu7QAAAAAElFTkSuQmCC" alt="Logo, that depicts three, differently sized, horizontal, blue bars." />
+            <button id=load-data class="btn has-icon blue">Load data</button>
 
-            <h1 id=title>
-                <span>Time</span>
-                <span>Visualizer</span>
-            </h1>
+            <button id=play-button class="btn has-icon">Play</button>
 
-            <div class="notice red javascript">Javascript needs to be enabled for this tool to work.</div>
+            <button id=pause-button class="btn has-icon">Pause</button>
 
-        </header>
+            <button id=stop-button class="btn has-icon">Stop</button>
+            
+            <button id=settings-button class="btn has-icon">Settings</button>
 
-        <nav role=navigation>
+        </div>
 
-            <div id=top-menu>
-
-                <button id=toggle-darkmode has-icon float-right title="Toggle dark mode" tabIndex="2"></button>
-
-                <button id=load-data has-icon tabIndex=1>Load data</button>
-
-            </div>
-
-            <div id=animation-controls>
-
-                <div class=right-side>
-
-                    <div class=descriptor>Animation Speed</div>
-                    
-                    <div id=pre-defined-speed class=active>
-
-                        <button tabIndex=6 id=half-speed secondary title="Set animation speed to 0.5">.5</button>
-
-                        <button tabIndex="-1" originalTabIndex=7 id=normal-speed class=active secondary title="Set animation speed to 1 (default)" aria-disabled="true">1</button>
-
-                        <button tabIndex=8 id=double-speed secondary title="Set animation speed to 2">2</button>
-
-                        <button tabIndex=9 id=open-custom-speed-menu secondary has-icon title="Set custom animation speed">?</button>
-                        
-                    </div>
-                    
-                    <div id=custom-speed>
-                    
-                        <input tabIndex=8 id=custom-speed-input type=text />
-                        
-                        <button tabIndex=9 id=close-custom-speed-menu secondary has-icon title="Close 'custom animation speed' area">x</button>
-                    
-                    </div>
-
-                </div>
-
-                <div class=left-side>
-
-                    <div class="descriptor hidden">Animation Controls</div>
-
-                    <button tabIndex=3 id=play-button secondary has-icon title="Play animation"></button>
-
-                    <button tabIndex=4 id=pause-button secondary has-icon title="Pause animation"></button>
-
-                    <button tabIndex=5 id=stop-button secondary has-icon title="Stop animation"></button>
-
-                </div>
-
-            </div>
-
-        </nav>
-    
-    </div>
+    </nav>
     
     <!-- open-/closable windows -->
     
-    <div id=data-load-window class=hidden-window>
+    <div id=settings-window class=hidden-window aria-hidden=true>
     
         <div class=blur></div>
-        <div class=content>
         
-            <button class=close>
-                <div class=cross></div>
-            </button>
+        <button class=close>
+            <div class=cross></div>
+        </button>
+        
+        <div class=content>
+
+            <button id=toggle-darkmode class="btn has-icon">Toggle Dark Mode</button>
+
+            <div class=descriptor>Animation Speed</div>
+
+            <div id=pre-defined-speed class=active>
+
+                <button id=half-speed class="btn" title="Set animation speed to 0.5">.5</button>
+
+                <button id=normal-speed class="btn active" tabIndex="-1" title="Set animation speed to 1 (default)" aria-disabled="true">1</button>
+
+                <button id=double-speed class="btn" title="Set animation speed to 2">2</button>
+
+                <button id=open-custom-speed-menu class="btn only-icon" title="Set custom animation speed">?</button>
+
+            </div>
+
+            <div id=custom-speed>
+
+                <input id=custom-speed-input type=text />
+
+                <button id=close-custom-speed-menu class="btn only-icon" title="Close setting">x</button>
+
+            </div>
+
+        </div>
+    
+    </div>
+    
+    <div id=data-load-window class=hidden-window aria-hidden=true>
+    
+        <div class=blur></div>
+        
+        <button class=close>
+            <div class=cross></div>
+        </button>
+        
+        <div class=content>
             
             <div class=file-selected>
             
@@ -177,14 +154,15 @@
     
     </div>
     
-    <div id=compare-items-window class=hidden-window>
+    <div id=compare-items-window class=hidden-window aria-hidden=true>
     
         <div class=blur></div>
-        <div class=content>
         
-            <button class=close>
-                <div class=cross></div>
-            </button>
+        <button class=close>
+            <div class=cross></div>
+        </button>
+        
+        <div class=content>
             
             <div class=heading>Hidden:</div>
             
@@ -223,6 +201,8 @@
                         <div class=indicator></div>
                     </div>
                 </div>
+                
+                <div class="notice red javascript">Javascript needs to be enabled for this tool to work.</div>
 
                 <div id=bar-chart></div>
                 
@@ -262,11 +242,11 @@
     
     <footer>
         
-        <div id=chart-number-note>* Number names have been assigned using the <a href="https://en.wikipedia.org/wiki/Names_of_large_numbers">short scale</a> used in American -/ British English.</div>
+        <div class=chart-number-note>* Number names have been assigned using the <a href="https://en.wikipedia.org/wiki/Names_of_large_numbers">short scale</a> used in American -/ British English.</div>
         
-        <img id=bottom-logo src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgBAMAAAAQtmoLAAAAIVBMVEWbm5sAAACbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5sRayXBAAAAC3RSTlOzAIwJakoUloI8VLlVwGoAAABnSURBVFjD7dAhDoAwEETRDao4IKQhKBQeyUE4ADdAcX5U21VkkMD/bsQzY+3DAIA7sG6pXQLxsFQtgdFyYVFAX0D1V+BePiXQuSmBxkoAwLdBnPKaJTCUFSTgJwAAAAAAAAAA8BJwAVcQosjI5lTSAAAAAElFTkSuQmCC" alt="Depicts three, differently sized, vertical, grey bar." />
+        <a class=logo href="https://christiandunkel.github.io/time-visualizer/" target="_blank" title="Go to Github Repository"></a>
         
-        <div id=bottom-links>
+        <div class=links>
             
             <a href="https://github.com/christiandunkel/time-visualizer">Github</a>
             
@@ -277,6 +257,15 @@
         </div>
         
     </footer>
+    
+    <!-- fixed on bottom right corner -->
+        
+    <a id=github-link href="https://github.com/christiandunkel/time-visualizer" title="Look at the code on Github">
+        <i class=curl></i>
+        <i class=icon></i>
+        <i class=background></i>
+        Github Repository
+    </a>
     
     <!-- scripts -->
     

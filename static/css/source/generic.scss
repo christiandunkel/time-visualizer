@@ -34,10 +34,9 @@ html {
     scroll-behavior: smooth; /* prevent instant scroll, enable smooth movement */
     background: #fafafa;
     font-family: $font; color: #484848;
-    @include user-select(none);
     @include transition(.2s);
     
-    &.darkMode {
+    &.dark-mode {
         background-color: #1d1d1d;
         color: #b9b9b9;
     }
@@ -51,11 +50,7 @@ a {
         background: #ebebeb;
     }
     
-    &:focus {
-        @include tab-effect;
-    }
-    
-    .darkMode & {
+    .dark-mode & {
         color: #b9b9b9;
         
         &:focus,
@@ -67,22 +62,9 @@ a {
 
 body {
     position: relative;
-    min-height: 100%; margin: 0 auto;
+    min-height: 100%; margin: 0 auto; padding: 80px 0 0 0;
     overflow-x: hidden;
     font-size: 0;
-}
-
-#top-area {
-    margin: 0 0 70px 0; padding: 20px;
-    background: #edf0f4 $top-area-background center;
-    @include background-size(60px 60px);
-    @include box-shadow(0 2px 12px #e6e6e6);
-    @include animation(fade-in .6s);
-    
-    .darkMode & {
-        background-color: #262a31;
-        @include box-shadow(0 2px 16px #0e1722);
-    }
 }
 
 main {
@@ -95,11 +77,11 @@ main {
     background: white; border: 1px solid #ebebeb;
     @include border-radius(5px);
     
-    .darkMode & {
+    .dark-mode & {
         background-color: #000000; border-color: #333;
     }
     
-    @include on-mobile {
+    @include ON_MOBILE {
         padding: 15px;
     }
 }
@@ -120,120 +102,13 @@ main {
 
 
 
-// area on top of page
-
-header {
-    position: relative;
-    max-width: 1100px; margin: 0 auto;
-    
-    #logo {
-        display: block; float: left;
-        width: 50px; height: 50px; margin: 0 10px 0 0;
-        @include animation(fade-in-logo 2s);
-    }
-    
-    #title {
-        display: inline-block;
-        
-        span {
-            display: block;
-            line-height: 1em; font-weight: 700;
-            
-            &:nth-child(1) {
-                font-size: 30px; color: #4196ff; 
-                @include animation(fade-in-logo 2.2s);
-            }
-            
-            &:nth-child(2) {
-                padding: 0 0 0 8px;
-                font-size: 18px; color: #4f9eff;
-                @include animation(fade-in-logo 2.4s);
-            }
-        }
-        
-    }
-    
-    
-    
-}
-
-@include keyframes(fade-in-logo) {
-    0%, 20% {
-        @include transform(translate(50px, 0)); 
-        @include opacity(0);
-    }
-}
-
-
-
-
-
-// icon of github with page curl effect in top right corner
-
-#github-link {
-    display: block; position: absolute; top: 0; right: 0;
-    width: 70px; height: 70px;
-    font-size: 0; line-height: 0; color: transparent;
-    @include transition(.9s);
-    
-    &:hover {
-        width: 100px; height: 100px;
-        @include transition(.3s);
-    }
-    
-    &:active, &:focus {
-        width: 220px; height: 220px;
-        @include transition(1s);
-        
-        .curl {
-            @include box-shadow(0 0 20px rgba(0, 0, 0, .5));
-            @include transition(1s);
-        }
-    }
-    
-    * {
-        display: block; position: absolute; top: 0; right: 0;
-        width: 100%; height: 100%;
-    }
-    
-    .curl {
-        z-index: 3;
-        @include linear-gradient(45deg, rgba(157,157,157,1) 0%, rgba(193,193,193,1) 14%, rgba(255,255,255,1) 35%, rgba(203,203,203,1) 49%, rgba(141,141,141,1) 51%, rgba(0,0,0,0) 52%);
-        @include box-shadow(0 0 6px rgba(0,0,0,.5));
-        @include transition(.9s);
-    }
-    
-    .icon {
-        top: 8px; right: 8px; z-index: 2;
-        width: 48px; height: 48px;
-        background: $github-icon-white no-repeat center;
-        @include background-size(100% 100%);
-        
-        .darkMode & {
-            background-image: $github-icon-black;
-        }
-    }
-    
-    .background {
-        z-index: 1;
-        @include linear-gradient(45deg, rgba(0,0,0,0) 50%, rgba(54,54,54,1) 51%, rgba(124,124,124,1) 100%);
-        
-        .darkMode & {
-            @include linear-gradient(5deg, rgba(0,0,0,0) 50%,rgba(165,165,165,1) 51%,rgba(212,212,212,1) 100%);
-        }
-    }
-    
-}
-
-
-
 // area at bottom of page
 
 footer {
     max-width: 1100px; margin: 0 auto; padding: 0 20px;
     @include animation(hidden-elem 1.5s, fade-in .6s 1.5s);
     
-    #chart-number-note {
+    .chart-number-note {
         display: none;
         opacity: .4;
         text-align: center; font-size: 13px; line-height: 16px;
@@ -243,20 +118,22 @@ footer {
         }
     }
     
-    #bottom-logo {
+    .logo {
         display: block;
         width: 100px; height: 100px; margin: 60px auto 20px auto;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgBAMAAAAQtmoLAAAAIVBMVEWbm5sAAACbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5sRayXBAAAAC3RSTlOzAIwJakoUloI8VLlVwGoAAABnSURBVFjD7dAhDoAwEETRDao4IKQhKBQeyUE4ADdAcX5U21VkkMD/bsQzY+3DAIA7sG6pXQLxsFQtgdFyYVFAX0D1V+BePiXQuSmBxkoAwLdBnPKaJTCUFSTgJwAAAAAAAAAA8BJwAVcQosjI5lTSAAAAAElFTkSuQmCC) no-repeat center;
+        @include background-size(100% 100%);
     }
     
-    #bottom-links {
+    .links {
         margin: 20px 0 50px 0;
         opacity: .7;
         text-align: center; font-size: 12px; line-height: 14px;
-    }
-
-    #bottom-links a {
-        display: inline-block;
-        margin: 0 2px; padding: 2px;
+        
+        a {
+            display: inline-block;
+            margin: 0 2px; padding: 2px;
+        }
     }
     
 }
@@ -276,7 +153,7 @@ footer {
         background: #e9f2ff; border-color: #bfc7ff;
         color: #485dff;
         
-        .darkMode & {
+        .dark-mode & {
             background: #4f4f9c; border-color: #6b76c5;
             color: #dde1fb;
         }
@@ -287,7 +164,7 @@ footer {
         background: #ffd4d4; border-color: #ffb0b0;
         color: #a91111;
         
-        .darkMode & {
+        .dark-mode & {
             background: rgba(255, 0, 0, 0.2); border-color: rgba(255, 75, 75, 0.35);
             color: #ffd1d1;
         }
@@ -297,7 +174,7 @@ footer {
         background: #e6ffe9; border-color: #d0ffd0;
         color: #00520d;
         
-        .darkMode & {
+        .dark-mode & {
             background: #112913; border-color: #264e26;
             color: #b3ffbf;
         }
@@ -308,7 +185,7 @@ footer {
         background: #fdffbc; border-color: #e5cc52;
         color: #a06707;
         
-        .darkMode & {
+        .dark-mode & {
             background: #5f6143; border-color: #d4e400;
             color: #fffc70;
         }
@@ -344,7 +221,7 @@ footer {
         background: #191919;
         color: #e2e2e2;
         
-        .darkMode & {
+        .dark-mode & {
             background: black;
         }
     }

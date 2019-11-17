@@ -1210,11 +1210,21 @@ var NODE = {
     /* navigation UI */
     
     data_load_btn               : _.id('load-data'),
-    darkmode_btn                : _.id('toggle-darkmode'),
 
     play_btn                    : _.id('play-button'),
     pause_btn                   : _.id('pause-button'),
     stop_btn                    : _.id('stop-button'),
+    
+    
+    
+    /* settings window */
+    
+    settings_btn                : _.id('settings-button'),
+    settings_window             : _.id('settings-window'),
+    settings_close_btn          : null,
+    settings_overlay            : null,
+    
+    darkmode_btn                : _.id('toggle-darkmode'),
     
     // animation speed menu for custom speed input
     speed_selection : {
@@ -1264,6 +1274,8 @@ var NODE = {
         
         // dark, transparent background overlay
         $.blur = _.class('blur', $.window)[0];
+        
+        
         
         // remove function from memory
         delete this.initializeDataLoadWindow;
@@ -1385,6 +1397,8 @@ var NODE = {
         this.initializeDataLoadWindow();
         this.initializeBarChart();
         this.initializeCompareItemsWindow();
+        
+        
         
         // remove function from memory
         delete this.initialize;
@@ -1523,7 +1537,7 @@ var MSG = {
  */
 var NAV = {
     
-    darkmode                : false,
+    darkmode          : false,
     line_chart_opened : false,
     
     
@@ -1538,9 +1552,6 @@ var NAV = {
         // open 'data load' window
         _.onClick(NODE.data_load_btn, DATA_LOAD.openWindow);
         
-        // toggle 'dark mode'
-        _.onClick(NODE.darkmode_btn, this.toggleDarkMode);
-        
         // start animation
         _.onClick(NODE.play_btn, ANIMATOR.play);
         
@@ -1549,6 +1560,29 @@ var NAV = {
         
         // stop animation
         _.onClick(NODE.stop_btn, ANIMATOR.stop);
+        
+        NAV.initializeSettingsWindow();
+        
+        
+        
+        // remove this function from memory
+        delete NAV.initialize
+        
+    },
+    
+    initializeSettingsWindow : function () {
+        
+        // open/close settings menu
+        _.onClick(NODE.settings_btn, NAV.openSettingsWindow);
+        
+        NODE.settings_close_btn = _.class('cross', NODE.settings_window)[0];
+        _.onClick(NODE.settings_close_btn, NAV.closeSettingsWindow);
+        
+        NODE.settings_overlay = _.class('blur', NODE.settings_window)[0];
+        _.onClick(NODE.settings_overlay, NAV.closeSettingsWindow);
+        
+        // toggle 'dark mode'
+        _.onClick(NODE.darkmode_btn, NAV.toggleDarkMode);
         
         // speed setter buttons
         _.onClick(NODE.speed_btn.slow, NAV.setSpeed);
@@ -1565,6 +1599,25 @@ var NAV = {
         _.onClick(NODE.download_png_btn, NAV.downloadLineChart);
         _.onClick(NODE.compare_btn, COMPARE_ITEMS.openWindow);
         
+        
+        
+        // remove this function from memory
+        delete NAV.initializeSettingsWindow;
+        
+    },
+    
+    openSettingsWindow : function () {
+        
+        _.addClass(NODE.settings_window, 'visible');
+        NODE.settings_window.setAttribute('aria-hidden', 'false');
+        
+    },
+    
+    closeSettingsWindow : function () {
+        
+        _.removeClass(NODE.settings_window, 'visible');
+        NODE.settings_window.setAttribute('aria-hidden', 'true');
+        
     },
     
     /**
@@ -1578,7 +1631,7 @@ var NAV = {
         NAV.darkmode = !NAV.darkmode;
         
         // toggle darkmode class according to value
-        _[(NAV.darkmode ? 'add' : 'remove') + 'Class'](NODE.html, 'darkMode');
+        _[(NAV.darkmode ? 'add' : 'remove') + 'Class'](NODE.html, 'dark-mode');
         
         MSG.show('Toggled dark mode.', 1300);
         
@@ -1775,7 +1828,7 @@ var NAV = {
         
         // give lag warning
         if (speed > 2) {
-            MSG.warn('High speed values may produce lag.');
+            MSG.warn('Speed values above 2 may produce lag.');
         }
         
         // send value to animator object
@@ -1911,7 +1964,7 @@ var DATA_LOAD = {
                 // get button and file name
                 var btn = _.target(e);
                 var file_name = btn.getAttribute('load-data');
-                var file_url = 'data/' + file_name + '.json';
+                var file_url = 'static/data/' + file_name + '.json';
                 
                 // try using the FileReaderAPI, as loadURL() uses a XMLHttpRequest, 
                 // which won't work if index.html is loaded locally as a file in browser
@@ -1972,6 +2025,7 @@ var DATA_LOAD = {
         
         // open window
         _.addClass(NODE.data_load.window, 'visible');
+        NODE.data_load.window.setAttribute('aria-hidden', false);
         
         // with a little delay, set tab focus on close button
         // if set immediately, will be ignored or buggy
@@ -1990,6 +2044,7 @@ var DATA_LOAD = {
         
         // close window
         _.removeClass(NODE.data_load.window, 'visible');
+        NODE.data_load.window.setAttribute('aria-hidden', true);
         
         // close 'file selected' message inside window
         _.removeClass(NODE.data_load.window, 'file-selected');
@@ -2186,6 +2241,7 @@ var COMPARE_ITEMS = {
         
         // open window
         _.addClass(NODE.compare_items.window, 'visible');
+        compare_items.window.setAttribute('aria-hidden', false);
         
         // clear areas and load current items
         COMPARE_ITEMS.orderButtons();
@@ -2207,6 +2263,7 @@ var COMPARE_ITEMS = {
         
         // close window
         _.removeClass(NODE.compare_items.window, 'visible');
+        compare_items.window.setAttribute('aria-hidden', true);
         
         // reset tab focus back to 'data load' button in navigation
         NODE.compare_btn.focus();
@@ -4244,7 +4301,7 @@ var MAIN = {
         }
 
         // otherwise, load example data set
-        var request = FILE.loadURL('data/example-data-set.json', false);
+        var request = FILE.loadURL('static/data/example-data-set.json', false);
 
         // on failed http request, load error messages
         request.onerror = function () {

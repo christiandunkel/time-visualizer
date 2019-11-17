@@ -64,7 +64,7 @@ var MAIN = {
         }
 
         // otherwise, load example data set
-        var request = FILE.loadURL('data/example-data-set.json', false);
+        var request = FILE.loadURL('static/data/example-data-set.json', false);
 
         // on failed http request, load error messages
         request.onerror = function () {

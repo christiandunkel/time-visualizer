@@ -22,17 +22,13 @@
         position: absolute; top: 0; left: 0;
         width: 100%; height: 100%;
         background: black; 
-        @include opacity(.6);
-        
-        .darkMode & {
-            @include opacity(.8);
-        }
+        @include opacity(.8);
     }
     
     .close {
-        position: absolute; top: 8px; right: 8px;
+        position: absolute; top: 12px; right: 12px;
         width: 1em; height: 1em;
-        font-size: 18px; color: #d10000;
+        font-size: 28px; color: #ffffff;
         
         &:focus {
             outline: 2px solid currentColor;
@@ -66,7 +62,7 @@
             @include opacity(.6);
         }
         
-        &:active.cross {
+        &:active .cross {
             @include transform(scale(.8));
             @include transition(.06s);
         }
@@ -74,15 +70,15 @@
     
     .content {
         position: absolute; top: 50%; left: 50%;
-        max-width: 550px; width: 90%; max-height: 330px; height: 90%; padding: 24px;
-        background: white; overflow-y: auto;
+        max-width: 600px; width: 90%; max-height: 430px; height: 90%; padding: 24px;
+        background: white; border: 1px solid #d0d0d0; overflow-y: auto;
         color: #979595;
-        @include border-radius(8px);
+        @include border-radius(4px);
         @include transform(translate(-50%, -50%) scale(1.1));
         @include transition(.5s);
         
-        .darkMode & {
-            background: #2f2f2f;
+        .dark-mode & {
+            background: #121212; border-color: #363636;
         }
         
         > *:last-child {
@@ -113,34 +109,35 @@
         @include border-radius(5px);
         @include transition(.3s);
         
-        .darkMode & {
+        .dark-mode & {
             color: #88b2ff;
         }
         
-        &:hover {
+        &:hover,
+        &:focus {
             background: #dce3ff;
             
-            .darkMode & {
+            .dark-mode & {
                 background: #454f7c;
             }
         }
         
         &:focus {
-            @include tab-effect;
+            outline: 2px solid currentColor;
         }
         
         &.example-data-set {
             border-style: dashed;
             color: #8b92a2;
             
-            .darkMode & {
+            .dark-mode & {
                 color: #85878d;
             }
         
             &:hover {
                 background: #eaeaea;
 
-                .darkMode & {
+                .dark-mode & {
                     background: #414141;
                 }
             }
@@ -184,9 +181,11 @@
             @include animation(appear-circle .4s);
             
             .tick {
+                @extend %icon-tick-white;
                 position: absolute; top: 50%; left: 50%;
                 width: 30px; height: 30px;
-                background: $tick-white no-repeat center;
+                background-repeat: no-repeat;
+                background-position: center;
                 @include transform(translate(-50%, -50%));
             }
 
@@ -218,14 +217,14 @@
         @include border-radius(6px);
         @include transition(.15s);
         
-        .darkMode & {
+        .dark-mode & {
             color: #767676;
         }
         
         &.dragged-over {
             color: #6c6c6c;
             
-            .darkMode & {
+            .dark-mode & {
                 color: #b2b2b2;
             }
         }
@@ -241,10 +240,11 @@
             position: absolute; z-index: -1;
             width: 0.1px; height: 0.1px;
             overflow: hidden;
+            @include user-select(none);
             @include opacity(0);
             
             &:focus + label {
-                @include tab-effect;
+                outline: 2px solid #2068cb;
             }
             
             + label {
@@ -308,7 +308,7 @@
     .selected-area {
         background-color: rgba(0,255,0,.1); border: 2px solid rgba(0,255,0,.1);
         
-        .darkMode & {
+        .dark-mode & {
             border-color: #222222;
         }
         
@@ -316,10 +316,10 @@
             padding-right: 28px;
             
             &:after {
+                @extend %icon-cross-white;
                 content: '';
                 position: absolute; top: 10px; right: 8px;
                 width: 1em; height: 1em;
-                background-image: $cross-white;
                 background-repeat: no-repeat;
                 background-position: center;
             }
@@ -329,6 +329,94 @@
     .unselected-area {
         margin: 0 0 24px 0;
         background-color: rgba(255,0,0,.1); border: 2px solid rgba(255,0,0,.1);
+    }
+    
+}
+
+
+
+// animation and ui settings window
+
+#settings-window {
+    
+    .descriptor {
+        margin: 25px 0 10px 0;
+        font-size: 16px; line-height: 20px;
+    }
+
+    #toggle-darkmode {
+        @extend %icon-moon-grey;
+        position: relative;
+        background-position: 8px center;
+        @include background-size(30px 30px);
+        
+        .dark-mode & {
+            @extend %icon-sun-white;
+        }
+    }
+    
+    #pre-defined-speed,
+    #custom-speed {
+        display: none;
+        
+        &.active {
+            display: inline-block;
+        }
+    }
+        
+    #open-custom-speed-menu,
+    #close-custom-speed-menu {
+        background-color: transparent;
+        color: transparent;
+        @include box-shadow(none);
+        
+        &:after {
+            top: 8px; left: 8px;
+            width: 16px; height: 16px;
+            @include opacity(.8);
+        }
+
+        &:hover,
+        &:focus {
+            background-color: #eaeaea;
+            @include transform(none);
+            
+            .dark-mode & {
+                background-color: #343434;
+            }
+            
+            &:after {
+                @include opacity(1);
+            }
+        }
+    }
+        
+    #open-custom-speed-menu {
+        @extend %icon-pencil-grey;
+    }
+    
+    #close-custom-speed-menu {
+        @extend %icon-cross-grey;
+    }
+    
+    #custom-speed-input {
+        width: 112px; height: 40px; margin: 0 8px 0 0; padding: 6px 12px;
+        border: 2px solid #b48080;
+        color: #656565; font-size: 16px; line-height: 20px;
+        
+        .dark-mode & {
+            background: black; border-color: #692c2c;
+            color: #a6a6a6;
+        }
+        
+        // set by javascript if input value is correct
+        &.correct-speed {
+            border-color: #97db97;
+            
+            .dark-mode & {
+                border-color: #376237;
+            }
+        }
     }
     
 }
