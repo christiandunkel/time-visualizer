@@ -4,43 +4,43 @@
     "items": {
         "country_1": {
             "name": "Germany",
-            "icon": "img/raster/country-flags/germany.png"
+            "icon": "static/img/raster/country-flags/germany.png"
         },
         "country_2": {
             "name": "France",
-            "icon": "img/raster/country-flags/france.png"
+            "icon": "static/img/raster/country-flags/france.png"
         },
         "country_3": {
             "name": "Sweden",
-            "icon": "img/raster/country-flags/sweden.png"
+            "icon": "static/img/raster/country-flags/sweden.png"
         },
         "country_4": {
             "name": "United Kingdom",
-            "icon": "img/raster/country-flags/uk.png"
+            "icon": "static/img/raster/country-flags/uk.png"
         },
         "country_5": {
             "name": "Italy",
-            "icon": "img/raster/country-flags/italy.png"
+            "icon": "static/img/raster/country-flags/italy.png"
         },
         "country_6": {
             "name": "Spain",
-            "icon": "img/raster/country-flags/spain.png"
+            "icon": "static/img/raster/country-flags/spain.png"
         },
         "country_7": {
             "name": "Poland",
-            "icon": "img/raster/country-flags/poland.png"
+            "icon": "static/img/raster/country-flags/poland.png"
         },
         "country_8": {
             "name": "USA",
-            "icon": "img/raster/country-flags/usa.png"
+            "icon": "static/img/raster/country-flags/usa.png"
         },
         "country_9": {
             "name": "South Korea",
-            "icon": "img/raster/country-flags/south-korea.png"
+            "icon": "static/img/raster/country-flags/south-korea.png"
         },
         "country_10": {
             "name": "Japan",
-            "icon": "img/raster/country-flags/japan.png"
+            "icon": "static/img/raster/country-flags/japan.png"
         }
     },
     "range": {

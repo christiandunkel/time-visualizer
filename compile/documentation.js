@@ -26,7 +26,7 @@ let markdown = `
 
 ` + 
 jsdoc2md.renderSync({
-    files : path.join(__dirname, '..', 'js', 'source', '*.js')
+    files : path.join(__dirname, '..', 'static', 'js', 'source', '*.js')
 });
 
 // create markdown file

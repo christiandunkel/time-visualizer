@@ -238,7 +238,7 @@ footer {
         opacity: .4;
         text-align: center; font-size: 13px; line-height: 16px;
         
-        .jsOn & {
+        .js-on & {
             display: block;
         }
     }
@@ -320,7 +320,7 @@ footer {
     }
     
     &.hidden:not(.show),
-    .jsOn &.javascript {
+    .js-on &.javascript {
         display: none;
     }
     

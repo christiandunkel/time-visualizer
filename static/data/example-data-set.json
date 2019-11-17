@@ -4,31 +4,31 @@
     "items": {
         "company_1": {
             "name": "Bob's Burger",
-            "icon": "img/raster/example-icons/burger.png"
+            "icon": "static/img/raster/example-icons/burger.png"
         },
         "company_2": {
             "name": "Steve's Steaks",
-            "icon": "img/raster/example-icons/steak.png"
+            "icon": "static/img/raster/example-icons/steak.png"
         },
         "company_3": {
             "name": "Cassy's Candies",
-            "icon": "img/raster/example-icons/chocolate.png"
+            "icon": "static/img/raster/example-icons/chocolate.png"
         },
         "company_4": {
             "name": "Lance's Lobsters",
-            "icon": "img/raster/example-icons/lobster.png"
+            "icon": "static/img/raster/example-icons/lobster.png"
         },
         "company_5": {
             "name": "Finn's Fish",
-            "icon": "img/raster/example-icons/fish.png"
+            "icon": "static/img/raster/example-icons/fish.png"
         },
         "company_6": {
             "name": "Peter's Pommes",
-            "icon": "img/raster/example-icons/fries.png"
+            "icon": "static/img/raster/example-icons/fries.png"
         },
         "company_7": {
             "name": "Pamela's Parmesan",
-            "icon": "img/raster/example-icons/cheese.png"
+            "icon": "static/img/raster/example-icons/cheese.png"
         }
     },
     "range": {

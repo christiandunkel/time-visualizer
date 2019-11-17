@@ -52,7 +52,7 @@ files_in_order.forEach(file => {
     }
     
     // read file and add content to total code
-    let file_path = path.join(__dirname, '..', 'js', 'source', file);
+    let file_path = path.join(__dirname, '..', 'static', 'js', 'source', file);
     total_code += fs.readFileSync(file_path, 'utf-8');
     
     counter++;
@@ -74,11 +74,11 @@ if (typeof(minified.code) === 'undefined') {
 }
 else {
     // create minified file
-    let filepath = path.join(__dirname, '..', 'js', 'app.min.js');
+    let filepath = path.join(__dirname, '..', 'static', 'js', 'app.min.js');
     fs.writeFileSync(filepath, minified.code, 'utf8');
     console.error('Successfully minified the JavaScript source files.');
 }
 
 // also create non-minified file
-let filepath = path.join(__dirname, '..', 'js', 'app.js');
+let filepath = path.join(__dirname, '..', 'static', 'js', 'app.js');
 fs.writeFileSync(filepath, total_code, 'utf8');
