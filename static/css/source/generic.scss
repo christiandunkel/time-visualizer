@@ -131,7 +131,8 @@ footer {
             background-color: #eaeaea;
         }
         
-        .dark-mode {
+        .dark-mode & {
+            
             &:hover,
             &:focus {
                 background-color: #373737;
