@@ -56,8 +56,8 @@ var MAIN = {
         if (window.location.protocol === 'file:') {
             
             // add error message to main page
-            _.append(NODE.bar_chart, _.create('div.notice.red', {
-                'innerHTML': 'You are running this HTML page locally as a file, which prevents XML HTTP requests. In order to load a data set, click the <b>Load data</b> button in the menu.'
+            _.append(NODE.bar_chart, _.create('div.notice.blue', {
+                'innerHTML': 'To load a data set, click on "<b>Load data</b>" in the menu.'
             }));
             
             return;

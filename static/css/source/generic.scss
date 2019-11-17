@@ -288,7 +288,7 @@ footer {
         color: #a91111;
         
         .darkMode & {
-            background: #710909; border-color: #a53737;
+            background: rgba(255, 0, 0, 0.2); border-color: rgba(255, 75, 75, 0.35);
             color: #ffd1d1;
         }
     }
