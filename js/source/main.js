@@ -57,7 +57,7 @@ var MAIN = {
             
             // add error message to main page
             _.append(NODE.bar_chart, _.create('div.notice.red', {
-                'innerHTML': 'You are running this HTML page locally as a file, which makes HTTP requests to the web or files impossible. Click the <b>Load data</b> button to select a data set file instead.'
+                'innerHTML': 'You are running this HTML page locally as a file, which prevents XML HTTP requests. In order to load a data set, click the <b>Load data</b> button in the menu.'
             }));
             
             return;

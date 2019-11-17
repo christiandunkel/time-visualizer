@@ -1,8 +1,8 @@
 /**
  * execute using this command from the project root directory:
- * > node js/jsdoc-generate.js
+ * > node compile/documentation.js
  *
- * @file generates documentation file for javascript source files
+ * @file generates documentation file for the JavaScript source files
  * @requires NodeJS (nodejs.org)
  * @requires JSDoc (npmjs.com/package/jsdoc)
  * @requires jsdoc-to-markdown (npmjs.com/package/jsdoc-to-markdown)
@@ -10,9 +10,13 @@
 
 "use strict";
 
-// get filesystem
-let fs = require('fs');
-let path = require('path');
+// get modules
+if (typeof(fs) == 'undefined') {
+    var fs = require('fs');
+}
+if (typeof(path) == 'undefined') {
+    var path = require('path');
+}
 
 // generate documentation markdown
 const jsdoc2md = require('jsdoc-to-markdown');
@@ -22,9 +26,11 @@ let markdown = `
 
 ` + 
 jsdoc2md.renderSync({
-    files : path.join(__dirname, 'source', '*.js')
+    files : path.join(__dirname, '..', 'js', 'source', '*.js')
 });
 
 // create markdown file
 let output_path = path.join(__dirname, '..', 'doc', 'documentation.md');
 fs.writeFileSync(output_path, markdown, 'utf8'); 
+
+console.error('Generated documentation for the JavaScript source code.');

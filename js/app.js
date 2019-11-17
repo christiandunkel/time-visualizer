@@ -756,8 +756,8 @@ var _ = {
      * @param {*} val
      * @returns {boolean} returns true if the element exists
      */
-    exists : function (val) {
-        return typeof(val) !== 'undefined' && val !== null;
+    exists : function (n) {
+        return typeof(n) !== 'undefined' && n !== null;
     },
     
     /**
@@ -767,8 +767,8 @@ var _ = {
      * @param {*} val
      * @returns {boolean}
      */
-    isElement : function (val) {
-        return val instanceof Element || val instanceof HTMLDocument;
+    isElement : function (n) {
+        return n instanceof Element || n instanceof HTMLDocument;
     },
     
     /**
@@ -778,8 +778,8 @@ var _ = {
      * @param {*} val
      * @returns {boolean}
      */
-    isElementInDOM : function (val) {
-        return _.isElement(val) ? document.documentElement.contains(val) : false;
+    isElementInDOM : function (n) {
+        return _.isElement(n) ? document.documentElement.contains(n) : false;
     },
     
     /**
@@ -789,8 +789,8 @@ var _ = {
      * @param {*} val
      * @returns {boolean}
      */
-    isNodelist : function (val) {
-        return NodeList.prototype.isPrototypeOf(val);
+    isNodelist : function (n) {
+        return NodeList.prototype.isPrototypeOf(n);
     },
     
     /**
@@ -800,8 +800,8 @@ var _ = {
      * @param {*} val
      * @returns {boolean}
      */
-    isHTMLCollection : function (val) {
-        return HTMLCollection.prototype.isPrototypeOf(val);
+    isHTMLCollection : function (n) {
+        return HTMLCollection.prototype.isPrototypeOf(n);
     },
     
     /**
@@ -4237,7 +4237,7 @@ var MAIN = {
             
             // add error message to main page
             _.append(NODE.bar_chart, _.create('div.notice.red', {
-                'innerHTML': 'You are running this HTML page locally as a file, which makes HTTP requests to the web or files impossible. Click the <b>Load data</b> button to select a data set file instead.'
+                'innerHTML': 'You are running this HTML page locally as a file, which prevents XML HTTP requests. In order to load a data set, click the <b>Load data</b> button in the menu.'
             }));
             
             return;

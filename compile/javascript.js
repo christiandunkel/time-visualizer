@@ -1,6 +1,6 @@
 /**
  * execute using this command from the project root directory:
- * > node js/uglify-merge.js
+ * > node compile/javascript.js
  *
  * @file combines and minifies javascript source files into one file
  * @requires NodeJS (nodejs.org)
@@ -9,9 +9,13 @@
 
 "use strict";
 
-// get filesystem
-let fs = require('fs');
-let path = require('path');
+// get modules
+if (typeof(fs) == 'undefined') {
+    var fs = require('fs');
+}
+if (typeof(path) == 'undefined') {
+    var path = require('path');
+}
 
 // files to combine in order
 let files_in_order = [
@@ -48,7 +52,7 @@ files_in_order.forEach(file => {
     }
     
     // read file and add content to total code
-    let file_path = path.join(__dirname, 'source', file);
+    let file_path = path.join(__dirname, '..', 'js', 'source', file);
     total_code += fs.readFileSync(file_path, 'utf-8');
     
     counter++;
@@ -66,14 +70,15 @@ let minified = require('uglify-js').minify(total_code, {
 
 // if Uglify failed, don't create a minified file
 if (typeof(minified.code) === 'undefined') {
-    console.error('ERROR: Minified code equals "undefined". Uglify.js probably failed.\nAre there any ES6 components or errors in the source code?');
+    console.error('ERROR: Uglify.js failed minifying the JavaScript source files.');
 }
 else {
     // create minified file
-    let filepath = path.join(__dirname, 'app.min.js');
+    let filepath = path.join(__dirname, '..', 'js', 'app.min.js');
     fs.writeFileSync(filepath, minified.code, 'utf8');
+    console.error('Successfully minified the JavaScript source files.');
 }
 
 // also create non-minified file
-let filepath = path.join(__dirname, 'app.js');
+let filepath = path.join(__dirname, '..', 'js', 'app.js');
 fs.writeFileSync(filepath, total_code, 'utf8');
