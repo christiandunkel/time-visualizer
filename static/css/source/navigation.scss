@@ -153,4 +153,16 @@ nav {
             }
         }
     }  
+    
+    @media (max-width: 550px) {
+        
+        .inner {
+            
+            .btn {
+                width: 40px; height: 40px; padding: 0;
+                background-position: center;
+                font-size: 0;
+            }
+        }
+    }
 }
