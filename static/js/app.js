@@ -1201,45 +1201,45 @@ var NODE = {
         
     /* default HTML elements */
     
-    html                        : _.tag('html')[0],
-    head                        : _.tag('head')[0],
-    body                        : _.tag('body')[0],
+    html : _.tag('html')[0],
+    head : _.tag('head')[0],
+    body : _.tag('body')[0],
     
     
     
     /* navigation UI */
     
-    data_load_btn               : _.id('load-data'),
+    data_load_btn : _.id('load-data'),
 
-    play_btn                    : _.id('play-button'),
-    pause_btn                   : _.id('pause-button'),
-    stop_btn                    : _.id('stop-button'),
+    play_btn      : _.id('play-button'),
+    pause_btn     : _.id('pause-button'),
+    stop_btn      : _.id('stop-button'),
     
     
     
     /* settings window */
     
-    settings_btn                : _.id('settings-button'),
-    settings_window             : _.id('settings-window'),
-    settings_close_btn          : null,
-    settings_overlay            : null,
+    settings_btn       : _.id('settings-button'),
+    settings_window    : _.id('settings-window'),
+    settings_close_btn : null,
+    settings_overlay   : null,
     
-    darkmode_btn                : _.id('toggle-darkmode'),
+    darkmode_btn       : _.id('toggle-darkmode'),
     
     // animation speed menu for custom speed input
     speed_selection : {
-        container_1             : _.id('pre-defined-speed'),
-        container_2             : _.id('custom-speed'),
-        input                   : _.id('custom-speed-input'),
-        custom                  : _.id('open-custom-speed-menu'),
-        close_custom            : _.id('close-custom-speed-menu')
+        container_1  : _.id('pre-defined-speed'),
+        container_2  : _.id('custom-speed'),
+        input        : _.id('custom-speed-input'),
+        custom       : _.id('open-custom-speed-menu'),
+        close_custom : _.id('close-custom-speed-menu')
     },
     
     // animation speed menu with pre-defined buttons
     speed_btn : {
-        slow                    : _.id('half-speed'),
-        normal                  : _.id('normal-speed'),
-        fast                    : _.id('double-speed')
+        slow   : _.id('half-speed'),
+        normal : _.id('normal-speed'),
+        fast   : _.id('double-speed')
     },
     
     
@@ -1248,16 +1248,16 @@ var NODE = {
     
     data_load : {
         
-        window                  : _.id('data-load-window'),
-        close_btn               : null,
-        blur                    : null,
+        window    : _.id('data-load-window'),
+        close_btn : null,
+        blur      : null,
         
         // get area and input on which user can drop files
-        drop_area               : _.id('drop-area'),
-        select_file_input       : _.id('selected-file'),
+        drop_area         : _.id('drop-area'),
+        select_file_input : _.id('selected-file'),
     
-        example_sets_area       : _.id('example-set-area'),
-        notice                  : _.id('file-reader-notice')
+        example_sets_area : _.id('example-set-area'),
+        notice            : _.id('file-reader-notice')
         
     },
     
@@ -1288,12 +1288,12 @@ var NODE = {
     
     compare_items : {
         
-        window                  : _.id('compare-items-window'),
-        close_btn               : null,
-        blur                    : null,
+        window    : _.id('compare-items-window'),
+        close_btn : null,
+        blur      : null,
         
-        unselected_area         : null,
-        selected_area           : null
+        unselected_area : null,
+        selected_area   : null
         
     },
     
@@ -1324,26 +1324,26 @@ var NODE = {
     
     /* BAR CHART */
     
-    chart_container_1           : _.id('chart-container-1'),
+    chart_container_1 : _.id('chart-container-1'),
     
     // HTML element displaying 'current' value
     current_value : {
-        container               : _.id('data-set-current-value'),
-        value                   : null,
-        indicator               : null
+        container : _.id('data-set-current-value'),
+        value     : null,
+        indicator : null
     },
     
     // elements of data set info header
     data_set_info : {
-        title                   : null,
-        date                    : null
+        title : null,
+        date  : null
     },
-    bar_chart                   : _.id('bar-chart'),
+    bar_chart : _.id('bar-chart'),
     
     // ratio chart below bar chart
-    ratio_chart_total           : _.id('ratio-total'),
-    ratio_chart_container       : _.id('ratio-chart'),
-    ratio_chart                 : null,
+    ratio_chart_total     : _.id('ratio-total'),
+    ratio_chart_container : _.id('ratio-chart'),
+    ratio_chart           : null,
     
     /**
      * @function
@@ -1374,14 +1374,20 @@ var NODE = {
     
     /* LINE CHART */
     
-    chart_container_2           : _.id('chart-container-2'),
-    line_chart                  : _.id('line-chart'),
+    chart_container_2 : _.id('chart-container-2'),
+    line_chart        : _.id('line-chart'),
     
     // custom navigation for line chart
-    line_chart_menu             : _.id('line-chart-menu'),
-    close_line_chart_btn       : _.id('close-line-chart'),
-    download_png_btn            : _.id('download-line-chart'),
-    compare_btn                 : _.id('compare-btn'),
+    line_chart_menu      : _.id('line-chart-menu'),
+    close_line_chart_btn : _.id('close-line-chart'),
+    download_png_btn     : _.id('download-line-chart'),
+    compare_btn          : _.id('compare-btn'),
+    
+    
+    
+    /* STATISTICS */
+    
+    statistics : _.id('statistics'),
     
     
     
@@ -2424,9 +2430,7 @@ var DATA = {
                 },
                 ratio_chart : {
                     container             : null,
-                    percentage            : null,
-                    tooltip               : null,
-                    tooltip_percentage    : null
+                    percentage            : null
                 }
             },
             
@@ -3342,6 +3346,9 @@ var VISUALIZER = {
         // remove elements in bar and ratio charts
         _.empty(NODE.bar_chart);
         _.empty(NODE.ratio_chart);
+        _.empty(NODE.statistics);
+        
+        _.addClass(NODE.statistics, 'has-content');
         
         // go through all items
         for (var item_id in DATA.items) {
@@ -3364,6 +3371,10 @@ var VISUALIZER = {
             // create a ratio part for ratio chart
             var ratio_part = VISUALIZER.getRatioPart(item_id);
             _.append(NODE.ratio_chart, ratio_part.container);
+            
+            // create statistic for the item
+            var stat = VISUALIZER.getStatisticPart(item_id);
+            _.append(NODE.statistics, stat);
             
             // save references to HTML elements of ratio part
             DATA.html[item_id].ratio_chart = ratio_part;
@@ -3457,11 +3468,7 @@ var VISUALIZER = {
         var item = {
             id      : item_id,
             name    : obj.name,
-            icon    : obj.icon,
-            color   : obj.color,
-            mean    : DATA.getMean(item_id),
-            min     : DATA.getMin(item_id),
-            max     : DATA.getMax(item_id)
+            color   : obj.color
         };
         
         
@@ -3484,42 +3491,60 @@ var VISUALIZER = {
         });
         _.onClick(clickEvent, VISUALIZER.openLineChartOnClick);
         
-        // tooltip
-        var tooltip             = _.create('div.tooltip');
-        var tooltip_percentage  = _.create('div.tooltip-percentage');
-        var tooltip_icon = _.create('div.icon', {
-            'style' : {
-                'background-image' : 'url(' + item.icon + ')'
-            }
-        });
-        var tooltip_name = _.create('div.name', {
-            'innerHTML' : item.name
-        });
-        var tooltip_description = _.create('div.description', {
-            'innerHTML' : '<b>Mean:</b> ' + item.mean.formatted + '<br>' +
-                          '<b>Min:</b> ' + item.min.formatted + '<br>' +
-                          '<b>Max:</b> ' + item.max.formatted
-        });
-        
         
         
         // append elements to container
-        _.append(tooltip,       tooltip_icon);
-        _.append(tooltip,       tooltip_percentage);
-        _.append(tooltip,       tooltip_name);
-        _.append(tooltip,       tooltip_description);
-        _.append(container,     tooltip);
         _.append(percentage,    div_in_percentage);
         _.append(container,     percentage);
         _.append(container,     clickEvent);
         
         return {
             container           : container,
-            percentage          : div_in_percentage,
-            tooltip             : tooltip,
-            tooltip_percentage  : tooltip_percentage
+            percentage          : div_in_percentage
         };
         
+    },
+    
+    /**
+     * @function
+     * @memberof module:VISUALIZER
+     * @desc generates a HTML element containing a HTML structure with statistical information about an item
+     * @param {string} item_id
+     * @returns {Object} HTML element
+     */
+    getStatisticPart : function (item_id) {
+        
+        // get item values
+        var obj = DATA.items[item_id];
+        var item = {
+            name    : obj.name,
+            icon    : obj.icon,
+            mean    : DATA.getMean(item_id),
+            min     : DATA.getMin(item_id),
+            max     : DATA.getMax(item_id)
+        };
+    
+        var stat_container = _.create('div');
+        var stat_icon = _.create('div.icon', {
+            'style' : {
+                'background-image' : 'url(' + item.icon + ')'
+            }
+        });
+        var stat_name = _.create('div.name', {
+            'innerHTML' : item.name
+        });
+        var stat_description = _.create('div.description', {
+            'innerHTML' : '<b>Mean:</b> ' + item.mean.formatted + '<br>' +
+                          '<b>Min:</b> ' + item.min.formatted + '<br>' +
+                          '<b>Max:</b> ' + item.max.formatted
+        });
+
+        _.append(stat_name, stat_icon);
+        _.append(stat_container, stat_name);
+        _.append(stat_container, stat_description);
+
+        return stat_container;
+
     },
     
     /**
@@ -3939,8 +3964,7 @@ var ANIMATOR = {
             
             // display percentage value on item
             var rounded = percentage.toFixed(1) + '%';
-            ratio_chart.percentage.innerHTML            = rounded;
-            ratio_chart.tooltip_percentage.innerHTML    = rounded;
+            ratio_chart.percentage.innerHTML = rounded;
             
         }
         

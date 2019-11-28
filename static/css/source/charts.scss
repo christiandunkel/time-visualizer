@@ -288,59 +288,57 @@
             cursor: pointer;
         }
         
-        .tooltip {
-            display: none; position: absolute; top: 100%; left: 50%; z-index: 3;
-            max-width: 300px; width: 100%; min-width: 200px; padding: 15px;
-            background: #313131;
-            text-shadow: 1px 1px 3px rgba(0,0,0,.3);
-            color: white; text-align: center;
-            @include border-radius(3px);
-            @include transform(translate(-50%, 25px));
-            
-            // arrow
-            &:after {
-                content: '';
-                display: block; position: absolute; top: -14px; left: 50%;
-                width: 0; height: 0; 
-                border-left: 15px solid transparent;
-                border-right: 15px solid transparent;
-                border-bottom: 15px solid #313131;
-                @include transform(translate(-50%, 0));
-            }
-            
-            .icon {
-                display: inline-block;
-                width: 30px; height: 30px; margin: 10px 0 0 0;
-                background-repeat: no-repeat;
-                background-position: center;
-                @include background-size(contain);
-            }
-            
-            .tooltip-percentage {
-                display: inline; position: relative; top: -8px;
-                width: auto; padding: 0 0 0 10px;
-                text-shadow: 1px 1px 3px rgba(0,0,0,.5);
-                color: white; text-align: center; font-size: 15px; line-height: 30px; font-weight: 700;
-            }
-            
-            .name {
-                margin: 12px 0 8px 0;
-                font-size: 15px; line-height: 1em; font-weight: 700;
-                @include text-wrap;
-            }
-            
-            .description {
-                font-size: 14px; line-height: 16px;
-            }
-        }
-        
-        &:hover .tooltip {
-            display: inline-block;
-        }
-        
     }
 }
 
+    
+#statistics {
+    
+    &.has-content {
+        margin-top: 50px; padding-top: 50px;
+        border-top: 1px solid #e8e8e8;
+    }
+    
+    > div {
+        display: inline-block;
+        width: 25%; padding: 10px;
+
+        .name {
+            display: inline-block; position: relative;
+            padding-left: 22px;
+            font-size: 18px; line-height: 22px;
+            color: #646464;
+            @include text-wrap;
+            
+            .icon {
+                content: '';
+                position: absolute; top: 2px; left: 0;
+                width: 18px; height: 18px;
+                background-repeat: no-repeat; background-position: 0px center;
+                @include background-size(contain);
+                @include filter(drop-shadow(0 1px 2px rgba(0,0,0,.2)));
+                @include border-radius(2px);
+            }
+        }
+
+        .description {
+            margin: 10px 0 0 0;
+            color: #938a8a; font-size: 14px; line-height: 16px;
+        }
+        
+        @media (max-width: 800px) {
+            width: 33%;
+        }
+        
+        @media (max-width: 650px) {
+            width: 50%;
+        }
+        
+        @media (max-width: 450px) {
+            width: 100%;
+        }
+    }
+}
 
 
 

@@ -23,6 +23,9 @@ var VISUALIZER = {
         // remove elements in bar and ratio charts
         _.empty(NODE.bar_chart);
         _.empty(NODE.ratio_chart);
+        _.empty(NODE.statistics);
+        
+        _.addClass(NODE.statistics, 'has-content');
         
         // go through all items
         for (var item_id in DATA.items) {
@@ -45,6 +48,10 @@ var VISUALIZER = {
             // create a ratio part for ratio chart
             var ratio_part = VISUALIZER.getRatioPart(item_id);
             _.append(NODE.ratio_chart, ratio_part.container);
+            
+            // create statistic for the item
+            var stat = VISUALIZER.getStatisticPart(item_id);
+            _.append(NODE.statistics, stat);
             
             // save references to HTML elements of ratio part
             DATA.html[item_id].ratio_chart = ratio_part;
@@ -138,11 +145,7 @@ var VISUALIZER = {
         var item = {
             id      : item_id,
             name    : obj.name,
-            icon    : obj.icon,
-            color   : obj.color,
-            mean    : DATA.getMean(item_id),
-            min     : DATA.getMin(item_id),
-            max     : DATA.getMax(item_id)
+            color   : obj.color
         };
         
         
@@ -165,42 +168,60 @@ var VISUALIZER = {
         });
         _.onClick(clickEvent, VISUALIZER.openLineChartOnClick);
         
-        // tooltip
-        var tooltip             = _.create('div.tooltip');
-        var tooltip_percentage  = _.create('div.tooltip-percentage');
-        var tooltip_icon = _.create('div.icon', {
-            'style' : {
-                'background-image' : 'url(' + item.icon + ')'
-            }
-        });
-        var tooltip_name = _.create('div.name', {
-            'innerHTML' : item.name
-        });
-        var tooltip_description = _.create('div.description', {
-            'innerHTML' : '<b>Mean:</b> ' + item.mean.formatted + '<br>' +
-                          '<b>Min:</b> ' + item.min.formatted + '<br>' +
-                          '<b>Max:</b> ' + item.max.formatted
-        });
-        
         
         
         // append elements to container
-        _.append(tooltip,       tooltip_icon);
-        _.append(tooltip,       tooltip_percentage);
-        _.append(tooltip,       tooltip_name);
-        _.append(tooltip,       tooltip_description);
-        _.append(container,     tooltip);
         _.append(percentage,    div_in_percentage);
         _.append(container,     percentage);
         _.append(container,     clickEvent);
         
         return {
             container           : container,
-            percentage          : div_in_percentage,
-            tooltip             : tooltip,
-            tooltip_percentage  : tooltip_percentage
+            percentage          : div_in_percentage
         };
         
+    },
+    
+    /**
+     * @function
+     * @memberof module:VISUALIZER
+     * @desc generates a HTML element containing a HTML structure with statistical information about an item
+     * @param {string} item_id
+     * @returns {Object} HTML element
+     */
+    getStatisticPart : function (item_id) {
+        
+        // get item values
+        var obj = DATA.items[item_id];
+        var item = {
+            name    : obj.name,
+            icon    : obj.icon,
+            mean    : DATA.getMean(item_id),
+            min     : DATA.getMin(item_id),
+            max     : DATA.getMax(item_id)
+        };
+    
+        var stat_container = _.create('div');
+        var stat_icon = _.create('div.icon', {
+            'style' : {
+                'background-image' : 'url(' + item.icon + ')'
+            }
+        });
+        var stat_name = _.create('div.name', {
+            'innerHTML' : item.name
+        });
+        var stat_description = _.create('div.description', {
+            'innerHTML' : '<b>Mean:</b> ' + item.mean.formatted + '<br>' +
+                          '<b>Min:</b> ' + item.min.formatted + '<br>' +
+                          '<b>Max:</b> ' + item.max.formatted
+        });
+
+        _.append(stat_name, stat_icon);
+        _.append(stat_container, stat_name);
+        _.append(stat_container, stat_description);
+
+        return stat_container;
+
     },
     
     /**

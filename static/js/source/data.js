@@ -36,9 +36,7 @@ var DATA = {
                 },
                 ratio_chart : {
                     container             : null,
-                    percentage            : null,
-                    tooltip               : null,
-                    tooltip_percentage    : null
+                    percentage            : null
                 }
             },
             

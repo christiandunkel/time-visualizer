@@ -392,8 +392,7 @@ var ANIMATOR = {
             
             // display percentage value on item
             var rounded = percentage.toFixed(1) + '%';
-            ratio_chart.percentage.innerHTML            = rounded;
-            ratio_chart.tooltip_percentage.innerHTML    = rounded;
+            ratio_chart.percentage.innerHTML = rounded;
             
         }
         
