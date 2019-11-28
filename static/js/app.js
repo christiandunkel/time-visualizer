@@ -391,7 +391,7 @@ var _ = {
             useCapture = false;
         }
 
-        if ('addEventListener' in elem) {
+        if ('addEventListener' in document.documentElement) {
             elem.addEventListener(event, fn, useCapture);
         }
         else {
@@ -428,7 +428,7 @@ var _ = {
             useCapture = false;
         }
 
-        if ('removeEventListener' in elem) {
+        if ('removeEventListener' in document.documentElement) {
             elem.removeEventListener(event, fn, useCapture);
         }
         else {
@@ -560,7 +560,7 @@ var _ = {
         }
 
         // use classList API if available
-        if ('classList' in elem) {
+        if ('classList' in document.documentElement) {
             elem.classList.add(class_);
         }
         else if (elem.className.split(" ").indexOf(class_) == -1) {
@@ -587,7 +587,7 @@ var _ = {
         }
 
         // use classList API if available
-        if ('classList' in elem) {
+        if ('classList' in document.documentElement) {
             elem.classList.remove(class_);
         }
         else {
@@ -644,7 +644,7 @@ var _ = {
         }
         
         // use classList API if available
-        if ('classList' in elem) {
+        if ('classList' in document.documentElement) {
             return elem.classList.contains(class_);
         }
         else if (elem.className.split(" ").indexOf(class_) == -1) {
@@ -680,7 +680,7 @@ var _ = {
         if ('getComputedStyle' in window) {
             return window.getComputedStyle(elem, null).getPropertyValue(style);
         }
-        else if ('currentStyle' in elem) {
+        else if ('currentStyle' in document.documentElement) {
             return elem.currentStyle[style];
         }
         

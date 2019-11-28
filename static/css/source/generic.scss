@@ -110,8 +110,7 @@ footer {
     
     .chart-number-note {
         display: none;
-        opacity: .4;
-        font-size: 13px; line-height: 16px;
+        color: #7c7c7c; font-size: 13px; line-height: 16px;
         
         .js-on & {
             display: block;
@@ -120,12 +119,11 @@ footer {
     
     .bottom-line {
         margin: 20px 0 50px 0;
-        @include opacity(.8);
     
         .copyright {
             display: inline-block;
             margin: 0;
-            font-size: 14px; line-height: 1em;
+            color: #6a6a6a; font-size: 14px; line-height: 1em;
         }
 
         .links {
