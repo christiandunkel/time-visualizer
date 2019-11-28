@@ -115,6 +115,10 @@ footer {
         .js-on & {
             display: block;
         }
+        
+        .dark-mode & {
+            color: #9b9b9b;
+        }
     }
     
     .bottom-line {
@@ -124,6 +128,10 @@ footer {
             display: inline-block;
             margin: 0;
             color: #6a6a6a; font-size: 14px; line-height: 1em;
+            
+            .dark-mode & {
+                color: #b3b3b3;
+            }
         }
 
         .links {

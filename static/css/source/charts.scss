@@ -82,7 +82,7 @@
     
     .value {
         display: inline-block; position: relative; z-index: 1;
-        @include opacity(.5);
+        color: #8e8e8e;
     }
     
     .indicator {
@@ -297,18 +297,26 @@
     &.has-content {
         margin-top: 50px; padding-top: 50px;
         border-top: 1px solid #e8e8e8;
+        
+        .dark-mode & {
+            border-color: #262626;
+        }
     }
     
     > div {
         display: inline-block;
-        width: 25%; padding: 10px;
+        width: 25%; padding: 0 10px 20px 10px;
 
         .name {
-            display: inline-block; position: relative;
+            position: relative;
             padding-left: 22px;
             font-size: 18px; line-height: 22px;
             color: #646464;
             @include text-wrap;
+            
+            .dark-mode & {
+                color: #ccc;
+            }
             
             .icon {
                 content: '';
@@ -324,6 +332,10 @@
         .description {
             margin: 10px 0 0 0;
             color: #938a8a; font-size: 14px; line-height: 16px;
+            
+            .dark-mode & {
+                color: #c1c1c1;
+            }
         }
         
         @media (max-width: 800px) {
