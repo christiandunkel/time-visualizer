@@ -104,29 +104,39 @@ main {
 
 
 // area at bottom of page
+    
+#below-charts-notes {
+    display: none;
+    list-style-type: decimal;
+    max-width: 1100px; margin: 0 auto; padding: 0 20px 0 40px;
+
+    .js-on & {
+        display: block;
+    }
+
+    .dark-mode & {
+        color: #6d6d6d;
+    }
+
+    li {
+        margin: 5px 0;
+        color: #a0a0a0; font-size: 12px; line-height: 16px;
+    }
+    
+    a {
+        color: inherit;
+    }
+}
 
 footer {
-    max-width: 1100px; margin: 0 auto; padding: 0 20px;
-    
-    .below-charts-note {
-        display: none;
-        color: #b2b2b2; font-size: 13px; line-height: 16px;
-        
-        .js-on & {
-            display: block;
-        }
-        
-        .dark-mode & {
-            color: #525252;
-        }
-        
-        a {
-            color: inherit;
-        }
+    max-width: 1100px; margin: 80px auto 0 auto; padding: 20px;
+    border-top: 1px solid rgba(0,0,0,.05);
+
+    .dark-mode & {
+        border-color: rgba(255,255,255,.05);
     }
     
     .bottom-line {
-        margin: 20px 0 50px 0;
     
         .copyright {
             display: inline-block;

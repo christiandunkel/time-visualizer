@@ -3866,6 +3866,7 @@ var ANIMATOR = {
         ANIMATOR.stopLoop();
         
         // reset ratio part animations
+        ANIMATOR.last_ratio_part_order = [];
         var parts = _.class('part-container', NODE.ratio_chart);
         for (var i = parts.length; i--;) {
             var current = parts[i];
