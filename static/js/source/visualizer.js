@@ -272,9 +272,10 @@ var VISUALIZER = {
      * @memberof module:VISUALIZER
      * @desc generates a HTML element containing a HTML structure with statistical information about an item
      * @param {integer} index Index in statistics array
+     * @param {string} dominant_metric Sorting metric by which the statistic is currently sorted
      * @returns {Object} HTML element
      */
-    getStatisticPart : function (index) {
+    getStatisticPart : function (index, dominant_metric) {
         
         var item = VISUALIZER.statistics[index];
     
@@ -287,10 +288,32 @@ var VISUALIZER = {
         var stat_name = _.create('div.name', {
             'innerHTML' : item.name
         });
+        
+        // generate description depending on dominant metric
+        var description = '';
+        switch (dominant_metric) {
+            case 'max':
+                description =
+                '<b>Max:</b> ' + item.max.formatted + '<br>' +
+                '<b>Min:</b> ' + item.min.formatted + '<br>' +
+                '<b>Mean:</b> ' + item.mean.formatted;
+                break;
+            case 'min':
+                description =
+                '<b>Min:</b> ' + item.min.formatted + '<br>' +
+                '<b>Max:</b> ' + item.max.formatted + '<br>' +
+                '<b>Mean:</b> ' + item.mean.formatted;
+                break;
+            case 'mean':
+                description =
+                '<b>Mean:</b> ' + item.mean.formatted + '<br>' +
+                '<b>Max:</b> ' + item.max.formatted + '<br>' +
+                '<b>Min:</b> ' + item.min.formatted;
+                break;
+        }
+        
         var stat_description = _.create('div.description', {
-            'innerHTML' : '<b>Mean:</b> ' + item.mean.formatted + '<br>' +
-                          '<b>Min:</b> ' + item.min.formatted + '<br>' +
-                          '<b>Max:</b> ' + item.max.formatted
+            'innerHTML' : description
         });
 
         _.append(stat_name, stat_icon);
@@ -316,20 +339,13 @@ var VISUALIZER = {
         }
         
         // sort statistics array
-        if (metric == 'min') {
-            VISUALIZER.statistics.sort(function (a, b) {
-                return a.min.value > b.min.value;
-            });
-        }
-        else {
-            VISUALIZER.statistics.sort(function (a, b) {
-                return a[metric].value < b[metric].value;
-            });
-        }
+        VISUALIZER.statistics.sort(function (a, b) {
+            return a[metric].value < b[metric].value;
+        });
         
         // re-add now-sorted statistic parts
         for (var i = 0; i < VISUALIZER.statistics.length; i++) {
-            _.append(NODE.statistics, VISUALIZER.getStatisticPart(i));
+            _.append(NODE.statistics, VISUALIZER.getStatisticPart(i, metric));
         }
         
     }
