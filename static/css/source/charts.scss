@@ -359,7 +359,7 @@
         .name {
             position: relative;
             padding-left: 24px;
-            font-size: 18px; line-height: 22px;
+            font-size: 15px; line-height: 22px;
             color: #646464;
             @include text-wrap;
             
@@ -380,7 +380,7 @@
 
         .description {
             margin: 10px 0 0 0;
-            color: #938a8a; font-size: 14px; line-height: 16px;
+            color: #938a8a; font-size: 14px; line-height: 1.3em;
             
             .dark-mode & {
                 color: #c1c1c1;
@@ -395,8 +395,38 @@
             width: 50%;
         }
         
-        @media (max-width: 450px) {
-            width: 100%;
+        @media (max-width: 500px) {
+            padding: 0 4px 14px 4px;
+            
+            .name {
+                font-size: 15px;
+            }
+            
+            .description {
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            
+            .name {
+                font-size: 12px;
+            }
+            
+            .description {
+                font-size: 10px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            
+            .name {
+                font-size: 10px;
+            }
+            
+            .description {
+                font-size: 9px;
+            }
         }
     }
 }
