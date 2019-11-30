@@ -150,6 +150,7 @@ var VISUALIZER = {
         
         // main element
         var container = _.create('td.part-container', {
+            'item-id' : item.id,
             'style' : {
                 'background-color' : item.color
             }

@@ -3473,6 +3473,7 @@ var VISUALIZER = {
         
         // main element
         var container = _.create('td.part-container', {
+            'item-id' : item.id,
             'style' : {
                 'background-color' : item.color
             }
@@ -3864,6 +3865,14 @@ var ANIMATOR = {
         
         ANIMATOR.stopLoop();
         
+        // reset ratio part animations
+        var parts = _.class('part-container', NODE.ratio_chart);
+        for (var i = parts.length; i--;) {
+            var current = parts[i];
+            _.removeClass(current, 'changed-place');
+            current.removeAttribute('changed-places-counter');
+        }
+        
     },
     
     /**
@@ -4033,6 +4042,10 @@ var ANIMATOR = {
         
     },
     
+    
+    
+    last_ratio_part_order : [],
+    
     /**
      * @function
      * @memberof module:ANIMATOR
@@ -4048,13 +4061,13 @@ var ANIMATOR = {
         // go through items in ratio chart (reversed order)
         for (var i = DATA.item_num - 1; i >= 0; i--) {
             
-            // get item id by order
+            // get item id by SORTED ORDER
             var item_id         = ANIMATOR.items_sorted[i].id;
             var item_data_point = DATA.upscaled[item_id][ANIMATOR.tick];
             var percentage      = 100 / (total / item_data_point);
             var ratio_chart     = DATA.html[item_id].ratio_chart;
             
-            // filter out percentages smaller than 0.2%
+            // filter out items with percentages smaller than 0.2%
             if (percentage < 0.2) {
                 _.addClass(ratio_chart.container, 'hidden');
                 continue;
@@ -4076,6 +4089,62 @@ var ANIMATOR = {
             ratio_chart.percentage.innerHTML = rounded;
             
         }
+        
+        // check new positions of ratio parts
+        var parts = _.class('part-container', NODE.ratio_chart);
+        var new_order = [];
+        for (var i = parts.length; i--;) {
+            var part = parts[i];
+            new_order.push(part.getAttribute('item-id'));
+        }
+        
+        // reset past positions if the array differs in length to current ones
+        if (new_order.length != ANIMATOR.last_ratio_part_order.length) {
+            ANIMATOR.last_ratio_part_order = [];
+        }
+        
+        // if there is previous data, compare parts, and add animations to parts that changed place
+        if (ANIMATOR.last_ratio_part_order.length > 0) {
+            
+            for (var i = new_order.length; i--;) {
+                
+                // get item-id of current position
+                var current_pos = i;
+                var current = parts[parts.length - 1 - i]; // because, it's reversed
+                var current_id = new_order[i];
+                // see where the item was in the old position
+                var old_pos = ANIMATOR.last_ratio_part_order.indexOf(current_id);
+                
+                // check if item switched places
+                if (old_pos != current_pos) {
+                    _.addClass(current, 'changed-place');
+                }
+                // otherwise, it didn't change place
+                // so, count down time until the class gets removed
+                else {
+                    var counter = current.getAttribute('changed-places-counter');
+                    // add counter if not yet added to part
+                    if (!counter) {
+                        current.setAttribute('changed-places-counter', '20');
+                    }
+                    // if applied, count it down
+                    else if (parseInt(counter) > 0) {
+                        counter--;
+                        current.setAttribute('changed-places-counter', ''+counter);
+                    }
+                    // on 0, remove class
+                    else {
+                        current.removeAttribute('changed-places-counter');
+                        _.removeClass(current, 'changed-place');
+                    }
+                }
+                
+            }
+            
+        }
+        
+        // overwrite previous parts position data
+        ANIMATOR.last_ratio_part_order = new_order;
         
     },
     
