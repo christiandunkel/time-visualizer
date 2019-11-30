@@ -1718,6 +1718,9 @@ var NAV = {
         _.addClass(NODE.chart_container_1, 'active');
         _.removeClass(NODE.chart_container_2, 'active');
         
+        // show statistics
+        _.addClass(NODE.statistics, 'active');
+        
         // update charts
         ANIMATOR.refreshFrame();
         
@@ -1735,6 +1738,9 @@ var NAV = {
         // switch chart containers
         _.removeClass(NODE.chart_container_1, 'active');
         _.addClass(NODE.chart_container_2, 'active');
+        
+        // hide statistics
+        _.removeClass(NODE.statistics, 'active');
         
         // update charts
         ANIMATOR.refreshFrame();
