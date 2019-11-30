@@ -48,7 +48,7 @@ var COMPARE_ITEMS = {
         var indexes = [];
         for (var i = 0; i < COMPARE_ITEMS.id_num; i++) {
             if (COMPARE_ITEMS.ids[i] === id) {
-                indexes[indexes.length] = i;
+                indexes.push(i);
             }
         }
         

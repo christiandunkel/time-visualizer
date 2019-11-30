@@ -23,9 +23,9 @@ var VISUALIZER = {
         // remove elements in bar and ratio charts
         _.empty(NODE.bar_chart);
         _.empty(NODE.ratio_chart);
-        _.empty(NODE.statistics);
         
-        _.addClass(NODE.statistics, 'has-content');
+        // generate statistics
+        VISUALIZER.generateStatistics();
         
         // go through all items
         for (var item_id in DATA.items) {
@@ -48,10 +48,6 @@ var VISUALIZER = {
             // create a ratio part for ratio chart
             var ratio_part = VISUALIZER.getRatioPart(item_id);
             _.append(NODE.ratio_chart, ratio_part.container);
-            
-            // create statistic for the item
-            var stat = VISUALIZER.getStatisticPart(item_id);
-            _.append(NODE.statistics, stat);
             
             // save references to HTML elements of ratio part
             DATA.html[item_id].ratio_chart = ratio_part;
@@ -185,23 +181,104 @@ var VISUALIZER = {
     /**
      * @function
      * @memberof module:VISUALIZER
+     * @desc called by a click event to open a specific line chart
+     * @param {e} event - click event
+     */
+    openLineChartOnClick : function (e) {
+        
+        // get item id
+        var item_id = _.target(e).getAttribute('item-id');
+        COMPARE_ITEMS.setItemIds([item_id]);
+        
+        // open line chart
+        NAV.showLineChart();
+        
+    },
+    
+    
+    
+    statistics : [],
+     
+    /**
+     * @function
+     * @memberof module:VISUALIZER
+     * @desc generates full statistics HTML section
+     */
+    generateStatistics : function () {
+        
+        // reset statistics
+        _.empty(NODE.statistics);
+        VISUALIZER.statistics = [];
+        
+        
+        // add items to array and sort them
+        for (var item_id in DATA.items) {
+            var obj = DATA.items[item_id];
+            VISUALIZER.statistics.push({
+                name    : obj.name,
+                icon    : obj.icon,
+                mean    : DATA.getMean(item_id),
+                min     : DATA.getMin(item_id),
+                max     : DATA.getMax(item_id)
+            });
+        }
+        VISUALIZER.sortStatistics('max');
+        
+        
+        // add sorting menu
+        _.addClass(NODE.statistics, 'has-content');
+        var sorting_text = _.create('p.sorting-text', {
+            innerHTML: 'Sort by '
+        });
+        NODE.statistic_sort_btn = _.create('button', {
+            innerHTML: 'Max'
+        });
+        _.append(sorting_text, NODE.statistic_sort_btn);
+        _.prepend(NODE.statistics, sorting_text);
+        
+        
+        // add click event for sorting button
+        _.onClick(NODE.statistic_sort_btn, function () {
+            
+            var text = '';
+            var type = NODE.statistic_sort_btn.innerHTML;
+            
+            switch (type) {
+                case 'Max':
+                    text = 'Min';
+                    type = 'min';
+                    break;
+                    
+                case 'Min':
+                    text = 'Mean';
+                    type = 'mean';
+                    break;
+                    
+                case 'Mean':
+                    text = 'Max';
+                    type = 'max';
+                    break;
+            }
+            
+            NODE.statistic_sort_btn.innerHTML = text;
+            VISUALIZER.sortStatistics(type);
+            
+        });
+    
+    },
+    
+    /**
+     * @function
+     * @memberof module:VISUALIZER
      * @desc generates a HTML element containing a HTML structure with statistical information about an item
-     * @param {string} item_id
+     * @param {integer} index Index in statistics array
      * @returns {Object} HTML element
      */
-    getStatisticPart : function (item_id) {
+    getStatisticPart : function (index) {
         
-        // get item values
-        var obj = DATA.items[item_id];
-        var item = {
-            name    : obj.name,
-            icon    : obj.icon,
-            mean    : DATA.getMean(item_id),
-            min     : DATA.getMin(item_id),
-            max     : DATA.getMax(item_id)
-        };
+        var item = VISUALIZER.statistics[index];
     
-        var stat_container = _.create('div');
+        var stat_container = _.create('div.statistic');
         var stat_icon = _.create('div.icon', {
             'style' : {
                 'background-image' : 'url(' + item.icon + ')'
@@ -227,17 +304,33 @@ var VISUALIZER = {
     /**
      * @function
      * @memberof module:VISUALIZER
-     * @desc called by a click event to open a specific line chart
-     * @param {e} event - click event
+     * @desc sorts items in statistic by a certain metric
+     * @param {string} metric Sorting metric: min|max|mean
      */
-    openLineChartOnClick : function (e) {
+    sortStatistics : function (metric) {
         
-        // get item id
-        var item_id = _.target(e).getAttribute('item-id');
-        COMPARE_ITEMS.setItemIds([item_id]);
+        // remove statistic parts
+        var statistics = _.class('statistic', NODE.statistics);
+        for (var i = statistics.length; i--;) {
+            _.remove(statistics[i]);
+        }
         
-        // open line chart
-        NAV.showLineChart();
+        // sort statistics array
+        if (metric == 'min') {
+            VISUALIZER.statistics.sort(function (a, b) {
+                return a.min.value > b.min.value;
+            });
+        }
+        else {
+            VISUALIZER.statistics.sort(function (a, b) {
+                return a[metric].value < b[metric].value;
+            });
+        }
+        
+        // re-add now-sorted statistic parts
+        for (var i = 0; i < VISUALIZER.statistics.length; i++) {
+            _.append(NODE.statistics, VISUALIZER.getStatisticPart(i));
+        }
         
     }
     

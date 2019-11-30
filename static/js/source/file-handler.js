@@ -176,7 +176,7 @@ var FILE = {
             }
             
             // add item to array for later
-            items[items.length] = prop;
+            items.push(prop);
             
             if (typeof(obj.items[prop].name) === 'undefined') {
                 return '"name" value in item "' + prop + '" is undefined.';

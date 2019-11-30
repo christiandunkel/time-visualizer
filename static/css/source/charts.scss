@@ -291,7 +291,7 @@
     }
 }
 
-    
+
 #statistics {
     
     &.has-content {
@@ -303,13 +303,34 @@
         }
     }
     
-    > div {
+    .sorting-text {
+        width: 100%;
+        font-size: 14px; line-height: 1em; color: #939393;
+        
+        button {
+            padding: 1px 5px;
+            background-color: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.1);
+            @include border-radius(4px);
+            
+            &:hover,
+            &:focus {
+                background-color: rgba(0,0,0,.08);
+            }
+            
+            &:active {
+                background-color: rgba(0,0,0,.12);
+            }
+        }
+    }
+    
+    .statistic {
         display: inline-block;
         width: 25%; padding: 0 10px 20px 10px;
+        @include animation(fade-in 1s);
 
         .name {
             position: relative;
-            padding-left: 22px;
+            padding-left: 24px;
             font-size: 18px; line-height: 22px;
             color: #646464;
             @include text-wrap;
