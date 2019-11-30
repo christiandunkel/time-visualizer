@@ -232,7 +232,8 @@ var VISUALIZER = {
             innerHTML: 'Sort by '
         });
         NODE.statistic_sort_btn = _.create('button', {
-            innerHTML: 'Max'
+            innerHTML: 'Max',
+            title: 'Change sorting metric'
         });
         _.append(sorting_text, NODE.statistic_sort_btn);
         _.prepend(NODE.statistics, sorting_text);
