@@ -145,11 +145,6 @@
             min-width: 1%; width: 100%; height: 44px;
             background: #67a2ff; 
             @include border-radius(5px);
-            @include box-shadow(
-                1px 1px 1px rgba(0, 0, 0, 0.1),
-                2px 2px 2px rgba(0, 0, 0, 0.1),
-                4px 4px 4px rgba(0, 0, 0, 0.1)
-            );
             @include transition(.2s);
         }
         
@@ -249,6 +244,8 @@
 
 #ratio-chart {
     width: 100%; height: 80px;
+    overflow: hidden;
+    @include border-radius(6px);
     
     &.hidden {
         display: none;
@@ -260,7 +257,7 @@
     
     .part-container {
         position: relative;
-        background: #575757;
+        background-color: #575757;
         @include user-select(none);
         
         &.hidden {
