@@ -355,7 +355,16 @@
     }
     
     .btn {
-        margin: 5px;
+        position: relative;
+        margin: 5px; padding-left: 43px;
+        
+        .icon {
+            position: absolute; top: 0; left: 15px;
+            width: 20px; height: 100%;
+            background-repeat: no-repeat; background-position: center;
+            @include background-size(contain);
+            @include filter(drop-shadow(1px 1px 1px rgba(0,0,0,.3)));
+        }
     }
     
     .selected-area,

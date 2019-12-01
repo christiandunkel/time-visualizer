@@ -2509,11 +2509,14 @@ var COMPARE_ITEMS = {
             // create button
             var btn = _.create('button.btn.small.has-icon', {
                 'item-id' : item_id,
-                'innerHTML' : item.name,
+                'innerHTML' : item.name
+            });
+            var icon = _.create('i.icon', {
                 'style' : {
                     'background-image' : 'url(' + item.icon + ')'
                 }
             });
+            _.append(btn, icon);
             
             // add click event for selecting / unselecting the item
             _.onClick(btn, COMPARE_ITEMS.moveButton);
@@ -2573,6 +2576,13 @@ var COMPARE_ITEMS = {
     moveButton : function (e) {
         
         var btn = _.target(e);
+        
+        // check if click was on button directly, or on icon inside
+        if (!_.hasClass(btn, 'btn')) {
+            // if click was on icon, select parent (button) instead
+            btn = btn.parentElement;
+        }
+        
         var item_id = btn.getAttribute('item-id');
         
         // check if the button's item needs to be included to or excluded from the 'item selection' array
