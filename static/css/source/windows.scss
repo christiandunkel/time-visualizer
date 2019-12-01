@@ -9,7 +9,7 @@
     
     &.visible {
         visibility: visible; pointer-events: auto;
-        width: 100%; height: 100%;
+        width: 100%; height: 100%; padding-top: 30px;
         @include opacity(1);
         @include transition(all 0s, opacity .3s);
         
@@ -25,8 +25,22 @@
         @include opacity(.8);
     }
     
+    .content {
+        position: relative; top: 50%; left: 50%;
+        max-width: 500px; width: 90%; max-height: 90%; padding: 24px;
+        background: white; border: 1px solid #d0d0d0; overflow-y: auto;
+        color: #979595;
+        @include border-radius(4px);
+        @include transform(translate(-50%, -50%) scale(1.1));
+        @include transition(.5s);
+        
+        .dark-mode & {
+            background: #121212; border-color: #363636;
+        }
+    }
+    
     .close {
-        position: absolute; top: 12px; right: 12px;
+        position: absolute; top: 5px; right: 5px;
         width: 1em; height: 1em;
         font-size: 28px; color: #ffffff;
         
@@ -65,20 +79,6 @@
         &:active .cross {
             @include transform(scale(.8));
             @include transition(.06s);
-        }
-    }
-    
-    .content {
-        position: absolute; top: 50%; left: 50%;
-        max-width: 500px; width: 90%; max-height: 90%; padding: 24px;
-        background: white; border: 1px solid #d0d0d0; overflow-y: auto;
-        color: #979595;
-        @include border-radius(4px);
-        @include transform(translate(-50%, -50%) scale(1.1));
-        @include transition(.5s);
-        
-        .dark-mode & {
-            background: #121212; border-color: #363636;
         }
     }
     
