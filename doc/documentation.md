@@ -1601,6 +1601,9 @@ generates HTML elements for charts
     * [.getBar(item_id)](#module_VISUALIZER.getBar) ⇒ <code>Object</code>
     * [.getRatioPart(item_id)](#module_VISUALIZER.getRatioPart) ⇒ <code>Object</code>
     * [.openLineChartOnClick(event)](#module_VISUALIZER.openLineChartOnClick)
+    * [.generateStatistics()](#module_VISUALIZER.generateStatistics)
+    * [.getStatisticPart(index, dominant_metric)](#module_VISUALIZER.getStatisticPart) ⇒ <code>Object</code>
+    * [.sortStatistics(metric)](#module_VISUALIZER.sortStatistics)
 
 <a name="module_VISUALIZER.createCharts"></a>
 
@@ -1642,4 +1645,34 @@ called by a click event to open a specific line chart
 | Param | Type | Description |
 | --- | --- | --- |
 | event | <code>e</code> | click event |
+
+<a name="module_VISUALIZER.generateStatistics"></a>
+
+### VISUALIZER.generateStatistics()
+generates full statistics HTML section
+
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
+<a name="module_VISUALIZER.getStatisticPart"></a>
+
+### VISUALIZER.getStatisticPart(index, dominant_metric) ⇒ <code>Object</code>
+generates a HTML element containing a HTML structure with statistical information about an item
+
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
+**Returns**: <code>Object</code> - HTML element  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| index | <code>integer</code> | Index in statistics array |
+| dominant_metric | <code>string</code> | Sorting metric by which the statistic is currently sorted |
+
+<a name="module_VISUALIZER.sortStatistics"></a>
+
+### VISUALIZER.sortStatistics(metric)
+sorts items in statistic by a certain metric
+
+**Kind**: static method of [<code>VISUALIZER</code>](#module_VISUALIZER)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| metric | <code>string</code> | Sorting metric: min|max|mean |
 
