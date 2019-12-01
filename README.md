@@ -9,7 +9,7 @@ This web app visualizes `.json` data sets. Keys (for example *companies* or *cou
 
 You can download the project and use it locally on your machine, or on a local server. You may also visit the *online demo* by clicking on the following button:
 
-[![Show the online demo](/doc/img/online_demo_button.png)](https://christiandunkel.github.io/time-visualizer/)
+[![Show the online demo](/doc/img/web_demo_button.png)](https://christiandunkel.github.io/time-visualizer/)
 
 ## Links
 - [Documentation](/doc/documentation.md)

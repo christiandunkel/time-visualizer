@@ -29,7 +29,7 @@ var NODE = {
     settings_close_btn : null,
     settings_overlay   : null,
     
-    darkmode_btn       : _.id('toggle-darkmode'),
+    darkmode_btn       : _.id('toggle-dark-mode'),
     
     // animation speed menu for custom speed input
     speed_selection : {

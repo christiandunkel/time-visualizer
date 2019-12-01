@@ -113,14 +113,15 @@
 
 #bar-chart {
     width: 100%;
+    @include user-select(none);
     
     .bar-container {
-        position: relative;
+        display: inline-block; position: relative;
         width: 100%; margin: 2px 0; padding: 2px 122px 2px 50px;
         text-align: left;
-        @include transition(1s);
+        @include transition(.2s);
         
-        .clickEvent {
+        button {
             position: absolute; top: 0; left: 0; z-index: 5;
             width: 100%; height: 100%;
         }
@@ -132,7 +133,7 @@
             background-position: center;
             @include background-size(contain);
             @include filter(drop-shadow(2px 2px 2px rgba(0,0,0,.3)));
-            @include transition(.8s);
+            @include transition(.2s);
             
             .dark-mode & {
                 @include filter(drop-shadow(1px 1px 2px rgba(217, 217, 217, 0.5)));
@@ -149,7 +150,7 @@
                 2px 2px 2px rgba(0, 0, 0, 0.1),
                 4px 4px 4px rgba(0, 0, 0, 0.1)
             );
-            @include transition(.1s);
+            @include transition(.2s);
         }
         
         .name,
@@ -180,20 +181,21 @@
             font-size: 14px; letter-spacing: -.1px; color: #919191;
         }
         
-        &:hover,
-        &:active {
-            background: #f8f7f7;
-            @include border-radius(10px);
-            @include transition(.3s);
-            
-            .dark-mode & {
-                background: #1a1a1a;
-            }
+        &:hover {
+            background-color: rgba(0,0,0,.15);
+            @include border-radius(5px);
             
             .meter,
             .icon {
-                @include opacity(.5);
-                @include transition(.3s);
+                @include opacity(.8);
+            }
+        }
+        
+        &:active {
+            
+            .meter,
+            .icon {
+                @include transform(scaleY(.8));
             }
         }
         
@@ -273,19 +275,6 @@
             display: none;
         }
         
-        .percentage {
-            position: absolute; top: 0; left: 0; z-index: 1;
-            width: 100%; height: 100%;
-            overflow: hidden;
-            
-            div {
-                position: absolute; top: 0; left: 0; z-index: 1;
-                width: 100%; height: 100%; padding: 0 3px;
-                text-shadow: 1px 1px 3px rgba(0,0,0,.5);
-                color: white; text-align: center; font-size: 15px; line-height: 80px; font-weight: 700;
-            }
-        }
-        
         // effect when parts switch places
         // needs to be animated over the counter attribute, as normal animations are broken due to the constant appending process 
         @for $i from 1 through 20 {
@@ -294,10 +283,29 @@
             }
         }
         
-        .clickEvent {
+        button {
             position: absolute; top: 0; left: 0; z-index: 2;
             width: 100%; height: 100%;
-            cursor: pointer;
+            cursor: pointer; overflow: hidden;
+            
+            .animation-playing & {
+                @include transition(0s);
+            }
+            
+            .animation-paused & {
+                @include transition(.2s);
+            }
+            
+            &:hover {
+                background-color: rgb(77, 77, 77);
+            }
+            
+            span {
+                position: absolute; top: 0; left: 0; z-index: 1;
+                width: 100%; height: 100%; padding: 0 3px;
+                text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+                color: white; text-align: center; font-size: 15px; line-height: 80px; font-weight: 700;
+            }
         }
         
     }
@@ -330,9 +338,12 @@
             background-color: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.1);
             @include border-radius(4px);
             
-            &:hover,
-            &:focus {
+            &:hover {
                 background-color: rgba(0,0,0,.08);
+            }
+            
+            &:focus {
+                outline: 1px solid currentColor;
             }
             
             &:active {
@@ -440,12 +451,16 @@
 
 #line-chart-menu {
     width: 100%; margin: 0 0 20px 0;
-    
-    .btn {
-        &.float-right {
-            float: right;
+        
+    .float-right {
+        float: right;
+        
+        .btn {
             margin: 0 0 0 5px;
         }
+    }
+    
+    .btn {
         
         &#close-line-chart {
             @extend %icon-arrow-left-white;
@@ -466,12 +481,16 @@
                 @extend %icon-download-lightgrey;
             }
         }
+    }
         
-        @include ON_MOBILE {
-            &, &.float-right {
-                float: none;
-                margin: 0 8px 8px 0;
-            }
+    @include ON_MOBILE {
+        
+        .float-right {
+            float: none;
+        }
+        
+        .btn, .float-right .btn {
+            margin: 0 8px 8px 0;
         }
     }
 }

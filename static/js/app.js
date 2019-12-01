@@ -1224,7 +1224,7 @@ var NODE = {
     settings_close_btn : null,
     settings_overlay   : null,
     
-    darkmode_btn       : _.id('toggle-darkmode'),
+    darkmode_btn       : _.id('toggle-dark-mode'),
     
     // animation speed menu for custom speed input
     speed_selection : {
@@ -3619,7 +3619,7 @@ var VISUALIZER = {
         // generate HTML elements
         
         // bar
-        var container = _.create('button.bar-container');
+        var container = _.create('div.bar-container');
         var bar = _.create('div.bar');
         var meter = _.create('div.meter', {
             'style' : {
@@ -3632,11 +3632,12 @@ var VISUALIZER = {
         var value = _.create('div.value');
         
         // overlay click event (opens line chart for item on click)
-        var clickEvent = _.create('div.clickEvent', {
-            'title' : 'Open line chart for ' + item.name_escaped,
-            'item-id' : item.id
+        var button = _.create('button', {
+            'title'    : 'Open line chart for ' + item.name_escaped,
+            'item-id'  : item.id,
+            'tabindex' : '-1'
         });
-        _.onClick(clickEvent, VISUALIZER.openLineChartOnClick);
+        _.onClick(button, VISUALIZER.openLineChartOnClick);
         
         // icon left of bar
         var icon = _.create('div.icon', {
@@ -3653,7 +3654,7 @@ var VISUALIZER = {
         _.append(bar,       meter);
         _.append(container, icon);
         _.append(container, bar);
-        _.append(container, clickEvent);
+        _.append(container, button);
         
         return {
             container   : container,
@@ -3691,26 +3692,25 @@ var VISUALIZER = {
                 'background-color' : item.color
             }
         });
-        var percentage          = _.create('div.percentage');
-        var div_in_percentage   = _.create('div');
+        var percentage = _.create('span.percentage');
         
         // overlay click event (opens line chart for item on click)
-        var clickEvent = _.create('button.clickEvent', {
+        var btn = _.create('button', {
             'title'     : 'Open line chart for ' + item.name,
-            'item-id'   : item.id
+            'item-id'   : item.id,
+            'tabindex'  : '-1'
         });
-        _.onClick(clickEvent, VISUALIZER.openLineChartOnClick);
+        _.onClick(btn, VISUALIZER.openLineChartOnClick);
         
         
         
         // append elements to container
-        _.append(percentage,    div_in_percentage);
-        _.append(container,     percentage);
-        _.append(container,     clickEvent);
+        _.append(btn, percentage);
+        _.append(container, btn);
         
         return {
-            container           : container,
-            percentage          : div_in_percentage
+            container  : container,
+            percentage : percentage
         };
         
     },

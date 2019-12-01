@@ -45,7 +45,7 @@
         font-size: 28px; color: #ffffff;
         
         &:focus {
-            outline: 2px solid currentColor;
+            outline: 1px solid currentColor;
         }
         
         .cross {
@@ -95,7 +95,7 @@
         font-size: 16px; line-height: 20px;
     }
 
-    #toggle-darkmode {
+    #toggle-dark-mode {
         @extend %icon-moon-grey;
         position: relative;
         background-position: 8px center;
@@ -211,7 +211,7 @@
         }
         
         &:focus {
-            outline: 2px solid currentColor;
+            outline: 1px solid currentColor;
         }
         
         &.example-data-set {
@@ -315,7 +315,7 @@
             @include opacity(0);
             
             &:focus + label {
-                outline: 2px solid #2068cb;
+                outline: 1px solid #2068cb;
             }
             
             + label {
