@@ -30,7 +30,9 @@ var MAIN = {
         if (showConfirmation) {
             _.addClass(NODE.data_load.window, 'file-selected');
             // set new focus chain, as only close btn is now visible in data load window
-            FOCUS_CHAIN.set([NODE.data_load.close_btn]);
+            FOCUS_CHAIN.set([
+                NODE.data_load.close_btn
+            ]);
         }
 
         // refresh animator

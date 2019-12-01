@@ -186,14 +186,6 @@
             }
         }
         
-        &:active {
-            
-            .meter,
-            .icon {
-                @include transform(scaleY(.8));
-            }
-        }
-        
         @include ON_MOBILE {
             padding-right: 2px; padding-left: 2px;
             

@@ -735,11 +735,11 @@ manages the UI of the navigation area
 
 
 * [NAV](#module_NAV)
-    * [.set(a, [b], [c])](#module_NAV.set)
+    * [.set(a)](#module_NAV.set)
     * [.reset()](#module_NAV.reset)
     * [.event(e)](#module_NAV.event)
-    * [.handleSelectionType1()](#module_NAV.handleSelectionType1)
-    * [.handleSelectionType2(e)](#module_NAV.handleSelectionType2)
+    * [.handleSelectionType1(e, go_backwards)](#module_NAV.handleSelectionType1)
+    * [.handleSelectionType2(e, go_backwards)](#module_NAV.handleSelectionType2)
     * [.initialize()](#module_NAV.initialize)
     * [.toggleDarkMode()](#module_NAV.toggleDarkMode)
     * [.enableButton(btn)](#module_NAV.enableButton)
@@ -755,16 +755,14 @@ manages the UI of the navigation area
 
 <a name="module_NAV.set"></a>
 
-### NAV.set(a, [b], [c])
+### NAV.set(a)
 sets elements as a focus chain
 
 **Kind**: static method of [<code>NAV</code>](#module_NAV)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| a | <code>Array</code> \| <code>Object</code> | either array of HTML elements or 1 HTML element |
-| [b] | <code>Object</code> | HTML element |
-| [c] | <code>Object</code> | HTML element |
+| a | <code>Array</code> \| <code>Object</code> | either array of HTML elements or object: {      start : HTML element  (start of chain)      end : HTML element (end of chain)      container : HTML element (contains all focussable elements in chain) } |
 
 <a name="module_NAV.reset"></a>
 
@@ -785,13 +783,19 @@ event function that hijacks the tab key event and sets the focus depending on th
 
 <a name="module_NAV.handleSelectionType1"></a>
 
-### NAV.handleSelectionType1()
+### NAV.handleSelectionType1(e, go_backwards)
 handles setting the user focus if the focus chain consists of an array of elements
 
 **Kind**: static method of [<code>NAV</code>](#module_NAV)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| e | <code>event</code> | keydown event |
+| go_backwards | <code>boolean</code> | if the focus go forward or backwards in focus chain |
+
 <a name="module_NAV.handleSelectionType2"></a>
 
-### NAV.handleSelectionType2(e)
+### NAV.handleSelectionType2(e, go_backwards)
 handles setting the user focus if the focus chain consists of a start and end element
 
 **Kind**: static method of [<code>NAV</code>](#module_NAV)  
@@ -799,6 +803,7 @@ handles setting the user focus if the focus chain consists of a start and end el
 | Param | Type | Description |
 | --- | --- | --- |
 | e | <code>event</code> | keydown event |
+| go_backwards | <code>boolean</code> | if the focus go forward or backwards in focus chain |
 
 <a name="module_NAV.initialize"></a>
 

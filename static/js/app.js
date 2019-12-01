@@ -1549,9 +1549,9 @@ var FOCUS_CHAIN = {
     // 2: by start_elem, end_elem and elems_container
     
     // for selection type 1, elements in focuschain
-    elems: [],
+    elems : [],
     // for selection type 2:
-    start_elem: null,
+    start_elem : null,
     end_elem : null,
     elems_container : null,
     
@@ -1559,24 +1559,26 @@ var FOCUS_CHAIN = {
      * @function
      * @memberof module:NAV
      * @desc sets elements as a focus chain
-     * @param {Array|Object} a - either array of HTML elements or 1 HTML element
-     * @param {Object} [b=undefined] - HTML element
-     * @param {Object} [c=undefined] - HTML element
+     * @param {Array|Object} a - either array of HTML elements or object: {
+     *      start : HTML element  (start of chain)
+     *      end : HTML element (end of chain)
+     *      container : HTML element (contains all focussable elements in chain)
+     * }
      */
-    set : function (a, b, c) {
+    set : function (input) {
         
         // remove focus from element that currently has focus
         document.activeElement.blur();
         
-        if (b === undefined && c === undefined) {
+        if (_.isArray(input)) {
             FOCUS_CHAIN.selection_type = 1;
-            FOCUS_CHAIN.elems = a;
+            FOCUS_CHAIN.elems = input;
         }
         else {
             FOCUS_CHAIN.selection_type = 2;
-            FOCUS_CHAIN.start_elem = a;
-            FOCUS_CHAIN.end_elem = b;
-            FOCUS_CHAIN.elems_container = c;
+            FOCUS_CHAIN.start_elem = input.start;
+            FOCUS_CHAIN.end_elem = input.end;
+            FOCUS_CHAIN.elems_container = input.container;
         }
         
         _.addEvent(window, 'keydown', FOCUS_CHAIN.event);
@@ -1612,25 +1614,15 @@ var FOCUS_CHAIN = {
         
         // tab key was pressed
         if (e.keyCode == 9) {
-        
-            // special conditions for selection type 1
-            if (FOCUS_CHAIN.selection_type == 1) {
-                // needs at least one element in chain
-                if (FOCUS_CHAIN.elems.length < 1) {
-                    return;
-                }
-                // if multiple elems, focus chain can work, so prevent default focus change by browser
-                else {
-                    e.preventDefault();
-                }
-            }
+            
+            var is_backwards_tab = (e.shiftKey === true);
             
             // handle selection
             if (FOCUS_CHAIN.selection_type == 1) {
-                FOCUS_CHAIN.handleSelectionType1();
+                FOCUS_CHAIN.handleSelectionType1(e, is_backwards_tab);
             }
             else {
-                FOCUS_CHAIN.handleSelectionType2(e);
+                FOCUS_CHAIN.handleSelectionType2(e, is_backwards_tab);
             }
             
         }
@@ -1641,27 +1633,63 @@ var FOCUS_CHAIN = {
      * @function
      * @memberof module:NAV
      * @desc handles setting the user focus if the focus chain consists of an array of elements
+     * @param {event} e - keydown event
+     * @param {boolean} go_backwards - if the focus go forward or backwards in focus chain
      */
-    handleSelectionType1 : function () {
+    handleSelectionType1 : function (e, go_backwards) {
+        
+        // needs at least one element in chain
+        if (FOCUS_CHAIN.elems.length < 1) {
+            return;
+        }
+        // if multiple elems, focus chain can work, so prevent default focus change by browser
+        else {
+            e.preventDefault();
+        }
             
         // only check for next focus element, if there's at least two elems
         if (FOCUS_CHAIN.elems.length != 1) {
             // find currently focussed element in chain, and focus on next in line
             for (var i = FOCUS_CHAIN.elems.length; i--;) {
+                
                 if (document.activeElement == FOCUS_CHAIN.elems[i]) {
 
                     // last element is in focus
                     if (i == FOCUS_CHAIN.elems.length - 1) {
-                        // focus on first
-                        FOCUS_CHAIN.elems[0].focus();
+                        // if going backwards, focus on before-last elem
+                        if (go_backwards) {
+                            FOCUS_CHAIN.elems[FOCUS_CHAIN.elems.length - 2].focus();
+                        }
+                        // if going forwards, focus on first elem
+                        else {
+                            FOCUS_CHAIN.elems[0].focus();
+                        }
+                    }
+                    // first element is in focus
+                    else if (i == 0) {
+                        // if going backwards, focus on last elem
+                        if (go_backwards) {
+                            FOCUS_CHAIN.elems[FOCUS_CHAIN.elems.length - 1].focus();
+                        }
+                        // if going forwards, focus on next (second) elem
+                        else {
+                            FOCUS_CHAIN.elems[1].focus();
+                        }
                     }
                     else {
-                        // otherwise, focus on next
-                        FOCUS_CHAIN.elems[i+1].focus();
+                        // if going backwards, focus on previous
+                        if (go_backwards) {
+                            FOCUS_CHAIN.elems[i-1].focus();
+                        }
+                        // if going forwards, focus on next
+                        else {
+                            FOCUS_CHAIN.elems[i+1].focus();
+                        }
                     }
 
                     return;
                 }
+                
             }
         }
 
@@ -1675,11 +1703,13 @@ var FOCUS_CHAIN = {
      * @memberof module:NAV
      * @desc handles setting the user focus if the focus chain consists of a start and end element
      * @param {event} e - keydown event
+     * @param {boolean} go_backwards - if the focus go forward or backwards in focus chain
      */
-    handleSelectionType2 : function (e) {
+    handleSelectionType2 : function (e, go_backwards) {
         
         // check element that had focus until now
         if (
+            !go_backwards &&
             // if last element reached, focus on first
             document.activeElement == FOCUS_CHAIN.end_elem
         ) {
@@ -1692,11 +1722,21 @@ var FOCUS_CHAIN = {
         setTimeout(function () {
             
             if (
-                // if no element inside window is being focussed, focussed start element
+                // if no element inside window is being focussed
                 !_.contains(FOCUS_CHAIN.elems_container, document.activeElement)
             ) {
+                
                 e.preventDefault();
-                FOCUS_CHAIN.start_elem.focus();
+                
+                // if user is tabbing backwards, focus end_elem
+                if (go_backwards) {
+                    FOCUS_CHAIN.end_elem.focus();
+                }
+                // if user is tabbing forwards, focus start_elem
+                else {
+                    FOCUS_CHAIN.start_elem.focus();
+                }
+                
             }
             
         }, 5);
@@ -1787,7 +1827,11 @@ var NAV = {
         _.addClass(NODE.settings_window, 'visible');
         NODE.settings_window.setAttribute('aria-hidden', 'false');
         
-        FOCUS_CHAIN.set(NODE.darkmode_btn, NODE.settings_close_btn, NODE.settings_window);
+        FOCUS_CHAIN.set({
+            start : NODE.darkmode_btn, 
+            end : NODE.settings_close_btn, 
+            container : NODE.settings_window
+        });
         
     },
     
@@ -4695,7 +4739,9 @@ var MAIN = {
         if (showConfirmation) {
             _.addClass(NODE.data_load.window, 'file-selected');
             // set new focus chain, as only close btn is now visible in data load window
-            FOCUS_CHAIN.set([NODE.data_load.close_btn]);
+            FOCUS_CHAIN.set([
+                NODE.data_load.close_btn
+            ]);
         }
 
         // refresh animator
