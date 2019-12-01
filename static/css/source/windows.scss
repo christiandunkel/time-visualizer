@@ -86,6 +86,94 @@
 
 
 
+// animation and ui settings window
+
+#settings-window {
+    
+    .descriptor {
+        margin: 25px 0 10px 0;
+        font-size: 16px; line-height: 20px;
+    }
+
+    #toggle-darkmode {
+        @extend %icon-moon-grey;
+        position: relative;
+        background-position: 8px center;
+        @include background-size(30px 30px);
+        
+        .dark-mode & {
+            @extend %icon-sun-white;
+        }
+    }
+    
+    #pre-defined-speed,
+    #custom-speed {
+        display: none;
+        
+        &.active {
+            display: inline-block;
+        }
+    }
+        
+    #open-custom-speed-menu,
+    #close-custom-speed-menu {
+        background-color: transparent;
+        color: transparent;
+        @include box-shadow(none);
+        
+        &:after {
+            top: 8px; left: 8px;
+            width: 16px; height: 16px;
+            @include opacity(.8);
+        }
+
+        &:hover,
+        &:focus {
+            background-color: #eaeaea;
+            @include transform(none);
+            
+            .dark-mode & {
+                background-color: #343434;
+            }
+            
+            &:after {
+                @include opacity(1);
+            }
+        }
+    }
+        
+    #open-custom-speed-menu {
+        @extend %icon-pencil-grey;
+    }
+    
+    #close-custom-speed-menu {
+        @extend %icon-cross-grey;
+    }
+    
+    #custom-speed-input {
+        width: 112px; height: 40px; margin: 0 8px 0 0; padding: 6px 12px;
+        border: 2px solid #b48080;
+        color: #656565; font-size: 16px; line-height: 20px;
+        
+        .dark-mode & {
+            background: black; border-color: #692c2c;
+            color: #a6a6a6;
+        }
+        
+        // set by javascript if input value is correct
+        &.correct-speed {
+            border-color: #97db97;
+            
+            .dark-mode & {
+                border-color: #376237;
+            }
+        }
+    }
+    
+}
+
+
+
 // window for loading or selecting data sets
 
 #data-load-window {
@@ -285,7 +373,7 @@
             &:after {
                 @extend %icon-cross-white;
                 content: '';
-                position: absolute; top: .2em; right: .1em;
+                position: absolute; top: .25em; right: .2em;
                 width: 1em; height: 1em;
                 background-repeat: no-repeat; background-position: center;
             }
@@ -295,94 +383,6 @@
     .unselected-area {
         margin: 0 0 24px 0;
         border: 1px solid currentColor;
-    }
-    
-}
-
-
-
-// animation and ui settings window
-
-#settings-window {
-    
-    .descriptor {
-        margin: 25px 0 10px 0;
-        font-size: 16px; line-height: 20px;
-    }
-
-    #toggle-darkmode {
-        @extend %icon-moon-grey;
-        position: relative;
-        background-position: 8px center;
-        @include background-size(30px 30px);
-        
-        .dark-mode & {
-            @extend %icon-sun-white;
-        }
-    }
-    
-    #pre-defined-speed,
-    #custom-speed {
-        display: none;
-        
-        &.active {
-            display: inline-block;
-        }
-    }
-        
-    #open-custom-speed-menu,
-    #close-custom-speed-menu {
-        background-color: transparent;
-        color: transparent;
-        @include box-shadow(none);
-        
-        &:after {
-            top: 8px; left: 8px;
-            width: 16px; height: 16px;
-            @include opacity(.8);
-        }
-
-        &:hover,
-        &:focus {
-            background-color: #eaeaea;
-            @include transform(none);
-            
-            .dark-mode & {
-                background-color: #343434;
-            }
-            
-            &:after {
-                @include opacity(1);
-            }
-        }
-    }
-        
-    #open-custom-speed-menu {
-        @extend %icon-pencil-grey;
-    }
-    
-    #close-custom-speed-menu {
-        @extend %icon-cross-grey;
-    }
-    
-    #custom-speed-input {
-        width: 112px; height: 40px; margin: 0 8px 0 0; padding: 6px 12px;
-        border: 2px solid #b48080;
-        color: #656565; font-size: 16px; line-height: 20px;
-        
-        .dark-mode & {
-            background: black; border-color: #692c2c;
-            color: #a6a6a6;
-        }
-        
-        // set by javascript if input value is correct
-        &.correct-speed {
-            border-color: #97db97;
-            
-            .dark-mode & {
-                border-color: #376237;
-            }
-        }
     }
     
 }

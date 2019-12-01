@@ -2331,6 +2331,9 @@ var COMPARE_ITEMS = {
     setItemIds : function (ids) {
         COMPARE_ITEMS.ids = ids;
         COMPARE_ITEMS.id_num = ids.length;
+        
+        // make buttons be re-generated next time opening the window
+        delete COMPARE_ITEMS.HAVE_CREATED_BUTTONS;
     },
     
     /**
@@ -2343,7 +2346,10 @@ var COMPARE_ITEMS = {
         
         if (!COMPARE_ITEMS.hasItemId(id)) {
             COMPARE_ITEMS.ids[COMPARE_ITEMS.id_num] = id;
-            COMPARE_ITEMS.id_num++;            
+            COMPARE_ITEMS.id_num++;
+        
+            // make buttons be re-generated next time opening the window
+            delete COMPARE_ITEMS.HAVE_CREATED_BUTTONS;     
         }
         
     },
@@ -2370,6 +2376,9 @@ var COMPARE_ITEMS = {
             COMPARE_ITEMS.ids = _.removeArrayIndex(COMPARE_ITEMS.ids, indexes[i]);
             COMPARE_ITEMS.id_num--;
         }
+        
+        // make buttons be re-generated next time opening the window
+        delete COMPARE_ITEMS.HAVE_CREATED_BUTTONS;
         
     },
     
@@ -2401,6 +2410,9 @@ var COMPARE_ITEMS = {
     resetItemIds : function () {
         COMPARE_ITEMS.ids = [];
         COMPARE_ITEMS.id_num = 0;
+        
+        // make buttons be re-generated next time opening the window
+        delete COMPARE_ITEMS.HAVE_CREATED_BUTTONS;
     },
     
     
@@ -2476,7 +2488,6 @@ var COMPARE_ITEMS = {
     
     // array of button HTML elements
     buttons : [],
-    buttons_num : 0,
     
     /**
      * @function
@@ -2488,6 +2499,7 @@ var COMPARE_ITEMS = {
         // empty item button containers
         _.empty(NODE.compare_items.selected_area);
         _.empty(NODE.compare_items.unselected_area);
+        COMPARE_ITEMS.buttons = [];
         
         // add a button for every item to window
         for (var item_id in DATA.items) {
@@ -2507,8 +2519,7 @@ var COMPARE_ITEMS = {
             _.onClick(btn, COMPARE_ITEMS.moveButton);
             
             // add button to array
-            COMPARE_ITEMS.buttons[COMPARE_ITEMS.buttons_num] = btn;
-            COMPARE_ITEMS.buttons_num++;
+            COMPARE_ITEMS.buttons.push(btn);
             
         }
         
@@ -2523,7 +2534,7 @@ var COMPARE_ITEMS = {
      */
     orderButtons : function () {
         
-        for (var i = 0; i < COMPARE_ITEMS.buttons_num; i++) {
+        for (var i = 0; i < COMPARE_ITEMS.buttons.length; i++) {
             
             var btn = COMPARE_ITEMS.buttons[i];
             var item_id = btn.getAttribute('item-id');
