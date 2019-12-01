@@ -2534,7 +2534,7 @@ var COMPARE_ITEMS = {
      */
     orderButtons : function () {
         
-        for (var i = 0; i < COMPARE_ITEMS.buttons.length; i++) {
+        for (var i = COMPARE_ITEMS.buttons.length; i--;) {
             
             var btn = COMPARE_ITEMS.buttons[i];
             var item_id = btn.getAttribute('item-id');
