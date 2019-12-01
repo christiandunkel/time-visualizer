@@ -194,12 +194,12 @@ footer {
     
     &.red,
     &.javascript {
-        background: #ffd4d4; border-color: #ffb0b0;
+        background: #ffd4d4; border-color: #d27272;
         color: #a91111;
         
         .dark-mode & {
-            background: rgba(255, 0, 0, 0.2); border-color: rgba(255, 75, 75, 0.35);
-            color: #ffd1d1;
+            background: #681818; border-color: #9b1d1d;
+            color: #ffefef;
         }
     }
     

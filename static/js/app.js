@@ -4220,7 +4220,6 @@ var ANIMATOR = {
             padding.right = label_bottom_width;
         }
         padding.right += 15;
-        console.log(padding.right);
         
         // draw right-side labels
         var label_xpos = canvas.width - padding.right + 5;
@@ -4353,8 +4352,10 @@ var ANIMATOR = {
         /* TIME INDICATOR LINE */
         
         // if animated is not at start or end
-        if (ANIMATOR.tick != 0 && 
-            ANIMATOR.tick != DATA.upscaled_num - 1) {
+        if (
+            ANIMATOR.tick != 0 && 
+            ANIMATOR.tick != DATA.upscaled_num - 1
+        ) {
             
             // how far to the right must the line be proportinal to the tick
             var width_ratio = (ANIMATOR.tick + 1) / DATA.upscaled_num;
