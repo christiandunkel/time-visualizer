@@ -180,12 +180,12 @@ var DATA = {
             }
             
             // add item information to DATA object
-            DATA.items[item]                = {};
-            DATA.items[item].name           = _.encodeHTML(obj[item].name);
-            DATA.items[item].name_escaped   = _.escapeDoubleQuotes(obj[item].name);
-            DATA.items[item].icon           = icon;
-            DATA.items[item].color          = DATA.getItemColor(DATA.item_num);
-            DATA.items[item].position       = DATA.item_num;
+            DATA.items[item]              = {};
+            DATA.items[item].name         = _.encodeHTML(obj[item].name);
+            DATA.items[item].name_escaped = _.escapeDoubleQuotes(obj[item].name);
+            DATA.items[item].icon         = icon;
+            DATA.items[item].color        = DATA.getItemColor(DATA.item_num);
+            DATA.items[item].position     = DATA.item_num;
             
             DATA.item_num++;
             

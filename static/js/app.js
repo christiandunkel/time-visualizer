@@ -2253,7 +2253,7 @@ var COMPARE_ITEMS = {
         
         // open window
         _.addClass(NODE.compare_items.window, 'visible');
-        compare_items.window.setAttribute('aria-hidden', false);
+        NODE.compare_items.window.setAttribute('aria-hidden', false);
         
         // clear areas and load current items
         COMPARE_ITEMS.orderButtons();
@@ -2275,7 +2275,7 @@ var COMPARE_ITEMS = {
         
         // close window
         _.removeClass(NODE.compare_items.window, 'visible');
-        compare_items.window.setAttribute('aria-hidden', true);
+        NODE.compare_items.window.setAttribute('aria-hidden', true);
         
         // reset tab focus back to 'data load' button in navigation
         NODE.compare_btn.focus();
@@ -2307,11 +2307,12 @@ var COMPARE_ITEMS = {
             var item = DATA.items[item_id];
             
             // create button
-            var btn = _.create('button.comparison-item', {
+            var btn = _.create('button.btn.small.has-icon', {
                 'item-id' : item_id,
                 'innerHTML' : item.name,
+                'title' : 'Toggle ' + item.name_escaped,
                 'style' : {
-                    'background' : item.color
+                    'background-image' : 'url(' + item.icon + ')'
                 }
             });
             
@@ -2352,9 +2353,11 @@ var COMPARE_ITEMS = {
             // append button to right area in window
             if (included) {
                 _.append(NODE.compare_items.selected_area, btn);
+                _.addClass(btn, 'green');
             }
             else {
                 _.append(NODE.compare_items.unselected_area, btn);
+                _.removeClass(btn, 'green');
             }
             
         }
@@ -2382,10 +2385,12 @@ var COMPARE_ITEMS = {
         if (include) {
             COMPARE_ITEMS.addItemId(item_id);
             _.append(NODE.compare_items.selected_area, btn);
+            _.addClass(btn, 'green');
         }
         else {
             COMPARE_ITEMS.removeItemId(item_id);
             _.append(NODE.compare_items.unselected_area, btn);
+            _.removeClass(btn, 'green');
         }
         
         ANIMATOR.refreshFrame();
@@ -2580,12 +2585,12 @@ var DATA = {
             }
             
             // add item information to DATA object
-            DATA.items[item]                = {};
-            DATA.items[item].name           = _.encodeHTML(obj[item].name);
-            DATA.items[item].name_escaped   = _.escapeDoubleQuotes(obj[item].name);
-            DATA.items[item].icon           = icon;
-            DATA.items[item].color          = DATA.getItemColor(DATA.item_num);
-            DATA.items[item].position       = DATA.item_num;
+            DATA.items[item]              = {};
+            DATA.items[item].name         = _.encodeHTML(obj[item].name);
+            DATA.items[item].name_escaped = _.escapeDoubleQuotes(obj[item].name);
+            DATA.items[item].icon         = icon;
+            DATA.items[item].color        = DATA.getItemColor(DATA.item_num);
+            DATA.items[item].position     = DATA.item_num;
             
             DATA.item_num++;
             

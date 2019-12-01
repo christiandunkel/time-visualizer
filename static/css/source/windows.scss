@@ -262,20 +262,8 @@
         font-size: 16px; line-height: 18px;
     }
     
-    .comparison-item {
-        position: relative;
-        margin: 3px; padding: 10px 12px;
-        background: #3c3c3c;
-        text-shadow: 1px 1px 3px rgba(0,0,0,.5);
-        color: white; font-size: 14px; line-height: 1em;
-        @include text-wrap;
-        @include box-shadow(1px 1px 3px rgba(0,0,0,.4));
-        @include border-radius(5px);
-        @include transition(.2s);
-        
-        &:hover {
-            @include opacity(.7);
-        }
+    .btn {
+        margin: 5px;
     }
     
     .selected-area,
@@ -285,29 +273,24 @@
     }
     
     .selected-area {
-        background-color: rgba(0,255,0,.1); border: 2px solid rgba(0,255,0,.1);
+        border: 2px solid #00bf00;
         
-        .dark-mode & {
-            border-color: #222222;
-        }
-        
-        .comparison-item {
+        .btn {
             padding-right: 28px;
             
             &:after {
                 @extend %icon-cross-white;
                 content: '';
-                position: absolute; top: 10px; right: 8px;
+                position: absolute; top: .2em; right: .1em;
                 width: 1em; height: 1em;
-                background-repeat: no-repeat;
-                background-position: center;
+                background-repeat: no-repeat; background-position: center;
             }
         }
     }
     
     .unselected-area {
         margin: 0 0 24px 0;
-        background-color: rgba(255,0,0,.1); border: 2px solid rgba(255,0,0,.1);
+        border: 1px solid currentColor;
     }
     
 }
