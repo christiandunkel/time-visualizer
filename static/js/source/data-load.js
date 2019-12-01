@@ -90,11 +90,15 @@ var DATA_LOAD = {
         _.addClass(NODE.data_load.window, 'visible');
         NODE.data_load.window.setAttribute('aria-hidden', false);
         
-        // with a little delay, set tab focus on close button
-        // if set immediately, will be ignored or buggy
-        setTimeout(function () {
-            NODE.data_load.close_btn.focus();
-        }, 100);
+        // get focussable elements in the window
+        var btns = [];
+        var data_set_btns = _.class('data-set-btn', NODE.data_load.example_sets_area);
+        for (var i = 0; i < data_set_btns.length; i++) {
+            btns.push(data_set_btns[i]);
+        }
+        btns.push(NODE.data_load.select_file_input, NODE.data_load.close_btn);
+        // put them into a focus chain
+        FOCUS_CHAIN.set(btns);
         
     },
     
@@ -111,6 +115,8 @@ var DATA_LOAD = {
         
         // close 'file selected' message inside window
         _.removeClass(NODE.data_load.window, 'file-selected');
+        
+        FOCUS_CHAIN.reset();
         
         // reset tab focus back to 'data load' button in navigation
         NODE.data_load_btn.focus();

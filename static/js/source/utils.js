@@ -29,7 +29,7 @@ var _ = {
      * @memberof module:_
      * @desc selects HTML element(s) by class
      * @param {string} selector - string containing one or multiple space-seperated HTML classes
-     * @param {string} [context=document] - container element in which to search for class
+     * @param {Object} [context=document] - container element in which to search for class
      * @returns {HTMLCollection} if the selector and context (if given) were valid
      */
     class : function (selector, context) {
@@ -58,7 +58,7 @@ var _ = {
      * @memberof module:_
      * @desc selects HTML element(s) by tag
      * @param {string} selector - string containing a HTML tag
-     * @param {string} [context=document] - container element in which to search for tag
+     * @param {Object} [context=document] - container element in which to search for tag
      * @returns {HTMLCollection} if the selector and context (if given) were valid
      */
     tag : function (selector, context) {
@@ -87,7 +87,7 @@ var _ = {
      * @memberof module:_
      * @desc selects HTML element(s) using a CSS selector
      * @param {string} selector - string containing a valid CSS selector
-     * @param {string} [context=document] - container element in which to search
+     * @param {Object} [context=document] - container element in which to search
      * @param {function} [callback] - called when querySelector is not supported by browser
      * @returns {HTMLCollection} if the selector and context (if given) were valid
      */
@@ -373,7 +373,7 @@ var _ = {
     addEvent : function (elem, event, fn, useCapture) {
         
         // given element must either be a HTML element or the window object
-        if (!_.isElement(elem) && !(elem instanceof Window)) {
+        if (!_.isElement(elem) && elem != window) {
             return console.error('Element does not exist.');
         }
         
@@ -410,7 +410,7 @@ var _ = {
      */
     removeEvent : function (elem, event, fn, useCapture) {
         
-        if (!_.isElement(elem)) {
+        if (!_.isElement(elem) && elem != window) {
             return console.error('Element does not exist.');
         }
         

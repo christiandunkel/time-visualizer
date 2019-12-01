@@ -31,7 +31,7 @@ var _ = {
      * @memberof module:_
      * @desc selects HTML element(s) by class
      * @param {string} selector - string containing one or multiple space-seperated HTML classes
-     * @param {string} [context=document] - container element in which to search for class
+     * @param {Object} [context=document] - container element in which to search for class
      * @returns {HTMLCollection} if the selector and context (if given) were valid
      */
     class : function (selector, context) {
@@ -60,7 +60,7 @@ var _ = {
      * @memberof module:_
      * @desc selects HTML element(s) by tag
      * @param {string} selector - string containing a HTML tag
-     * @param {string} [context=document] - container element in which to search for tag
+     * @param {Object} [context=document] - container element in which to search for tag
      * @returns {HTMLCollection} if the selector and context (if given) were valid
      */
     tag : function (selector, context) {
@@ -89,7 +89,7 @@ var _ = {
      * @memberof module:_
      * @desc selects HTML element(s) using a CSS selector
      * @param {string} selector - string containing a valid CSS selector
-     * @param {string} [context=document] - container element in which to search
+     * @param {Object} [context=document] - container element in which to search
      * @param {function} [callback] - called when querySelector is not supported by browser
      * @returns {HTMLCollection} if the selector and context (if given) were valid
      */
@@ -375,7 +375,7 @@ var _ = {
     addEvent : function (elem, event, fn, useCapture) {
         
         // given element must either be a HTML element or the window object
-        if (!_.isElement(elem) && !(elem instanceof Window)) {
+        if (!_.isElement(elem) && elem != window) {
             return console.error('Element does not exist.');
         }
         
@@ -412,7 +412,7 @@ var _ = {
      */
     removeEvent : function (elem, event, fn, useCapture) {
         
-        if (!_.isElement(elem)) {
+        if (!_.isElement(elem) && elem != window) {
             return console.error('Element does not exist.');
         }
         
@@ -1538,6 +1538,176 @@ var MSG = {
 
 
 /** 
+ * @module FOCUS_CHAIN 
+ * @desc manages chains of elements that can be focussed via the tab key (hijacks the tab key event, and prevents normal focussing via browser)
+ */
+var FOCUS_CHAIN = {
+    
+    selection_type : 0,
+    // 0: unselected
+    // 1: by elems array
+    // 2: by start_elem, end_elem and elems_container
+    
+    // for selection type 1, elements in focuschain
+    elems: [],
+    // for selection type 2:
+    start_elem: null,
+    end_elem : null,
+    elems_container : null,
+    
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc sets elements as a focus chain
+     * @param {Array|Object} a - either array of HTML elements or 1 HTML element
+     * @param {Object} [b=undefined] - HTML element
+     * @param {Object} [c=undefined] - HTML element
+     */
+    set : function (a, b, c) {
+        
+        // remove focus from element that currently has focus
+        document.activeElement.blur();
+        
+        if (b === undefined && c === undefined) {
+            FOCUS_CHAIN.selection_type = 1;
+            FOCUS_CHAIN.elems = a;
+        }
+        else {
+            FOCUS_CHAIN.selection_type = 2;
+            FOCUS_CHAIN.start_elem = a;
+            FOCUS_CHAIN.end_elem = b;
+            FOCUS_CHAIN.elems_container = c;
+        }
+        
+        _.addEvent(window, 'keydown', FOCUS_CHAIN.event);
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc removes the current focus chain
+     */
+    reset : function () {
+        
+        FOCUS_CHAIN.selection_type = 0;
+        // reset stuff for selection type 1
+        FOCUS_CHAIN.elems = [];
+        // reset stuff for selection type 2
+        FOCUS_CHAIN.start_elem = null;
+        FOCUS_CHAIN.end_elem = null;
+        FOCUS_CHAIN.elems_container = null;
+        
+        _.removeEvent(window, 'keydown', FOCUS_CHAIN.event);
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc event function that hijacks the tab key event and sets the focus depending on the user's current position in the focus chain 
+     * @param {event} e - keydown event
+     */
+    event : function (e) {
+        
+        // tab key was pressed
+        if (e.keyCode == 9) {
+        
+            // special conditions for selection type 1
+            if (FOCUS_CHAIN.selection_type == 1) {
+                // needs at least one element in chain
+                if (FOCUS_CHAIN.elems.length < 1) {
+                    return;
+                }
+                // if multiple elems, focus chain can work, so prevent default focus change by browser
+                else {
+                    e.preventDefault();
+                }
+            }
+            
+            // handle selection
+            if (FOCUS_CHAIN.selection_type == 1) {
+                FOCUS_CHAIN.handleSelectionType1();
+            }
+            else {
+                FOCUS_CHAIN.handleSelectionType2(e);
+            }
+            
+        }
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc handles setting the user focus if the focus chain consists of an array of elements
+     */
+    handleSelectionType1 : function () {
+            
+        // only check for next focus element, if there's at least two elems
+        if (FOCUS_CHAIN.elems.length != 1) {
+            // find currently focussed element in chain, and focus on next in line
+            for (var i = FOCUS_CHAIN.elems.length; i--;) {
+                if (document.activeElement == FOCUS_CHAIN.elems[i]) {
+
+                    // last element is in focus
+                    if (i == FOCUS_CHAIN.elems.length - 1) {
+                        // focus on first
+                        FOCUS_CHAIN.elems[0].focus();
+                    }
+                    else {
+                        // otherwise, focus on next
+                        FOCUS_CHAIN.elems[i+1].focus();
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        // if no element in chain is currently focussed on, focus on first in list
+        FOCUS_CHAIN.elems[0].focus();
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc handles setting the user focus if the focus chain consists of a start and end element
+     * @param {event} e - keydown event
+     */
+    handleSelectionType2 : function (e) {
+        
+        // check element that had focus until now
+        if (
+            // if last element reached, focus on first
+            document.activeElement == FOCUS_CHAIN.end_elem
+        ) {
+            e.preventDefault();
+            FOCUS_CHAIN.start_elem.focus();
+            return;
+        }
+        
+        // check element that now gets focus
+        setTimeout(function () {
+            
+            if (
+                // if no element inside window is being focussed, focussed start element
+                !_.contains(FOCUS_CHAIN.elems_container, document.activeElement)
+            ) {
+                e.preventDefault();
+                FOCUS_CHAIN.start_elem.focus();
+            }
+            
+        }, 5);
+        
+    }
+    
+};
+
+
+
+/** 
  * @module NAV 
  * @desc manages the UI of the navigation area
  */
@@ -1581,7 +1751,7 @@ var NAV = {
         // open/close settings menu
         _.onClick(NODE.settings_btn, NAV.openSettingsWindow);
         
-        NODE.settings_close_btn = _.class('cross', NODE.settings_window)[0];
+        NODE.settings_close_btn = _.class('close', NODE.settings_window)[0];
         _.onClick(NODE.settings_close_btn, NAV.closeSettingsWindow);
         
         NODE.settings_overlay = _.class('blur', NODE.settings_window)[0];
@@ -1617,12 +1787,18 @@ var NAV = {
         _.addClass(NODE.settings_window, 'visible');
         NODE.settings_window.setAttribute('aria-hidden', 'false');
         
+        FOCUS_CHAIN.set(NODE.darkmode_btn, NODE.settings_close_btn, NODE.settings_window);
+        
     },
     
     closeSettingsWindow : function () {
         
         _.removeClass(NODE.settings_window, 'visible');
         NODE.settings_window.setAttribute('aria-hidden', 'true');
+        
+        FOCUS_CHAIN.reset();
+        
+        NODE.settings_btn.focus();
         
     },
     
@@ -2039,11 +2215,15 @@ var DATA_LOAD = {
         _.addClass(NODE.data_load.window, 'visible');
         NODE.data_load.window.setAttribute('aria-hidden', false);
         
-        // with a little delay, set tab focus on close button
-        // if set immediately, will be ignored or buggy
-        setTimeout(function () {
-            NODE.data_load.close_btn.focus();
-        }, 100);
+        // get focussable elements in the window
+        var btns = [];
+        var data_set_btns = _.class('data-set-btn', NODE.data_load.example_sets_area);
+        for (var i = 0; i < data_set_btns.length; i++) {
+            btns.push(data_set_btns[i]);
+        }
+        btns.push(NODE.data_load.select_file_input, NODE.data_load.close_btn);
+        // put them into a focus chain
+        FOCUS_CHAIN.set(btns);
         
     },
     
@@ -2060,6 +2240,8 @@ var DATA_LOAD = {
         
         // close 'file selected' message inside window
         _.removeClass(NODE.data_load.window, 'file-selected');
+        
+        FOCUS_CHAIN.reset();
         
         // reset tab focus back to 'data load' button in navigation
         NODE.data_load_btn.focus();
@@ -2258,11 +2440,15 @@ var COMPARE_ITEMS = {
         // clear areas and load current items
         COMPARE_ITEMS.orderButtons();
         
-        // with a little delay, set tab focus on close button
-        // if set immediately, will be ignored or buggy
-        setTimeout(function () {
-            NODE.compare_items.close_btn.focus();
-        }, 100);
+        // get focussable elements in the window
+        var btns = [];
+        var compare_item_btns = _.class('btn', NODE.compare_items.window);
+        for (var i = 0; i < compare_item_btns.length; i++) {
+            btns.push(compare_item_btns[i]);
+        }
+        btns.push(NODE.compare_items.close_btn);
+        // put them into a focus chain
+        FOCUS_CHAIN.set(btns);
         
     },
     
@@ -2276,6 +2462,8 @@ var COMPARE_ITEMS = {
         // close window
         _.removeClass(NODE.compare_items.window, 'visible');
         NODE.compare_items.window.setAttribute('aria-hidden', true);
+        
+        FOCUS_CHAIN.reset();
         
         // reset tab focus back to 'data load' button in navigation
         NODE.compare_btn.focus();
@@ -4485,6 +4673,8 @@ var MAIN = {
         // show confirmation message in 'data load' window
         if (showConfirmation) {
             _.addClass(NODE.data_load.window, 'file-selected');
+            // set new focus chain, as only close btn is now visible in data load window
+            FOCUS_CHAIN.set([NODE.data_load.close_btn]);
         }
 
         // refresh animator

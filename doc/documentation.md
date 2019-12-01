@@ -29,6 +29,9 @@
 <dt><a href="#module_MSG">MSG</a></dt>
 <dd><p>manages overlay messages</p>
 </dd>
+<dt><a href="#module_FOCUS_CHAIN">FOCUS_CHAIN</a></dt>
+<dd><p>manages chains of elements that can be focussed via the tab key (hijacks the tab key event, and prevents normal focussing via browser)</p>
+</dd>
 <dt><a href="#module_NAV">NAV</a></dt>
 <dd><p>manages the UI of the navigation area</p>
 </dd>
@@ -720,6 +723,11 @@ displays an overlay warning message
 hides the current overlay message
 
 **Kind**: static method of [<code>MSG</code>](#module_MSG)  
+<a name="module_FOCUS_CHAIN"></a>
+
+## FOCUS\_CHAIN
+manages chains of elements that can be focussed via the tab key (hijacks the tab key event, and prevents normal focussing via browser)
+
 <a name="module_NAV"></a>
 
 ## NAV
@@ -727,6 +735,11 @@ manages the UI of the navigation area
 
 
 * [NAV](#module_NAV)
+    * [.set(a, [b], [c])](#module_NAV.set)
+    * [.reset()](#module_NAV.reset)
+    * [.event(e)](#module_NAV.event)
+    * [.handleSelectionType1()](#module_NAV.handleSelectionType1)
+    * [.handleSelectionType2(e)](#module_NAV.handleSelectionType2)
     * [.initialize()](#module_NAV.initialize)
     * [.toggleDarkMode()](#module_NAV.toggleDarkMode)
     * [.enableButton(btn)](#module_NAV.enableButton)
@@ -739,6 +752,53 @@ manages the UI of the navigation area
     * [.showCustomSpeedMenu()](#module_NAV.showCustomSpeedMenu)
     * [.showDefinedSpeedMenu()](#module_NAV.showDefinedSpeedMenu)
     * [.downloadLineChart()](#module_NAV.downloadLineChart)
+
+<a name="module_NAV.set"></a>
+
+### NAV.set(a, [b], [c])
+sets elements as a focus chain
+
+**Kind**: static method of [<code>NAV</code>](#module_NAV)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| a | <code>Array</code> \| <code>Object</code> | either array of HTML elements or 1 HTML element |
+| [b] | <code>Object</code> | HTML element |
+| [c] | <code>Object</code> | HTML element |
+
+<a name="module_NAV.reset"></a>
+
+### NAV.reset()
+removes the current focus chain
+
+**Kind**: static method of [<code>NAV</code>](#module_NAV)  
+<a name="module_NAV.event"></a>
+
+### NAV.event(e)
+event function that hijacks the tab key event and sets the focus depending on the user's current position in the focus chain
+
+**Kind**: static method of [<code>NAV</code>](#module_NAV)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| e | <code>event</code> | keydown event |
+
+<a name="module_NAV.handleSelectionType1"></a>
+
+### NAV.handleSelectionType1()
+handles setting the user focus if the focus chain consists of an array of elements
+
+**Kind**: static method of [<code>NAV</code>](#module_NAV)  
+<a name="module_NAV.handleSelectionType2"></a>
+
+### NAV.handleSelectionType2(e)
+handles setting the user focus if the focus chain consists of a start and end element
+
+**Kind**: static method of [<code>NAV</code>](#module_NAV)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| e | <code>event</code> | keydown event |
 
 <a name="module_NAV.initialize"></a>
 
@@ -924,7 +984,7 @@ selects HTML element(s) by class
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | selector | <code>string</code> |  | string containing one or multiple space-seperated HTML classes |
-| [context] | <code>string</code> | <code>&quot;document&quot;</code> | container element in which to search for class |
+| [context] | <code>Object</code> | <code>document</code> | container element in which to search for class |
 
 <a name="module__.tag"></a>
 
@@ -937,7 +997,7 @@ selects HTML element(s) by tag
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | selector | <code>string</code> |  | string containing a HTML tag |
-| [context] | <code>string</code> | <code>&quot;document&quot;</code> | container element in which to search for tag |
+| [context] | <code>Object</code> | <code>document</code> | container element in which to search for tag |
 
 <a name="module__.select"></a>
 
@@ -950,7 +1010,7 @@ selects HTML element(s) using a CSS selector
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | selector | <code>string</code> |  | string containing a valid CSS selector |
-| [context] | <code>string</code> | <code>&quot;document&quot;</code> | container element in which to search |
+| [context] | <code>Object</code> | <code>document</code> | container element in which to search |
 | [callback] | <code>function</code> |  | called when querySelector is not supported by browser |
 
 <a name="module__.contains"></a>

@@ -128,11 +128,15 @@ var COMPARE_ITEMS = {
         // clear areas and load current items
         COMPARE_ITEMS.orderButtons();
         
-        // with a little delay, set tab focus on close button
-        // if set immediately, will be ignored or buggy
-        setTimeout(function () {
-            NODE.compare_items.close_btn.focus();
-        }, 100);
+        // get focussable elements in the window
+        var btns = [];
+        var compare_item_btns = _.class('btn', NODE.compare_items.window);
+        for (var i = 0; i < compare_item_btns.length; i++) {
+            btns.push(compare_item_btns[i]);
+        }
+        btns.push(NODE.compare_items.close_btn);
+        // put them into a focus chain
+        FOCUS_CHAIN.set(btns);
         
     },
     
@@ -146,6 +150,8 @@ var COMPARE_ITEMS = {
         // close window
         _.removeClass(NODE.compare_items.window, 'visible');
         NODE.compare_items.window.setAttribute('aria-hidden', true);
+        
+        FOCUS_CHAIN.reset();
         
         // reset tab focus back to 'data load' button in navigation
         NODE.compare_btn.focus();

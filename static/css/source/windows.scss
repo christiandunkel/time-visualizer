@@ -90,6 +90,10 @@
 
 #data-load-window {
     
+    #file-reader-notice {
+        margin-top: 12px;
+    }
+    
     .heading {
         font-size: 20px; line-height: 23px;
     }
@@ -123,14 +127,14 @@
         }
         
         &.example-data-set {
-            border-style: dashed;
             color: #8b92a2;
             
             .dark-mode & {
                 color: #85878d;
             }
         
-            &:hover {
+            &:hover,
+            &:focus {
                 background: #eaeaea;
 
                 .dark-mode & {

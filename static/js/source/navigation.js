@@ -1,4 +1,174 @@
 /** 
+ * @module FOCUS_CHAIN 
+ * @desc manages chains of elements that can be focussed via the tab key (hijacks the tab key event, and prevents normal focussing via browser)
+ */
+var FOCUS_CHAIN = {
+    
+    selection_type : 0,
+    // 0: unselected
+    // 1: by elems array
+    // 2: by start_elem, end_elem and elems_container
+    
+    // for selection type 1, elements in focuschain
+    elems: [],
+    // for selection type 2:
+    start_elem: null,
+    end_elem : null,
+    elems_container : null,
+    
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc sets elements as a focus chain
+     * @param {Array|Object} a - either array of HTML elements or 1 HTML element
+     * @param {Object} [b=undefined] - HTML element
+     * @param {Object} [c=undefined] - HTML element
+     */
+    set : function (a, b, c) {
+        
+        // remove focus from element that currently has focus
+        document.activeElement.blur();
+        
+        if (b === undefined && c === undefined) {
+            FOCUS_CHAIN.selection_type = 1;
+            FOCUS_CHAIN.elems = a;
+        }
+        else {
+            FOCUS_CHAIN.selection_type = 2;
+            FOCUS_CHAIN.start_elem = a;
+            FOCUS_CHAIN.end_elem = b;
+            FOCUS_CHAIN.elems_container = c;
+        }
+        
+        _.addEvent(window, 'keydown', FOCUS_CHAIN.event);
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc removes the current focus chain
+     */
+    reset : function () {
+        
+        FOCUS_CHAIN.selection_type = 0;
+        // reset stuff for selection type 1
+        FOCUS_CHAIN.elems = [];
+        // reset stuff for selection type 2
+        FOCUS_CHAIN.start_elem = null;
+        FOCUS_CHAIN.end_elem = null;
+        FOCUS_CHAIN.elems_container = null;
+        
+        _.removeEvent(window, 'keydown', FOCUS_CHAIN.event);
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc event function that hijacks the tab key event and sets the focus depending on the user's current position in the focus chain 
+     * @param {event} e - keydown event
+     */
+    event : function (e) {
+        
+        // tab key was pressed
+        if (e.keyCode == 9) {
+        
+            // special conditions for selection type 1
+            if (FOCUS_CHAIN.selection_type == 1) {
+                // needs at least one element in chain
+                if (FOCUS_CHAIN.elems.length < 1) {
+                    return;
+                }
+                // if multiple elems, focus chain can work, so prevent default focus change by browser
+                else {
+                    e.preventDefault();
+                }
+            }
+            
+            // handle selection
+            if (FOCUS_CHAIN.selection_type == 1) {
+                FOCUS_CHAIN.handleSelectionType1();
+            }
+            else {
+                FOCUS_CHAIN.handleSelectionType2(e);
+            }
+            
+        }
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc handles setting the user focus if the focus chain consists of an array of elements
+     */
+    handleSelectionType1 : function () {
+            
+        // only check for next focus element, if there's at least two elems
+        if (FOCUS_CHAIN.elems.length != 1) {
+            // find currently focussed element in chain, and focus on next in line
+            for (var i = FOCUS_CHAIN.elems.length; i--;) {
+                if (document.activeElement == FOCUS_CHAIN.elems[i]) {
+
+                    // last element is in focus
+                    if (i == FOCUS_CHAIN.elems.length - 1) {
+                        // focus on first
+                        FOCUS_CHAIN.elems[0].focus();
+                    }
+                    else {
+                        // otherwise, focus on next
+                        FOCUS_CHAIN.elems[i+1].focus();
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        // if no element in chain is currently focussed on, focus on first in list
+        FOCUS_CHAIN.elems[0].focus();
+        
+    },
+    
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc handles setting the user focus if the focus chain consists of a start and end element
+     * @param {event} e - keydown event
+     */
+    handleSelectionType2 : function (e) {
+        
+        // check element that had focus until now
+        if (
+            // if last element reached, focus on first
+            document.activeElement == FOCUS_CHAIN.end_elem
+        ) {
+            e.preventDefault();
+            FOCUS_CHAIN.start_elem.focus();
+            return;
+        }
+        
+        // check element that now gets focus
+        setTimeout(function () {
+            
+            if (
+                // if no element inside window is being focussed, focussed start element
+                !_.contains(FOCUS_CHAIN.elems_container, document.activeElement)
+            ) {
+                e.preventDefault();
+                FOCUS_CHAIN.start_elem.focus();
+            }
+            
+        }, 5);
+        
+    }
+    
+};
+
+
+
+/** 
  * @module NAV 
  * @desc manages the UI of the navigation area
  */
@@ -42,7 +212,7 @@ var NAV = {
         // open/close settings menu
         _.onClick(NODE.settings_btn, NAV.openSettingsWindow);
         
-        NODE.settings_close_btn = _.class('cross', NODE.settings_window)[0];
+        NODE.settings_close_btn = _.class('close', NODE.settings_window)[0];
         _.onClick(NODE.settings_close_btn, NAV.closeSettingsWindow);
         
         NODE.settings_overlay = _.class('blur', NODE.settings_window)[0];
@@ -78,12 +248,18 @@ var NAV = {
         _.addClass(NODE.settings_window, 'visible');
         NODE.settings_window.setAttribute('aria-hidden', 'false');
         
+        FOCUS_CHAIN.set(NODE.darkmode_btn, NODE.settings_close_btn, NODE.settings_window);
+        
     },
     
     closeSettingsWindow : function () {
         
         _.removeClass(NODE.settings_window, 'visible');
         NODE.settings_window.setAttribute('aria-hidden', 'true');
+        
+        FOCUS_CHAIN.reset();
+        
+        NODE.settings_btn.focus();
         
     },
     
