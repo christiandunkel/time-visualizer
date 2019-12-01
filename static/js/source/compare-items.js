@@ -180,7 +180,6 @@ var COMPARE_ITEMS = {
             var btn = _.create('button.btn.small.has-icon', {
                 'item-id' : item_id,
                 'innerHTML' : item.name,
-                'title' : 'Toggle ' + item.name_escaped,
                 'style' : {
                     'background-image' : 'url(' + item.icon + ')'
                 }
@@ -224,10 +223,12 @@ var COMPARE_ITEMS = {
             if (included) {
                 _.append(NODE.compare_items.selected_area, btn);
                 _.addClass(btn, 'green');
+                btn.title = 'Hide \"' + DATA.items[item_id].name_escaped + '\" in graph';
             }
             else {
                 _.append(NODE.compare_items.unselected_area, btn);
                 _.removeClass(btn, 'green');
+                btn.title = 'Show \"' + DATA.items[item_id].name_escaped+ '\" in graph';
             }
             
         }
@@ -256,11 +257,13 @@ var COMPARE_ITEMS = {
             COMPARE_ITEMS.addItemId(item_id);
             _.append(NODE.compare_items.selected_area, btn);
             _.addClass(btn, 'green');
+            btn.title = 'Hide \"' + DATA.items[item_id].name_escaped + '\" in graph';
         }
         else {
             COMPARE_ITEMS.removeItemId(item_id);
             _.append(NODE.compare_items.unselected_area, btn);
             _.removeClass(btn, 'green');
+            btn.title = 'Show \"' + DATA.items[item_id].name_escaped + '\" in graph';
         }
         
         ANIMATOR.refreshFrame();
