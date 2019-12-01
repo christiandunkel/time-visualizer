@@ -2,7 +2,8 @@
     display: inline-block; position: relative;
     min-width: 40px; min-height: 40px; margin: 0 8px 0 0; padding: 13px 15px;
     background-color: #ededed;
-    white-space: nowrap; font-size: 14px; line-height: 14px; color: #676767; font-weight: 700;
+    white-space: nowrap; 
+    font-size: 14px; line-height: 14px; color: #676767; font-weight: 700;
     @include user-select(none);
     @include box-shadow(
         2px 2px 0 #bebebe, 
@@ -69,6 +70,34 @@
 
         &:focus {
             outline: 2px solid currentColor;
+        }
+    }
+    
+    &.red {
+        background-color: #b90000;
+        color: white;
+        @include box-shadow(
+            2px 2px 0 #770000, 
+            1px 1px 4px rgba(0, 0, 0, 0.3)
+        );
+
+        &:hover,
+        &:focus,
+        .dark-mode &:hover,
+        .dark-mode &:focus  {
+            background-color: #9b0000;
+            @include box-shadow(
+                0 0 0 #770000, 
+                0 0 2px rgba(0, 0, 0, 0.1)
+            );
+        }
+
+        &:focus {
+            outline: 2px solid #d41b1b;
+            
+            .dark-mode & {
+                outline-color: #f55757;
+            }
         }
     }
     

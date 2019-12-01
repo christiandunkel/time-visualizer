@@ -441,78 +441,36 @@
 #line-chart-menu {
     width: 100%; margin: 0 0 20px 0;
     
-    button {
-        padding: 10px 12px;
-        background: #f4f4f4; border: 1px solid #e6e6e6;
-        color: #979797; font-size: 14px; line-height: 14px;
-        @include border-radius(5px);
-        @include transition(.3s);
-        
-        .dark-mode & {
-            background-color: #242424; border-color: #3e3e3e;
-            color: #898989;
-        }
-        
-        &:hover {
-            @include box-shadow(1px 1px 5px rgba(0,0,0,.2));
-            
-            .dark-mode & {
-                @include box-shadow(2px 2px 5px rgba(255,255,255,.3));
-            }
-        }
-        
-        &[float-right] {
+    .btn {
+        &.float-right {
             float: right;
             margin: 0 0 0 5px;
         }
         
         &#close-line-chart {
-            background: #ffdddd; border-color: #ffa6a6;
-            color: #c92f2f;
-            
-            .dark-mode & {
-                background: #3e0d0d; border-color: #8c3d3d;
-                color: #ea6969;
-            }
-            
-            &:after {
-                @extend %icon-arrow-left-red;
-            }
+            @extend %icon-arrow-left-white;
         }
         
-        &:after {
-            content: '';
-            float: left;
-            width: 1em; height: 1em; margin: 0 .5em 0 0;
-            background-repeat: no-repeat;
-            background-position: center;
-            @include background-size(100% 100%);
-        }
-        
-        &#compare-btn:after {
+        &#compare-btn {
             @extend %icon-compare;
-            @include opacity(.4);
             
             .dark-mode & {
                 @extend %icon-compare-lightgrey;
-                @include opacity(1);
             }
         }
         
-        &#download-line-chart:after {
+        &#download-line-chart {
             @extend %icon-download;
-            @include opacity(.4);
             
             .dark-mode & {
                 @extend %icon-download-lightgrey;
-                @include opacity(1);
             }
         }
         
         @include ON_MOBILE {
-            &, &[float-right] {
-                display: block; float: none;
-                width: 100%; margin: 0 0 5px 0; padding: 12px;
+            &, &.float-right {
+                float: none;
+                margin: 0 8px 8px 0;
             }
         }
     }
