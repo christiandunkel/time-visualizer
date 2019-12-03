@@ -38,6 +38,8 @@ var FOCUS_CHAIN = {
      */
     set : function (input) {
         
+        FOCUS_CHAIN.reset();
+        
         // remove focus from element that currently has focus
         document.activeElement.blur();
         
@@ -62,8 +64,6 @@ var FOCUS_CHAIN = {
      * @desc removes the current focus chain
      */
     reset : function () {
-        
-        FOCUS_CHAIN.reset();
         
         FOCUS_CHAIN.selection_type = 0;
         // reset stuff for selection type 1
