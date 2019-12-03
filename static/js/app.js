@@ -4722,7 +4722,7 @@ var MAIN = {
      */
     initializeDataSet : function (str, showConfirmation) {
         
-        // switch back to bar chart
+        // switch back to bar chart view
         NAV.showBarChart();
 
         // generate an object from JSON string
@@ -4743,6 +4743,9 @@ var MAIN = {
                 NODE.data_load.close_btn
             ]);
         }
+        
+        // tell CSS, that a data set was loaded
+        _.addClass(NODE.html, 'data-set-loaded');
 
         // refresh animator
         ANIMATOR.setCSSTransitions();

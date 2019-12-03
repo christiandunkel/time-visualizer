@@ -109,6 +109,10 @@ main {
     display: none;
     list-style-type: decimal;
     max-width: 1100px; margin: 0 auto; padding: 0 20px 0 40px;
+            
+    html:not(.data-set-loaded) & {
+        display: none;
+    }
 
     .js-on & {
         display: block;

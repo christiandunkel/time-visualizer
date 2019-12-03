@@ -58,6 +58,16 @@ nav {
                     @extend %icon-settings-button-white;
                 }
             }
+            
+            html:not(.data-set-loaded) & {
+                
+                &#play-button,
+                &#pause-button,
+                &#stop-button,
+                &#settings-button {
+                    display: none;
+                }
+            }
         }
     }  
     
