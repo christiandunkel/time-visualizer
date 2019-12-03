@@ -1557,7 +1557,7 @@ var FOCUS_CHAIN = {
     
     /**
      * @function
-     * @memberof module:NAV
+     * @memberof module:FOCUS_CHAIN
      * @desc checks if the focus chain is currently active
      * @returns {boolean} true, if the focus chain is active
      */
@@ -1567,7 +1567,7 @@ var FOCUS_CHAIN = {
     
     /**
      * @function
-     * @memberof module:NAV
+     * @memberof module:FOCUS_CHAIN
      * @desc sets elements as a focus chain
      * @param {Array|Object} a - either array of HTML elements or object: {
      *      start : HTML element  (start of chain)
@@ -1597,7 +1597,7 @@ var FOCUS_CHAIN = {
     
     /**
      * @function
-     * @memberof module:NAV
+     * @memberof module:FOCUS_CHAIN
      * @desc removes the current focus chain
      */
     reset : function () {
@@ -1618,7 +1618,7 @@ var FOCUS_CHAIN = {
     
     /**
      * @function
-     * @memberof module:NAV
+     * @memberof module:FOCUS_CHAIN
      * @desc event function that hijacks the tab key event and sets the focus depending on the user's current position in the focus chain 
      * @param {event} e - keydown event
      */
@@ -1643,7 +1643,7 @@ var FOCUS_CHAIN = {
     
     /**
      * @function
-     * @memberof module:NAV
+     * @memberof module:FOCUS_CHAIN
      * @desc handles setting the user focus if the focus chain consists of an array of elements
      * @param {event} e - keydown event
      * @param {boolean} go_backwards - if the focus go forward or backwards in focus chain
@@ -1712,7 +1712,7 @@ var FOCUS_CHAIN = {
     
     /**
      * @function
-     * @memberof module:NAV
+     * @memberof module:FOCUS_CHAIN
      * @desc handles setting the user focus if the focus chain consists of a start and end element
      * @param {event} e - keydown event
      * @param {boolean} go_backwards - if the focus go forward or backwards in focus chain

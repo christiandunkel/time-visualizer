@@ -728,6 +728,74 @@ hides the current overlay message
 ## FOCUS\_CHAIN
 manages chains of elements that can be focussed via the tab key (hijacks the tab key event, and prevents normal focussing via browser)
 
+
+* [FOCUS_CHAIN](#module_FOCUS_CHAIN)
+    * [.isActive()](#module_FOCUS_CHAIN.isActive) ⇒ <code>boolean</code>
+    * [.set(a)](#module_FOCUS_CHAIN.set)
+    * [.reset()](#module_FOCUS_CHAIN.reset)
+    * [.event(e)](#module_FOCUS_CHAIN.event)
+    * [.handleSelectionType1(e, go_backwards)](#module_FOCUS_CHAIN.handleSelectionType1)
+    * [.handleSelectionType2(e, go_backwards)](#module_FOCUS_CHAIN.handleSelectionType2)
+
+<a name="module_FOCUS_CHAIN.isActive"></a>
+
+### FOCUS_CHAIN.isActive() ⇒ <code>boolean</code>
+checks if the focus chain is currently active
+
+**Kind**: static method of [<code>FOCUS\_CHAIN</code>](#module_FOCUS_CHAIN)  
+**Returns**: <code>boolean</code> - true, if the focus chain is active  
+<a name="module_FOCUS_CHAIN.set"></a>
+
+### FOCUS_CHAIN.set(a)
+sets elements as a focus chain
+
+**Kind**: static method of [<code>FOCUS\_CHAIN</code>](#module_FOCUS_CHAIN)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| a | <code>Array</code> \| <code>Object</code> | either array of HTML elements or object: {      start : HTML element  (start of chain)      end : HTML element (end of chain)      container : HTML element (contains all focussable elements in chain) } |
+
+<a name="module_FOCUS_CHAIN.reset"></a>
+
+### FOCUS_CHAIN.reset()
+removes the current focus chain
+
+**Kind**: static method of [<code>FOCUS\_CHAIN</code>](#module_FOCUS_CHAIN)  
+<a name="module_FOCUS_CHAIN.event"></a>
+
+### FOCUS_CHAIN.event(e)
+event function that hijacks the tab key event and sets the focus depending on the user's current position in the focus chain
+
+**Kind**: static method of [<code>FOCUS\_CHAIN</code>](#module_FOCUS_CHAIN)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| e | <code>event</code> | keydown event |
+
+<a name="module_FOCUS_CHAIN.handleSelectionType1"></a>
+
+### FOCUS_CHAIN.handleSelectionType1(e, go_backwards)
+handles setting the user focus if the focus chain consists of an array of elements
+
+**Kind**: static method of [<code>FOCUS\_CHAIN</code>](#module_FOCUS_CHAIN)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| e | <code>event</code> | keydown event |
+| go_backwards | <code>boolean</code> | if the focus go forward or backwards in focus chain |
+
+<a name="module_FOCUS_CHAIN.handleSelectionType2"></a>
+
+### FOCUS_CHAIN.handleSelectionType2(e, go_backwards)
+handles setting the user focus if the focus chain consists of a start and end element
+
+**Kind**: static method of [<code>FOCUS\_CHAIN</code>](#module_FOCUS_CHAIN)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| e | <code>event</code> | keydown event |
+| go_backwards | <code>boolean</code> | if the focus go forward or backwards in focus chain |
+
 <a name="module_NAV"></a>
 
 ## NAV
@@ -735,12 +803,6 @@ manages the UI of the navigation area
 
 
 * [NAV](#module_NAV)
-    * [.isActive()](#module_NAV.isActive) ⇒ <code>boolean</code>
-    * [.set(a)](#module_NAV.set)
-    * [.reset()](#module_NAV.reset)
-    * [.event(e)](#module_NAV.event)
-    * [.handleSelectionType1(e, go_backwards)](#module_NAV.handleSelectionType1)
-    * [.handleSelectionType2(e, go_backwards)](#module_NAV.handleSelectionType2)
     * [.initialize()](#module_NAV.initialize)
     * [.initializeSettingsWindow()](#module_NAV.initializeSettingsWindow)
     * [.openSettingsWindow()](#module_NAV.openSettingsWindow)
@@ -756,65 +818,6 @@ manages the UI of the navigation area
     * [.showCustomSpeedMenu()](#module_NAV.showCustomSpeedMenu)
     * [.showDefinedSpeedMenu()](#module_NAV.showDefinedSpeedMenu)
     * [.downloadLineChart()](#module_NAV.downloadLineChart)
-
-<a name="module_NAV.isActive"></a>
-
-### NAV.isActive() ⇒ <code>boolean</code>
-checks if the focus chain is currently active
-
-**Kind**: static method of [<code>NAV</code>](#module_NAV)  
-**Returns**: <code>boolean</code> - true, if the focus chain is active  
-<a name="module_NAV.set"></a>
-
-### NAV.set(a)
-sets elements as a focus chain
-
-**Kind**: static method of [<code>NAV</code>](#module_NAV)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| a | <code>Array</code> \| <code>Object</code> | either array of HTML elements or object: {      start : HTML element  (start of chain)      end : HTML element (end of chain)      container : HTML element (contains all focussable elements in chain) } |
-
-<a name="module_NAV.reset"></a>
-
-### NAV.reset()
-removes the current focus chain
-
-**Kind**: static method of [<code>NAV</code>](#module_NAV)  
-<a name="module_NAV.event"></a>
-
-### NAV.event(e)
-event function that hijacks the tab key event and sets the focus depending on the user's current position in the focus chain
-
-**Kind**: static method of [<code>NAV</code>](#module_NAV)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| e | <code>event</code> | keydown event |
-
-<a name="module_NAV.handleSelectionType1"></a>
-
-### NAV.handleSelectionType1(e, go_backwards)
-handles setting the user focus if the focus chain consists of an array of elements
-
-**Kind**: static method of [<code>NAV</code>](#module_NAV)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| e | <code>event</code> | keydown event |
-| go_backwards | <code>boolean</code> | if the focus go forward or backwards in focus chain |
-
-<a name="module_NAV.handleSelectionType2"></a>
-
-### NAV.handleSelectionType2(e, go_backwards)
-handles setting the user focus if the focus chain consists of a start and end element
-
-**Kind**: static method of [<code>NAV</code>](#module_NAV)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| e | <code>event</code> | keydown event |
-| go_backwards | <code>boolean</code> | if the focus go forward or backwards in focus chain |
 
 <a name="module_NAV.initialize"></a>
 
