@@ -19,6 +19,16 @@ var FOCUS_CHAIN = {
     /**
      * @function
      * @memberof module:NAV
+     * @desc checks if the focus chain is currently active
+     * @returns {boolean} true, if the focus chain is active
+     */
+    isActive : function () {
+        return selection_type === 0;
+    },
+    
+    /**
+     * @function
+     * @memberof module:NAV
      * @desc sets elements as a focus chain
      * @param {Array|Object} a - either array of HTML elements or object: {
      *      start : HTML element  (start of chain)
@@ -52,6 +62,8 @@ var FOCUS_CHAIN = {
      * @desc removes the current focus chain
      */
     reset : function () {
+        
+        FOCUS_CHAIN.reset();
         
         FOCUS_CHAIN.selection_type = 0;
         // reset stuff for selection type 1
@@ -247,6 +259,11 @@ var NAV = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc initializes elements in and for settings window
+     */
     initializeSettingsWindow : function () {
         
         // open/close settings menu
@@ -283,6 +300,11 @@ var NAV = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc opens settings window
+     */
     openSettingsWindow : function () {
         
         _.addClass(NODE.settings_window, 'visible');
@@ -296,6 +318,11 @@ var NAV = {
         
     },
     
+    /**
+     * @function
+     * @memberof module:NAV
+     * @desc closes settings window
+     */
     closeSettingsWindow : function () {
         
         _.removeClass(NODE.settings_window, 'visible');

@@ -735,12 +735,16 @@ manages the UI of the navigation area
 
 
 * [NAV](#module_NAV)
+    * [.isActive()](#module_NAV.isActive) ⇒ <code>boolean</code>
     * [.set(a)](#module_NAV.set)
     * [.reset()](#module_NAV.reset)
     * [.event(e)](#module_NAV.event)
     * [.handleSelectionType1(e, go_backwards)](#module_NAV.handleSelectionType1)
     * [.handleSelectionType2(e, go_backwards)](#module_NAV.handleSelectionType2)
     * [.initialize()](#module_NAV.initialize)
+    * [.initializeSettingsWindow()](#module_NAV.initializeSettingsWindow)
+    * [.openSettingsWindow()](#module_NAV.openSettingsWindow)
+    * [.closeSettingsWindow()](#module_NAV.closeSettingsWindow)
     * [.toggleDarkMode()](#module_NAV.toggleDarkMode)
     * [.enableButton(btn)](#module_NAV.enableButton)
     * [.disableButton(btn)](#module_NAV.disableButton)
@@ -753,6 +757,13 @@ manages the UI of the navigation area
     * [.showDefinedSpeedMenu()](#module_NAV.showDefinedSpeedMenu)
     * [.downloadLineChart()](#module_NAV.downloadLineChart)
 
+<a name="module_NAV.isActive"></a>
+
+### NAV.isActive() ⇒ <code>boolean</code>
+checks if the focus chain is currently active
+
+**Kind**: static method of [<code>NAV</code>](#module_NAV)  
+**Returns**: <code>boolean</code> - true, if the focus chain is active  
 <a name="module_NAV.set"></a>
 
 ### NAV.set(a)
@@ -809,6 +820,24 @@ handles setting the user focus if the focus chain consists of a start and end el
 
 ### NAV.initialize()
 initializes navigation elements with events
+
+**Kind**: static method of [<code>NAV</code>](#module_NAV)  
+<a name="module_NAV.initializeSettingsWindow"></a>
+
+### NAV.initializeSettingsWindow()
+initializes elements in and for settings window
+
+**Kind**: static method of [<code>NAV</code>](#module_NAV)  
+<a name="module_NAV.openSettingsWindow"></a>
+
+### NAV.openSettingsWindow()
+opens settings window
+
+**Kind**: static method of [<code>NAV</code>](#module_NAV)  
+<a name="module_NAV.closeSettingsWindow"></a>
+
+### NAV.closeSettingsWindow()
+closes settings window
 
 **Kind**: static method of [<code>NAV</code>](#module_NAV)  
 <a name="module_NAV.toggleDarkMode"></a>
