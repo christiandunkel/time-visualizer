@@ -3778,7 +3778,14 @@ var VISUALIZER = {
     openLineChartOnClick : function (e) {
         
         // get item id
-        var item_id = _.target(e).getAttribute('item-id');
+        var target = _.target(e);
+        var item_id = target.getAttribute('item-id');
+        
+        // if current item ID is null, check if any parent has a item id
+        while (!item_id && target.parentElement) {
+            item_id = target.parentElement.getAttribute('item-id');
+        }
+        
         COMPARE_ITEMS.setItemIds([item_id]);
         
         // open line chart
